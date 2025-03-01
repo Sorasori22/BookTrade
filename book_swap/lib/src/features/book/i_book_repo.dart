@@ -67,7 +67,7 @@ class _Impl implements IBookRepo {
   @override
   Future<Either<Failure, IList<BookModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(BookModel.table.tableName).select(BookModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(BookModel.table.tableName).select(BookModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements IBookRepo {
     required BookListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(BookModel.table.tableName).select(BookModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(BookModel.table.tableName).select(BookModel.table.selectStatement);
     
     if (true) {}
     

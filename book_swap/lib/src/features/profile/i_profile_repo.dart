@@ -67,7 +67,7 @@ class _Impl implements IProfileRepo {
   @override
   Future<Either<Failure, IList<ProfileModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(ProfileModel.table.tableName).select(ProfileModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(ProfileModel.table.tableName).select(ProfileModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements IProfileRepo {
     required ProfileListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(ProfileModel.table.tableName).select(ProfileModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(ProfileModel.table.tableName).select(ProfileModel.table.selectStatement);
     
     if (true) {}
     

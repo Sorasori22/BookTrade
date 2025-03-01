@@ -67,7 +67,7 @@ class _Impl implements IBookRatingRepo {
   @override
   Future<Either<Failure, IList<BookRatingModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(BookRatingModel.table.tableName).select(BookRatingModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(BookRatingModel.table.tableName).select(BookRatingModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements IBookRatingRepo {
     required BookRatingListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(BookRatingModel.table.tableName).select(BookRatingModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(BookRatingModel.table.tableName).select(BookRatingModel.table.selectStatement);
     
     if (true) {}
     

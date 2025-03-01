@@ -78,7 +78,7 @@ class ThousandsFormatter extends TextInputFormatter {
     String newText = text.replaceAll(',', '');
     final matches = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))').allMatches(newText);
     int offset = 0;
-    for (Match match in matches) {
+    for (final Match match in matches) {
       newText =
           newText.replaceRange(match.start + offset, match.end + offset, '${match.group(1)},');
       offset += 1;

@@ -67,7 +67,7 @@ class _Impl implements IMessageRepo {
   @override
   Future<Either<Failure, IList<MessageModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(MessageModel.table.tableName).select(MessageModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(MessageModel.table.tableName).select(MessageModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements IMessageRepo {
     required MessageListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(MessageModel.table.tableName).select(MessageModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(MessageModel.table.tableName).select(MessageModel.table.selectStatement);
     
     if (true) {}
     

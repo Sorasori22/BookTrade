@@ -67,7 +67,7 @@ class _Impl implements IUserRatingRepo {
   @override
   Future<Either<Failure, IList<UserRatingModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(UserRatingModel.table.tableName).select(UserRatingModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(UserRatingModel.table.tableName).select(UserRatingModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements IUserRatingRepo {
     required UserRatingListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(UserRatingModel.table.tableName).select(UserRatingModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(UserRatingModel.table.tableName).select(UserRatingModel.table.selectStatement);
     
     if (true) {}
     

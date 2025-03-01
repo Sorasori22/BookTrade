@@ -67,7 +67,7 @@ class _Impl implements IBookGenreRepo {
   @override
   Future<Either<Failure, IList<BookGenreModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(BookGenreModel.table.tableName).select(BookGenreModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(BookGenreModel.table.tableName).select(BookGenreModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements IBookGenreRepo {
     required BookGenreListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(BookGenreModel.table.tableName).select(BookGenreModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(BookGenreModel.table.tableName).select(BookGenreModel.table.selectStatement);
     
     if (true) {}
     

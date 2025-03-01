@@ -61,6 +61,8 @@ dependencies:
       ref: master
       path: packages/kimapp_utils
 
+  riverpod: any
+  flutter_riverpod: any
 dev_dependencies:
   autoverpod_generator: ^0.0.2
   kimapp_generator:

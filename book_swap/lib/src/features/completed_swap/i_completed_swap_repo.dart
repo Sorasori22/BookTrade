@@ -67,7 +67,7 @@ class _Impl implements ICompletedSwapRepo {
   @override
   Future<Either<Failure, IList<CompletedSwapModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(CompletedSwapModel.table.tableName).select(CompletedSwapModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(CompletedSwapModel.table.tableName).select(CompletedSwapModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements ICompletedSwapRepo {
     required CompletedSwapListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(CompletedSwapModel.table.tableName).select(CompletedSwapModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(CompletedSwapModel.table.tableName).select(CompletedSwapModel.table.selectStatement);
     
     if (true) {}
     

@@ -67,7 +67,7 @@ class _Impl implements ITradeRequestRepo {
   @override
   Future<Either<Failure, IList<TradeRequestModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(TradeRequestModel.table.tableName).select(TradeRequestModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(TradeRequestModel.table.tableName).select(TradeRequestModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements ITradeRequestRepo {
     required TradeRequestListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(TradeRequestModel.table.tableName).select(TradeRequestModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(TradeRequestModel.table.tableName).select(TradeRequestModel.table.selectStatement);
     
     if (true) {}
     

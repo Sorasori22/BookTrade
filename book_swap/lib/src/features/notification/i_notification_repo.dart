@@ -67,7 +67,7 @@ class _Impl implements INotificationRepo {
   @override
   Future<Either<Failure, IList<NotificationModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(NotificationModel.table.tableName).select(NotificationModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(NotificationModel.table.tableName).select(NotificationModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements INotificationRepo {
     required NotificationListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(NotificationModel.table.tableName).select(NotificationModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(NotificationModel.table.tableName).select(NotificationModel.table.selectStatement);
     
     if (true) {}
     

@@ -67,7 +67,7 @@ class _Impl implements IWishlistItemRepo {
   @override
   Future<Either<Failure, IList<WishlistItemModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(WishlistItemModel.table.tableName).select(WishlistItemModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(WishlistItemModel.table.tableName).select(WishlistItemModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements IWishlistItemRepo {
     required WishlistItemListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(WishlistItemModel.table.tableName).select(WishlistItemModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(WishlistItemModel.table.tableName).select(WishlistItemModel.table.selectStatement);
     
     if (true) {}
     

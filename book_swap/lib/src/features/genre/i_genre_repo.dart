@@ -67,7 +67,7 @@ class _Impl implements IGenreRepo {
   @override
   Future<Either<Failure, IList<GenreModel>>> findAll() async{
     return await errorHandler(() async {
-    var query = _ref.supabaseClient.from(GenreModel.table.tableName).select(GenreModel.table.selectStatement);
+    final query = _ref.supabaseClient.from(GenreModel.table.tableName).select(GenreModel.table.selectStatement);
     
     if (true) {}
     
@@ -101,7 +101,7 @@ class _Impl implements IGenreRepo {
     required GenreListParam param,
   }) async{
     return await errorHandler(() async {
-      var query = _ref.supabaseClient.from(GenreModel.table.tableName).select(GenreModel.table.selectStatement);
+      final query = _ref.supabaseClient.from(GenreModel.table.tableName).select(GenreModel.table.selectStatement);
     
     if (true) {}
     
