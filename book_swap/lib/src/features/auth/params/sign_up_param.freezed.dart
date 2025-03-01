@@ -15,13 +15,27 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$SignUpParam {}
+mixin _$SignUpParam {
+  String get email => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get name =>
+      throw _privateConstructorUsedError; // extract from email first
+  int? get age => throw _privateConstructorUsedError;
+
+  /// Create a copy of SignUpParam
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SignUpParamCopyWith<SignUpParam> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $SignUpParamCopyWith<$Res> {
   factory $SignUpParamCopyWith(
           SignUpParam value, $Res Function(SignUpParam) then) =
       _$SignUpParamCopyWithImpl<$Res, SignUpParam>;
+  @useResult
+  $Res call({String email, String password, String name, int? age});
 }
 
 /// @nodoc
@@ -36,13 +50,44 @@ class _$SignUpParamCopyWithImpl<$Res, $Val extends SignUpParam>
 
   /// Create a copy of SignUpParam
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? password = null,
+    Object? name = null,
+    Object? age = freezed,
+  }) {
+    return _then(_value.copyWith(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$SignUpParamImplCopyWith<$Res> {
+abstract class _$$SignUpParamImplCopyWith<$Res>
+    implements $SignUpParamCopyWith<$Res> {
   factory _$$SignUpParamImplCopyWith(
           _$SignUpParamImpl value, $Res Function(_$SignUpParamImpl) then) =
       __$$SignUpParamImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String email, String password, String name, int? age});
 }
 
 /// @nodoc
@@ -55,29 +100,105 @@ class __$$SignUpParamImplCopyWithImpl<$Res>
 
   /// Create a copy of SignUpParam
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? password = null,
+    Object? name = null,
+    Object? age = freezed,
+  }) {
+    return _then(_$SignUpParamImpl(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SignUpParamImpl extends _SignUpParam {
-  const _$SignUpParamImpl() : super._();
+  const _$SignUpParamImpl(
+      {required this.email,
+      required this.password,
+      required this.name,
+      required this.age})
+      : super._();
+
+  @override
+  final String email;
+  @override
+  final String password;
+  @override
+  final String name;
+// extract from email first
+  @override
+  final int? age;
 
   @override
   String toString() {
-    return 'SignUpParam()';
+    return 'SignUpParam(email: $email, password: $password, name: $name, age: $age)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SignUpParamImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SignUpParamImpl &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.age, age) || other.age == age));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, email, password, name, age);
+
+  /// Create a copy of SignUpParam
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignUpParamImplCopyWith<_$SignUpParamImpl> get copyWith =>
+      __$$SignUpParamImplCopyWithImpl<_$SignUpParamImpl>(this, _$identity);
 }
 
 abstract class _SignUpParam extends SignUpParam {
-  const factory _SignUpParam() = _$SignUpParamImpl;
+  const factory _SignUpParam(
+      {required final String email,
+      required final String password,
+      required final String name,
+      required final int? age}) = _$SignUpParamImpl;
   const _SignUpParam._() : super._();
+
+  @override
+  String get email;
+  @override
+  String get password;
+  @override
+  String get name; // extract from email first
+  @override
+  int? get age;
+
+  /// Create a copy of SignUpParam
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SignUpParamImplCopyWith<_$SignUpParamImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

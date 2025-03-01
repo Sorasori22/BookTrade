@@ -85,6 +85,7 @@ alwaysApply: false
 
 ## Best Practices for UI Implementation
 - Follow Material Design guidelines for consistent look and feel
+- Only add comment on complex widget
 - Ensure responsive layouts that work across different screen sizes
 - Implement appropriate error states and loading indicators
 - Maintain accessibility standards with proper contrast and text scaling

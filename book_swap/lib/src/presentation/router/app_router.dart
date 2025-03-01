@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'app_router.gr.dart';
 import 'app_router_guard.dart';
 
@@ -20,9 +21,9 @@ class AppRouter extends RootStackRouter {
         keepHistory: false,
       ),
       AutoRoute(
-        page: SignInRoute.page,
-        guards: [LoginGuard(_ref)],
-        path: '/login',
+        page: AuthRoute.page,
+        guards: [AuthedGuard(_ref)],
+        path: '/auth',
         keepHistory: false,
       ),
       AutoRoute(

@@ -21,13 +21,18 @@ import 'app_theme_extension.dart';
 ///     :
 /// );
 abstract final class AppTheme {
+  // App brand colors
+  static const Color goldColor = Color(0xFFB99653);
+  static const Color lightGold = Color(0xFFF0E6C9);
+  static const Color darkGold = Color(0xFF8C7A48);
+
   // Custom color scheme for book-themed UI
-  static const Color _primaryLight = Color(0xFF006064); // Deep Teal
-  static const Color _primaryDark = Color(0xFF00BCD4); // Teal
-  static const Color _secondaryLight = Color(0xFFFF8F00); // Warm Amber
-  static const Color _secondaryDark = Color(0xFFFFB300); // Amber
-  static const Color _tertiaryLight = Color(0xFF795548); // Book Brown
-  static const Color _tertiaryDark = Color(0xFFBCAAA4); // Light Brown
+  static const Color _primaryLight = goldColor; // Gold color
+  static const Color _primaryDark = goldColor; // Gold color
+  static const Color _secondaryLight = Color(0xFF795548); // Book Brown
+  static const Color _secondaryDark = Color(0xFFBCAAA4); // Light Brown
+  static const Color _tertiaryLight = Color(0xFF006064); // Deep Teal
+  static const Color _tertiaryDark = Color(0xFF00BCD4); // Teal
 
   // Typography configuration
   static TextTheme _createTextTheme(TextTheme base) {
@@ -100,11 +105,11 @@ abstract final class AppTheme {
     scheme: FlexScheme.custom,
     colors: FlexSchemeColor(
       primary: _primaryLight,
-      primaryContainer: const Color(0xFFB2EBF2),
+      primaryContainer: const Color(0xFFF0E6C9), // Light gold
       secondary: _secondaryLight,
-      secondaryContainer: const Color(0xFFFFE082),
+      secondaryContainer: const Color(0xFFD7CCC8), // Light brown
       tertiary: _tertiaryLight,
-      tertiaryContainer: const Color(0xFFD7CCC8),
+      tertiaryContainer: const Color(0xFFB2EBF2), // Light teal
       appBarColor: _primaryLight,
       error: const Color(0xFFD32F2F),
     ),
@@ -174,11 +179,11 @@ abstract final class AppTheme {
     scheme: FlexScheme.custom,
     colors: FlexSchemeColor(
       primary: _primaryDark,
-      primaryContainer: const Color(0xFF004D61),
+      primaryContainer: const Color(0xFF8C7A48), // Darker gold
       secondary: _secondaryDark,
-      secondaryContainer: const Color(0xFF633F00),
+      secondaryContainer: const Color(0xFF5D4037), // Dark brown
       tertiary: _tertiaryDark,
-      tertiaryContainer: const Color(0xFF5D4037),
+      tertiaryContainer: const Color(0xFF004D61), // Dark teal
       appBarColor: _primaryDark,
       error: const Color(0xFFEF5350),
     ),
@@ -237,7 +242,7 @@ abstract final class AppTheme {
     textTheme: _createTextTheme(ThemeData.dark().textTheme),
     primaryTextTheme: _createTextTheme(ThemeData.dark().primaryTextTheme),
     cupertinoOverrideTheme: CupertinoThemeData(
-      primaryColor: _primaryDark,
+      primaryColor: _primaryLight,
       applyThemeToAll: true,
     ),
     extensions: [

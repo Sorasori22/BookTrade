@@ -20,13 +20,13 @@ class AuthGuard extends _AppStateRouteGuard with LoggerMixin {
     authState.when(
       authenticated: (_) => resolver.next(true),
       unauthenticated: () {
-        logInfo('Unauthenticated. Redirecting to sign page...');
+        logInfo('Unauthenticated. Redirecting to auth page...');
         resolver.redirect(
-          SignInRoute(
+          AuthRoute(
             onSuccess: () {
               // We need to navigate to splash page again to initialize state base on auth
               // if not doing this, it might cause issue
-              logInfo('Redirecting to splash page after sign in initialization...');
+              logInfo('Redirecting to splash page after auth initialization...');
               resolver.redirect(
                 SplashRoute(
                   onInitialized: () {
@@ -43,8 +43,8 @@ class AuthGuard extends _AppStateRouteGuard with LoggerMixin {
   }
 }
 
-class LoginGuard extends _AppStateRouteGuard with LoggerMixin {
-  LoginGuard(this._ref);
+class AuthedGuard extends _AppStateRouteGuard with LoggerMixin {
+  AuthedGuard(this._ref);
 
   @override
   final Ref _ref;

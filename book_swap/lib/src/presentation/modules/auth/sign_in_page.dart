@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:book_swap/src/presentation/modules/splash/splash_widget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,7 +19,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   Widget build(BuildContext context) {
     final appInfo = ref.watch(appInfoProvider).valueOrNull;
 
-    return SplashWidget();
+    return Container();
   }
 
   Future<String?> _signInPress(WidgetRef ref) async {

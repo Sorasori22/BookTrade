@@ -5,6 +5,7 @@ import 'package:kimapp_supabase_helper/kimapp_supabase_helper.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../auth.dart';
+import '../params/sign_up_param.dart';
 
 part 'i_auth_repo.g.dart';
 
@@ -15,6 +16,7 @@ abstract class IAuthRepo {
   Future<Either<Failure, Option<UserId>>> currentId();
   Future<Either<Failure, UserId>> signIn(SignInParam param);
   Future<Either<Failure, Unit>> signOut();
+  Future<Either<Failure, UserId>> signUp(SignUpParam param);
 }
 
 class _Impl implements IAuthRepo {
@@ -48,6 +50,22 @@ class _Impl implements IAuthRepo {
     return await errorHandler(() async {
       await _ref.supabaseClient.auth.signOut();
       return right(unit);
+    });
+  }
+
+  @override
+  Future<Either<Failure, UserId>> signUp(SignUpParam param) async {
+    return await errorHandler(() async {
+      final result = await _ref.supabaseClient.auth.signUp(
+        email: param.email,
+        password: param.password,
+        data: {
+          'name': param.name,
+          'age': param.age,
+        },
+      );
+
+      return right(UserId.fromValue(result.user!.id));
     });
   }
 }
