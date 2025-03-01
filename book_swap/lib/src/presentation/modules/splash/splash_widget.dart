@@ -1,7 +1,8 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:book_swap/gen/assets.gen.dart';
+import 'package:book_swap/src/presentation/app/app_style.dart';
 import 'package:flutter/material.dart';
-
-import '../../app/app_style.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashWidget extends StatelessWidget {
   const SplashWidget({
@@ -20,30 +21,60 @@ class SplashWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: FadeIn(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'កំពុងដំណើរការ...',
-                style: TextStyle(
-                  fontSize: 28,
-                ),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: Assets.images.background.provider(),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withValues(alpha: 0.6),
+                BlendMode.darken,
               ),
-              AS.hGap8,
-              const SizedBox(
-                width: 200,
-                child: LinearProgressIndicator(
-                  color: Colors.black,
-                ),
+            ),
+          ),
+          child: Center(
+            child: SizedBox(
+              height: 300,
+              child: Stack(
+                children: [
+                  ClipRect(
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      heightFactor: 0.6,
+                      child: Assets.images.logo.image(
+                        width: 300,
+                        height: 300,
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 170),
+                      child: Column(
+                        children: [
+                          Text(
+                            'BOOK SWAP',
+                            style: GoogleFonts.montserrat(
+                              fontSize: 38,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          AS.hGap8,
+                          Text(
+                            'Swap Books, Share Stories',
+                            style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              AS.hGap8,
-              Text(appVersion ?? ""),
-              if (error != null && !loadedInMain) ...[
-                const SizedBox(height: 16),
-                Text(error ?? "Something went wrong"),
-              ],
-            ],
+            ),
           ),
         ),
       ),

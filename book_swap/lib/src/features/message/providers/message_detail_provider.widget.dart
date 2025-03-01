@@ -9,13 +9,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
 import 'package:autoverpod/autoverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:kimapp_utils/kimapp_utils.dart';
-import 'package:book_swap/src/features/message/message_schema.schema.dart';
 import 'package:book_swap/src/features/message/i_message_repo.dart';
+import 'package:book_swap/src/features/message/message_schema.schema.dart';
 import 'dart:core';
 
 class _MessageDetailInheritedWidget extends InheritedWidget {
