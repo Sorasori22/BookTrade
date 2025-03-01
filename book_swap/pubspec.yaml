@@ -27,6 +27,7 @@ dependencies:
   assorted_layout_widgets: ^10.0.4
   fpdart: ^1.1.1
   freezed_annotation: ^2.4.4
+  google_fonts: ^6.2.1
   hive_ce: ^2.8.0
   hive_ce_flutter: ^2.1.0
   hooks_riverpod: ^2.6.1
