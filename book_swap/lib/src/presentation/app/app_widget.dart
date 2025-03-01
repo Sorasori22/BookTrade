@@ -1,12 +1,10 @@
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:bot_toast/bot_toast.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 import '../../../config.dart';
@@ -69,8 +67,7 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
         debugShowCheckedModeBanner: false,
         routerConfig: router.config(
           reevaluateListenable: _authListenable,
-          navigatorObservers: () =>
-              [SentryNavigatorObserver(), TalkerRouteObserver(ref.watch(talkerProvider))],
+          navigatorObservers: () => [TalkerRouteObserver(ref.watch(talkerProvider))],
         ),
         restorationScopeId: Config.appName,
         key: ValueKey(Config.appName),
@@ -78,9 +75,6 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
         theme: ref.watch(lightThemeProvider),
         darkTheme: ref.watch(darkThemeProvider),
         themeMode: ref.watch(appThemeModeProvider).valueOrNull,
-        localizationsDelegates: [...context.localizationDelegates],
-        supportedLocales: [...context.supportedLocales],
-        locale: context.locale,
         builder: (context, child) {
           child = BotToastInit()(context, child);
           child = KeyboardDismiss(child: child);

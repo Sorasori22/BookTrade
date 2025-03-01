@@ -1,21 +1,18 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 import '../../../config.dart';
-import '../app/app_widget.dart';
 import '../../../src/core/helpers/flutter_talker.dart';
 import '../../../src/core/helpers/kimapp_riverpod_observer.dart';
+import '../app/app_widget.dart';
 import 'tasks/init_app_setting_task.dart';
 import 'tasks/init_cache_manager_task.dart';
 import 'tasks/init_device_info_task.dart';
 import 'tasks/init_error_reporter_task.dart';
 import 'tasks/init_flutter_error_catcher_task.dart';
 import 'tasks/init_kimapp_task.dart';
-import 'tasks/init_localization_task.dart';
 import 'tasks/init_platform_error_catcher_task.dart';
 import 'tasks/init_supabase_task.dart';
 
@@ -47,7 +44,6 @@ class KimappRunner {
       InitPlatformErrorCatcherTask(),
       InitFlutterErrorCatcherTask(),
       InitSupabaseTask(),
-      InitLocalizationTask(),
       InitDeviceInfoTask(),
       InitAppSettingTask(),
     ];
@@ -57,15 +53,7 @@ class KimappRunner {
     runApp(
       UncontrolledProviderScope(
         container: container,
-        child: EasyLocalization(
-          path: 'assets/translations',
-          supportedLocales: const [Locale("en"), Locale("km")],
-          fallbackLocale: const Locale('km'),
-          child: DefaultAssetBundle(
-            bundle: SentryAssetBundle(),
-            child: app,
-          ),
-        ),
+        child: app,
       ),
     );
   }
