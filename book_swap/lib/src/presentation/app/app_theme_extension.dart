@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Custom theme extension for book-themed UI elements
 class BookThemeExtension extends ThemeExtension<BookThemeExtension> {
   final Color bookCoverOverlayColor;
   final Color statusAvailable;
@@ -132,7 +131,7 @@ class BookThemeExtension extends ThemeExtension<BookThemeExtension> {
 
   // Light theme extension
   static BookThemeExtension get light => BookThemeExtension(
-        bookCoverOverlayColor: Colors.black.withOpacity(0.1),
+        bookCoverOverlayColor: Colors.black.withValues(alpha: 0.1),
         statusAvailable: const Color(0xFF4CAF50),
         statusUnavailable: const Color(0xFFE53935),
         statusPending: const Color(0xFFFFA000),
@@ -164,7 +163,7 @@ class BookThemeExtension extends ThemeExtension<BookThemeExtension> {
 
   // Dark theme extension
   static BookThemeExtension get dark => BookThemeExtension(
-        bookCoverOverlayColor: Colors.black.withOpacity(0.3),
+        bookCoverOverlayColor: Colors.black.withValues(alpha: 0.3),
         statusAvailable: const Color(0xFF66BB6A),
         statusUnavailable: const Color(0xFFEF5350),
         statusPending: const Color(0xFFFFB300),

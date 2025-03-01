@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../app/app_style.dart';
 import '../buttons/app_button.dart';
-import '../theme/base_widget.dart';
 import '../typography/app_text.dart';
 
 /// Defines the type of dialog
@@ -293,7 +293,7 @@ class AppDialog extends StatelessWidget {
       actions: actionButtons,
       insetPadding: insetPadding,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppThemeConfig.radiusM),
+        borderRadius: BorderRadius.circular(AS.radiusM),
       ),
     );
   }

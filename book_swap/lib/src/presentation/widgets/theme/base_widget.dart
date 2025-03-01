@@ -85,27 +85,3 @@ mixin AppThemeMixin<T extends StatefulWidget> on State<T> {
   /// Access the text theme easily
   TextTheme get textTheme => theme.textTheme;
 }
-
-/// Theme configuration for application widgets
-class AppThemeConfig {
-  const AppThemeConfig._();
-
-  // Default padding values
-  static const double paddingXS = 4.0;
-  static const double paddingS = 8.0;
-  static const double paddingM = 16.0;
-  static const double paddingL = 24.0;
-  static const double paddingXL = 32.0;
-
-  // Default border radius values
-  static const double radiusXS = 4.0;
-  static const double radiusS = 8.0;
-  static const double radiusM = 12.0;
-  static const double radiusL = 16.0;
-  static const double radiusXL = 24.0;
-
-  // Animation durations
-  static const Duration animationFast = Duration(milliseconds: 150);
-  static const Duration animationMedium = Duration(milliseconds: 300);
-  static const Duration animationSlow = Duration(milliseconds: 500);
-}

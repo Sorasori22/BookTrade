@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../app/app_style.dart';
 import '../theme/base_widget.dart';
 
 /// Defines the variant styles for text fields
@@ -80,7 +81,7 @@ class AppTextField extends AppBaseWidget {
     final colors = theme.colorScheme;
 
     // Determine border radius
-    final radius = borderRadius ?? AppThemeConfig.radiusM;
+    final radius = borderRadius ?? AS.radiusM;
 
     // Default content padding
     final defaultPadding =

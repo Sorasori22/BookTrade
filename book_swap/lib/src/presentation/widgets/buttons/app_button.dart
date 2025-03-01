@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../app/app_style.dart';
 import '../theme/base_widget.dart';
 
-/// Button variant types to control appearance
 enum AppButtonVariant {
   primary,
   secondary,
@@ -10,15 +10,12 @@ enum AppButtonVariant {
   text,
 }
 
-/// Button size options
 enum AppButtonSize {
   small,
   medium,
   large,
 }
 
-/// A customizable button component that adapts to the application theme
-/// and provides consistent styling across the app.
 class AppButton extends AppBaseWidget {
   const AppButton({
     super.key,
@@ -34,34 +31,24 @@ class AppButton extends AppBaseWidget {
     this.leadingIcon = false,
   });
 
-  /// The callback when button is pressed
   final VoidCallback? onPressed;
 
-  /// The button label text
   final String label;
 
-  /// Optional icon to display
   final IconData? icon;
 
-  /// Button style variant
   final AppButtonVariant variant;
 
-  /// Button size
   final AppButtonSize size;
 
-  /// Whether the button should take full width
   final bool fullWidth;
 
-  /// Loading/busy state
   final bool busy;
 
-  /// Disabled state
   final bool disabled;
 
-  /// Custom border radius (uses theme default if null)
   final double? borderRadius;
 
-  /// Whether icon should appear before the label
   final bool leadingIcon;
 
   @override
@@ -69,7 +56,6 @@ class AppButton extends AppBaseWidget {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
 
-    // Determine button colors based on variant
     Color backgroundColor;
     Color textColor;
     Color borderColor;
@@ -97,7 +83,6 @@ class AppButton extends AppBaseWidget {
         break;
     }
 
-    // Determine padding and text style based on size
     EdgeInsets padding;
     TextStyle textStyle;
     double iconSize;
@@ -120,7 +105,6 @@ class AppButton extends AppBaseWidget {
         break;
     }
 
-    // Handle disabled state
     final isDisabled = disabled || busy || onPressed == null;
     if (isDisabled) {
       backgroundColor = theme.disabledColor;
@@ -128,11 +112,9 @@ class AppButton extends AppBaseWidget {
       borderColor = Colors.transparent;
     }
 
-    // Create button content
     Widget buttonContent;
 
     if (busy) {
-      // Show loading indicator when busy
       buttonContent = SizedBox(
         height: iconSize,
         width: iconSize,
@@ -142,7 +124,6 @@ class AppButton extends AppBaseWidget {
         ),
       );
     } else if (icon != null) {
-      // Show icon and text
       final iconWidget = Icon(
         icon,
         color: textColor,
@@ -170,17 +151,14 @@ class AppButton extends AppBaseWidget {
               ],
       );
     } else {
-      // Text only
       buttonContent = Text(
         label,
         style: textStyle.copyWith(color: textColor),
       );
     }
 
-    // Apply border radius
-    final radius = borderRadius ?? AppThemeConfig.radiusM;
+    final radius = borderRadius ?? AS.radiusM;
 
-    // Build the button with Material
     return Material(
       color: Colors.transparent,
       child: InkWell(
