@@ -17,7 +17,7 @@ class UserSchema extends KimappSchema {
         ..addFields({'id': id, 'name': name}),
       Model('UserDetailModel')
         ..table()
-        ..inheritAllFromBase()
+        ..inheritAllFromBase(excepts: [name]) // name is not inherited from base model
         ..addFields({
           'createdAt': Field<DateTime>('created_at'),
         }),
