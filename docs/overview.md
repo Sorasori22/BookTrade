@@ -18,13 +18,37 @@ Book Swap addresses these issues by providing a simple, dedicated space for peop
 - Search and filter features for finding books by title, author, genre, and more
 - A secure messaging system for user communication
 - Swap history tracking for easy reference
+- Book and user rating systems
+- Wishlist functionality for desired books
+- Real-time notifications
 
 ## Technical Specifications
 - **Operating System**: Hybrid
 - **Technology**: Flutter Cross Platform Development
 - **Development Tools**: VSCode
-- **Database**: Supabase
+- **Database**: Supabase PostgreSQL with the following key components:
+  - User profiles linked to Supabase authentication
+  - Book catalog with condition ratings and genre classifications
+  - Trade request and completion tracking system
+  - Messaging system for user communication
+  - Rating system for both users and books
+  - Notification system for platform activities
+- **Authentication**: Supabase Auth with JWT tokens
+- **Storage**: Supabase Storage for book images and user avatars
+- **Security**: Row Level Security (RLS) policies for data protection
 - **Design Tools**: Figma
+
+## Database Architecture
+The application uses a relational database model with the following core tables:
+- **profiles**: Extends Supabase auth with additional user information
+- **books**: Stores book details including condition and ownership
+- **genres**: Categorizes books by literary genres
+- **trade_requests**: Manages the book swap proposal process
+- **completed_swaps**: Records successful book exchanges
+- **messages**: Supports direct communication between users
+- **notifications**: Provides system alerts for platform activities
+
+For a detailed breakdown of the database schema, please refer to [Database Schema Documentation](./database_schema.md).
 
 ## Benefits
 - **Sustainability**: Promotes eco-friendly practices by reusing books
