@@ -80,6 +80,7 @@ dev_dependencies:
   json_serializable: ^6.9.2
   riverpod_generator: ^2.6.3
   riverpod_lint: ^2.6.3
+  flutter_launcher_icons: "^0.14.3"
 
 dependency_overrides: 
   # Remove to use pub.dev version
@@ -96,7 +97,19 @@ dependency_overrides:
   kimapp:
     path: /Users/kim/Development/projects/kimapp/packages/kimapp
 
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/images/logo.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+
 flutter:
   uses-material-design: true
   assets:
-    - assets/translations/
+    - assets/
