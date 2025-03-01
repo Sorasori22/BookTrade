@@ -1,4 +1,4 @@
-package com.example.book_swap
+package com.sonata.book_swap
 
 import io.flutter.embedding.android.FlutterActivity
 
