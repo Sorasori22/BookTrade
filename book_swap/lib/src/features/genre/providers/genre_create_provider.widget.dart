@@ -1,0 +1,386 @@
+// **************************************************************************
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// **************************************************************************
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// coverage:ignore-file
+
+import 'package:book_swap/src/features/genre/providers/genre_create_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kimapp_utils/kimapp_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:autoverpod/autoverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kimapp/kimapp.dart';
+import 'package:book_swap/src/features/genre/genre_schema.schema.dart';
+import 'package:book_swap/src/features/genre/i_genre_repo.dart';
+import 'package:book_swap/src/features/genre/providers/genre_list_pagination_provider.dart';
+import 'package:book_swap/src/features/genre/providers/genre_list_provider.dart';
+import 'dart:core';
+
+class _GenreCreateFormInheritedWidget extends InheritedWidget {
+  const _GenreCreateFormInheritedWidget({
+    required this.formKey,
+    required super.child,
+  });
+
+  final GlobalKey<FormState> formKey;
+
+  static _GenreCreateFormInheritedWidget of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<_GenreCreateFormInheritedWidget>()!;
+  }
+
+  @override
+  bool updateShouldNotify(covariant _GenreCreateFormInheritedWidget oldWidget) {
+    return formKey != oldWidget.formKey;
+  }
+}
+
+class GenreCreateProxyWidgetRef extends WidgetRef {
+  GenreCreateProxyWidgetRef(this._ref);
+
+  final WidgetRef _ref;
+
+  AsyncValue<GenreModel>? get status =>
+      _ref.watch(genreCreateCallStatusProvider);
+
+  GlobalKey<FormState> get formKey =>
+      _GenreCreateFormInheritedWidget.of(context).formKey;
+
+  GenreCreate get notifier => _ref.read(genreCreateProvider.notifier);
+
+  /// Submits the form. Internally this calls [notifier.submit] with the form key validated.
+  Future<AsyncValue<GenreModel>> submit() async {
+    if (!(formKey.currentState?.validate() ?? false)) {
+      return AsyncValue.error(
+        Exception('Form is not valid'),
+        StackTrace.current,
+      );
+    }
+    formKey.currentState?.save();
+
+    return await notifier();
+  }
+
+  GenreCreateParam get state => _ref.watch(genreCreateProvider);
+
+  Selected select<Selected>(Selected Function(GenreCreateParam) selector) =>
+      _ref.watch(genreCreateProvider.select((value) => selector(value)));
+
+  @override
+  BuildContext get context => _ref.context;
+
+  @override
+  bool exists(ProviderBase<Object?> provider) => _ref.exists(provider);
+
+  @override
+  void invalidate(ProviderOrFamily provider) => _ref.invalidate(provider);
+
+  @override
+  void listen<T>(
+    ProviderListenable<T> provider,
+    void Function(T?, T) listener, {
+    void Function(Object, StackTrace)? onError,
+  }) => _ref.listen(provider, listener, onError: onError);
+
+  @override
+  ProviderSubscription<T> listenManual<T>(
+    ProviderListenable<T> provider,
+    void Function(T?, T) listener, {
+    void Function(Object, StackTrace)? onError,
+    bool fireImmediately = false,
+  }) => _ref.listenManual(
+    provider,
+    listener,
+    onError: onError,
+    fireImmediately: fireImmediately,
+  );
+
+  @override
+  T read<T>(ProviderListenable<T> provider) => _ref.read(provider);
+
+  @override
+  State refresh<State>(Refreshable<State> provider) => _ref.refresh(provider);
+
+  @override
+  T watch<T>(ProviderListenable<T> provider) => _ref.watch(provider);
+}
+
+class GenreCreateFormScope extends ConsumerStatefulWidget {
+  const GenreCreateFormScope({
+    super.key,
+    this.formKey,
+    this.autovalidateMode,
+    this.onPopInvokedWithResult,
+    required this.builder,
+    this.child,
+    this.onSuccessed,
+  }) : assert(
+         child != null || builder != null,
+         'Either child or builder must be provided',
+       );
+
+  final Widget Function(
+    BuildContext context,
+    GenreCreateProxyWidgetRef ref,
+    Widget? child,
+  )?
+  builder;
+  final Widget? child;
+  final GlobalKey<FormState>? formKey;
+  final AutovalidateMode? autovalidateMode;
+  final void Function(bool, Object?)? onPopInvokedWithResult;
+  final void Function(BuildContext context, GenreModel value)? onSuccessed;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _GenreCreateFormScopeState();
+}
+
+class _GenreCreateFormScopeState extends ConsumerState<GenreCreateFormScope> {
+  late final GlobalKey<FormState> _cachedFormKey;
+
+  @override
+  void initState() {
+    super.initState();
+    _cachedFormKey = widget.formKey ?? GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    _cachedFormKey.currentState?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen(genreCreateCallStatusProvider, (previous, next) {
+      if (previous?.hasValue == false && next?.hasValue == true) {
+        widget.onSuccessed?.call(context, next!.requireValue);
+      }
+    });
+
+    return _GenreCreateFormInheritedWidget(
+      formKey: _cachedFormKey,
+      child: Form(
+        key: _cachedFormKey,
+        autovalidateMode: widget.autovalidateMode,
+        onPopInvokedWithResult: widget.onPopInvokedWithResult,
+        child: Consumer(
+          builder: (context, ref, child) {
+            if (widget.builder != null) {
+              return widget.builder!(
+                context,
+                GenreCreateProxyWidgetRef(ref),
+                widget.child,
+              );
+            }
+
+            return widget.child!;
+          },
+        ),
+      ),
+    );
+  }
+}
+
+bool _debugCheckHasGenreCreateForm(BuildContext context) {
+  assert(() {
+    if (context.widget is! GenreCreateFormScope &&
+        context.findAncestorWidgetOfExactType<GenreCreateFormScope>() == null) {
+      throw FlutterError.fromParts(<DiagnosticsNode>[
+        ErrorSummary('No GenreCreateFormScope found'),
+        ErrorDescription(
+          '${context.widget.runtimeType} widgets require a GenreCreateFormScope widget ancestor.',
+        ),
+      ]);
+    }
+    return true;
+  }());
+  return true;
+}
+
+class GenreCreateFormSelect<Selected> extends ConsumerWidget {
+  const GenreCreateFormSelect({
+    super.key,
+    required this.selector,
+    required this.builder,
+    this.onStateChanged,
+  });
+
+  final Selected Function(GenreCreateParam state) selector;
+  final Widget Function(
+    BuildContext context,
+    GenreCreateProxyWidgetRef ref,
+    Selected value,
+  )
+  builder;
+  final void Function(Selected? previous, Selected? next)? onStateChanged;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasGenreCreateForm(context);
+
+    if (onStateChanged != null) {
+      ref.listen(genreCreateProvider.select((value) => selector(value)), (
+        pre,
+        next,
+      ) {
+        if (pre != next) onStateChanged!(pre, next);
+      });
+    }
+    final stateRef = GenreCreateProxyWidgetRef(ref);
+    return builder(context, stateRef, stateRef.select(selector));
+  }
+}
+
+class GenreCreateFormState extends ConsumerWidget {
+  const GenreCreateFormState({
+    super.key,
+    required this.builder,
+    this.child,
+    this.onStateChanged,
+  });
+
+  /// The builder function that constructs the widget tree.
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(genreCreateProvider)
+  ///
+  /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
+  /// The ref parameter provides type-safe access to the provider state and notifier
+  final Widget Function(
+    BuildContext context,
+    GenreCreateProxyWidgetRef ref,
+    Widget? child,
+  )
+  builder;
+  final Widget? child;
+  final void Function(GenreCreateParam? previous, GenreCreateParam? next)?
+  onStateChanged;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasGenreCreateForm(context);
+
+    if (onStateChanged != null) {
+      ref.listen(genreCreateProvider, (pre, next) {
+        if (pre != next) onStateChanged!(pre, next);
+      });
+    }
+    return builder(context, GenreCreateProxyWidgetRef(ref), child);
+  }
+}
+
+class GenreCreateFormStatus extends ConsumerWidget {
+  const GenreCreateFormStatus({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    GenreCreateProxyWidgetRef ref,
+    AsyncValue<GenreModel>? status,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasGenreCreateForm(context);
+
+    final stateRef = GenreCreateProxyWidgetRef(ref);
+    return builder(context, stateRef, stateRef.status);
+  }
+}
+
+class GenreCreateNameProxyWidgetRef extends GenreCreateProxyWidgetRef {
+  GenreCreateNameProxyWidgetRef(super._ref, {required this.textController});
+
+  /// Text controller for the field. This is automatically created by the form widget and handles cleanup automatically.
+  final TextEditingController textController;
+
+  /// Access the field value directly.
+  String get name => select((state) => state.name);
+
+  /// Update the field value directly.
+  void updateName(String newValue) => notifier.updateName(newValue);
+}
+
+class GenreCreateNameField extends ConsumerStatefulWidget {
+  const GenreCreateNameField({
+    super.key,
+    this.textController,
+    required this.builder,
+  });
+
+  /// Text controller for the field. If not provided, one will be created automatically.
+  final TextEditingController? textController;
+
+  /// Builder function that will be called with the context and ref.
+  /// Field utilities are accessible via [ref]
+  final Widget Function(BuildContext context, GenreCreateNameProxyWidgetRef ref)
+  builder;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      GenreCreateNameFieldState();
+}
+
+class GenreCreateNameFieldState extends ConsumerState<GenreCreateNameField> {
+  late final TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    final initialValue = ref.read(genreCreateProvider).name;
+    _textController =
+        widget.textController ?? TextEditingController(text: initialValue);
+
+    // Setup listener for provider changes
+    ref.listenManual(
+      genreCreateProvider.select((value) => value.name),
+      _handleFieldValueChange,
+      fireImmediately: false,
+    );
+
+    _textController.addListener(_syncTextToProvider);
+  }
+
+  /// Handles when the provider value changes and updates the text controller
+  void _handleFieldValueChange(dynamic previous, dynamic next) {
+    if (previous == next) return;
+    if (_textController.text == next) return;
+
+    // Ensure we're not updating a disposed controller
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _textController.text = next;
+      }
+    });
+  }
+
+  /// Syncs text field changes to the provider
+  void _syncTextToProvider() {
+    if (!mounted) return;
+
+    ref.read(genreCreateProvider.notifier).updateName(_textController.text);
+  }
+
+  @override
+  void dispose() {
+    _textController.removeListener(_syncTextToProvider);
+    // Only dispose if we created the controller
+    if (widget.textController == null) {
+      _textController.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _debugCheckHasGenreCreateForm(context);
+
+    final proxy = GenreCreateNameProxyWidgetRef(
+      ref,
+      textController: _textController,
+    );
+    return widget.builder(context, proxy);
+  }
+}

@@ -1,0 +1,22 @@
+import 'package:autoverpod/autoverpod.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:kimapp/kimapp.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../core/helpers/ilist_provider_helper.dart';
+import '../i_book_rating_repo.dart';
+import '../book_rating_schema.schema.dart';
+
+part 'book_rating_list_provider.g.dart';
+
+@stateWidget
+@riverpod
+class BookRatingList extends _$BookRatingList with IListAsyncNotifier<BookRatingModel> {
+  @override
+  bool identity(BookRatingModel item) => item.id == item.id;
+
+  @override
+  FutureOr<IList<BookRatingModel>> build() {
+    return ref.watch(bookRatingRepoProvider).findAll().getOrThrow();
+  }
+}

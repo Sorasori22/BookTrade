@@ -1,0 +1,37 @@
+import 'package:autoverpod/autoverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kimapp/kimapp.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../profile/profile_schema.schema.dart';
+import '../i_user_rating_repo.dart';
+import '../user_rating_schema.schema.dart';
+import 'user_rating_list_pagination_provider.dart';
+import 'user_rating_list_provider.dart';
+
+part 'user_rating_create_provider.g.dart';
+
+@formWidget
+@riverpod
+class UserRatingCreate extends _$UserRatingCreateWidget {
+  @override
+  UserRatingCreateParam build() => UserRatingCreateParam(
+        raterId: ProfileId.fromValue(''),
+        ratedUserId: ProfileId.fromValue(''),
+        tradeRequestId: null,
+        rating: 0,
+        comment: '',
+      );
+
+  @override
+  Future<UserRatingModel> submit(UserRatingCreateParam state) async {
+    return await ref.read(userRatingRepoProvider).create(state).getOrThrow();
+  }
+
+  @override
+  void onSuccess(UserRatingModel result) {
+    ref.read(userRatingListProvider.notifier).insertItem(result);
+    ref.invalidate(userRatingListPaginationProvider);
+  }
+}
