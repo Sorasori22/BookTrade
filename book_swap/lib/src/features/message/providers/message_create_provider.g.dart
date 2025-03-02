@@ -12,21 +12,17 @@ final messageCreateCallStatusProvider =
     StateProvider.autoDispose<AsyncValue<MessageModel>?>((ref) => null);
 
 abstract class _$MessageCreateWidget extends _$MessageCreate {
-  static final messageCreateCallStatusProvider =
-      StateProvider.autoDispose<AsyncValue<MessageModel>?>((ref) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(MessageModel result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<MessageModel>> call() async {
     final _callStatus = ref.read(messageCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(messageCreateCallStatusProvider.notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -65,10 +61,11 @@ abstract class _$MessageCreateWidget extends _$MessageCreate {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<MessageModel> submit(MessageCreateParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(
           MessageCreateParam Function(MessageCreateParam state) update) =>
       state = update(state);

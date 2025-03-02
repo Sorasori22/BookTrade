@@ -12,21 +12,17 @@ final userRatingCreateCallStatusProvider =
     StateProvider.autoDispose<AsyncValue<UserRatingModel>?>((ref) => null);
 
 abstract class _$UserRatingCreateWidget extends _$UserRatingCreate {
-  static final userRatingCreateCallStatusProvider =
-      StateProvider.autoDispose<AsyncValue<UserRatingModel>?>((ref) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(UserRatingModel result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<UserRatingModel>> call() async {
     final _callStatus = ref.read(userRatingCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(userRatingCreateCallStatusProvider.notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -65,10 +61,11 @@ abstract class _$UserRatingCreateWidget extends _$UserRatingCreate {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<UserRatingModel> submit(UserRatingCreateParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(
           UserRatingCreateParam Function(UserRatingCreateParam state) update) =>
       state = update(state);

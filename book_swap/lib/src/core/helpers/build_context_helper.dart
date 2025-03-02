@@ -1,3 +1,4 @@
+import 'package:book_swap/src/presentation/app/app_theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -19,6 +20,8 @@ extension BuildContextX on BuildContext {
   TextTheme get textTheme => theme.textTheme;
   Color get primaryColor => theme.primaryColor;
   Color get onPrimaryColor => theme.colorScheme.onPrimary;
+  Color get secondaryColor => theme.colorScheme.secondary;
+  BookThemeExtension get bookTheme => theme.extension<BookThemeExtension>()!;
 
   NavigatorState get nav => Navigator.of(this);
 

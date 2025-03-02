@@ -12,21 +12,17 @@ final completedSwapCreateCallStatusProvider =
     StateProvider.autoDispose<AsyncValue<CompletedSwapModel>?>((ref) => null);
 
 abstract class _$CompletedSwapCreateWidget extends _$CompletedSwapCreate {
-  static final completedSwapCreateCallStatusProvider =
-      StateProvider.autoDispose<AsyncValue<CompletedSwapModel>?>((ref) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(CompletedSwapModel result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<CompletedSwapModel>> call() async {
     final _callStatus = ref.read(completedSwapCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(completedSwapCreateCallStatusProvider.notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -65,10 +61,11 @@ abstract class _$CompletedSwapCreateWidget extends _$CompletedSwapCreate {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<CompletedSwapModel> submit(CompletedSwapCreateParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(
           CompletedSwapCreateParam Function(CompletedSwapCreateParam state)
               update) =>

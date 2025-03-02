@@ -77,11 +77,6 @@ class CompletedSwapUpdateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  CompletedSwapUpdateParam get state =>
-      _ref
-          .watch(completedSwapUpdateProvider(params.completedSwapId))
-          .requireValue;
-
   Selected select<Selected>(
     Selected Function(CompletedSwapUpdateParam) selector,
   ) => _ref.watch(
@@ -251,12 +246,22 @@ bool _debugCheckHasCompletedSwapUpdateForm(BuildContext context) {
     if (context.widget is! CompletedSwapUpdateFormScope &&
         context.findAncestorWidgetOfExactType<CompletedSwapUpdateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No CompletedSwapUpdateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a CompletedSwapUpdateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No CompletedSwapUpdateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a CompletedSwapUpdateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct CompletedSwapUpdateFormScope',
+      );
     }
     return true;
   }());
@@ -367,7 +372,11 @@ class CompletedSwapUpdateFormState extends ConsumerWidget {
 }
 
 class CompletedSwapUpdateFormStatus extends ConsumerWidget {
-  const CompletedSwapUpdateFormStatus({super.key, required this.builder});
+  const CompletedSwapUpdateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -375,11 +384,29 @@ class CompletedSwapUpdateFormStatus extends ConsumerWidget {
     AsyncValue<CompletedSwapModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<CompletedSwapModel>? previous,
+    AsyncValue<CompletedSwapModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasCompletedSwapUpdateForm(context);
 
+    if (onChanged != null) {
+      final params = _CompletedSwapUpdateFormInheritedWidget.of(context).params;
+      ref.listen(
+        completedSwapUpdateCallStatusProvider((
+          completedSwapId: params.completedSwapId,
+        )),
+        (previous, next) {
+          if (previous != next) {
+            onChanged!(previous, next);
+          }
+        },
+      );
+    }
     final stateRef = CompletedSwapUpdateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

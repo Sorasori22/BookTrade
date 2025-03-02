@@ -68,8 +68,6 @@ class MessageCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  MessageCreateParam get state => _ref.watch(messageCreateProvider);
-
   Selected select<Selected>(Selected Function(MessageCreateParam) selector) =>
       _ref.watch(messageCreateProvider.select((value) => selector(value)));
 
@@ -196,12 +194,22 @@ bool _debugCheckHasMessageCreateForm(BuildContext context) {
     if (context.widget is! MessageCreateFormScope &&
         context.findAncestorWidgetOfExactType<MessageCreateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No MessageCreateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a MessageCreateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No MessageCreateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a MessageCreateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct MessageCreateFormScope',
+      );
     }
     return true;
   }());
@@ -279,7 +287,11 @@ class MessageCreateFormState extends ConsumerWidget {
 }
 
 class MessageCreateFormStatus extends ConsumerWidget {
-  const MessageCreateFormStatus({super.key, required this.builder});
+  const MessageCreateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -287,11 +299,23 @@ class MessageCreateFormStatus extends ConsumerWidget {
     AsyncValue<MessageModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<MessageModel>? previous,
+    AsyncValue<MessageModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasMessageCreateForm(context);
 
+    if (onChanged != null) {
+      ref.listen(messageCreateCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = MessageCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

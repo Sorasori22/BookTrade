@@ -1,6 +1,5 @@
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/features/auth/params/sign_up_param.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -26,11 +25,11 @@ class SignUp extends _$SignUpWidget {
     return ref.read(authRepoProvider).signUp(state).getOrThrow();
   }
 
-  void extractNameFromEmail(String email) {
+  void extractNameFromEmail() {
     // If name already exists, do nothing
     if (state.name.isNotEmpty) return;
 
-    String name = email.split('@')[0];
+    String name = state.email.split('@')[0];
     // Replace numbers and special characters with empty string
     name = name.replaceAll(RegExp(r'[0-9_\-\.]+'), ' ').trim();
     // Capitalize first letter of each word

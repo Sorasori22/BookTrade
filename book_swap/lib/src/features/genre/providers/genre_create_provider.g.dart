@@ -12,20 +12,16 @@ final genreCreateCallStatusProvider =
     StateProvider.autoDispose<AsyncValue<GenreModel>?>((ref) => null);
 
 abstract class _$GenreCreateWidget extends _$GenreCreate {
-  static final genreCreateCallStatusProvider =
-      StateProvider.autoDispose<AsyncValue<GenreModel>?>((ref) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(GenreModel result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<GenreModel>> call() async {
     final _callStatus = ref.read(genreCreateCallStatusProvider);
     final _updateCallStatus = ref.read(genreCreateCallStatusProvider.notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -64,10 +60,11 @@ abstract class _$GenreCreateWidget extends _$GenreCreate {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<GenreModel> submit(GenreCreateParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(GenreCreateParam Function(GenreCreateParam state) update) =>
       state = update(state);
 

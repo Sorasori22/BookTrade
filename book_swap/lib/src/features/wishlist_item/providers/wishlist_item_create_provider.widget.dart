@@ -69,8 +69,6 @@ class WishlistItemCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  WishlistItemCreateParam get state => _ref.watch(wishlistItemCreateProvider);
-
   Selected select<Selected>(
     Selected Function(WishlistItemCreateParam) selector,
   ) =>
@@ -200,12 +198,22 @@ bool _debugCheckHasWishlistItemCreateForm(BuildContext context) {
     if (context.widget is! WishlistItemCreateFormScope &&
         context.findAncestorWidgetOfExactType<WishlistItemCreateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No WishlistItemCreateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a WishlistItemCreateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No WishlistItemCreateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a WishlistItemCreateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct WishlistItemCreateFormScope',
+      );
     }
     return true;
   }());
@@ -286,7 +294,11 @@ class WishlistItemCreateFormState extends ConsumerWidget {
 }
 
 class WishlistItemCreateFormStatus extends ConsumerWidget {
-  const WishlistItemCreateFormStatus({super.key, required this.builder});
+  const WishlistItemCreateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -294,11 +306,23 @@ class WishlistItemCreateFormStatus extends ConsumerWidget {
     AsyncValue<WishlistItemModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<WishlistItemModel>? previous,
+    AsyncValue<WishlistItemModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasWishlistItemCreateForm(context);
 
+    if (onChanged != null) {
+      ref.listen(wishlistItemCreateCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = WishlistItemCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

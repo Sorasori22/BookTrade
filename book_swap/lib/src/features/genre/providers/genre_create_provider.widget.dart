@@ -63,8 +63,6 @@ class GenreCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  GenreCreateParam get state => _ref.watch(genreCreateProvider);
-
   Selected select<Selected>(Selected Function(GenreCreateParam) selector) =>
       _ref.watch(genreCreateProvider.select((value) => selector(value)));
 
@@ -189,12 +187,22 @@ bool _debugCheckHasGenreCreateForm(BuildContext context) {
   assert(() {
     if (context.widget is! GenreCreateFormScope &&
         context.findAncestorWidgetOfExactType<GenreCreateFormScope>() == null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No GenreCreateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a GenreCreateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No GenreCreateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a GenreCreateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct GenreCreateFormScope',
+      );
     }
     return true;
   }());
@@ -272,7 +280,11 @@ class GenreCreateFormState extends ConsumerWidget {
 }
 
 class GenreCreateFormStatus extends ConsumerWidget {
-  const GenreCreateFormStatus({super.key, required this.builder});
+  const GenreCreateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -280,11 +292,23 @@ class GenreCreateFormStatus extends ConsumerWidget {
     AsyncValue<GenreModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<GenreModel>? previous,
+    AsyncValue<GenreModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasGenreCreateForm(context);
 
+    if (onChanged != null) {
+      ref.listen(genreCreateCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = GenreCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

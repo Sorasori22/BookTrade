@@ -77,11 +77,6 @@ class NotificationUpdateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  NotificationUpdateParam get state =>
-      _ref
-          .watch(notificationUpdateProvider(params.notificationId))
-          .requireValue;
-
   Selected select<Selected>(
     Selected Function(NotificationUpdateParam) selector,
   ) => _ref.watch(
@@ -251,12 +246,22 @@ bool _debugCheckHasNotificationUpdateForm(BuildContext context) {
     if (context.widget is! NotificationUpdateFormScope &&
         context.findAncestorWidgetOfExactType<NotificationUpdateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No NotificationUpdateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a NotificationUpdateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No NotificationUpdateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a NotificationUpdateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct NotificationUpdateFormScope',
+      );
     }
     return true;
   }());
@@ -367,7 +372,11 @@ class NotificationUpdateFormState extends ConsumerWidget {
 }
 
 class NotificationUpdateFormStatus extends ConsumerWidget {
-  const NotificationUpdateFormStatus({super.key, required this.builder});
+  const NotificationUpdateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -375,11 +384,29 @@ class NotificationUpdateFormStatus extends ConsumerWidget {
     AsyncValue<NotificationModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<NotificationModel>? previous,
+    AsyncValue<NotificationModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasNotificationUpdateForm(context);
 
+    if (onChanged != null) {
+      final params = _NotificationUpdateFormInheritedWidget.of(context).params;
+      ref.listen(
+        notificationUpdateCallStatusProvider((
+          notificationId: params.notificationId,
+        )),
+        (previous, next) {
+          if (previous != next) {
+            onChanged!(previous, next);
+          }
+        },
+      );
+    }
     final stateRef = NotificationUpdateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

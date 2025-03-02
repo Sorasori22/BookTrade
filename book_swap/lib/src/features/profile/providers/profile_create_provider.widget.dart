@@ -67,8 +67,6 @@ class ProfileCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  ProfileCreateParam get state => _ref.watch(profileCreateProvider);
-
   Selected select<Selected>(Selected Function(ProfileCreateParam) selector) =>
       _ref.watch(profileCreateProvider.select((value) => selector(value)));
 
@@ -195,12 +193,22 @@ bool _debugCheckHasProfileCreateForm(BuildContext context) {
     if (context.widget is! ProfileCreateFormScope &&
         context.findAncestorWidgetOfExactType<ProfileCreateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No ProfileCreateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a ProfileCreateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No ProfileCreateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a ProfileCreateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct ProfileCreateFormScope',
+      );
     }
     return true;
   }());
@@ -278,7 +286,11 @@ class ProfileCreateFormState extends ConsumerWidget {
 }
 
 class ProfileCreateFormStatus extends ConsumerWidget {
-  const ProfileCreateFormStatus({super.key, required this.builder});
+  const ProfileCreateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -286,11 +298,23 @@ class ProfileCreateFormStatus extends ConsumerWidget {
     AsyncValue<ProfileModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<ProfileModel>? previous,
+    AsyncValue<ProfileModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasProfileCreateForm(context);
 
+    if (onChanged != null) {
+      ref.listen(profileCreateCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = ProfileCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

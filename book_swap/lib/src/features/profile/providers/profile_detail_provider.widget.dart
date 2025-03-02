@@ -177,12 +177,22 @@ bool _debugCheckHasProfileDetailProviderScope(BuildContext context) {
     if (context.widget is! ProfileDetailProviderScope &&
         context.findAncestorWidgetOfExactType<ProfileDetailProviderScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No ProfileDetailProviderScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a ProfileDetailProviderScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No ProfileDetailProviderScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a ProfileDetailProviderScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct ProfileDetailProviderScope',
+      );
     }
     return true;
   }());

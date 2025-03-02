@@ -13,15 +13,10 @@ final tradeRequestUpdateCallStatusProvider = StateProvider.autoDispose
         (ref, _) => null);
 
 abstract class _$TradeRequestUpdateWidget extends _$TradeRequestUpdate {
-  static final tradeRequestUpdateCallStatusProvider = StateProvider.autoDispose
-      .family<AsyncValue<TradeRequestModel>?,
-          ({TradeRequestId tradeRequestId})>((ref, _) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(TradeRequestModel result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<TradeRequestModel>> call() async {
     // Ignore if form is not loaded yet
@@ -35,7 +30,7 @@ abstract class _$TradeRequestUpdateWidget extends _$TradeRequestUpdate {
         tradeRequestUpdateCallStatusProvider((tradeRequestId: tradeRequestId))
             .notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -75,10 +70,11 @@ abstract class _$TradeRequestUpdateWidget extends _$TradeRequestUpdate {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<TradeRequestModel> submit(TradeRequestUpdateParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(
           TradeRequestUpdateParam Function(TradeRequestUpdateParam state)
               update) =>

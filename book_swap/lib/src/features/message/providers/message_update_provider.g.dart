@@ -13,15 +13,10 @@ final messageUpdateCallStatusProvider = StateProvider.autoDispose
         (ref, _) => null);
 
 abstract class _$MessageUpdateWidget extends _$MessageUpdate {
-  static final messageUpdateCallStatusProvider = StateProvider.autoDispose
-      .family<AsyncValue<MessageModel>?, ({MessageId messageId})>(
-          (ref, _) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(MessageModel result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<MessageModel>> call() async {
     // Ignore if form is not loaded yet
@@ -34,7 +29,7 @@ abstract class _$MessageUpdateWidget extends _$MessageUpdate {
     final _updateCallStatus = ref
         .read(messageUpdateCallStatusProvider((messageId: messageId)).notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -74,10 +69,11 @@ abstract class _$MessageUpdateWidget extends _$MessageUpdate {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<MessageModel> submit(MessageUpdateParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(
           MessageUpdateParam Function(MessageUpdateParam state) update) =>
       state = state.whenData(update);

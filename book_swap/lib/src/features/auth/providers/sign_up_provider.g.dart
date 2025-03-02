@@ -12,20 +12,16 @@ final signUpCallStatusProvider =
     StateProvider.autoDispose<AsyncValue<UserId>?>((ref) => null);
 
 abstract class _$SignUpWidget extends _$SignUp {
-  static final signUpCallStatusProvider =
-      StateProvider.autoDispose<AsyncValue<UserId>?>((ref) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(UserId result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<UserId>> call() async {
     final _callStatus = ref.read(signUpCallStatusProvider);
     final _updateCallStatus = ref.read(signUpCallStatusProvider.notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -64,10 +60,11 @@ abstract class _$SignUpWidget extends _$SignUp {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<UserId> submit(SignUpParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(SignUpParam Function(SignUpParam state) update) =>
       state = update(state);
 
@@ -89,7 +86,7 @@ abstract class _$SignUpWidget extends _$SignUp {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signUpHash() => r'528ae996a11c3aa90a5dc70afb6629f6cf6f1cb6';
+String _$signUpHash() => r'5138a6df9c1bc3301971da5d89d86a846bc5a9ff';
 
 /// See also [SignUp].
 @ProviderFor(SignUp)

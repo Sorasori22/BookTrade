@@ -136,7 +136,7 @@ class BookThemeExtension extends ThemeExtension<BookThemeExtension> {
         statusUnavailable: const Color(0xFFE53935),
         statusPending: const Color(0xFFFFA000),
         statusReserved: const Color(0xFF3F51B5),
-        ratingActiveColor: const Color(0xFFBEA363),
+        ratingActiveColor: const Color(0xFFB99653),
         ratingInactiveColor: const Color(0xFFE0E0E0),
         tagBackgroundColor: const Color(0xFFF0E6C9),
         tagTextColor: const Color(0xFF424242),
@@ -145,10 +145,10 @@ class BookThemeExtension extends ThemeExtension<BookThemeExtension> {
         searchBarTextColor: const Color(0xFF424242),
         dividerColor: const Color(0xFFE0E0E0),
         bottomSheetHandleColor: const Color(0xFFBDBDBD),
-        bookmarkColor: const Color(0xFFBEA363),
+        bookmarkColor: const Color(0xFFB99653),
         favoriteColor: const Color(0xFFE53935),
         readingProgressBackgroundColor: const Color(0xFFE0E0E0),
-        readingProgressFillColor: const Color(0xFFBEA363),
+        readingProgressFillColor: const Color(0xFFB99653),
         bookCoverGradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -157,7 +157,7 @@ class BookThemeExtension extends ThemeExtension<BookThemeExtension> {
         appBarGradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFBEA363), Color(0xFF8C7A48)],
+          colors: [Color(0xFFB99653), Color(0xFFF0E6C9)],
         ),
       );
 
@@ -168,19 +168,19 @@ class BookThemeExtension extends ThemeExtension<BookThemeExtension> {
         statusUnavailable: const Color(0xFFEF5350),
         statusPending: const Color(0xFFFFB300),
         statusReserved: const Color(0xFF5C6BC0),
-        ratingActiveColor: const Color(0xFFBEA363),
+        ratingActiveColor: const Color(0xFFB99653),
         ratingInactiveColor: const Color(0xFF424242),
-        tagBackgroundColor: const Color(0xFF8C7A48),
+        tagBackgroundColor: const Color(0xFFB99653),
         tagTextColor: const Color(0xFFE0E0E0),
         searchBarBackgroundColor: const Color(0xFF333333),
         searchBarIconColor: const Color(0xFFBDBDBD),
         searchBarTextColor: const Color(0xFFE0E0E0),
         dividerColor: const Color(0xFF424242),
         bottomSheetHandleColor: const Color(0xFF757575),
-        bookmarkColor: const Color(0xFFBEA363),
+        bookmarkColor: const Color(0xFFB99653),
         favoriteColor: const Color(0xFFEF5350),
         readingProgressBackgroundColor: const Color(0xFF424242),
-        readingProgressFillColor: const Color(0xFFBEA363),
+        readingProgressFillColor: const Color(0xFFB99653),
         bookCoverGradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -189,12 +189,7 @@ class BookThemeExtension extends ThemeExtension<BookThemeExtension> {
         appBarGradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFBEA363), Color(0xFF8C7A48)],
+          colors: [Color(0xFFB99653), Color(0xFFF0E6C9)],
         ),
       );
-}
-
-// Extension method to easily access the BookThemeExtension from ThemeData
-extension BookThemeExtensionGetter on ThemeData {
-  BookThemeExtension get bookTheme => extension<BookThemeExtension>() ?? BookThemeExtension.light;
 }

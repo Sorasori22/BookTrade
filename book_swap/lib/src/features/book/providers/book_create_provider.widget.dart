@@ -63,8 +63,6 @@ class BookCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  BookCreateParam get state => _ref.watch(bookCreateProvider);
-
   Selected select<Selected>(Selected Function(BookCreateParam) selector) =>
       _ref.watch(bookCreateProvider.select((value) => selector(value)));
 
@@ -189,12 +187,22 @@ bool _debugCheckHasBookCreateForm(BuildContext context) {
   assert(() {
     if (context.widget is! BookCreateFormScope &&
         context.findAncestorWidgetOfExactType<BookCreateFormScope>() == null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No BookCreateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a BookCreateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No BookCreateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a BookCreateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct BookCreateFormScope',
+      );
     }
     return true;
   }());
@@ -272,7 +280,11 @@ class BookCreateFormState extends ConsumerWidget {
 }
 
 class BookCreateFormStatus extends ConsumerWidget {
-  const BookCreateFormStatus({super.key, required this.builder});
+  const BookCreateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -280,11 +292,23 @@ class BookCreateFormStatus extends ConsumerWidget {
     AsyncValue<BookModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<BookModel>? previous,
+    AsyncValue<BookModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasBookCreateForm(context);
 
+    if (onChanged != null) {
+      ref.listen(bookCreateCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = BookCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

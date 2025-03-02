@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/features/auth/params/sign_up_param.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/auth/auth.dart';
 import 'dart:core';
@@ -59,8 +58,6 @@ class SignUpProxyWidgetRef extends WidgetRef {
 
     return await notifier();
   }
-
-  SignUpParam get state => _ref.watch(signUpProvider);
 
   Selected select<Selected>(Selected Function(SignUpParam) selector) =>
       _ref.watch(signUpProvider.select((value) => selector(value)));
@@ -186,12 +183,22 @@ bool _debugCheckHasSignUpForm(BuildContext context) {
   assert(() {
     if (context.widget is! SignUpFormScope &&
         context.findAncestorWidgetOfExactType<SignUpFormScope>() == null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No SignUpFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a SignUpFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No SignUpFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a SignUpFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct SignUpFormScope',
+      );
     }
     return true;
   }());
@@ -268,7 +275,7 @@ class SignUpFormState extends ConsumerWidget {
 }
 
 class SignUpFormStatus extends ConsumerWidget {
-  const SignUpFormStatus({super.key, required this.builder});
+  const SignUpFormStatus({super.key, required this.builder, this.onChanged});
 
   final Widget Function(
     BuildContext context,
@@ -276,11 +283,20 @@ class SignUpFormStatus extends ConsumerWidget {
     AsyncValue<UserId>? status,
   )
   builder;
+  final void Function(AsyncValue<UserId>? previous, AsyncValue<UserId>? next)?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasSignUpForm(context);
 
+    if (onChanged != null) {
+      ref.listen(signUpCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = SignUpProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

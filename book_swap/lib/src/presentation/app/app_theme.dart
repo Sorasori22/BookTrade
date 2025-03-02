@@ -1,40 +1,21 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'app_theme_extension.dart';
 
-/// The [AppTheme] defines light and dark themes for the app.
-///
-/// Theme setup for FlexColorScheme package v8.
-/// Use same major flex_color_scheme package version. If you use a
-/// lower minor version, some properties may not be supported.
-/// In that case, remove them after copying this theme to your
-/// app or upgrade package to version 8.1.0.
-///
-/// Use in [MaterialApp] like this:
-///
-/// MaterialApp(
-///   theme: AppTheme.light,
-///   darkTheme: AppTheme.dark,
-///     :
-/// );
 abstract final class AppTheme {
-  // App brand colors
   static const Color goldColor = Color(0xFFB99653);
   static const Color lightGold = Color(0xFFF0E6C9);
   static const Color darkGold = Color(0xFF8C7A48);
 
-  // Custom color scheme for book-themed UI
-  static const Color _primaryLight = goldColor; // Gold color
-  static const Color _primaryDark = goldColor; // Gold color
-  static const Color _secondaryLight = Color(0xFF795548); // Book Brown
-  static const Color _secondaryDark = Color(0xFFBCAAA4); // Light Brown
-  static const Color _tertiaryLight = Color(0xFF006064); // Deep Teal
-  static const Color _tertiaryDark = Color(0xFF00BCD4); // Teal
+  static const Color _primaryLight = goldColor;
+  static const Color _primaryDark = goldColor;
+  static const Color _secondaryLight = Color(0xFF795548);
+  static const Color _secondaryDark = Color(0xFFBCAAA4);
+  static const Color _tertiaryLight = Color(0xFF006064);
+  static const Color _tertiaryDark = Color(0xFF00BCD4);
 
-  // Typography configuration
   static TextTheme _createTextTheme(TextTheme base) {
     return base.copyWith(
       displayLarge: GoogleFonts.merriweather(
@@ -100,68 +81,94 @@ abstract final class AppTheme {
     );
   }
 
-  // The defined light theme.
-  static ThemeData light = FlexThemeData.light(
-    scheme: FlexScheme.custom,
-    colors: FlexSchemeColor(
-      primary: _primaryLight,
-      primaryContainer: const Color(0xFFF0E6C9), // Light gold
-      secondary: _secondaryLight,
-      secondaryContainer: const Color(0xFFD7CCC8), // Light brown
-      tertiary: _tertiaryLight,
-      tertiaryContainer: const Color(0xFFB2EBF2), // Light teal
-      appBarColor: _primaryLight,
-      error: const Color(0xFFD32F2F),
-    ),
-    surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-    blendLevel: 9,
-    appBarStyle: FlexAppBarStyle.primary,
-    appBarOpacity: 0.95,
-    appBarElevation: 0.0,
-    transparentStatusBar: true,
-    tabBarStyle: FlexTabBarStyle.forAppBar,
+  static ThemeData light = ThemeData(
     useMaterial3: true,
-    subThemesData: const FlexSubThemesData(
-      interactionEffects: true,
-      tintedDisabledControls: true,
-      useM2StyleDividerInM3: true,
-      thinBorderWidth: 1.5,
-      defaultRadius: 12.0,
-      elevatedButtonSchemeColor: SchemeColor.primary,
-      elevatedButtonSecondarySchemeColor: SchemeColor.onPrimary,
-      outlinedButtonOutlineSchemeColor: SchemeColor.primary,
-      inputDecoratorSchemeColor: SchemeColor.primary,
-      inputDecoratorBorderSchemeColor: SchemeColor.primary,
-      inputDecoratorBorderType: FlexInputBorderType.outline,
-      inputCursorSchemeColor: SchemeColor.primary,
-      inputSelectionSchemeColor: SchemeColor.primaryContainer,
-      fabSchemeColor: SchemeColor.primary,
-      chipSchemeColor: SchemeColor.primaryContainer,
-      cardElevation: 2.0,
-      popupMenuElevation: 3.0,
-      dialogElevation: 3.0,
-      bottomNavigationBarElevation: 3.0,
-      navigationBarElevation: 2.0,
-      bottomNavigationBarOpacity: 0.95,
-      navigationBarOpacity: 0.95,
-      navigationBarIndicatorSchemeColor: SchemeColor.primary,
-      navigationBarSelectedLabelSchemeColor: SchemeColor.primary,
-      navigationBarSelectedIconSchemeColor: SchemeColor.primary,
-      navigationBarUnselectedLabelSchemeColor: SchemeColor.onSurface,
-      navigationBarUnselectedIconSchemeColor: SchemeColor.onSurface,
-      navigationRailSelectedLabelSchemeColor: SchemeColor.primary,
-      navigationRailSelectedIconSchemeColor: SchemeColor.primary,
-      navigationRailUnselectedLabelSchemeColor: SchemeColor.onSurface,
-      navigationRailUnselectedIconSchemeColor: SchemeColor.onSurface,
-      navigationRailIndicatorSchemeColor: SchemeColor.primary,
-      navigationRailUseIndicator: true,
-      navigationRailLabelType: NavigationRailLabelType.all,
+    brightness: Brightness.light,
+    colorScheme: ColorScheme.light(
+      primary: _primaryLight,
+      onPrimary: Colors.white,
+      primaryContainer: lightGold,
+      onPrimaryContainer: Colors.brown.shade900,
+      secondary: _secondaryLight,
+      onSecondary: Colors.white,
+      secondaryContainer: const Color(0xFFD7CCC8),
+      onSecondaryContainer: Colors.brown.shade900,
+      tertiary: _tertiaryLight,
+      onTertiary: Colors.white,
+      tertiaryContainer: const Color(0xFFB2EBF2),
+      onTertiaryContainer: Colors.teal.shade900,
+      error: const Color(0xFFD32F2F),
+      onError: Colors.white,
+      surface: Colors.white,
+      onSurface: Colors.black,
     ),
-    keyColors: const FlexKeyColors(
-      useSecondary: true,
-      useTertiary: true,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      elevation: 0,
+      scrolledUnderElevation: 0,
     ),
-    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    cardTheme: const CardTheme(
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: _primaryLight, width: 1.5),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: _primaryLight, width: 1.5),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: _primaryLight, width: 2.0),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: const BorderSide(color: Color(0xFFD32F2F), width: 1.5),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: const BorderSide(color: Color(0xFFD32F2F), width: 2.0),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _primaryLight,
+        foregroundColor: Colors.white,
+        elevation: 1.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: _primaryLight,
+        side: BorderSide(color: _primaryLight, width: 1.5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: _primaryLight,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: lightGold,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+    ),
     fontFamily: GoogleFonts.roboto().fontFamily,
     textTheme: _createTextTheme(ThemeData.light().textTheme),
     primaryTextTheme: _createTextTheme(ThemeData.light().primaryTextTheme),
@@ -174,75 +181,98 @@ abstract final class AppTheme {
     ],
   );
 
-  // The defined dark theme.
-  static ThemeData dark = FlexThemeData.dark(
-    scheme: FlexScheme.custom,
-    colors: FlexSchemeColor(
-      primary: _primaryDark,
-      primaryContainer: const Color(0xFF8C7A48), // Darker gold
-      secondary: _secondaryDark,
-      secondaryContainer: const Color(0xFF5D4037), // Dark brown
-      tertiary: _tertiaryDark,
-      tertiaryContainer: const Color(0xFF004D61), // Dark teal
-      appBarColor: _primaryDark,
-      error: const Color(0xFFEF5350),
-    ),
-    surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-    blendLevel: 15,
-    appBarStyle: FlexAppBarStyle.primary,
-    appBarOpacity: 0.90,
-    appBarElevation: 0.0,
-    transparentStatusBar: true,
-    tabBarStyle: FlexTabBarStyle.forAppBar,
-    darkIsTrueBlack: false,
+  static ThemeData dark = ThemeData(
     useMaterial3: true,
-    subThemesData: const FlexSubThemesData(
-      interactionEffects: true,
-      tintedDisabledControls: true,
-      blendOnColors: true,
-      useM2StyleDividerInM3: true,
-      defaultRadius: 12.0,
-      thinBorderWidth: 1.5,
-      elevatedButtonSchemeColor: SchemeColor.primary,
-      elevatedButtonSecondarySchemeColor: SchemeColor.onPrimary,
-      outlinedButtonOutlineSchemeColor: SchemeColor.primary,
-      inputDecoratorSchemeColor: SchemeColor.primary,
-      inputDecoratorBorderSchemeColor: SchemeColor.primary,
-      inputDecoratorBorderType: FlexInputBorderType.outline,
-      inputCursorSchemeColor: SchemeColor.primary,
-      inputSelectionSchemeColor: SchemeColor.primaryContainer,
-      fabSchemeColor: SchemeColor.primary,
-      chipSchemeColor: SchemeColor.primaryContainer,
-      cardElevation: 2.0,
-      popupMenuElevation: 3.0,
-      dialogElevation: 3.0,
-      bottomNavigationBarElevation: 3.0,
-      navigationBarElevation: 2.0,
-      bottomNavigationBarOpacity: 0.95,
-      navigationBarOpacity: 0.95,
-      navigationBarIndicatorSchemeColor: SchemeColor.primary,
-      navigationBarSelectedLabelSchemeColor: SchemeColor.primary,
-      navigationBarSelectedIconSchemeColor: SchemeColor.primary,
-      navigationBarUnselectedLabelSchemeColor: SchemeColor.onSurface,
-      navigationBarUnselectedIconSchemeColor: SchemeColor.onSurface,
-      navigationRailSelectedLabelSchemeColor: SchemeColor.primary,
-      navigationRailSelectedIconSchemeColor: SchemeColor.primary,
-      navigationRailUnselectedLabelSchemeColor: SchemeColor.onSurface,
-      navigationRailUnselectedIconSchemeColor: SchemeColor.onSurface,
-      navigationRailIndicatorSchemeColor: SchemeColor.primary,
-      navigationRailUseIndicator: true,
-      navigationRailLabelType: NavigationRailLabelType.all,
+    brightness: Brightness.dark,
+    colorScheme: ColorScheme.dark(
+      primary: _primaryDark,
+      onPrimary: Colors.black,
+      primaryContainer: darkGold,
+      onPrimaryContainer: Colors.white,
+      secondary: _secondaryDark,
+      onSecondary: Colors.black,
+      secondaryContainer: const Color(0xFF5D4037),
+      onSecondaryContainer: Colors.white,
+      tertiary: _tertiaryDark,
+      onTertiary: Colors.black,
+      tertiaryContainer: const Color(0xFF004D61),
+      onTertiaryContainer: Colors.white,
+      error: const Color(0xFFEF5350),
+      onError: Colors.black,
+      surface: const Color(0xFF121212),
+      onSurface: Colors.white,
     ),
-    keyColors: const FlexKeyColors(
-      useSecondary: true,
-      useTertiary: true,
+    appBarTheme: AppBarTheme(
+      backgroundColor: _primaryDark,
+      foregroundColor: Colors.black,
+      elevation: 0,
     ),
-    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    cardTheme: const CardTheme(
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: _primaryDark, width: 1.5),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: _primaryDark, width: 1.5),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(color: _primaryDark, width: 2.0),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: const BorderSide(color: Color(0xFFEF5350), width: 1.5),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: const BorderSide(color: Color(0xFFEF5350), width: 2.0),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _primaryDark,
+        foregroundColor: Colors.black,
+        elevation: 1.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: _primaryDark,
+        side: BorderSide(color: _primaryDark, width: 1.5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: _primaryDark,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: darkGold,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+    ),
     fontFamily: GoogleFonts.roboto().fontFamily,
     textTheme: _createTextTheme(ThemeData.dark().textTheme),
     primaryTextTheme: _createTextTheme(ThemeData.dark().primaryTextTheme),
     cupertinoOverrideTheme: CupertinoThemeData(
-      primaryColor: _primaryLight,
+      primaryColor: _primaryDark,
       applyThemeToAll: true,
     ),
     extensions: [

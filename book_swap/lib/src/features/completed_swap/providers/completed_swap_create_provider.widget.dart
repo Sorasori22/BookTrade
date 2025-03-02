@@ -70,8 +70,6 @@ class CompletedSwapCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  CompletedSwapCreateParam get state => _ref.watch(completedSwapCreateProvider);
-
   Selected select<Selected>(
     Selected Function(CompletedSwapCreateParam) selector,
   ) => _ref.watch(
@@ -202,12 +200,22 @@ bool _debugCheckHasCompletedSwapCreateForm(BuildContext context) {
     if (context.widget is! CompletedSwapCreateFormScope &&
         context.findAncestorWidgetOfExactType<CompletedSwapCreateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No CompletedSwapCreateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a CompletedSwapCreateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No CompletedSwapCreateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a CompletedSwapCreateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct CompletedSwapCreateFormScope',
+      );
     }
     return true;
   }());
@@ -288,7 +296,11 @@ class CompletedSwapCreateFormState extends ConsumerWidget {
 }
 
 class CompletedSwapCreateFormStatus extends ConsumerWidget {
-  const CompletedSwapCreateFormStatus({super.key, required this.builder});
+  const CompletedSwapCreateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -296,11 +308,23 @@ class CompletedSwapCreateFormStatus extends ConsumerWidget {
     AsyncValue<CompletedSwapModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<CompletedSwapModel>? previous,
+    AsyncValue<CompletedSwapModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasCompletedSwapCreateForm(context);
 
+    if (onChanged != null) {
+      ref.listen(completedSwapCreateCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = CompletedSwapCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

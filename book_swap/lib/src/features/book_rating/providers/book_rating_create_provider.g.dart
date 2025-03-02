@@ -12,21 +12,17 @@ final bookRatingCreateCallStatusProvider =
     StateProvider.autoDispose<AsyncValue<BookRatingModel>?>((ref) => null);
 
 abstract class _$BookRatingCreateWidget extends _$BookRatingCreate {
-  static final bookRatingCreateCallStatusProvider =
-      StateProvider.autoDispose<AsyncValue<BookRatingModel>?>((ref) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(BookRatingModel result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<BookRatingModel>> call() async {
     final _callStatus = ref.read(bookRatingCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(bookRatingCreateCallStatusProvider.notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -65,10 +61,11 @@ abstract class _$BookRatingCreateWidget extends _$BookRatingCreate {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<BookRatingModel> submit(BookRatingCreateParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(
           BookRatingCreateParam Function(BookRatingCreateParam state) update) =>
       state = update(state);

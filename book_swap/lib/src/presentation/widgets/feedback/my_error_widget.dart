@@ -24,6 +24,8 @@ class MyErrorWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             Icons.error_outline,

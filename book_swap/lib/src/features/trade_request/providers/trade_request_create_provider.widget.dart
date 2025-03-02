@@ -70,8 +70,6 @@ class TradeRequestCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  TradeRequestCreateParam get state => _ref.watch(tradeRequestCreateProvider);
-
   Selected select<Selected>(
     Selected Function(TradeRequestCreateParam) selector,
   ) =>
@@ -201,12 +199,22 @@ bool _debugCheckHasTradeRequestCreateForm(BuildContext context) {
     if (context.widget is! TradeRequestCreateFormScope &&
         context.findAncestorWidgetOfExactType<TradeRequestCreateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No TradeRequestCreateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a TradeRequestCreateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No TradeRequestCreateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a TradeRequestCreateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct TradeRequestCreateFormScope',
+      );
     }
     return true;
   }());
@@ -287,7 +295,11 @@ class TradeRequestCreateFormState extends ConsumerWidget {
 }
 
 class TradeRequestCreateFormStatus extends ConsumerWidget {
-  const TradeRequestCreateFormStatus({super.key, required this.builder});
+  const TradeRequestCreateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -295,11 +307,23 @@ class TradeRequestCreateFormStatus extends ConsumerWidget {
     AsyncValue<TradeRequestModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<TradeRequestModel>? previous,
+    AsyncValue<TradeRequestModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasTradeRequestCreateForm(context);
 
+    if (onChanged != null) {
+      ref.listen(tradeRequestCreateCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = TradeRequestCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

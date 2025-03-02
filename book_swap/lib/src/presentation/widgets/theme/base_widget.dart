@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/helpers/build_context_helper.dart';
-
 /// Base class for all themed widgets in the application
 ///
 /// This class provides a consistent way to build widgets that adapt to the
@@ -72,16 +70,4 @@ class AppThemedWidget extends AppBaseWidget {
           : child,
     );
   }
-}
-
-/// Mixin for stateful widgets to provide theme access
-mixin AppThemeMixin<T extends StatefulWidget> on State<T> {
-  /// Access the current theme easily
-  ThemeData get theme => context.theme;
-
-  /// Access the color scheme easily
-  ColorScheme get colors => theme.colorScheme;
-
-  /// Access the text theme easily
-  TextTheme get textTheme => theme.textTheme;
 }

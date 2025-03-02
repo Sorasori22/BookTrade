@@ -69,8 +69,6 @@ class BookRatingCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  BookRatingCreateParam get state => _ref.watch(bookRatingCreateProvider);
-
   Selected select<Selected>(
     Selected Function(BookRatingCreateParam) selector,
   ) => _ref.watch(bookRatingCreateProvider.select((value) => selector(value)));
@@ -198,12 +196,22 @@ bool _debugCheckHasBookRatingCreateForm(BuildContext context) {
     if (context.widget is! BookRatingCreateFormScope &&
         context.findAncestorWidgetOfExactType<BookRatingCreateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No BookRatingCreateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a BookRatingCreateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No BookRatingCreateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a BookRatingCreateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct BookRatingCreateFormScope',
+      );
     }
     return true;
   }());
@@ -284,7 +292,11 @@ class BookRatingCreateFormState extends ConsumerWidget {
 }
 
 class BookRatingCreateFormStatus extends ConsumerWidget {
-  const BookRatingCreateFormStatus({super.key, required this.builder});
+  const BookRatingCreateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -292,11 +304,23 @@ class BookRatingCreateFormStatus extends ConsumerWidget {
     AsyncValue<BookRatingModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<BookRatingModel>? previous,
+    AsyncValue<BookRatingModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasBookRatingCreateForm(context);
 
+    if (onChanged != null) {
+      ref.listen(bookRatingCreateCallStatusProvider, (previous, next) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = BookRatingCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

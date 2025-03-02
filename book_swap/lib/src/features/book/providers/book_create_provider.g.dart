@@ -12,20 +12,16 @@ final bookCreateCallStatusProvider =
     StateProvider.autoDispose<AsyncValue<BookModel>?>((ref) => null);
 
 abstract class _$BookCreateWidget extends _$BookCreate {
-  static final bookCreateCallStatusProvider =
-      StateProvider.autoDispose<AsyncValue<BookModel>?>((ref) => null);
-
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
   void onSuccess(BookModel result) {}
-  @protected
   @nonVirtual
   Future<AsyncValue<BookModel>> call() async {
     final _callStatus = ref.read(bookCreateCallStatusProvider);
     final _updateCallStatus = ref.read(bookCreateCallStatusProvider.notifier);
 
-    // If it's already loading, return loading
+// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -64,10 +60,11 @@ abstract class _$BookCreateWidget extends _$BookCreate {
   /// 3. Call API/repository methods
   /// 4. Return success/failure result
   @visibleForOverriding
+  @protected
   Future<BookModel> submit(BookCreateParam state);
 
   /// Update the state of the form.
-  /// This allow for more flexible to update specific fields.
+  /// This allows for more flexible updates to specific fields.
   void updateState(BookCreateParam Function(BookCreateParam state) update) =>
       state = update(state);
 

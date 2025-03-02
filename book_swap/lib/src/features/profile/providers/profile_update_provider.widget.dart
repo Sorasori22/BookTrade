@@ -75,9 +75,6 @@ class ProfileUpdateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  ProfileUpdateParam get state =>
-      _ref.watch(profileUpdateProvider(params.profileId)).requireValue;
-
   Selected select<Selected>(Selected Function(ProfileUpdateParam) selector) =>
       _ref.watch(
         profileUpdateProvider(
@@ -243,12 +240,22 @@ bool _debugCheckHasProfileUpdateForm(BuildContext context) {
     if (context.widget is! ProfileUpdateFormScope &&
         context.findAncestorWidgetOfExactType<ProfileUpdateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No ProfileUpdateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a ProfileUpdateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No ProfileUpdateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a ProfileUpdateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct ProfileUpdateFormScope',
+      );
     }
     return true;
   }());
@@ -353,7 +360,11 @@ class ProfileUpdateFormState extends ConsumerWidget {
 }
 
 class ProfileUpdateFormStatus extends ConsumerWidget {
-  const ProfileUpdateFormStatus({super.key, required this.builder});
+  const ProfileUpdateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -361,11 +372,27 @@ class ProfileUpdateFormStatus extends ConsumerWidget {
     AsyncValue<ProfileModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<ProfileModel>? previous,
+    AsyncValue<ProfileModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasProfileUpdateForm(context);
 
+    if (onChanged != null) {
+      final params = _ProfileUpdateFormInheritedWidget.of(context).params;
+      ref.listen(
+        profileUpdateCallStatusProvider((profileId: params.profileId)),
+        (previous, next) {
+          if (previous != next) {
+            onChanged!(previous, next);
+          }
+        },
+      );
+    }
     final stateRef = ProfileUpdateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

@@ -77,11 +77,6 @@ class WishlistItemUpdateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  WishlistItemUpdateParam get state =>
-      _ref
-          .watch(wishlistItemUpdateProvider(params.wishlistItemId))
-          .requireValue;
-
   Selected select<Selected>(
     Selected Function(WishlistItemUpdateParam) selector,
   ) => _ref.watch(
@@ -251,12 +246,22 @@ bool _debugCheckHasWishlistItemUpdateForm(BuildContext context) {
     if (context.widget is! WishlistItemUpdateFormScope &&
         context.findAncestorWidgetOfExactType<WishlistItemUpdateFormScope>() ==
             null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No WishlistItemUpdateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a WishlistItemUpdateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No WishlistItemUpdateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a WishlistItemUpdateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct WishlistItemUpdateFormScope',
+      );
     }
     return true;
   }());
@@ -367,7 +372,11 @@ class WishlistItemUpdateFormState extends ConsumerWidget {
 }
 
 class WishlistItemUpdateFormStatus extends ConsumerWidget {
-  const WishlistItemUpdateFormStatus({super.key, required this.builder});
+  const WishlistItemUpdateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -375,11 +384,29 @@ class WishlistItemUpdateFormStatus extends ConsumerWidget {
     AsyncValue<WishlistItemModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<WishlistItemModel>? previous,
+    AsyncValue<WishlistItemModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasWishlistItemUpdateForm(context);
 
+    if (onChanged != null) {
+      final params = _WishlistItemUpdateFormInheritedWidget.of(context).params;
+      ref.listen(
+        wishlistItemUpdateCallStatusProvider((
+          wishlistItemId: params.wishlistItemId,
+        )),
+        (previous, next) {
+          if (previous != next) {
+            onChanged!(previous, next);
+          }
+        },
+      );
+    }
     final stateRef = WishlistItemUpdateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }

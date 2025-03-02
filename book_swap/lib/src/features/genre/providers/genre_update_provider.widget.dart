@@ -70,9 +70,6 @@ class GenreUpdateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  GenreUpdateParam get state =>
-      _ref.watch(genreUpdateProvider(params.genreId)).requireValue;
-
   Selected select<Selected>(Selected Function(GenreUpdateParam) selector) =>
       _ref.watch(
         genreUpdateProvider(
@@ -236,12 +233,22 @@ bool _debugCheckHasGenreUpdateForm(BuildContext context) {
   assert(() {
     if (context.widget is! GenreUpdateFormScope &&
         context.findAncestorWidgetOfExactType<GenreUpdateFormScope>() == null) {
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary('No GenreUpdateFormScope found'),
-        ErrorDescription(
-          '${context.widget.runtimeType} widgets require a GenreUpdateFormScope widget ancestor.',
-        ),
-      ]);
+      // Check if we're in a navigation context (dialog or pushed screen)
+      final isInNavigation = ModalRoute.of(context) != null;
+
+      if (!isInNavigation) {
+        throw FlutterError.fromParts(<DiagnosticsNode>[
+          ErrorSummary('No GenreUpdateFormScope found'),
+          ErrorDescription(
+            '${context.widget.runtimeType} widgets require a GenreUpdateFormScope widget ancestor '
+            'or to be used in a navigation context with proper state management.',
+          ),
+        ]);
+      }
+      // If in navigation context, we'll return true but log a warning
+      debugPrint(
+        'Widget ${context.widget.runtimeType} used in navigation without direct GenreUpdateFormScope',
+      );
     }
     return true;
   }());
@@ -346,7 +353,11 @@ class GenreUpdateFormState extends ConsumerWidget {
 }
 
 class GenreUpdateFormStatus extends ConsumerWidget {
-  const GenreUpdateFormStatus({super.key, required this.builder});
+  const GenreUpdateFormStatus({
+    super.key,
+    required this.builder,
+    this.onChanged,
+  });
 
   final Widget Function(
     BuildContext context,
@@ -354,11 +365,27 @@ class GenreUpdateFormStatus extends ConsumerWidget {
     AsyncValue<GenreModel>? status,
   )
   builder;
+  final void Function(
+    AsyncValue<GenreModel>? previous,
+    AsyncValue<GenreModel>? next,
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasGenreUpdateForm(context);
 
+    if (onChanged != null) {
+      final params = _GenreUpdateFormInheritedWidget.of(context).params;
+      ref.listen(genreUpdateCallStatusProvider((genreId: params.genreId)), (
+        previous,
+        next,
+      ) {
+        if (previous != next) {
+          onChanged!(previous, next);
+        }
+      });
+    }
     final stateRef = GenreUpdateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }
