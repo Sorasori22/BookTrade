@@ -30,6 +30,12 @@ class AppRouter extends RootStackRouter {
         page: RootRoute.page,
         guards: [AuthGuard(_ref)],
         path: '/',
+        children: [
+          AutoRoute(page: HomeRoute.page, path: 'home'),
+          AutoRoute(page: MessageRoute.page, path: 'message'),
+          AutoRoute(page: BookRoute.page, path: 'book'),
+          AutoRoute(page: ProfileRoute.page, path: 'profile'),
+        ],
       ),
     ];
   }

@@ -4,8 +4,8 @@ analyzer:
   plugins:
     - custom_lint
   exclude:
-    # - "**/*.g.dart" 
-    # - "**/*.widget.dart"
+    - "**/*.g.dart" 
+    - "**/*.widget.dart"
     - "**/*.freezed.dart"
     - "**/*.gr.dart"
     - "**/*.table.dart"

@@ -9,21 +9,27 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i4;
+import 'package:auto_route/auto_route.dart' as _i8;
 import 'package:book_swap/src/presentation/modules/auth/auth_page.dart' as _i1;
-import 'package:book_swap/src/presentation/modules/root_page.dart' as _i2;
+import 'package:book_swap/src/presentation/modules/book/book_page.dart' as _i2;
+import 'package:book_swap/src/presentation/modules/home/home_page.dart' as _i3;
+import 'package:book_swap/src/presentation/modules/message/message_page.dart'
+    as _i4;
+import 'package:book_swap/src/presentation/modules/profile/profile_page.dart'
+    as _i5;
+import 'package:book_swap/src/presentation/modules/root_page.dart' as _i6;
 import 'package:book_swap/src/presentation/modules/splash/splash_page.dart'
-    as _i3;
-import 'package:flutter/material.dart' as _i6;
-import 'package:flutter/widgets.dart' as _i5;
+    as _i7;
+import 'package:flutter/material.dart' as _i10;
+import 'package:flutter/widgets.dart' as _i9;
 
 /// generated route for
 /// [_i1.AuthPage]
-class AuthRoute extends _i4.PageRouteInfo<AuthRouteArgs> {
+class AuthRoute extends _i8.PageRouteInfo<AuthRouteArgs> {
   AuthRoute({
-    _i5.Key? key,
+    _i9.Key? key,
     void Function()? onSuccess,
-    List<_i4.PageRouteInfo>? children,
+    List<_i8.PageRouteInfo>? children,
   }) : super(
          AuthRoute.name,
          args: AuthRouteArgs(key: key, onSuccess: onSuccess),
@@ -32,7 +38,7 @@ class AuthRoute extends _i4.PageRouteInfo<AuthRouteArgs> {
 
   static const String name = 'AuthRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AuthRouteArgs>(
@@ -46,7 +52,7 @@ class AuthRoute extends _i4.PageRouteInfo<AuthRouteArgs> {
 class AuthRouteArgs {
   const AuthRouteArgs({this.key, this.onSuccess});
 
-  final _i5.Key? key;
+  final _i9.Key? key;
 
   final void Function()? onSuccess;
 
@@ -57,28 +63,92 @@ class AuthRouteArgs {
 }
 
 /// generated route for
-/// [_i2.RootPage]
-class RootRoute extends _i4.PageRouteInfo<void> {
-  const RootRoute({List<_i4.PageRouteInfo>? children})
-    : super(RootRoute.name, initialChildren: children);
+/// [_i2.BookPage]
+class BookRoute extends _i8.PageRouteInfo<void> {
+  const BookRoute({List<_i8.PageRouteInfo>? children})
+    : super(BookRoute.name, initialChildren: children);
 
-  static const String name = 'RootRoute';
+  static const String name = 'BookRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i2.RootPage();
+      return const _i2.BookPage();
     },
   );
 }
 
 /// generated route for
-/// [_i3.SplashPage]
-class SplashRoute extends _i4.PageRouteInfo<SplashRouteArgs> {
+/// [_i3.HomePage]
+class HomeRoute extends _i8.PageRouteInfo<void> {
+  const HomeRoute({List<_i8.PageRouteInfo>? children})
+    : super(HomeRoute.name, initialChildren: children);
+
+  static const String name = 'HomeRoute';
+
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i3.HomePage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i4.MessagePage]
+class MessageRoute extends _i8.PageRouteInfo<void> {
+  const MessageRoute({List<_i8.PageRouteInfo>? children})
+    : super(MessageRoute.name, initialChildren: children);
+
+  static const String name = 'MessageRoute';
+
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.MessagePage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i5.ProfilePage]
+class ProfileRoute extends _i8.PageRouteInfo<void> {
+  const ProfileRoute({List<_i8.PageRouteInfo>? children})
+    : super(ProfileRoute.name, initialChildren: children);
+
+  static const String name = 'ProfileRoute';
+
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i5.ProfilePage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i6.RootPage]
+class RootRoute extends _i8.PageRouteInfo<void> {
+  const RootRoute({List<_i8.PageRouteInfo>? children})
+    : super(RootRoute.name, initialChildren: children);
+
+  static const String name = 'RootRoute';
+
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i6.RootPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i7.SplashPage]
+class SplashRoute extends _i8.PageRouteInfo<SplashRouteArgs> {
   SplashRoute({
-    _i6.Key? key,
-    _i6.VoidCallback? onInitialized,
-    List<_i4.PageRouteInfo>? children,
+    _i10.Key? key,
+    _i10.VoidCallback? onInitialized,
+    List<_i8.PageRouteInfo>? children,
   }) : super(
          SplashRoute.name,
          args: SplashRouteArgs(key: key, onInitialized: onInitialized),
@@ -87,13 +157,13 @@ class SplashRoute extends _i4.PageRouteInfo<SplashRouteArgs> {
 
   static const String name = 'SplashRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<SplashRouteArgs>(
         orElse: () => const SplashRouteArgs(),
       );
-      return _i3.SplashPage(key: args.key, onInitialized: args.onInitialized);
+      return _i7.SplashPage(key: args.key, onInitialized: args.onInitialized);
     },
   );
 }
@@ -101,9 +171,9 @@ class SplashRoute extends _i4.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key, this.onInitialized});
 
-  final _i6.Key? key;
+  final _i10.Key? key;
 
-  final _i6.VoidCallback? onInitialized;
+  final _i10.VoidCallback? onInitialized;
 
   @override
   String toString() {
