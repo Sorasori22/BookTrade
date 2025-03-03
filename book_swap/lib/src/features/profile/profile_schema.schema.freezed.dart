@@ -24,12 +24,16 @@ mixin _$ProfileModel {
   ProfileId get id => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileModel.usernameKey)
   String get username => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileModel.fullNameKey)
-  String? get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileModel.avatarUrlKey)
-  String? get avatarUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileModel.emailKey)
+  String get email => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileModel.fullnameKey)
+  String? get fullname => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileModel.avatarKey)
+  ImageObject? get avatar => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileModel.bioKey)
   String? get bio => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileModel.ageKey)
+  int? get age => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileModel.locationKey)
   String? get location => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileModel.addressKey)
@@ -60,9 +64,11 @@ abstract class $ProfileModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: ProfileModel.idKey) ProfileId id,
       @JsonKey(name: ProfileModel.usernameKey) String username,
-      @JsonKey(name: ProfileModel.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileModel.avatarUrlKey) String? avatarUrl,
+      @JsonKey(name: ProfileModel.emailKey) String email,
+      @JsonKey(name: ProfileModel.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileModel.avatarKey) ImageObject? avatar,
       @JsonKey(name: ProfileModel.bioKey) String? bio,
+      @JsonKey(name: ProfileModel.ageKey) int? age,
       @JsonKey(name: ProfileModel.locationKey) String? location,
       @JsonKey(name: ProfileModel.addressKey) String? address,
       @JsonKey(name: ProfileModel.phoneNumberKey) String? phoneNumber,
@@ -87,9 +93,11 @@ class _$ProfileModelCopyWithImpl<$Res, $Val extends ProfileModel>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
+    Object? email = null,
+    Object? fullname = freezed,
+    Object? avatar = freezed,
     Object? bio = freezed,
+    Object? age = freezed,
     Object? location = freezed,
     Object? address = freezed,
     Object? phoneNumber = freezed,
@@ -105,18 +113,26 @@ class _$ProfileModelCopyWithImpl<$Res, $Val extends ProfileModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullname: freezed == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
@@ -152,9 +168,11 @@ abstract class _$$ProfileModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: ProfileModel.idKey) ProfileId id,
       @JsonKey(name: ProfileModel.usernameKey) String username,
-      @JsonKey(name: ProfileModel.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileModel.avatarUrlKey) String? avatarUrl,
+      @JsonKey(name: ProfileModel.emailKey) String email,
+      @JsonKey(name: ProfileModel.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileModel.avatarKey) ImageObject? avatar,
       @JsonKey(name: ProfileModel.bioKey) String? bio,
+      @JsonKey(name: ProfileModel.ageKey) int? age,
       @JsonKey(name: ProfileModel.locationKey) String? location,
       @JsonKey(name: ProfileModel.addressKey) String? address,
       @JsonKey(name: ProfileModel.phoneNumberKey) String? phoneNumber,
@@ -177,9 +195,11 @@ class __$$ProfileModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
+    Object? email = null,
+    Object? fullname = freezed,
+    Object? avatar = freezed,
     Object? bio = freezed,
+    Object? age = freezed,
     Object? location = freezed,
     Object? address = freezed,
     Object? phoneNumber = freezed,
@@ -195,18 +215,26 @@ class __$$ProfileModelImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullname: freezed == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
@@ -239,9 +267,11 @@ class _$ProfileModelImpl extends _ProfileModel {
   const _$ProfileModelImpl(
       {@JsonKey(name: ProfileModel.idKey) required this.id,
       @JsonKey(name: ProfileModel.usernameKey) required this.username,
-      @JsonKey(name: ProfileModel.fullNameKey) required this.fullName,
-      @JsonKey(name: ProfileModel.avatarUrlKey) required this.avatarUrl,
+      @JsonKey(name: ProfileModel.emailKey) required this.email,
+      @JsonKey(name: ProfileModel.fullnameKey) required this.fullname,
+      @JsonKey(name: ProfileModel.avatarKey) required this.avatar,
       @JsonKey(name: ProfileModel.bioKey) required this.bio,
+      @JsonKey(name: ProfileModel.ageKey) required this.age,
       @JsonKey(name: ProfileModel.locationKey) required this.location,
       @JsonKey(name: ProfileModel.addressKey) required this.address,
       @JsonKey(name: ProfileModel.phoneNumberKey) required this.phoneNumber,
@@ -259,14 +289,20 @@ class _$ProfileModelImpl extends _ProfileModel {
   @JsonKey(name: ProfileModel.usernameKey)
   final String username;
   @override
-  @JsonKey(name: ProfileModel.fullNameKey)
-  final String? fullName;
+  @JsonKey(name: ProfileModel.emailKey)
+  final String email;
   @override
-  @JsonKey(name: ProfileModel.avatarUrlKey)
-  final String? avatarUrl;
+  @JsonKey(name: ProfileModel.fullnameKey)
+  final String? fullname;
+  @override
+  @JsonKey(name: ProfileModel.avatarKey)
+  final ImageObject? avatar;
   @override
   @JsonKey(name: ProfileModel.bioKey)
   final String? bio;
+  @override
+  @JsonKey(name: ProfileModel.ageKey)
+  final int? age;
   @override
   @JsonKey(name: ProfileModel.locationKey)
   final String? location;
@@ -285,7 +321,7 @@ class _$ProfileModelImpl extends _ProfileModel {
 
   @override
   String toString() {
-    return 'ProfileModel(id: $id, username: $username, fullName: $fullName, avatarUrl: $avatarUrl, bio: $bio, location: $location, address: $address, phoneNumber: $phoneNumber, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ProfileModel(id: $id, username: $username, email: $email, fullname: $fullname, avatar: $avatar, bio: $bio, age: $age, location: $location, address: $address, phoneNumber: $phoneNumber, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -296,11 +332,12 @@ class _$ProfileModelImpl extends _ProfileModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.fullname, fullname) ||
+                other.fullname == fullname) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.bio, bio) || other.bio == bio) &&
+            (identical(other.age, age) || other.age == age) &&
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.address, address) || other.address == address) &&
@@ -314,8 +351,8 @@ class _$ProfileModelImpl extends _ProfileModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username, fullName,
-      avatarUrl, bio, location, address, phoneNumber, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, username, email, fullname,
+      avatar, bio, age, location, address, phoneNumber, createdAt, updatedAt);
 
   /// Create a copy of ProfileModel
   /// with the given fields replaced by the non-null parameter values.
@@ -337,10 +374,11 @@ abstract class _ProfileModel extends ProfileModel {
   const factory _ProfileModel(
       {@JsonKey(name: ProfileModel.idKey) required final ProfileId id,
       @JsonKey(name: ProfileModel.usernameKey) required final String username,
-      @JsonKey(name: ProfileModel.fullNameKey) required final String? fullName,
-      @JsonKey(name: ProfileModel.avatarUrlKey)
-      required final String? avatarUrl,
+      @JsonKey(name: ProfileModel.emailKey) required final String email,
+      @JsonKey(name: ProfileModel.fullnameKey) required final String? fullname,
+      @JsonKey(name: ProfileModel.avatarKey) required final ImageObject? avatar,
       @JsonKey(name: ProfileModel.bioKey) required final String? bio,
+      @JsonKey(name: ProfileModel.ageKey) required final int? age,
       @JsonKey(name: ProfileModel.locationKey) required final String? location,
       @JsonKey(name: ProfileModel.addressKey) required final String? address,
       @JsonKey(name: ProfileModel.phoneNumberKey)
@@ -361,14 +399,20 @@ abstract class _ProfileModel extends ProfileModel {
   @JsonKey(name: ProfileModel.usernameKey)
   String get username;
   @override
-  @JsonKey(name: ProfileModel.fullNameKey)
-  String? get fullName;
+  @JsonKey(name: ProfileModel.emailKey)
+  String get email;
   @override
-  @JsonKey(name: ProfileModel.avatarUrlKey)
-  String? get avatarUrl;
+  @JsonKey(name: ProfileModel.fullnameKey)
+  String? get fullname;
+  @override
+  @JsonKey(name: ProfileModel.avatarKey)
+  ImageObject? get avatar;
   @override
   @JsonKey(name: ProfileModel.bioKey)
   String? get bio;
+  @override
+  @JsonKey(name: ProfileModel.ageKey)
+  int? get age;
   @override
   @JsonKey(name: ProfileModel.locationKey)
   String? get location;
@@ -403,10 +447,12 @@ mixin _$ProfileLiteModel {
   ProfileId get id => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileLiteModel.usernameKey)
   String get username => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileLiteModel.fullNameKey)
-  String? get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileLiteModel.avatarUrlKey)
-  String? get avatarUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileLiteModel.emailKey)
+  String get email => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileLiteModel.fullnameKey)
+  String? get fullname => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileLiteModel.avatarKey)
+  ImageObject? get avatar => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileLiteModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -427,8 +473,9 @@ abstract class $ProfileLiteModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: ProfileLiteModel.idKey) ProfileId id,
       @JsonKey(name: ProfileLiteModel.usernameKey) String username,
-      @JsonKey(name: ProfileLiteModel.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileLiteModel.avatarUrlKey) String? avatarUrl});
+      @JsonKey(name: ProfileLiteModel.emailKey) String email,
+      @JsonKey(name: ProfileLiteModel.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileLiteModel.avatarKey) ImageObject? avatar});
 }
 
 /// @nodoc
@@ -448,8 +495,9 @@ class _$ProfileLiteModelCopyWithImpl<$Res, $Val extends ProfileLiteModel>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
+    Object? email = null,
+    Object? fullname = freezed,
+    Object? avatar = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -460,14 +508,18 @@ class _$ProfileLiteModelCopyWithImpl<$Res, $Val extends ProfileLiteModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullname: freezed == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
     ) as $Val);
   }
 }
@@ -483,8 +535,9 @@ abstract class _$$ProfileLiteModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: ProfileLiteModel.idKey) ProfileId id,
       @JsonKey(name: ProfileLiteModel.usernameKey) String username,
-      @JsonKey(name: ProfileLiteModel.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileLiteModel.avatarUrlKey) String? avatarUrl});
+      @JsonKey(name: ProfileLiteModel.emailKey) String email,
+      @JsonKey(name: ProfileLiteModel.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileLiteModel.avatarKey) ImageObject? avatar});
 }
 
 /// @nodoc
@@ -502,8 +555,9 @@ class __$$ProfileLiteModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
+    Object? email = null,
+    Object? fullname = freezed,
+    Object? avatar = freezed,
   }) {
     return _then(_$ProfileLiteModelImpl(
       id: null == id
@@ -514,14 +568,18 @@ class __$$ProfileLiteModelImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullname: freezed == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
     ));
   }
 }
@@ -534,8 +592,9 @@ class _$ProfileLiteModelImpl extends _ProfileLiteModel {
   const _$ProfileLiteModelImpl(
       {@JsonKey(name: ProfileLiteModel.idKey) required this.id,
       @JsonKey(name: ProfileLiteModel.usernameKey) required this.username,
-      @JsonKey(name: ProfileLiteModel.fullNameKey) required this.fullName,
-      @JsonKey(name: ProfileLiteModel.avatarUrlKey) required this.avatarUrl})
+      @JsonKey(name: ProfileLiteModel.emailKey) required this.email,
+      @JsonKey(name: ProfileLiteModel.fullnameKey) required this.fullname,
+      @JsonKey(name: ProfileLiteModel.avatarKey) required this.avatar})
       : super._();
 
   factory _$ProfileLiteModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -548,15 +607,18 @@ class _$ProfileLiteModelImpl extends _ProfileLiteModel {
   @JsonKey(name: ProfileLiteModel.usernameKey)
   final String username;
   @override
-  @JsonKey(name: ProfileLiteModel.fullNameKey)
-  final String? fullName;
+  @JsonKey(name: ProfileLiteModel.emailKey)
+  final String email;
   @override
-  @JsonKey(name: ProfileLiteModel.avatarUrlKey)
-  final String? avatarUrl;
+  @JsonKey(name: ProfileLiteModel.fullnameKey)
+  final String? fullname;
+  @override
+  @JsonKey(name: ProfileLiteModel.avatarKey)
+  final ImageObject? avatar;
 
   @override
   String toString() {
-    return 'ProfileLiteModel(id: $id, username: $username, fullName: $fullName, avatarUrl: $avatarUrl)';
+    return 'ProfileLiteModel(id: $id, username: $username, email: $email, fullname: $fullname, avatar: $avatar)';
   }
 
   @override
@@ -567,16 +629,16 @@ class _$ProfileLiteModelImpl extends _ProfileLiteModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.fullname, fullname) ||
+                other.fullname == fullname) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, username, fullName, avatarUrl);
+      Object.hash(runtimeType, id, username, email, fullname, avatar);
 
   /// Create a copy of ProfileLiteModel
   /// with the given fields replaced by the non-null parameter values.
@@ -600,10 +662,11 @@ abstract class _ProfileLiteModel extends ProfileLiteModel {
       {@JsonKey(name: ProfileLiteModel.idKey) required final ProfileId id,
       @JsonKey(name: ProfileLiteModel.usernameKey)
       required final String username,
-      @JsonKey(name: ProfileLiteModel.fullNameKey)
-      required final String? fullName,
-      @JsonKey(name: ProfileLiteModel.avatarUrlKey)
-      required final String? avatarUrl}) = _$ProfileLiteModelImpl;
+      @JsonKey(name: ProfileLiteModel.emailKey) required final String email,
+      @JsonKey(name: ProfileLiteModel.fullnameKey)
+      required final String? fullname,
+      @JsonKey(name: ProfileLiteModel.avatarKey)
+      required final ImageObject? avatar}) = _$ProfileLiteModelImpl;
   const _ProfileLiteModel._() : super._();
 
   factory _ProfileLiteModel.fromJson(Map<String, dynamic> json) =
@@ -616,11 +679,14 @@ abstract class _ProfileLiteModel extends ProfileLiteModel {
   @JsonKey(name: ProfileLiteModel.usernameKey)
   String get username;
   @override
-  @JsonKey(name: ProfileLiteModel.fullNameKey)
-  String? get fullName;
+  @JsonKey(name: ProfileLiteModel.emailKey)
+  String get email;
   @override
-  @JsonKey(name: ProfileLiteModel.avatarUrlKey)
-  String? get avatarUrl;
+  @JsonKey(name: ProfileLiteModel.fullnameKey)
+  String? get fullname;
+  @override
+  @JsonKey(name: ProfileLiteModel.avatarKey)
+  ImageObject? get avatar;
 
   /// Create a copy of ProfileLiteModel
   /// with the given fields replaced by the non-null parameter values.
@@ -640,12 +706,16 @@ mixin _$ProfileDetailModel {
   ProfileId get id => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileDetailModel.usernameKey)
   String get username => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileDetailModel.fullNameKey)
-  String? get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileDetailModel.avatarUrlKey)
-  String? get avatarUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileDetailModel.emailKey)
+  String get email => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileDetailModel.fullnameKey)
+  String? get fullname => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileDetailModel.avatarKey)
+  ImageObject? get avatar => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileDetailModel.bioKey)
   String? get bio => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileDetailModel.ageKey)
+  int? get age => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileDetailModel.locationKey)
   String? get location => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileDetailModel.addressKey)
@@ -676,9 +746,11 @@ abstract class $ProfileDetailModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: ProfileDetailModel.idKey) ProfileId id,
       @JsonKey(name: ProfileDetailModel.usernameKey) String username,
-      @JsonKey(name: ProfileDetailModel.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileDetailModel.avatarUrlKey) String? avatarUrl,
+      @JsonKey(name: ProfileDetailModel.emailKey) String email,
+      @JsonKey(name: ProfileDetailModel.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileDetailModel.avatarKey) ImageObject? avatar,
       @JsonKey(name: ProfileDetailModel.bioKey) String? bio,
+      @JsonKey(name: ProfileDetailModel.ageKey) int? age,
       @JsonKey(name: ProfileDetailModel.locationKey) String? location,
       @JsonKey(name: ProfileDetailModel.addressKey) String? address,
       @JsonKey(name: ProfileDetailModel.phoneNumberKey) String? phoneNumber,
@@ -703,9 +775,11 @@ class _$ProfileDetailModelCopyWithImpl<$Res, $Val extends ProfileDetailModel>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
+    Object? email = null,
+    Object? fullname = freezed,
+    Object? avatar = freezed,
     Object? bio = freezed,
+    Object? age = freezed,
     Object? location = freezed,
     Object? address = freezed,
     Object? phoneNumber = freezed,
@@ -721,18 +795,26 @@ class _$ProfileDetailModelCopyWithImpl<$Res, $Val extends ProfileDetailModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullname: freezed == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
@@ -768,9 +850,11 @@ abstract class _$$ProfileDetailModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: ProfileDetailModel.idKey) ProfileId id,
       @JsonKey(name: ProfileDetailModel.usernameKey) String username,
-      @JsonKey(name: ProfileDetailModel.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileDetailModel.avatarUrlKey) String? avatarUrl,
+      @JsonKey(name: ProfileDetailModel.emailKey) String email,
+      @JsonKey(name: ProfileDetailModel.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileDetailModel.avatarKey) ImageObject? avatar,
       @JsonKey(name: ProfileDetailModel.bioKey) String? bio,
+      @JsonKey(name: ProfileDetailModel.ageKey) int? age,
       @JsonKey(name: ProfileDetailModel.locationKey) String? location,
       @JsonKey(name: ProfileDetailModel.addressKey) String? address,
       @JsonKey(name: ProfileDetailModel.phoneNumberKey) String? phoneNumber,
@@ -793,9 +877,11 @@ class __$$ProfileDetailModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? username = null,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
+    Object? email = null,
+    Object? fullname = freezed,
+    Object? avatar = freezed,
     Object? bio = freezed,
+    Object? age = freezed,
     Object? location = freezed,
     Object? address = freezed,
     Object? phoneNumber = freezed,
@@ -811,18 +897,26 @@ class __$$ProfileDetailModelImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullname: freezed == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
@@ -855,9 +949,11 @@ class _$ProfileDetailModelImpl extends _ProfileDetailModel {
   const _$ProfileDetailModelImpl(
       {@JsonKey(name: ProfileDetailModel.idKey) required this.id,
       @JsonKey(name: ProfileDetailModel.usernameKey) required this.username,
-      @JsonKey(name: ProfileDetailModel.fullNameKey) required this.fullName,
-      @JsonKey(name: ProfileDetailModel.avatarUrlKey) required this.avatarUrl,
+      @JsonKey(name: ProfileDetailModel.emailKey) required this.email,
+      @JsonKey(name: ProfileDetailModel.fullnameKey) required this.fullname,
+      @JsonKey(name: ProfileDetailModel.avatarKey) required this.avatar,
       @JsonKey(name: ProfileDetailModel.bioKey) required this.bio,
+      @JsonKey(name: ProfileDetailModel.ageKey) required this.age,
       @JsonKey(name: ProfileDetailModel.locationKey) required this.location,
       @JsonKey(name: ProfileDetailModel.addressKey) required this.address,
       @JsonKey(name: ProfileDetailModel.phoneNumberKey)
@@ -876,14 +972,20 @@ class _$ProfileDetailModelImpl extends _ProfileDetailModel {
   @JsonKey(name: ProfileDetailModel.usernameKey)
   final String username;
   @override
-  @JsonKey(name: ProfileDetailModel.fullNameKey)
-  final String? fullName;
+  @JsonKey(name: ProfileDetailModel.emailKey)
+  final String email;
   @override
-  @JsonKey(name: ProfileDetailModel.avatarUrlKey)
-  final String? avatarUrl;
+  @JsonKey(name: ProfileDetailModel.fullnameKey)
+  final String? fullname;
+  @override
+  @JsonKey(name: ProfileDetailModel.avatarKey)
+  final ImageObject? avatar;
   @override
   @JsonKey(name: ProfileDetailModel.bioKey)
   final String? bio;
+  @override
+  @JsonKey(name: ProfileDetailModel.ageKey)
+  final int? age;
   @override
   @JsonKey(name: ProfileDetailModel.locationKey)
   final String? location;
@@ -902,7 +1004,7 @@ class _$ProfileDetailModelImpl extends _ProfileDetailModel {
 
   @override
   String toString() {
-    return 'ProfileDetailModel(id: $id, username: $username, fullName: $fullName, avatarUrl: $avatarUrl, bio: $bio, location: $location, address: $address, phoneNumber: $phoneNumber, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ProfileDetailModel(id: $id, username: $username, email: $email, fullname: $fullname, avatar: $avatar, bio: $bio, age: $age, location: $location, address: $address, phoneNumber: $phoneNumber, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -913,11 +1015,12 @@ class _$ProfileDetailModelImpl extends _ProfileDetailModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.fullname, fullname) ||
+                other.fullname == fullname) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.bio, bio) || other.bio == bio) &&
+            (identical(other.age, age) || other.age == age) &&
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.address, address) || other.address == address) &&
@@ -931,8 +1034,8 @@ class _$ProfileDetailModelImpl extends _ProfileDetailModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username, fullName,
-      avatarUrl, bio, location, address, phoneNumber, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, username, email, fullname,
+      avatar, bio, age, location, address, phoneNumber, createdAt, updatedAt);
 
   /// Create a copy of ProfileDetailModel
   /// with the given fields replaced by the non-null parameter values.
@@ -956,11 +1059,13 @@ abstract class _ProfileDetailModel extends ProfileDetailModel {
       {@JsonKey(name: ProfileDetailModel.idKey) required final ProfileId id,
       @JsonKey(name: ProfileDetailModel.usernameKey)
       required final String username,
-      @JsonKey(name: ProfileDetailModel.fullNameKey)
-      required final String? fullName,
-      @JsonKey(name: ProfileDetailModel.avatarUrlKey)
-      required final String? avatarUrl,
+      @JsonKey(name: ProfileDetailModel.emailKey) required final String email,
+      @JsonKey(name: ProfileDetailModel.fullnameKey)
+      required final String? fullname,
+      @JsonKey(name: ProfileDetailModel.avatarKey)
+      required final ImageObject? avatar,
       @JsonKey(name: ProfileDetailModel.bioKey) required final String? bio,
+      @JsonKey(name: ProfileDetailModel.ageKey) required final int? age,
       @JsonKey(name: ProfileDetailModel.locationKey)
       required final String? location,
       @JsonKey(name: ProfileDetailModel.addressKey)
@@ -983,14 +1088,20 @@ abstract class _ProfileDetailModel extends ProfileDetailModel {
   @JsonKey(name: ProfileDetailModel.usernameKey)
   String get username;
   @override
-  @JsonKey(name: ProfileDetailModel.fullNameKey)
-  String? get fullName;
+  @JsonKey(name: ProfileDetailModel.emailKey)
+  String get email;
   @override
-  @JsonKey(name: ProfileDetailModel.avatarUrlKey)
-  String? get avatarUrl;
+  @JsonKey(name: ProfileDetailModel.fullnameKey)
+  String? get fullname;
+  @override
+  @JsonKey(name: ProfileDetailModel.avatarKey)
+  ImageObject? get avatar;
   @override
   @JsonKey(name: ProfileDetailModel.bioKey)
   String? get bio;
+  @override
+  @JsonKey(name: ProfileDetailModel.ageKey)
+  int? get age;
   @override
   @JsonKey(name: ProfileDetailModel.locationKey)
   String? get location;
@@ -1015,340 +1126,6 @@ abstract class _ProfileDetailModel extends ProfileDetailModel {
       throw _privateConstructorUsedError;
 }
 
-ProfileCreateParam _$ProfileCreateParamFromJson(Map<String, dynamic> json) {
-  return _ProfileCreateParam.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ProfileCreateParam {
-  @JsonKey(name: ProfileCreateParam.idKey)
-  ProfileId get id => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileCreateParam.usernameKey)
-  String get username => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileCreateParam.fullNameKey)
-  String? get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileCreateParam.avatarUrlKey)
-  String? get avatarUrl => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileCreateParam.bioKey)
-  String? get bio => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileCreateParam.locationKey)
-  String? get location => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileCreateParam.addressKey)
-  String? get address => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileCreateParam.phoneNumberKey)
-  String? get phoneNumber => throw _privateConstructorUsedError;
-
-  /// Serializes this ProfileCreateParam to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ProfileCreateParam
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProfileCreateParamCopyWith<ProfileCreateParam> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProfileCreateParamCopyWith<$Res> {
-  factory $ProfileCreateParamCopyWith(
-          ProfileCreateParam value, $Res Function(ProfileCreateParam) then) =
-      _$ProfileCreateParamCopyWithImpl<$Res, ProfileCreateParam>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: ProfileCreateParam.idKey) ProfileId id,
-      @JsonKey(name: ProfileCreateParam.usernameKey) String username,
-      @JsonKey(name: ProfileCreateParam.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileCreateParam.avatarUrlKey) String? avatarUrl,
-      @JsonKey(name: ProfileCreateParam.bioKey) String? bio,
-      @JsonKey(name: ProfileCreateParam.locationKey) String? location,
-      @JsonKey(name: ProfileCreateParam.addressKey) String? address,
-      @JsonKey(name: ProfileCreateParam.phoneNumberKey) String? phoneNumber});
-}
-
-/// @nodoc
-class _$ProfileCreateParamCopyWithImpl<$Res, $Val extends ProfileCreateParam>
-    implements $ProfileCreateParamCopyWith<$Res> {
-  _$ProfileCreateParamCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ProfileCreateParam
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? username = null,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
-    Object? bio = freezed,
-    Object? location = freezed,
-    Object? address = freezed,
-    Object? phoneNumber = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as ProfileId,
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bio: freezed == bio
-          ? _value.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phoneNumber: freezed == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$ProfileCreateParamImplCopyWith<$Res>
-    implements $ProfileCreateParamCopyWith<$Res> {
-  factory _$$ProfileCreateParamImplCopyWith(_$ProfileCreateParamImpl value,
-          $Res Function(_$ProfileCreateParamImpl) then) =
-      __$$ProfileCreateParamImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: ProfileCreateParam.idKey) ProfileId id,
-      @JsonKey(name: ProfileCreateParam.usernameKey) String username,
-      @JsonKey(name: ProfileCreateParam.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileCreateParam.avatarUrlKey) String? avatarUrl,
-      @JsonKey(name: ProfileCreateParam.bioKey) String? bio,
-      @JsonKey(name: ProfileCreateParam.locationKey) String? location,
-      @JsonKey(name: ProfileCreateParam.addressKey) String? address,
-      @JsonKey(name: ProfileCreateParam.phoneNumberKey) String? phoneNumber});
-}
-
-/// @nodoc
-class __$$ProfileCreateParamImplCopyWithImpl<$Res>
-    extends _$ProfileCreateParamCopyWithImpl<$Res, _$ProfileCreateParamImpl>
-    implements _$$ProfileCreateParamImplCopyWith<$Res> {
-  __$$ProfileCreateParamImplCopyWithImpl(_$ProfileCreateParamImpl _value,
-      $Res Function(_$ProfileCreateParamImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ProfileCreateParam
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? username = null,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
-    Object? bio = freezed,
-    Object? location = freezed,
-    Object? address = freezed,
-    Object? phoneNumber = freezed,
-  }) {
-    return _then(_$ProfileCreateParamImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as ProfileId,
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bio: freezed == bio
-          ? _value.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phoneNumber: freezed == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-
-@JsonSerializable(explicitToJson: true)
-class _$ProfileCreateParamImpl extends _ProfileCreateParam {
-  const _$ProfileCreateParamImpl(
-      {@JsonKey(name: ProfileCreateParam.idKey) required this.id,
-      @JsonKey(name: ProfileCreateParam.usernameKey) required this.username,
-      @JsonKey(name: ProfileCreateParam.fullNameKey) required this.fullName,
-      @JsonKey(name: ProfileCreateParam.avatarUrlKey) required this.avatarUrl,
-      @JsonKey(name: ProfileCreateParam.bioKey) required this.bio,
-      @JsonKey(name: ProfileCreateParam.locationKey) required this.location,
-      @JsonKey(name: ProfileCreateParam.addressKey) required this.address,
-      @JsonKey(name: ProfileCreateParam.phoneNumberKey)
-      required this.phoneNumber})
-      : super._();
-
-  factory _$ProfileCreateParamImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProfileCreateParamImplFromJson(json);
-
-  @override
-  @JsonKey(name: ProfileCreateParam.idKey)
-  final ProfileId id;
-  @override
-  @JsonKey(name: ProfileCreateParam.usernameKey)
-  final String username;
-  @override
-  @JsonKey(name: ProfileCreateParam.fullNameKey)
-  final String? fullName;
-  @override
-  @JsonKey(name: ProfileCreateParam.avatarUrlKey)
-  final String? avatarUrl;
-  @override
-  @JsonKey(name: ProfileCreateParam.bioKey)
-  final String? bio;
-  @override
-  @JsonKey(name: ProfileCreateParam.locationKey)
-  final String? location;
-  @override
-  @JsonKey(name: ProfileCreateParam.addressKey)
-  final String? address;
-  @override
-  @JsonKey(name: ProfileCreateParam.phoneNumberKey)
-  final String? phoneNumber;
-
-  @override
-  String toString() {
-    return 'ProfileCreateParam(id: $id, username: $username, fullName: $fullName, avatarUrl: $avatarUrl, bio: $bio, location: $location, address: $address, phoneNumber: $phoneNumber)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProfileCreateParamImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
-            (identical(other.bio, bio) || other.bio == bio) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
-            (identical(other.address, address) || other.address == address) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, username, fullName,
-      avatarUrl, bio, location, address, phoneNumber);
-
-  /// Create a copy of ProfileCreateParam
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProfileCreateParamImplCopyWith<_$ProfileCreateParamImpl> get copyWith =>
-      __$$ProfileCreateParamImplCopyWithImpl<_$ProfileCreateParamImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ProfileCreateParamImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ProfileCreateParam extends ProfileCreateParam {
-  const factory _ProfileCreateParam(
-      {@JsonKey(name: ProfileCreateParam.idKey) required final ProfileId id,
-      @JsonKey(name: ProfileCreateParam.usernameKey)
-      required final String username,
-      @JsonKey(name: ProfileCreateParam.fullNameKey)
-      required final String? fullName,
-      @JsonKey(name: ProfileCreateParam.avatarUrlKey)
-      required final String? avatarUrl,
-      @JsonKey(name: ProfileCreateParam.bioKey) required final String? bio,
-      @JsonKey(name: ProfileCreateParam.locationKey)
-      required final String? location,
-      @JsonKey(name: ProfileCreateParam.addressKey)
-      required final String? address,
-      @JsonKey(name: ProfileCreateParam.phoneNumberKey)
-      required final String? phoneNumber}) = _$ProfileCreateParamImpl;
-  const _ProfileCreateParam._() : super._();
-
-  factory _ProfileCreateParam.fromJson(Map<String, dynamic> json) =
-      _$ProfileCreateParamImpl.fromJson;
-
-  @override
-  @JsonKey(name: ProfileCreateParam.idKey)
-  ProfileId get id;
-  @override
-  @JsonKey(name: ProfileCreateParam.usernameKey)
-  String get username;
-  @override
-  @JsonKey(name: ProfileCreateParam.fullNameKey)
-  String? get fullName;
-  @override
-  @JsonKey(name: ProfileCreateParam.avatarUrlKey)
-  String? get avatarUrl;
-  @override
-  @JsonKey(name: ProfileCreateParam.bioKey)
-  String? get bio;
-  @override
-  @JsonKey(name: ProfileCreateParam.locationKey)
-  String? get location;
-  @override
-  @JsonKey(name: ProfileCreateParam.addressKey)
-  String? get address;
-  @override
-  @JsonKey(name: ProfileCreateParam.phoneNumberKey)
-  String? get phoneNumber;
-
-  /// Create a copy of ProfileCreateParam
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileCreateParamImplCopyWith<_$ProfileCreateParamImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
 ProfileUpdateParam _$ProfileUpdateParamFromJson(Map<String, dynamic> json) {
   return _ProfileUpdateParam.fromJson(json);
 }
@@ -1357,12 +1134,14 @@ ProfileUpdateParam _$ProfileUpdateParamFromJson(Map<String, dynamic> json) {
 mixin _$ProfileUpdateParam {
   @JsonKey(name: ProfileUpdateParam.usernameKey)
   String? get username => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileUpdateParam.fullNameKey)
-  String? get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileUpdateParam.avatarUrlKey)
-  String? get avatarUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileUpdateParam.fullnameKey)
+  String? get fullname => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileUpdateParam.avatarKey)
+  ImageObject? get avatar => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileUpdateParam.bioKey)
   String? get bio => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileUpdateParam.ageKey)
+  int? get age => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileUpdateParam.locationKey)
   String? get location => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileUpdateParam.addressKey)
@@ -1388,9 +1167,10 @@ abstract class $ProfileUpdateParamCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: ProfileUpdateParam.usernameKey) String? username,
-      @JsonKey(name: ProfileUpdateParam.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileUpdateParam.avatarUrlKey) String? avatarUrl,
+      @JsonKey(name: ProfileUpdateParam.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileUpdateParam.avatarKey) ImageObject? avatar,
       @JsonKey(name: ProfileUpdateParam.bioKey) String? bio,
+      @JsonKey(name: ProfileUpdateParam.ageKey) int? age,
       @JsonKey(name: ProfileUpdateParam.locationKey) String? location,
       @JsonKey(name: ProfileUpdateParam.addressKey) String? address,
       @JsonKey(name: ProfileUpdateParam.phoneNumberKey) String? phoneNumber});
@@ -1412,9 +1192,10 @@ class _$ProfileUpdateParamCopyWithImpl<$Res, $Val extends ProfileUpdateParam>
   @override
   $Res call({
     Object? username = freezed,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
+    Object? fullname = freezed,
+    Object? avatar = freezed,
     Object? bio = freezed,
+    Object? age = freezed,
     Object? location = freezed,
     Object? address = freezed,
     Object? phoneNumber = freezed,
@@ -1424,18 +1205,22 @@ class _$ProfileUpdateParamCopyWithImpl<$Res, $Val extends ProfileUpdateParam>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
+      fullname: freezed == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
@@ -1462,9 +1247,10 @@ abstract class _$$ProfileUpdateParamImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: ProfileUpdateParam.usernameKey) String? username,
-      @JsonKey(name: ProfileUpdateParam.fullNameKey) String? fullName,
-      @JsonKey(name: ProfileUpdateParam.avatarUrlKey) String? avatarUrl,
+      @JsonKey(name: ProfileUpdateParam.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileUpdateParam.avatarKey) ImageObject? avatar,
       @JsonKey(name: ProfileUpdateParam.bioKey) String? bio,
+      @JsonKey(name: ProfileUpdateParam.ageKey) int? age,
       @JsonKey(name: ProfileUpdateParam.locationKey) String? location,
       @JsonKey(name: ProfileUpdateParam.addressKey) String? address,
       @JsonKey(name: ProfileUpdateParam.phoneNumberKey) String? phoneNumber});
@@ -1484,9 +1270,10 @@ class __$$ProfileUpdateParamImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? username = freezed,
-    Object? fullName = freezed,
-    Object? avatarUrl = freezed,
+    Object? fullname = freezed,
+    Object? avatar = freezed,
     Object? bio = freezed,
+    Object? age = freezed,
     Object? location = freezed,
     Object? address = freezed,
     Object? phoneNumber = freezed,
@@ -1496,18 +1283,22 @@ class __$$ProfileUpdateParamImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
-      fullName: freezed == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
+      fullname: freezed == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      age: freezed == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as int?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
@@ -1530,9 +1321,10 @@ class __$$ProfileUpdateParamImplCopyWithImpl<$Res>
 class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
   const _$ProfileUpdateParamImpl(
       {@JsonKey(name: ProfileUpdateParam.usernameKey) required this.username,
-      @JsonKey(name: ProfileUpdateParam.fullNameKey) required this.fullName,
-      @JsonKey(name: ProfileUpdateParam.avatarUrlKey) required this.avatarUrl,
+      @JsonKey(name: ProfileUpdateParam.fullnameKey) required this.fullname,
+      @JsonKey(name: ProfileUpdateParam.avatarKey) required this.avatar,
       @JsonKey(name: ProfileUpdateParam.bioKey) required this.bio,
+      @JsonKey(name: ProfileUpdateParam.ageKey) required this.age,
       @JsonKey(name: ProfileUpdateParam.locationKey) required this.location,
       @JsonKey(name: ProfileUpdateParam.addressKey) required this.address,
       @JsonKey(name: ProfileUpdateParam.phoneNumberKey)
@@ -1546,14 +1338,17 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
   @JsonKey(name: ProfileUpdateParam.usernameKey)
   final String? username;
   @override
-  @JsonKey(name: ProfileUpdateParam.fullNameKey)
-  final String? fullName;
+  @JsonKey(name: ProfileUpdateParam.fullnameKey)
+  final String? fullname;
   @override
-  @JsonKey(name: ProfileUpdateParam.avatarUrlKey)
-  final String? avatarUrl;
+  @JsonKey(name: ProfileUpdateParam.avatarKey)
+  final ImageObject? avatar;
   @override
   @JsonKey(name: ProfileUpdateParam.bioKey)
   final String? bio;
+  @override
+  @JsonKey(name: ProfileUpdateParam.ageKey)
+  final int? age;
   @override
   @JsonKey(name: ProfileUpdateParam.locationKey)
   final String? location;
@@ -1566,7 +1361,7 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
 
   @override
   String toString() {
-    return 'ProfileUpdateParam(username: $username, fullName: $fullName, avatarUrl: $avatarUrl, bio: $bio, location: $location, address: $address, phoneNumber: $phoneNumber)';
+    return 'ProfileUpdateParam(username: $username, fullname: $fullname, avatar: $avatar, bio: $bio, age: $age, location: $location, address: $address, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -1576,11 +1371,11 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
             other is _$ProfileUpdateParamImpl &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
+            (identical(other.fullname, fullname) ||
+                other.fullname == fullname) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.bio, bio) || other.bio == bio) &&
+            (identical(other.age, age) || other.age == age) &&
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.address, address) || other.address == address) &&
@@ -1590,8 +1385,8 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, username, fullName, avatarUrl,
-      bio, location, address, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, username, fullname, avatar, bio,
+      age, location, address, phoneNumber);
 
   /// Create a copy of ProfileUpdateParam
   /// with the given fields replaced by the non-null parameter values.
@@ -1614,11 +1409,12 @@ abstract class _ProfileUpdateParam extends ProfileUpdateParam {
   const factory _ProfileUpdateParam(
       {@JsonKey(name: ProfileUpdateParam.usernameKey)
       required final String? username,
-      @JsonKey(name: ProfileUpdateParam.fullNameKey)
-      required final String? fullName,
-      @JsonKey(name: ProfileUpdateParam.avatarUrlKey)
-      required final String? avatarUrl,
+      @JsonKey(name: ProfileUpdateParam.fullnameKey)
+      required final String? fullname,
+      @JsonKey(name: ProfileUpdateParam.avatarKey)
+      required final ImageObject? avatar,
       @JsonKey(name: ProfileUpdateParam.bioKey) required final String? bio,
+      @JsonKey(name: ProfileUpdateParam.ageKey) required final int? age,
       @JsonKey(name: ProfileUpdateParam.locationKey)
       required final String? location,
       @JsonKey(name: ProfileUpdateParam.addressKey)
@@ -1634,14 +1430,17 @@ abstract class _ProfileUpdateParam extends ProfileUpdateParam {
   @JsonKey(name: ProfileUpdateParam.usernameKey)
   String? get username;
   @override
-  @JsonKey(name: ProfileUpdateParam.fullNameKey)
-  String? get fullName;
+  @JsonKey(name: ProfileUpdateParam.fullnameKey)
+  String? get fullname;
   @override
-  @JsonKey(name: ProfileUpdateParam.avatarUrlKey)
-  String? get avatarUrl;
+  @JsonKey(name: ProfileUpdateParam.avatarKey)
+  ImageObject? get avatar;
   @override
   @JsonKey(name: ProfileUpdateParam.bioKey)
   String? get bio;
+  @override
+  @JsonKey(name: ProfileUpdateParam.ageKey)
+  int? get age;
   @override
   @JsonKey(name: ProfileUpdateParam.locationKey)
   String? get location;

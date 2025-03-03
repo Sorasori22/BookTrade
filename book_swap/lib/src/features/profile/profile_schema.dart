@@ -1,3 +1,4 @@
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:kimapp/kimapp.dart';
 
 @Schema(
@@ -8,9 +9,11 @@ import 'package:kimapp/kimapp.dart';
 class ProfileSchema extends KimappSchema {
   final id = Field.id<String>('id').generateAs('ProfileId');
   final username = Field<String>('username');
-  final fullName = Field<String?>('full_name');
-  final avatarUrl = Field<String?>('avatar_url');
+  final email = Field<String>('email');
+  final fullname = Field<String?>('fullname');
+  final avatar = Field<ImageObject?>('avatar_url');
   final bio = Field<String?>('bio');
+  final age = Field<int?>('age');
   final location = Field<String?>('location');
   final address = Field<String?>('address');
   final phoneNumber = Field<String?>('phone_number');
@@ -25,31 +28,20 @@ class ProfileSchema extends KimappSchema {
         ..addFields({
           'id': id,
           'username': username,
-          'fullName': fullName,
-          'avatarUrl': avatarUrl,
+          'email': email,
+          'fullname': fullname,
+          'avatar': avatar,
         }),
       Model('ProfileDetailModel')
         ..table()
         ..inheritAllFromBase(),
-
-      // Params
-      Model('ProfileCreateParam')
-        ..addFields({
-          'id': id,
-          'username': username,
-          'fullName': fullName,
-          'avatarUrl': avatarUrl,
-          'bio': bio,
-          'location': location,
-          'address': address,
-          'phoneNumber': phoneNumber,
-        }),
       Model('ProfileUpdateParam')
         ..addFields({
           'username': Field<String?>('username'),
-          'fullName': fullName,
-          'avatarUrl': avatarUrl,
+          'fullname': Field<String?>('fullname'),
+          'avatar': avatar,
           'bio': bio,
+          'age': age,
           'location': location,
           'address': address,
           'phoneNumber': phoneNumber,

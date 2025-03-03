@@ -29,5 +29,6 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true
   },
-  "hide-files.files": []
+  "hide-files.files": [],
+  "vscodeTodo.enableWideView": false
 }

@@ -9,16 +9,16 @@ part of 'profile_update_provider.dart';
 // **************************************************************************
 
 final profileUpdateCallStatusProvider = StateProvider.autoDispose
-    .family<AsyncValue<ProfileModel>?, ({ProfileId profileId})>(
+    .family<AsyncValue<ProfileDetailModel>?, ({ProfileId profileId})>(
         (ref, _) => null);
 
 abstract class _$ProfileUpdateWidget extends _$ProfileUpdate {
   /// Callback for when the form is successfully submitted.
   /// Override this method to handle the result or perform side effects.
   @protected
-  void onSuccess(ProfileModel result) {}
+  void onSuccess(ProfileDetailModel result) {}
   @nonVirtual
-  Future<AsyncValue<ProfileModel>> call() async {
+  Future<AsyncValue<ProfileDetailModel>> call() async {
     // Ignore if form is not loaded yet
     if (this.state.isLoading) return const AsyncValue.loading();
     // Cannot submit when form is not loaded yet
@@ -70,7 +70,7 @@ abstract class _$ProfileUpdateWidget extends _$ProfileUpdate {
   /// 4. Return success/failure result
   @visibleForOverriding
   @protected
-  Future<ProfileModel> submit(ProfileUpdateParam state);
+  Future<ProfileDetailModel> submit(ProfileUpdateParam state);
 
   /// Update the state of the form.
   /// This allows for more flexible updates to specific fields.
@@ -82,17 +82,21 @@ abstract class _$ProfileUpdateWidget extends _$ProfileUpdate {
   void updateUsername(String? newValue) =>
       state = state.whenData((state) => state.copyWith(username: newValue));
 
-  /// Update the fullName field of ProfileUpdateParam class.
-  void updateFullName(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(fullName: newValue));
+  /// Update the fullname field of ProfileUpdateParam class.
+  void updateFullname(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(fullname: newValue));
 
-  /// Update the avatarUrl field of ProfileUpdateParam class.
-  void updateAvatarUrl(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(avatarUrl: newValue));
+  /// Update the avatar field of ProfileUpdateParam class.
+  void updateAvatar(ImageObject? newValue) =>
+      state = state.whenData((state) => state.copyWith(avatar: newValue));
 
   /// Update the bio field of ProfileUpdateParam class.
   void updateBio(String? newValue) =>
       state = state.whenData((state) => state.copyWith(bio: newValue));
+
+  /// Update the age field of ProfileUpdateParam class.
+  void updateAge(int? newValue) =>
+      state = state.whenData((state) => state.copyWith(age: newValue));
 
   /// Update the location field of ProfileUpdateParam class.
   void updateLocation(String? newValue) =>
@@ -111,7 +115,7 @@ abstract class _$ProfileUpdateWidget extends _$ProfileUpdate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileUpdateHash() => r'26e8803452760d2d00d7c9e3de0f171671226b9e';
+String _$profileUpdateHash() => r'1f344936884e60ff828c78d28dce48ff37cbab3f';
 
 /// Copied from Dart SDK
 class _SystemHash {

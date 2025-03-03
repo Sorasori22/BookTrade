@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CurrentAccountState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function() $default, {
+    TResult Function(ProfileDetailModel profile) $default, {
     required TResult Function() none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function()? $default, {
+    TResult? Function(ProfileDetailModel profile)? $default, {
     TResult? Function()? none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function()? $default, {
+    TResult Function(ProfileDetailModel profile)? $default, {
     TResult Function()? none,
     required TResult orElse(),
   }) =>
@@ -117,7 +117,7 @@ class _$NoneImpl extends _None {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function() $default, {
+    TResult Function(ProfileDetailModel profile) $default, {
     required TResult Function() none,
   }) {
     return none();
@@ -126,7 +126,7 @@ class _$NoneImpl extends _None {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function()? $default, {
+    TResult? Function(ProfileDetailModel profile)? $default, {
     TResult? Function()? none,
   }) {
     return none?.call();
@@ -135,7 +135,7 @@ class _$NoneImpl extends _None {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function()? $default, {
+    TResult Function(ProfileDetailModel profile)? $default, {
     TResult Function()? none,
     required TResult orElse(),
   }) {
@@ -188,6 +188,10 @@ abstract class _$$CurrentAccountStateDataImplCopyWith<$Res> {
           _$CurrentAccountStateDataImpl value,
           $Res Function(_$CurrentAccountStateDataImpl) then) =
       __$$CurrentAccountStateDataImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ProfileDetailModel profile});
+
+  $ProfileDetailModelCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -202,55 +206,90 @@ class __$$CurrentAccountStateDataImplCopyWithImpl<$Res>
 
   /// Create a copy of CurrentAccountState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? profile = null,
+  }) {
+    return _then(_$CurrentAccountStateDataImpl(
+      null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as ProfileDetailModel,
+    ));
+  }
+
+  /// Create a copy of CurrentAccountState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileDetailModelCopyWith<$Res> get profile {
+    return $ProfileDetailModelCopyWith<$Res>(_value.profile, (value) {
+      return _then(_value.copyWith(profile: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$CurrentAccountStateDataImpl extends CurrentAccountStateData {
-  const _$CurrentAccountStateDataImpl() : super._();
+  const _$CurrentAccountStateDataImpl(this.profile) : super._();
+
+  @override
+  final ProfileDetailModel profile;
 
   @override
   String toString() {
-    return 'CurrentAccountState()';
+    return 'CurrentAccountState(profile: $profile)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CurrentAccountStateDataImpl);
+            other is _$CurrentAccountStateDataImpl &&
+            (identical(other.profile, profile) || other.profile == profile));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, profile);
+
+  /// Create a copy of CurrentAccountState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CurrentAccountStateDataImplCopyWith<_$CurrentAccountStateDataImpl>
+      get copyWith => __$$CurrentAccountStateDataImplCopyWithImpl<
+          _$CurrentAccountStateDataImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function() $default, {
+    TResult Function(ProfileDetailModel profile) $default, {
     required TResult Function() none,
   }) {
-    return $default();
+    return $default(profile);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function()? $default, {
+    TResult? Function(ProfileDetailModel profile)? $default, {
     TResult? Function()? none,
   }) {
-    return $default?.call();
+    return $default?.call(profile);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function()? $default, {
+    TResult Function(ProfileDetailModel profile)? $default, {
     TResult Function()? none,
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default();
+      return $default(profile);
     }
     return orElse();
   }
@@ -288,6 +327,15 @@ class _$CurrentAccountStateDataImpl extends CurrentAccountStateData {
 }
 
 abstract class CurrentAccountStateData extends CurrentAccountState {
-  const factory CurrentAccountStateData() = _$CurrentAccountStateDataImpl;
+  const factory CurrentAccountStateData(final ProfileDetailModel profile) =
+      _$CurrentAccountStateDataImpl;
   const CurrentAccountStateData._() : super._();
+
+  ProfileDetailModel get profile;
+
+  /// Create a copy of CurrentAccountState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CurrentAccountStateDataImplCopyWith<_$CurrentAccountStateDataImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

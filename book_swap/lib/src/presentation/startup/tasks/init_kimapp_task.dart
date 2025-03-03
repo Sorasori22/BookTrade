@@ -37,7 +37,7 @@ class InitKimappTask extends StartUpTask {
     StorageManager.initialize(
       config: const StorageConfig(
         bucketFileTypes: {
-          'files': [FileType.image],
+          'images': [FileType.image],
         },
         maxFileSizeBytes: 10 * 1024 * 1024,
         typeSpecificMaxSizes: {

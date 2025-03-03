@@ -9,6 +9,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kimapp/kimapp.dart';
 
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'profile_schema.dart';
 
 part 'profile_schema.schema.freezed.dart';
@@ -35,20 +36,30 @@ class ProfileTable {
   /// Key: `username`
   static const String username = "username";
 
-  /// Column: full_name
+  /// Column: email
+  /// Data type: `String`
+  /// Key: `email`
+  static const String email = "email";
+
+  /// Column: fullname
   /// Data type: `String?`
-  /// Key: `full_name`
-  static const String fullName = "full_name";
+  /// Key: `fullname`
+  static const String fullname = "fullname";
 
   /// Column: avatar_url
-  /// Data type: `String?`
+  /// Data type: `ImageObject?`
   /// Key: `avatar_url`
-  static const String avatarUrl = "avatar_url";
+  static const String avatar = "avatar_url";
 
   /// Column: bio
   /// Data type: `String?`
   /// Key: `bio`
   static const String bio = "bio";
+
+  /// Column: age
+  /// Data type: `int?`
+  /// Key: `age`
+  static const String age = "age";
 
   /// Column: location
   /// Data type: `String?`
@@ -111,9 +122,11 @@ abstract class BaseProfileSchema {}
 abstract class IProfileModel {
   ProfileId get id;
   String get username;
-  String? get fullName;
-  String? get avatarUrl;
+  String get email;
+  String? get fullname;
+  ImageObject? get avatar;
   String? get bio;
+  int? get age;
   String? get location;
   String? get address;
   String? get phoneNumber;
@@ -137,9 +150,11 @@ class ProfileModel
   /// Fields:
   /// - ProfileId id : JsonKey('id')
   /// - String username : JsonKey('username')
-  /// - String? fullName : JsonKey('full_name')
-  /// - String? avatarUrl : JsonKey('avatar_url')
+  /// - String email : JsonKey('email')
+  /// - String? fullname : JsonKey('fullname')
+  /// - ImageObject? avatar : JsonKey('avatar_url')
   /// - String? bio : JsonKey('bio')
+  /// - int? age : JsonKey('age')
   /// - String? location : JsonKey('location')
   /// - String? address : JsonKey('address')
   /// - String? phoneNumber : JsonKey('phone_number')
@@ -150,9 +165,11 @@ class ProfileModel
   const factory ProfileModel({
     @JsonKey(name: ProfileModel.idKey) required ProfileId id,
     @JsonKey(name: ProfileModel.usernameKey) required String username,
-    @JsonKey(name: ProfileModel.fullNameKey) required String? fullName,
-    @JsonKey(name: ProfileModel.avatarUrlKey) required String? avatarUrl,
+    @JsonKey(name: ProfileModel.emailKey) required String email,
+    @JsonKey(name: ProfileModel.fullnameKey) required String? fullname,
+    @JsonKey(name: ProfileModel.avatarKey) required ImageObject? avatar,
     @JsonKey(name: ProfileModel.bioKey) required String? bio,
+    @JsonKey(name: ProfileModel.ageKey) required int? age,
     @JsonKey(name: ProfileModel.locationKey) required String? location,
     @JsonKey(name: ProfileModel.addressKey) required String? address,
     @JsonKey(name: ProfileModel.phoneNumberKey) required String? phoneNumber,
@@ -176,14 +193,20 @@ class ProfileModel
   /// Field name for username field with JsonKey('username')
   static const String usernameKey = "username";
 
-  /// Field name for fullName field with JsonKey('full_name')
-  static const String fullNameKey = "full_name";
+  /// Field name for email field with JsonKey('email')
+  static const String emailKey = "email";
 
-  /// Field name for avatarUrl field with JsonKey('avatar_url')
-  static const String avatarUrlKey = "avatar_url";
+  /// Field name for fullname field with JsonKey('fullname')
+  static const String fullnameKey = "fullname";
+
+  /// Field name for avatar field with JsonKey('avatar_url')
+  static const String avatarKey = "avatar_url";
 
   /// Field name for bio field with JsonKey('bio')
   static const String bioKey = "bio";
+
+  /// Field name for age field with JsonKey('age')
+  static const String ageKey = "age";
 
   /// Field name for location field with JsonKey('location')
   static const String locationKey = "location";
@@ -216,15 +239,17 @@ class ProfileLiteModel with _$ProfileLiteModel implements BaseProfileSchema {
   /// Fields:
   /// - ProfileId id : JsonKey('id')
   /// - String username : JsonKey('username')
-  /// - String? fullName : JsonKey('full_name')
-  /// - String? avatarUrl : JsonKey('avatar_url')
+  /// - String email : JsonKey('email')
+  /// - String? fullname : JsonKey('fullname')
+  /// - ImageObject? avatar : JsonKey('avatar_url')
   @TableModel(ProfileLiteModel.tableName)
   @JsonSerializable(explicitToJson: true)
   const factory ProfileLiteModel({
     @JsonKey(name: ProfileLiteModel.idKey) required ProfileId id,
     @JsonKey(name: ProfileLiteModel.usernameKey) required String username,
-    @JsonKey(name: ProfileLiteModel.fullNameKey) required String? fullName,
-    @JsonKey(name: ProfileLiteModel.avatarUrlKey) required String? avatarUrl,
+    @JsonKey(name: ProfileLiteModel.emailKey) required String email,
+    @JsonKey(name: ProfileLiteModel.fullnameKey) required String? fullname,
+    @JsonKey(name: ProfileLiteModel.avatarKey) required ImageObject? avatar,
   }) = _ProfileLiteModel;
 
   /// Creates an instance of ProfileLiteModel from a JSON map.
@@ -243,11 +268,14 @@ class ProfileLiteModel with _$ProfileLiteModel implements BaseProfileSchema {
   /// Field name for username field with JsonKey('username')
   static const String usernameKey = "username";
 
-  /// Field name for fullName field with JsonKey('full_name')
-  static const String fullNameKey = "full_name";
+  /// Field name for email field with JsonKey('email')
+  static const String emailKey = "email";
 
-  /// Field name for avatarUrl field with JsonKey('avatar_url')
-  static const String avatarUrlKey = "avatar_url";
+  /// Field name for fullname field with JsonKey('fullname')
+  static const String fullnameKey = "fullname";
+
+  /// Field name for avatar field with JsonKey('avatar_url')
+  static const String avatarKey = "avatar_url";
 }
 
 /// Represents the ProfileDetailModel model. generated by kimapp_generator
@@ -267,9 +295,11 @@ class ProfileDetailModel
   /// Fields:
   /// - ProfileId id : JsonKey('id')
   /// - String username : JsonKey('username')
-  /// - String? fullName : JsonKey('full_name')
-  /// - String? avatarUrl : JsonKey('avatar_url')
+  /// - String email : JsonKey('email')
+  /// - String? fullname : JsonKey('fullname')
+  /// - ImageObject? avatar : JsonKey('avatar_url')
   /// - String? bio : JsonKey('bio')
+  /// - int? age : JsonKey('age')
   /// - String? location : JsonKey('location')
   /// - String? address : JsonKey('address')
   /// - String? phoneNumber : JsonKey('phone_number')
@@ -280,9 +310,11 @@ class ProfileDetailModel
   const factory ProfileDetailModel({
     @JsonKey(name: ProfileDetailModel.idKey) required ProfileId id,
     @JsonKey(name: ProfileDetailModel.usernameKey) required String username,
-    @JsonKey(name: ProfileDetailModel.fullNameKey) required String? fullName,
-    @JsonKey(name: ProfileDetailModel.avatarUrlKey) required String? avatarUrl,
+    @JsonKey(name: ProfileDetailModel.emailKey) required String email,
+    @JsonKey(name: ProfileDetailModel.fullnameKey) required String? fullname,
+    @JsonKey(name: ProfileDetailModel.avatarKey) required ImageObject? avatar,
     @JsonKey(name: ProfileDetailModel.bioKey) required String? bio,
+    @JsonKey(name: ProfileDetailModel.ageKey) required int? age,
     @JsonKey(name: ProfileDetailModel.locationKey) required String? location,
     @JsonKey(name: ProfileDetailModel.addressKey) required String? address,
     @JsonKey(name: ProfileDetailModel.phoneNumberKey)
@@ -307,14 +339,20 @@ class ProfileDetailModel
   /// Field name for username field with JsonKey('username')
   static const String usernameKey = "username";
 
-  /// Field name for fullName field with JsonKey('full_name')
-  static const String fullNameKey = "full_name";
+  /// Field name for email field with JsonKey('email')
+  static const String emailKey = "email";
 
-  /// Field name for avatarUrl field with JsonKey('avatar_url')
-  static const String avatarUrlKey = "avatar_url";
+  /// Field name for fullname field with JsonKey('fullname')
+  static const String fullnameKey = "fullname";
+
+  /// Field name for avatar field with JsonKey('avatar_url')
+  static const String avatarKey = "avatar_url";
 
   /// Field name for bio field with JsonKey('bio')
   static const String bioKey = "bio";
+
+  /// Field name for age field with JsonKey('age')
+  static const String ageKey = "age";
 
   /// Field name for location field with JsonKey('location')
   static const String locationKey = "location";
@@ -336,9 +374,11 @@ class ProfileDetailModel
     return ProfileModel(
       id: id,
       username: username,
-      fullName: fullName,
-      avatarUrl: avatarUrl,
+      email: email,
+      fullname: fullname,
+      avatar: avatar,
       bio: bio,
+      age: age,
       location: location,
       address: address,
       phoneNumber: phoneNumber,
@@ -346,70 +386,6 @@ class ProfileDetailModel
       updatedAt: updatedAt,
     );
   }
-}
-
-/// Represents the ProfileCreateParam model. generated by kimapp_generator
-@freezed
-class ProfileCreateParam
-    with _$ProfileCreateParam
-    implements BaseProfileSchema {
-  const ProfileCreateParam._();
-
-  /// Constructor for ProfileCreateParam.
-  ///
-  /// This class was generated by the Kimapp generator based on KimappSchema.
-  ///
-  /// Table Mode: `disabled`
-  ///
-  /// Fields:
-  /// - ProfileId id : JsonKey('id')
-  /// - String username : JsonKey('username')
-  /// - String? fullName : JsonKey('full_name')
-  /// - String? avatarUrl : JsonKey('avatar_url')
-  /// - String? bio : JsonKey('bio')
-  /// - String? location : JsonKey('location')
-  /// - String? address : JsonKey('address')
-  /// - String? phoneNumber : JsonKey('phone_number')
-  @JsonSerializable(explicitToJson: true)
-  const factory ProfileCreateParam({
-    @JsonKey(name: ProfileCreateParam.idKey) required ProfileId id,
-    @JsonKey(name: ProfileCreateParam.usernameKey) required String username,
-    @JsonKey(name: ProfileCreateParam.fullNameKey) required String? fullName,
-    @JsonKey(name: ProfileCreateParam.avatarUrlKey) required String? avatarUrl,
-    @JsonKey(name: ProfileCreateParam.bioKey) required String? bio,
-    @JsonKey(name: ProfileCreateParam.locationKey) required String? location,
-    @JsonKey(name: ProfileCreateParam.addressKey) required String? address,
-    @JsonKey(name: ProfileCreateParam.phoneNumberKey)
-    required String? phoneNumber,
-  }) = _ProfileCreateParam;
-
-  /// Creates an instance of ProfileCreateParam from a JSON map.
-  factory ProfileCreateParam.fromJson(Map<String, dynamic> json) =>
-      _$ProfileCreateParamFromJson(json);
-
-  /// Field name for id field with JsonKey('id')
-  static const String idKey = "id";
-
-  /// Field name for username field with JsonKey('username')
-  static const String usernameKey = "username";
-
-  /// Field name for fullName field with JsonKey('full_name')
-  static const String fullNameKey = "full_name";
-
-  /// Field name for avatarUrl field with JsonKey('avatar_url')
-  static const String avatarUrlKey = "avatar_url";
-
-  /// Field name for bio field with JsonKey('bio')
-  static const String bioKey = "bio";
-
-  /// Field name for location field with JsonKey('location')
-  static const String locationKey = "location";
-
-  /// Field name for address field with JsonKey('address')
-  static const String addressKey = "address";
-
-  /// Field name for phoneNumber field with JsonKey('phone_number')
-  static const String phoneNumberKey = "phone_number";
 }
 
 /// Represents the ProfileUpdateParam model. generated by kimapp_generator
@@ -427,18 +403,20 @@ class ProfileUpdateParam
   ///
   /// Fields:
   /// - String? username : JsonKey('username')
-  /// - String? fullName : JsonKey('full_name')
-  /// - String? avatarUrl : JsonKey('avatar_url')
+  /// - String? fullname : JsonKey('fullname')
+  /// - ImageObject? avatar : JsonKey('avatar_url')
   /// - String? bio : JsonKey('bio')
+  /// - int? age : JsonKey('age')
   /// - String? location : JsonKey('location')
   /// - String? address : JsonKey('address')
   /// - String? phoneNumber : JsonKey('phone_number')
   @JsonSerializable(explicitToJson: true)
   const factory ProfileUpdateParam({
     @JsonKey(name: ProfileUpdateParam.usernameKey) required String? username,
-    @JsonKey(name: ProfileUpdateParam.fullNameKey) required String? fullName,
-    @JsonKey(name: ProfileUpdateParam.avatarUrlKey) required String? avatarUrl,
+    @JsonKey(name: ProfileUpdateParam.fullnameKey) required String? fullname,
+    @JsonKey(name: ProfileUpdateParam.avatarKey) required ImageObject? avatar,
     @JsonKey(name: ProfileUpdateParam.bioKey) required String? bio,
+    @JsonKey(name: ProfileUpdateParam.ageKey) required int? age,
     @JsonKey(name: ProfileUpdateParam.locationKey) required String? location,
     @JsonKey(name: ProfileUpdateParam.addressKey) required String? address,
     @JsonKey(name: ProfileUpdateParam.phoneNumberKey)
@@ -452,14 +430,17 @@ class ProfileUpdateParam
   /// Field name for username field with JsonKey('username')
   static const String usernameKey = "username";
 
-  /// Field name for fullName field with JsonKey('full_name')
-  static const String fullNameKey = "full_name";
+  /// Field name for fullname field with JsonKey('fullname')
+  static const String fullnameKey = "fullname";
 
-  /// Field name for avatarUrl field with JsonKey('avatar_url')
-  static const String avatarUrlKey = "avatar_url";
+  /// Field name for avatar field with JsonKey('avatar_url')
+  static const String avatarKey = "avatar_url";
 
   /// Field name for bio field with JsonKey('bio')
   static const String bioKey = "bio";
+
+  /// Field name for age field with JsonKey('age')
+  static const String ageKey = "age";
 
   /// Field name for location field with JsonKey('location')
   static const String locationKey = "location";

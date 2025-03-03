@@ -1,6 +1,6 @@
 ---
 description: Guidelines for writing Postgres migrations
-globs: supabase/migrations/**/*.sql
+globs: **/supabase/migrations/**/*.sql
 alwaysApply: false
 ---
 # Database: Create migration

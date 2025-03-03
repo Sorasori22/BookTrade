@@ -123,6 +123,7 @@ class MessageDetailProviderScope extends ConsumerWidget {
     return _MessageDetailInheritedWidget(
       params: (id: id),
       child: Consumer(
+        child: child,
         builder: (context, ref, child) {
           final state = ref.watch(messageDetailProvider(id));
 

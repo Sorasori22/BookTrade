@@ -122,6 +122,7 @@ class GenreDetailProviderScope extends ConsumerWidget {
     return _GenreDetailInheritedWidget(
       params: (id: id),
       child: Consumer(
+        child: child,
         builder: (context, ref, child) {
           final state = ref.watch(genreDetailProvider(id));
 

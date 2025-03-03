@@ -127,6 +127,7 @@ class BookRatingDetailProviderScope extends ConsumerWidget {
     return _BookRatingDetailInheritedWidget(
       params: (id: id),
       child: Consumer(
+        child: child,
         builder: (context, ref, child) {
           final state = ref.watch(bookRatingDetailProvider(id));
 

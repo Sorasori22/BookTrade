@@ -20,30 +20,31 @@ class ProfileUpdate extends _$ProfileUpdateWidget {
     final result = await ref.read(profileRepoProvider).findOne(profileId).getOrThrow();
     return ProfileUpdateParam(
       username: result.username,
-      fullName: result.fullName,
-      avatarUrl: result.avatarUrl,
+      fullname: result.fullname,
+      avatar: result.avatar,
       bio: result.bio,
       location: result.location,
+      age: result.age,
       address: result.address,
       phoneNumber: result.phoneNumber,
     );
   }
 
   @override
-  Future<ProfileModel> submit(ProfileUpdateParam state) async {
+  Future<ProfileDetailModel> submit(ProfileUpdateParam state) async {
     return await ref.read(profileRepoProvider).update(profileId, data: state).getOrThrow();
   }
 
   @override
-  void onSuccess(ProfileModel result) {
-    ref.read(profileListProvider.notifier).updateItem(result);
+  void onSuccess(ProfileDetailModel result) {
+    ref.read(profileListProvider.notifier).updateItem(result.toProfileModel());
     ref.read(profileDetailProvider(profileId).notifier).updateState((_) => result);
 
     //! Use with caution
     /// this update might lead to data inconsistency, for example, if we have update the item to not meet the param filter
     /// in this case, the item should be removed from the paginated list, but using this method will just update the item
     /// other case is if we update sort order, the item might need to change position
-    ProfilePaginationTracker.instance.updatePaginatedItem(ref, result);
+    ProfilePaginationTracker.instance.updatePaginatedItem(ref, result.toProfileModel());
 
     super.onSuccess(result);
   }

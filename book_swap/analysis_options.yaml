@@ -5,7 +5,7 @@ analyzer:
     - custom_lint
   exclude:
     - "**/*.g.dart" 
-    - "**/*.widget.dart"
+    # - "**/*.widget.dart"
     - "**/*.freezed.dart"
     - "**/*.gr.dart"
     - "**/*.table.dart"

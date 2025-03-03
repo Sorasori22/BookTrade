@@ -84,6 +84,10 @@ abstract final class AppTheme {
   static ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    dividerTheme: DividerThemeData(
+      color: BookThemeExtension.light.dividerColor,
+      thickness: 1,
+    ),
     colorScheme: ColorScheme.light(
       primary: _primaryLight,
       onPrimary: Colors.white,
@@ -107,6 +111,7 @@ abstract final class AppTheme {
       foregroundColor: Colors.black,
       elevation: 0,
       scrolledUnderElevation: 0,
+      centerTitle: true,
     ),
     cardTheme: const CardTheme(
       elevation: 2.0,
@@ -202,10 +207,15 @@ abstract final class AppTheme {
       surface: const Color(0xFF121212),
       onSurface: Colors.white,
     ),
+    dividerTheme: DividerThemeData(
+      color: BookThemeExtension.dark.dividerColor,
+      thickness: 1,
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: _primaryDark,
       foregroundColor: Colors.black,
       elevation: 0,
+      centerTitle: true,
     ),
     cardTheme: const CardTheme(
       elevation: 2.0,

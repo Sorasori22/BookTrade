@@ -127,6 +127,7 @@ class CompletedSwapDetailProviderScope extends ConsumerWidget {
     return _CompletedSwapDetailInheritedWidget(
       params: (id: id),
       child: Consumer(
+        child: child,
         builder: (context, ref, child) {
           final state = ref.watch(completedSwapDetailProvider(id));
 

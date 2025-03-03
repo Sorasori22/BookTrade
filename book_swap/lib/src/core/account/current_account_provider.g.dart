@@ -25,7 +25,7 @@ final currentUserIdProvider = Provider<UserId?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CurrentUserIdRef = ProviderRef<UserId?>;
-String _$currentAccountHash() => r'ca6246de589b4a44c51ebae6867f8b39b55b1900';
+String _$currentAccountHash() => r'48904e027fee12d744745e3518c7851515197bed';
 
 /// See also [CurrentAccount].
 @ProviderFor(CurrentAccount)

@@ -25,7 +25,7 @@ extension BuildContextX on BuildContext {
 
   NavigatorState get nav => Navigator.of(this);
 
-  pop([dynamic data]) => Navigator.of(this, rootNavigator: true).pop(data);
+  pop([dynamic data]) => Navigator.of(this).pop(data);
 
   Future<dynamic> pushTo(
     Widget Function(BuildContext context) page, {

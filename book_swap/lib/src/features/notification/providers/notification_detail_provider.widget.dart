@@ -127,6 +127,7 @@ class NotificationDetailProviderScope extends ConsumerWidget {
     return _NotificationDetailInheritedWidget(
       params: (id: id),
       child: Consumer(
+        child: child,
         builder: (context, ref, child) {
           final state = ref.watch(notificationDetailProvider(id));
 

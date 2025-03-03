@@ -12,7 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/core/helpers/ilist_provider_helper.dart';
+import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:book_swap/src/features/profile/i_profile_repo.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'dart:core';
@@ -98,6 +98,7 @@ class ProfileListProviderScope extends ConsumerWidget {
     }
 
     return Consumer(
+      child: child,
       builder: (context, ref, child) {
         final state = ref.watch(profileListProvider);
 

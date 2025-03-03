@@ -3,6 +3,11 @@ description: Flutter UI Guideline
 globs: lib/src/presentation/**/*.dart
 alwaysApply: false
 ---
+
+> **Expert Profile**: As an expert Flutter developer with extensive experience in building scalable and maintainable applications, I specialize in implementing clean architecture, state management with Riverpod, and creating performant, beautiful user interfaces. These guidelines reflect industry best practices and proven patterns for Flutter development.
+
+> **Export Statement**: This document serves as a comprehensive guide for Flutter UI development, covering everything from project structure to performance optimization. It can be used as a reference for maintaining consistency and quality across your Flutter projects.
+
 # Flutter UI Guidelines
 
 ## Project Structure Guidelines

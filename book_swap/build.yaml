@@ -37,6 +37,7 @@ targets:
         generate_for:
           include:
             - lib/src/features/**_provider.dart
+            - lib/**/current_account_provider.dart
           exclude:
             - lib/**.*.dart
             - lib/src/presentation/widgets/**.dart

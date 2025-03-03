@@ -127,6 +127,7 @@ class WishlistItemDetailProviderScope extends ConsumerWidget {
     return _WishlistItemDetailInheritedWidget(
       params: (id: id),
       child: Consumer(
+        child: child,
         builder: (context, ref, child) {
           final state = ref.watch(wishlistItemDetailProvider(id));
 

@@ -259,7 +259,7 @@ class AppDialog extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16),
       child: AppText.bodyMedium(
         message,
-        color: theme.colorScheme.onSurface.withOpacity(0.8),
+        color: theme.colorScheme.onSurface.withValues(alpha: .8),
       ),
     );
 
@@ -276,7 +276,7 @@ class AppDialog extends StatelessWidget {
               },
             ),
           AppButton(
-            label: confirmButtonText ?? 'OK',
+            label: confirmButtonText ?? 'Yes',
             variant: type == AppDialogType.error || type == AppDialogType.warning
                 ? AppButtonVariant.primary
                 : AppButtonVariant.primary,

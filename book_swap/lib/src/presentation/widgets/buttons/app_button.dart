@@ -32,7 +32,8 @@ class AppButton extends AppBaseWidget {
     this.busy = false,
     this.disabled = false,
     this.borderRadius,
-    this.leadingIcon = false,
+    this.leadingIcon = true,
+    this.labelTextStyle,
   });
 
   final VoidCallback? onPressed;
@@ -47,6 +48,7 @@ class AppButton extends AppBaseWidget {
   final bool disabled;
   final double? borderRadius;
   final bool leadingIcon;
+  final TextStyle? labelTextStyle;
 
   @override
   Widget buildWithTheme(BuildContext context) {
@@ -246,7 +248,10 @@ class AppButton extends AppBaseWidget {
       );
     }
 
-    final textWidget = Text(label);
+    final textWidget = Text(
+      label,
+      style: labelTextStyle,
+    );
 
     if (icon != null) {
       final iconWidget = Icon(

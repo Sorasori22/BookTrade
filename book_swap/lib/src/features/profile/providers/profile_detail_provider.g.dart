@@ -8,7 +8,7 @@ part of 'profile_detail_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileDetailHash() => r'b1668226456eaa87b78fc7e1a3b4e5700d74d9b4';
+String _$profileDetailHash() => r'87f946200c6eb57b409370c768f07c5d5628d908';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -32,11 +32,11 @@ class _SystemHash {
 }
 
 abstract class _$ProfileDetail
-    extends BuildlessAutoDisposeAsyncNotifier<ProfileModel> {
-  late final ProfileId id;
+    extends BuildlessAutoDisposeAsyncNotifier<ProfileDetailModel> {
+  late final ProfileId profileId;
 
-  FutureOr<ProfileModel> build(
-    ProfileId id,
+  FutureOr<ProfileDetailModel> build(
+    ProfileId profileId,
   );
 }
 
@@ -45,16 +45,16 @@ abstract class _$ProfileDetail
 const profileDetailProvider = ProfileDetailFamily();
 
 /// See also [ProfileDetail].
-class ProfileDetailFamily extends Family<AsyncValue<ProfileModel>> {
+class ProfileDetailFamily extends Family<AsyncValue<ProfileDetailModel>> {
   /// See also [ProfileDetail].
   const ProfileDetailFamily();
 
   /// See also [ProfileDetail].
   ProfileDetailProvider call(
-    ProfileId id,
+    ProfileId profileId,
   ) {
     return ProfileDetailProvider(
-      id,
+      profileId,
     );
   }
 
@@ -63,7 +63,7 @@ class ProfileDetailFamily extends Family<AsyncValue<ProfileModel>> {
     covariant ProfileDetailProvider provider,
   ) {
     return call(
-      provider.id,
+      provider.profileId,
     );
   }
 
@@ -83,13 +83,13 @@ class ProfileDetailFamily extends Family<AsyncValue<ProfileModel>> {
 }
 
 /// See also [ProfileDetail].
-class ProfileDetailProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<ProfileDetail, ProfileModel> {
+class ProfileDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    ProfileDetail, ProfileDetailModel> {
   /// See also [ProfileDetail].
   ProfileDetailProvider(
-    ProfileId id,
+    ProfileId profileId,
   ) : this._internal(
-          () => ProfileDetail()..id = id,
+          () => ProfileDetail()..profileId = profileId,
           from: profileDetailProvider,
           name: r'profileDetailProvider',
           debugGetCreateSourceHash:
@@ -99,7 +99,7 @@ class ProfileDetailProvider
           dependencies: ProfileDetailFamily._dependencies,
           allTransitiveDependencies:
               ProfileDetailFamily._allTransitiveDependencies,
-          id: id,
+          profileId: profileId,
         );
 
   ProfileDetailProvider._internal(
@@ -109,17 +109,17 @@ class ProfileDetailProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.id,
+    required this.profileId,
   }) : super.internal();
 
-  final ProfileId id;
+  final ProfileId profileId;
 
   @override
-  FutureOr<ProfileModel> runNotifierBuild(
+  FutureOr<ProfileDetailModel> runNotifierBuild(
     covariant ProfileDetail notifier,
   ) {
     return notifier.build(
-      id,
+      profileId,
     );
   }
 
@@ -128,32 +128,32 @@ class ProfileDetailProvider
     return ProviderOverride(
       origin: this,
       override: ProfileDetailProvider._internal(
-        () => create()..id = id,
+        () => create()..profileId = profileId,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        id: id,
+        profileId: profileId,
       ),
     );
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<ProfileDetail, ProfileModel>
+  AutoDisposeAsyncNotifierProviderElement<ProfileDetail, ProfileDetailModel>
       createElement() {
     return _ProfileDetailProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ProfileDetailProvider && other.id == id;
+    return other is ProfileDetailProvider && other.profileId == profileId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, profileId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -161,18 +161,19 @@ class ProfileDetailProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ProfileDetailRef on AutoDisposeAsyncNotifierProviderRef<ProfileModel> {
-  /// The parameter `id` of this provider.
-  ProfileId get id;
+mixin ProfileDetailRef
+    on AutoDisposeAsyncNotifierProviderRef<ProfileDetailModel> {
+  /// The parameter `profileId` of this provider.
+  ProfileId get profileId;
 }
 
 class _ProfileDetailProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<ProfileDetail, ProfileModel>
-    with ProfileDetailRef {
+    extends AutoDisposeAsyncNotifierProviderElement<ProfileDetail,
+        ProfileDetailModel> with ProfileDetailRef {
   _ProfileDetailProviderElement(super.provider);
 
   @override
-  ProfileId get id => (origin as ProfileDetailProvider).id;
+  ProfileId get profileId => (origin as ProfileDetailProvider).profileId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

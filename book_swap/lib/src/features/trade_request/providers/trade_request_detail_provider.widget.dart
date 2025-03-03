@@ -127,6 +127,7 @@ class TradeRequestDetailProviderScope extends ConsumerWidget {
     return _TradeRequestDetailInheritedWidget(
       params: (id: id),
       child: Consumer(
+        child: child,
         builder: (context, ref, child) {
           final state = ref.watch(tradeRequestDetailProvider(id));
 

@@ -2,8 +2,8 @@ import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../profile_schema.schema.dart';
 import '../i_profile_repo.dart';
+import '../profile_schema.schema.dart';
 
 part 'profile_detail_provider.g.dart';
 
@@ -11,12 +11,13 @@ part 'profile_detail_provider.g.dart';
 @riverpod
 class ProfileDetail extends _$ProfileDetail {
   @override
-  FutureOr<ProfileModel> build(ProfileId id) {
-    return ref.watch(profileRepoProvider).findOne(id).then((value) => value.getOrThrow());
+  FutureOr<ProfileDetailModel> build(ProfileId profileId) {
+    ref.autoInvalidateSelf(const Duration(minutes: 3));
+
+    return ref.watch(profileRepoProvider).findOne(profileId).getOrThrow();
   }
 
-  /// Perform side-effect update detail provider
-  void updateState(ProfileModel Function(ProfileModel oldState) newState) {
+  void updateState(ProfileDetailModel Function(ProfileDetailModel oldState) newState) {
     state = state.whenData(newState);
   }
 }

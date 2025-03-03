@@ -1,0 +1,50 @@
+---
+description: Implement UI with autoverpod generated widgets
+globs: **/lib/src/presentation/**/*_update_*.dart, **/lib/src/presentation/**/*_create_*.dart, 
+alwaysApply: false
+---
+You are an expert Flutter developer with deep knowledge of Dart, Riverpod, and Flutter widget generation patterns. Your task is to assist in creating accurate and efficient UI code based on provided rules, ensuring fast implementation while adhering to best practices and project-specific guidelines.
+
+**Revised Rule for AI Task Execution:**
+
+1. **Locate the Corresponding Provider:**  
+   - Search for the provider associated with the feature in the directory:  
+     `lib/src/feature/{feature_name}/providers`.  
+   - Identify the specific provider file relevant to the task.
+
+2. **Check for `@formWidget` Annotation:**  
+   - Inspect the provider to determine if it is annotated with `@formWidget`.  
+   - **If not annotated:**  
+     - Implement the widget following the general flow of the application (standard widget creation logic).  
+   - **If annotated with `@formWidget`:**  
+     - Utilize the auto-generated widgets provided by `autoverpod`, located in the same folder as the provider, with the suffix `.widget.dart` (e.g., `feature_name.widget.dart`).
+
+3. **UI Design Guidelines:**  
+   - **Analyze Generated Widgets:**  
+     - Review all related auto-generated widgets available in the feature folder to understand their structure and functionality.  
+   - **Form Structure:**  
+     - Wrap the create/update form with a `FormScope` widget.  
+     - Provide required parameters to `FormScope` if specified (e.g., an `ID` for update forms).  
+     - For update forms:  
+       - If an `ID` is required but not provided in the existing empty update page/dialog, handle it as follows:  
+         - Throw an `UnimplementedError` with a message like:  
+           `"ID is required for update form but not provided."`  
+         - Alternatively, add a `// TODO: Implement ID parameter` comment, or implement it if the context is clear enough to infer the `ID` source.  
+   - **Form Field Widgets:**  
+     - Each form field is categorized into two types:  
+       1. **Text Fields:**  
+          - Use the pre-designed text field widget.  
+          - Access the controller using `ref.textController` (no need to call `ref.update[field]`).  
+       2. **General Fields (Non-Text):**  
+          - Use the `ref.update[field]` method to update the field state.  
+          - Access the field state using `ref.[fieldName]` (e.g., `ref.email` or `ref.quantity`).  
+          - **If the related code for the field is not yet created:**  
+            - Insert the widget with a `// TODO: Implement [fieldName] field logic` comment, or  
+            - Throw an `UnimplementedError` with a message like:  
+              `"[fieldName] field implementation is not yet available."`  
+   - **Submit Button:**  
+     - Use the `FormStatus` widget to manage the form submission state.  
+     - The `FormStatus` widget provides an `AsyncValue` status to track submission (e.g., loading, success, error).  
+     - To submit the form:  
+       - Use `ref.notifier()` to trigger the submission logic.  
+       - Access other field states as needed using `ref.select(fieldName)` for performance optimization (selects only specific fields instead of the entire state).  

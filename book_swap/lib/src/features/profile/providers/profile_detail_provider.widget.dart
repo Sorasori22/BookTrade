@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/profile/i_profile_repo.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'dart:core';
 
 class _ProfileDetailInheritedWidget extends InheritedWidget {
@@ -21,7 +21,7 @@ class _ProfileDetailInheritedWidget extends InheritedWidget {
     required super.child,
   });
 
-  final ({ProfileId id}) params;
+  final ({ProfileId profileId}) params;
 
   static _ProfileDetailInheritedWidget of(BuildContext context) {
     return context
@@ -40,9 +40,9 @@ class _ProfileDetailProxyWidgetRef extends WidgetRef {
   final WidgetRef _ref;
 
   ProfileDetail get notifier =>
-      _ref.read(profileDetailProvider(params.id).notifier);
+      _ref.read(profileDetailProvider(params.profileId).notifier);
 
-  ({ProfileId id}) get params =>
+  ({ProfileId profileId}) get params =>
       _ProfileDetailInheritedWidget.of(context).params;
 
   @override
@@ -87,7 +87,7 @@ class _ProfileDetailProxyWidgetRef extends WidgetRef {
 class ProfileDetailProviderScope extends ConsumerWidget {
   const ProfileDetailProviderScope({
     super.key,
-    required this.id,
+    required this.profileId,
     this.loading,
     this.error,
     this.data,
@@ -96,35 +96,36 @@ class ProfileDetailProviderScope extends ConsumerWidget {
     this.onStateChanged,
   });
 
-  final ProfileId id;
+  final ProfileId profileId;
   final Widget Function()? loading;
   final Widget Function(Object error, StackTrace? stackTrace)? error;
-  final Widget Function(ProfileModel data)? data;
+  final Widget Function(ProfileDetailModel data)? data;
   final Widget Function(
     BuildContext context,
     _ProfileDetailProxyWidgetRef ref,
-    AsyncValue<ProfileModel> asyncValue,
+    AsyncValue<ProfileDetailModel> asyncValue,
     Widget? child,
   )?
   builder;
   final Widget? child;
   final void Function(
-    AsyncValue<ProfileModel>? previous,
-    AsyncValue<ProfileModel> next,
+    AsyncValue<ProfileDetailModel>? previous,
+    AsyncValue<ProfileDetailModel> next,
   )?
   onStateChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (onStateChanged != null) {
-      ref.listen(profileDetailProvider(id), onStateChanged!);
+      ref.listen(profileDetailProvider(profileId), onStateChanged!);
     }
 
     return _ProfileDetailInheritedWidget(
-      params: (id: id),
+      params: (profileId: profileId),
       child: Consumer(
+        child: child,
         builder: (context, ref, child) {
-          final state = ref.watch(profileDetailProvider(id));
+          final state = ref.watch(profileDetailProvider(profileId));
 
           if (builder != null) {
             return builder!(
@@ -205,7 +206,7 @@ class ProfileDetailParamsWidget extends ConsumerWidget {
   final Widget Function(
     BuildContext context,
     _ProfileDetailProxyWidgetRef ref,
-    ({ProfileId id}) params,
+    ({ProfileId profileId}) params,
   )
   builder;
 
@@ -221,13 +222,13 @@ class ProfileDetailParamsWidget extends ConsumerWidget {
 class _ProfileDetailStateProxyWidgetRef extends _ProfileDetailProxyWidgetRef {
   _ProfileDetailStateProxyWidgetRef(super._ref);
 
-  ProfileModel get state =>
-      _ref.watch(profileDetailProvider(params.id)).requireValue;
+  ProfileDetailModel get state =>
+      _ref.watch(profileDetailProvider(params.profileId)).requireValue;
 
-  Selected select<Selected>(Selected Function(ProfileModel) selector) =>
+  Selected select<Selected>(Selected Function(ProfileDetailModel) selector) =>
       _ref.watch(
         profileDetailProvider(
-          params.id,
+          params.profileId,
         ).select((value) => selector(value.requireValue)),
       );
 }
@@ -241,7 +242,7 @@ class ProfileDetailStateWidget extends ConsumerWidget {
   });
 
   /// The builder function that constructs the widget tree.
-  /// Access the state directly via ref.state, which is equivalent to ref.watch(profileDetailProvider(params.id))
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(profileDetailProvider(params.profileId))
   ///
   /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
   /// The ref parameter provides type-safe access to the provider state and notifier
@@ -252,7 +253,7 @@ class ProfileDetailStateWidget extends ConsumerWidget {
   )
   builder;
   final Widget? child;
-  final void Function(ProfileModel? previous, ProfileModel? next)?
+  final void Function(ProfileDetailModel? previous, ProfileDetailModel? next)?
   onStateChanged;
 
   @override
@@ -261,7 +262,7 @@ class ProfileDetailStateWidget extends ConsumerWidget {
 
     if (onStateChanged != null) {
       final params = _ProfileDetailInheritedWidget.of(context).params;
-      ref.listen(profileDetailProvider(params.id), (pre, next) {
+      ref.listen(profileDetailProvider(params.profileId), (pre, next) {
         if (pre != next) onStateChanged!(pre?.valueOrNull, next.valueOrNull);
       });
     }
@@ -277,7 +278,7 @@ class ProfileDetailSelectWidget<Selected> extends ConsumerWidget {
     this.onStateChanged,
   });
 
-  final Selected Function(ProfileModel state) selector;
+  final Selected Function(ProfileDetailModel state) selector;
   final Widget Function(
     BuildContext context,
     _ProfileDetailStateProxyWidgetRef ref,
@@ -294,7 +295,7 @@ class ProfileDetailSelectWidget<Selected> extends ConsumerWidget {
       final params = _ProfileDetailInheritedWidget.of(context).params;
       ref.listen(
         profileDetailProvider(
-          params.id,
+          params.profileId,
         ).select((value) => selector(value.requireValue)),
         (pre, next) {
           if (pre != next) onStateChanged!(pre, next);

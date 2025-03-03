@@ -74,7 +74,7 @@ class _Impl implements IAuthRepo {
         email: param.email,
         password: param.password,
         data: {
-          'name': param.name,
+          'fullname': param.name,
           'age': param.age,
         },
       );
@@ -163,7 +163,6 @@ class _Impl implements IAuthRepo {
         userId,
         attributes: AdminUserAttributes(
           password: param.password.trim(),
-          appMetadata: {'type': 'agent'},
         ),
       );
 

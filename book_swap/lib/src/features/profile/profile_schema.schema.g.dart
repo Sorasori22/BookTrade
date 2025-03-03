@@ -12,9 +12,13 @@ _$ProfileModelImpl _$$ProfileModelImplFromJson(Map<String, dynamic> json) =>
     _$ProfileModelImpl(
       id: ProfileId.fromJson(json['id']),
       username: json['username'] as String,
-      fullName: json['full_name'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
+      email: json['email'] as String,
+      fullname: json['fullname'] as String?,
+      avatar: json['avatar_url'] == null
+          ? null
+          : ImageObject.fromJson(json['avatar_url']),
       bio: json['bio'] as String?,
+      age: (json['age'] as num?)?.toInt(),
       location: json['location'] as String?,
       address: json['address'] as String?,
       phoneNumber: json['phone_number'] as String?,
@@ -26,9 +30,11 @@ Map<String, dynamic> _$$ProfileModelImplToJson(_$ProfileModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
       'username': instance.username,
-      'full_name': instance.fullName,
-      'avatar_url': instance.avatarUrl,
+      'email': instance.email,
+      'fullname': instance.fullname,
+      'avatar_url': instance.avatar?.toJson(),
       'bio': instance.bio,
+      'age': instance.age,
       'location': instance.location,
       'address': instance.address,
       'phone_number': instance.phoneNumber,
@@ -41,8 +47,11 @@ _$ProfileLiteModelImpl _$$ProfileLiteModelImplFromJson(
     _$ProfileLiteModelImpl(
       id: ProfileId.fromJson(json['id']),
       username: json['username'] as String,
-      fullName: json['full_name'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
+      email: json['email'] as String,
+      fullname: json['fullname'] as String?,
+      avatar: json['avatar_url'] == null
+          ? null
+          : ImageObject.fromJson(json['avatar_url']),
     );
 
 Map<String, dynamic> _$$ProfileLiteModelImplToJson(
@@ -50,8 +59,9 @@ Map<String, dynamic> _$$ProfileLiteModelImplToJson(
     <String, dynamic>{
       'id': instance.id.toJson(),
       'username': instance.username,
-      'full_name': instance.fullName,
-      'avatar_url': instance.avatarUrl,
+      'email': instance.email,
+      'fullname': instance.fullname,
+      'avatar_url': instance.avatar?.toJson(),
     };
 
 _$ProfileDetailModelImpl _$$ProfileDetailModelImplFromJson(
@@ -59,9 +69,13 @@ _$ProfileDetailModelImpl _$$ProfileDetailModelImplFromJson(
     _$ProfileDetailModelImpl(
       id: ProfileId.fromJson(json['id']),
       username: json['username'] as String,
-      fullName: json['full_name'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
+      email: json['email'] as String,
+      fullname: json['fullname'] as String?,
+      avatar: json['avatar_url'] == null
+          ? null
+          : ImageObject.fromJson(json['avatar_url']),
       bio: json['bio'] as String?,
+      age: (json['age'] as num?)?.toInt(),
       location: json['location'] as String?,
       address: json['address'] as String?,
       phoneNumber: json['phone_number'] as String?,
@@ -74,9 +88,11 @@ Map<String, dynamic> _$$ProfileDetailModelImplToJson(
     <String, dynamic>{
       'id': instance.id.toJson(),
       'username': instance.username,
-      'full_name': instance.fullName,
-      'avatar_url': instance.avatarUrl,
+      'email': instance.email,
+      'fullname': instance.fullname,
+      'avatar_url': instance.avatar?.toJson(),
       'bio': instance.bio,
+      'age': instance.age,
       'location': instance.location,
       'address': instance.address,
       'phone_number': instance.phoneNumber,
@@ -84,39 +100,16 @@ Map<String, dynamic> _$$ProfileDetailModelImplToJson(
       'updated_at': instance.updatedAt.toIso8601String(),
     };
 
-_$ProfileCreateParamImpl _$$ProfileCreateParamImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ProfileCreateParamImpl(
-      id: ProfileId.fromJson(json['id']),
-      username: json['username'] as String,
-      fullName: json['full_name'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
-      bio: json['bio'] as String?,
-      location: json['location'] as String?,
-      address: json['address'] as String?,
-      phoneNumber: json['phone_number'] as String?,
-    );
-
-Map<String, dynamic> _$$ProfileCreateParamImplToJson(
-        _$ProfileCreateParamImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id.toJson(),
-      'username': instance.username,
-      'full_name': instance.fullName,
-      'avatar_url': instance.avatarUrl,
-      'bio': instance.bio,
-      'location': instance.location,
-      'address': instance.address,
-      'phone_number': instance.phoneNumber,
-    };
-
 _$ProfileUpdateParamImpl _$$ProfileUpdateParamImplFromJson(
         Map<String, dynamic> json) =>
     _$ProfileUpdateParamImpl(
       username: json['username'] as String?,
-      fullName: json['full_name'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
+      fullname: json['fullname'] as String?,
+      avatar: json['avatar_url'] == null
+          ? null
+          : ImageObject.fromJson(json['avatar_url']),
       bio: json['bio'] as String?,
+      age: (json['age'] as num?)?.toInt(),
       location: json['location'] as String?,
       address: json['address'] as String?,
       phoneNumber: json['phone_number'] as String?,
@@ -126,9 +119,10 @@ Map<String, dynamic> _$$ProfileUpdateParamImplToJson(
         _$ProfileUpdateParamImpl instance) =>
     <String, dynamic>{
       'username': instance.username,
-      'full_name': instance.fullName,
-      'avatar_url': instance.avatarUrl,
+      'fullname': instance.fullname,
+      'avatar_url': instance.avatar?.toJson(),
       'bio': instance.bio,
+      'age': instance.age,
       'location': instance.location,
       'address': instance.address,
       'phone_number': instance.phoneNumber,
@@ -143,9 +137,11 @@ const _tableProfileModel = TableBuilder(
   columns: [
     ColumnBuilder('id'),
     ColumnBuilder('username'),
-    ColumnBuilder('full_name'),
+    ColumnBuilder('email'),
+    ColumnBuilder('fullname'),
     ColumnBuilder('avatar_url'),
     ColumnBuilder('bio'),
+    ColumnBuilder('age'),
     ColumnBuilder('location'),
     ColumnBuilder('address'),
     ColumnBuilder('phone_number'),
@@ -159,7 +155,8 @@ const _tableProfileLiteModel = TableBuilder(
   columns: [
     ColumnBuilder('id'),
     ColumnBuilder('username'),
-    ColumnBuilder('full_name'),
+    ColumnBuilder('email'),
+    ColumnBuilder('fullname'),
     ColumnBuilder('avatar_url'),
   ],
 );
@@ -169,9 +166,11 @@ const _tableProfileDetailModel = TableBuilder(
   columns: [
     ColumnBuilder('id'),
     ColumnBuilder('username'),
-    ColumnBuilder('full_name'),
+    ColumnBuilder('email'),
+    ColumnBuilder('fullname'),
     ColumnBuilder('avatar_url'),
     ColumnBuilder('bio'),
+    ColumnBuilder('age'),
     ColumnBuilder('location'),
     ColumnBuilder('address'),
     ColumnBuilder('phone_number'),
