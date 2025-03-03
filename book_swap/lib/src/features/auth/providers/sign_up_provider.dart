@@ -1,5 +1,4 @@
 import 'package:autoverpod/autoverpod.dart';
-import 'package:book_swap/src/features/auth/params/sign_up_param.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

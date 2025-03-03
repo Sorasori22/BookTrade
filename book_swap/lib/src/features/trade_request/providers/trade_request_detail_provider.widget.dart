@@ -9,6 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
@@ -95,6 +97,8 @@ class TradeRequestDetailProviderScope extends ConsumerWidget {
     this.loading,
     this.error,
     this.data,
+    this.skipLoadingOnReload = true,
+    this.skipLoadingOnRefresh = true,
     this.builder,
     this.child,
     this.onStateChanged,
@@ -104,6 +108,8 @@ class TradeRequestDetailProviderScope extends ConsumerWidget {
   final Widget Function()? loading;
   final Widget Function(Object error, StackTrace? stackTrace)? error;
   final Widget Function(TradeRequestModel data)? data;
+  final bool skipLoadingOnReload;
+  final bool skipLoadingOnRefresh;
   final Widget Function(
     BuildContext context,
     _TradeRequestDetailProxyWidgetRef ref,
@@ -143,6 +149,8 @@ class TradeRequestDetailProviderScope extends ConsumerWidget {
           final themeExtension =
               Theme.of(context).extension<KimappThemeExtension>();
           return state.when(
+            skipLoadingOnReload: skipLoadingOnReload,
+            skipLoadingOnRefresh: skipLoadingOnRefresh,
             data: (data) {
               final result = this.data?.call(data) ?? child;
               if (result == null) {

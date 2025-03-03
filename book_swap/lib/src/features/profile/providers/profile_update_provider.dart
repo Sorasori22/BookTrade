@@ -1,6 +1,5 @@
 import 'package:autoverpod/autoverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,12 +8,13 @@ import '../profile_schema.schema.dart';
 import 'profile_detail_provider.dart';
 import 'profile_list_pagination_provider.dart';
 import 'profile_list_provider.dart';
+import 'profile_update_provider.widget.dart';
 
 part 'profile_update_provider.g.dart';
 
 @formWidget
 @riverpod
-class ProfileUpdate extends _$ProfileUpdateWidget {
+class ProfileUpdate extends $ProfileUpdateWidget {
   @override
   Future<ProfileUpdateParam> build(ProfileId profileId) async {
     final result = await ref.read(profileRepoProvider).findOne(profileId).getOrThrow();
@@ -27,6 +27,7 @@ class ProfileUpdate extends _$ProfileUpdateWidget {
       age: result.age,
       address: result.address,
       phoneNumber: result.phoneNumber,
+      test: null,
     );
   }
 
@@ -45,7 +46,5 @@ class ProfileUpdate extends _$ProfileUpdateWidget {
     /// in this case, the item should be removed from the paginated list, but using this method will just update the item
     /// other case is if we update sort order, the item might need to change position
     ProfilePaginationTracker.instance.updatePaginatedItem(ref, result.toProfileModel());
-
-    super.onSuccess(result);
   }
 }

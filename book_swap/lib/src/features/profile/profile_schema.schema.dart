@@ -10,6 +10,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kimapp/kimapp.dart';
 
 import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'profile_schema.dart';
 
 part 'profile_schema.schema.freezed.dart';
@@ -409,6 +410,7 @@ class ProfileUpdateParam
   /// - int? age : JsonKey('age')
   /// - String? location : JsonKey('location')
   /// - String? address : JsonKey('address')
+  /// - BookModel? test : JsonKey('test')
   /// - String? phoneNumber : JsonKey('phone_number')
   @JsonSerializable(explicitToJson: true)
   const factory ProfileUpdateParam({
@@ -419,6 +421,7 @@ class ProfileUpdateParam
     @JsonKey(name: ProfileUpdateParam.ageKey) required int? age,
     @JsonKey(name: ProfileUpdateParam.locationKey) required String? location,
     @JsonKey(name: ProfileUpdateParam.addressKey) required String? address,
+    @JsonKey(name: ProfileUpdateParam.testKey) required BookModel? test,
     @JsonKey(name: ProfileUpdateParam.phoneNumberKey)
     required String? phoneNumber,
   }) = _ProfileUpdateParam;
@@ -447,6 +450,9 @@ class ProfileUpdateParam
 
   /// Field name for address field with JsonKey('address')
   static const String addressKey = "address";
+
+  /// Field name for test field with JsonKey('test')
+  static const String testKey = "test";
 
   /// Field name for phoneNumber field with JsonKey('phone_number')
   static const String phoneNumberKey = "phone_number";

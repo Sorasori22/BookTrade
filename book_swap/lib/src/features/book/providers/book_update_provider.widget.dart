@@ -9,8 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:autoverpod/autoverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/book/i_book_repo.dart';
@@ -194,6 +195,8 @@ class _BookUpdateFormScopeState extends ConsumerState<BookUpdateFormScope> {
             );
 
             return isInitializedAsync.when(
+              skipLoadingOnReload: true,
+              skipLoadingOnRefresh: true,
               data: (_) {
                 if (widget.builder != null) {
                   return widget.builder!(
@@ -404,10 +407,11 @@ class BookUpdateTitleProxyWidgetRef extends BookUpdateProxyWidgetRef {
   void updateTitle(String? newValue) => notifier.updateTitle(newValue);
 }
 
-class BookUpdateTitleField extends ConsumerStatefulWidget {
+class BookUpdateTitleField extends HookConsumerWidget {
   const BookUpdateTitleField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -419,76 +423,67 @@ class BookUpdateTitleField extends ConsumerStatefulWidget {
   final Widget Function(BuildContext context, BookUpdateTitleProxyWidgetRef ref)
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      BookUpdateTitleFieldState();
-}
-
-class BookUpdateTitleFieldState extends ConsumerState<BookUpdateTitleField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookUpdateForm(context);
+
     final params = _BookUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue =
         ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.title;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       bookUpdateProvider(
         params.bookId,
-      ).select((value) => value.requireValue.title),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      ).select((value) => value.valueOrNull?.title),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-    final params = _BookUpdateFormInheritedWidget.of(context).params;
-    ref
-        .read(bookUpdateProvider(params.bookId).notifier)
-        .updateTitle(_textController.text);
-  }
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.title;
+        if (currentValue != controller.text) {
+          ref
+              .read(bookUpdateProvider(params.bookId).notifier)
+              .updateTitle(controller.text);
+        }
+      }
 
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasBookUpdateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = BookUpdateTitleProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }
 
@@ -505,10 +500,11 @@ class BookUpdateAuthorProxyWidgetRef extends BookUpdateProxyWidgetRef {
   void updateAuthor(String? newValue) => notifier.updateAuthor(newValue);
 }
 
-class BookUpdateAuthorField extends ConsumerStatefulWidget {
+class BookUpdateAuthorField extends HookConsumerWidget {
   const BookUpdateAuthorField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -523,76 +519,67 @@ class BookUpdateAuthorField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      BookUpdateAuthorFieldState();
-}
-
-class BookUpdateAuthorFieldState extends ConsumerState<BookUpdateAuthorField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookUpdateForm(context);
+
     final params = _BookUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue =
         ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.author;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       bookUpdateProvider(
         params.bookId,
-      ).select((value) => value.requireValue.author),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      ).select((value) => value.valueOrNull?.author),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-    final params = _BookUpdateFormInheritedWidget.of(context).params;
-    ref
-        .read(bookUpdateProvider(params.bookId).notifier)
-        .updateAuthor(_textController.text);
-  }
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.author;
+        if (currentValue != controller.text) {
+          ref
+              .read(bookUpdateProvider(params.bookId).notifier)
+              .updateAuthor(controller.text);
+        }
+      }
 
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasBookUpdateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = BookUpdateAuthorProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }
 
@@ -609,10 +596,11 @@ class BookUpdateIsbnProxyWidgetRef extends BookUpdateProxyWidgetRef {
   void updateIsbn(String? newValue) => notifier.updateIsbn(newValue);
 }
 
-class BookUpdateIsbnField extends ConsumerStatefulWidget {
+class BookUpdateIsbnField extends HookConsumerWidget {
   const BookUpdateIsbnField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -624,76 +612,64 @@ class BookUpdateIsbnField extends ConsumerStatefulWidget {
   final Widget Function(BuildContext context, BookUpdateIsbnProxyWidgetRef ref)
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      BookUpdateIsbnFieldState();
-}
-
-class BookUpdateIsbnFieldState extends ConsumerState<BookUpdateIsbnField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookUpdateForm(context);
+
     final params = _BookUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue =
         ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.isbn;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       bookUpdateProvider(
         params.bookId,
-      ).select((value) => value.requireValue.isbn),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      ).select((value) => value.valueOrNull?.isbn),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-    final params = _BookUpdateFormInheritedWidget.of(context).params;
-    ref
-        .read(bookUpdateProvider(params.bookId).notifier)
-        .updateIsbn(_textController.text);
-  }
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.isbn;
+        if (currentValue != controller.text) {
+          ref
+              .read(bookUpdateProvider(params.bookId).notifier)
+              .updateIsbn(controller.text);
+        }
+      }
 
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasBookUpdateForm(context);
+    final proxy = BookUpdateIsbnProxyWidgetRef(ref, textController: controller);
 
-    final proxy = BookUpdateIsbnProxyWidgetRef(
-      ref,
-      textController: _textController,
-    );
-    return widget.builder(context, proxy);
+    return builder(context, proxy);
   }
 }
 
@@ -714,10 +690,11 @@ class BookUpdateDescriptionProxyWidgetRef extends BookUpdateProxyWidgetRef {
       notifier.updateDescription(newValue);
 }
 
-class BookUpdateDescriptionField extends ConsumerStatefulWidget {
+class BookUpdateDescriptionField extends HookConsumerWidget {
   const BookUpdateDescriptionField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -732,77 +709,70 @@ class BookUpdateDescriptionField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      BookUpdateDescriptionFieldState();
-}
-
-class BookUpdateDescriptionFieldState
-    extends ConsumerState<BookUpdateDescriptionField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookUpdateForm(context);
+
     final params = _BookUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue =
         ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.description;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       bookUpdateProvider(
         params.bookId,
-      ).select((value) => value.requireValue.description),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      ).select((value) => value.valueOrNull?.description),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-    final params = _BookUpdateFormInheritedWidget.of(context).params;
-    ref
-        .read(bookUpdateProvider(params.bookId).notifier)
-        .updateDescription(_textController.text);
-  }
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref
+                .read(bookUpdateProvider(params.bookId))
+                .valueOrNull
+                ?.description;
+        if (currentValue != controller.text) {
+          ref
+              .read(bookUpdateProvider(params.bookId).notifier)
+              .updateDescription(controller.text);
+        }
+      }
 
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasBookUpdateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = BookUpdateDescriptionProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }
 
@@ -847,10 +817,11 @@ class BookUpdateImageUrlProxyWidgetRef extends BookUpdateProxyWidgetRef {
   void updateImageUrl(String? newValue) => notifier.updateImageUrl(newValue);
 }
 
-class BookUpdateImageUrlField extends ConsumerStatefulWidget {
+class BookUpdateImageUrlField extends HookConsumerWidget {
   const BookUpdateImageUrlField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -865,76 +836,66 @@ class BookUpdateImageUrlField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      BookUpdateImageUrlFieldState();
-}
-
-class BookUpdateImageUrlFieldState
-    extends ConsumerState<BookUpdateImageUrlField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookUpdateForm(context);
+
     final params = _BookUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue =
         ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.imageUrl;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       bookUpdateProvider(
         params.bookId,
-      ).select((value) => value.requireValue.imageUrl),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      ).select((value) => value.valueOrNull?.imageUrl),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-    final params = _BookUpdateFormInheritedWidget.of(context).params;
-    ref
-        .read(bookUpdateProvider(params.bookId).notifier)
-        .updateImageUrl(_textController.text);
-  }
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.imageUrl;
+        if (currentValue != controller.text) {
+          ref
+              .read(bookUpdateProvider(params.bookId).notifier)
+              .updateImageUrl(controller.text);
+        }
+      }
 
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasBookUpdateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = BookUpdateImageUrlProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }

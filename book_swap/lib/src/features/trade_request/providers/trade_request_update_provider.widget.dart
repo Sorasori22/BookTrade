@@ -9,8 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:autoverpod/autoverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
@@ -207,6 +208,8 @@ class _TradeRequestUpdateFormScopeState
             );
 
             return isInitializedAsync.when(
+              skipLoadingOnReload: true,
+              skipLoadingOnRefresh: true,
               data: (_) {
                 if (widget.builder != null) {
                   return widget.builder!(
@@ -431,10 +434,11 @@ class TradeRequestUpdateStatusProxyWidgetRef
   void updateStatus(String? newValue) => notifier.updateStatus(newValue);
 }
 
-class TradeRequestUpdateStatusField extends ConsumerStatefulWidget {
+class TradeRequestUpdateStatusField extends HookConsumerWidget {
   const TradeRequestUpdateStatusField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -449,80 +453,73 @@ class TradeRequestUpdateStatusField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      TradeRequestUpdateStatusFieldState();
-}
-
-class TradeRequestUpdateStatusFieldState
-    extends ConsumerState<TradeRequestUpdateStatusField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasTradeRequestUpdateForm(context);
+
     final params = _TradeRequestUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue =
         ref
             .read(tradeRequestUpdateProvider(params.tradeRequestId))
             .valueOrNull
             ?.status;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       tradeRequestUpdateProvider(
         params.tradeRequestId,
-      ).select((value) => value.requireValue.status),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      ).select((value) => value.valueOrNull?.status),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-    final params = _TradeRequestUpdateFormInheritedWidget.of(context).params;
-    ref
-        .read(tradeRequestUpdateProvider(params.tradeRequestId).notifier)
-        .updateStatus(_textController.text);
-  }
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref
+                .read(tradeRequestUpdateProvider(params.tradeRequestId))
+                .valueOrNull
+                ?.status;
+        if (currentValue != controller.text) {
+          ref
+              .read(tradeRequestUpdateProvider(params.tradeRequestId).notifier)
+              .updateStatus(controller.text);
+        }
+      }
 
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasTradeRequestUpdateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = TradeRequestUpdateStatusProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }
 
@@ -543,10 +540,11 @@ class TradeRequestUpdateMessageProxyWidgetRef
   void updateMessage(String? newValue) => notifier.updateMessage(newValue);
 }
 
-class TradeRequestUpdateMessageField extends ConsumerStatefulWidget {
+class TradeRequestUpdateMessageField extends HookConsumerWidget {
   const TradeRequestUpdateMessageField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -561,79 +559,72 @@ class TradeRequestUpdateMessageField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      TradeRequestUpdateMessageFieldState();
-}
-
-class TradeRequestUpdateMessageFieldState
-    extends ConsumerState<TradeRequestUpdateMessageField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasTradeRequestUpdateForm(context);
+
     final params = _TradeRequestUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue =
         ref
             .read(tradeRequestUpdateProvider(params.tradeRequestId))
             .valueOrNull
             ?.message;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       tradeRequestUpdateProvider(
         params.tradeRequestId,
-      ).select((value) => value.requireValue.message),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      ).select((value) => value.valueOrNull?.message),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-    final params = _TradeRequestUpdateFormInheritedWidget.of(context).params;
-    ref
-        .read(tradeRequestUpdateProvider(params.tradeRequestId).notifier)
-        .updateMessage(_textController.text);
-  }
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref
+                .read(tradeRequestUpdateProvider(params.tradeRequestId))
+                .valueOrNull
+                ?.message;
+        if (currentValue != controller.text) {
+          ref
+              .read(tradeRequestUpdateProvider(params.tradeRequestId).notifier)
+              .updateMessage(controller.text);
+        }
+      }
 
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasTradeRequestUpdateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = TradeRequestUpdateMessageProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }

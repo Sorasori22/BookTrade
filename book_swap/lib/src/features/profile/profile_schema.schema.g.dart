@@ -112,6 +112,9 @@ _$ProfileUpdateParamImpl _$$ProfileUpdateParamImplFromJson(
       age: (json['age'] as num?)?.toInt(),
       location: json['location'] as String?,
       address: json['address'] as String?,
+      test: json['test'] == null
+          ? null
+          : BookModel.fromJson(json['test'] as Map<String, dynamic>),
       phoneNumber: json['phone_number'] as String?,
     );
 
@@ -125,6 +128,7 @@ Map<String, dynamic> _$$ProfileUpdateParamImplToJson(
       'age': instance.age,
       'location': instance.location,
       'address': instance.address,
+      'test': instance.test?.toJson(),
       'phone_number': instance.phoneNumber,
     };
 

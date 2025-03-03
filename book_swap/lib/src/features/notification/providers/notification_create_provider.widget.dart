@@ -9,8 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:autoverpod/autoverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/notification/i_notification_repo.dart';
@@ -374,10 +375,11 @@ class NotificationCreateContentProxyWidgetRef
   void updateContent(String newValue) => notifier.updateContent(newValue);
 }
 
-class NotificationCreateContentField extends ConsumerStatefulWidget {
+class NotificationCreateContentField extends HookConsumerWidget {
   const NotificationCreateContentField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -392,73 +394,59 @@ class NotificationCreateContentField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      NotificationCreateContentFieldState();
-}
-
-class NotificationCreateContentFieldState
-    extends ConsumerState<NotificationCreateContentField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasNotificationCreateForm(context);
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue = ref.read(notificationCreateProvider).content;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       notificationCreateProvider.select((value) => value.content),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next;
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next;
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(notificationCreateProvider).content;
+        if (currentValue != controller.text) {
+          ref
+              .read(notificationCreateProvider.notifier)
+              .updateContent(controller.text);
+        }
+      }
 
-    ref
-        .read(notificationCreateProvider.notifier)
-        .updateContent(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasNotificationCreateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = NotificationCreateContentProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }
 
@@ -513,10 +501,11 @@ class NotificationCreateNotificationTypeProxyWidgetRef
       notifier.updateNotificationType(newValue);
 }
 
-class NotificationCreateNotificationTypeField extends ConsumerStatefulWidget {
+class NotificationCreateNotificationTypeField extends HookConsumerWidget {
   const NotificationCreateNotificationTypeField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -531,72 +520,59 @@ class NotificationCreateNotificationTypeField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      NotificationCreateNotificationTypeFieldState();
-}
-
-class NotificationCreateNotificationTypeFieldState
-    extends ConsumerState<NotificationCreateNotificationTypeField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasNotificationCreateForm(context);
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue = ref.read(notificationCreateProvider).notificationType;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       notificationCreateProvider.select((value) => value.notificationType),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next;
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next;
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref.read(notificationCreateProvider).notificationType;
+        if (currentValue != controller.text) {
+          ref
+              .read(notificationCreateProvider.notifier)
+              .updateNotificationType(controller.text);
+        }
+      }
 
-    ref
-        .read(notificationCreateProvider.notifier)
-        .updateNotificationType(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasNotificationCreateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = NotificationCreateNotificationTypeProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }

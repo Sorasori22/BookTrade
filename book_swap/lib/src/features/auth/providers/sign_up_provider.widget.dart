@@ -9,8 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:autoverpod/autoverpod.dart';
-import 'package:book_swap/src/features/auth/params/sign_up_param.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/auth/auth.dart';
 import 'dart:core';
@@ -315,10 +316,11 @@ class SignUpEmailProxyWidgetRef extends SignUpProxyWidgetRef {
   void updateEmail(String newValue) => notifier.updateEmail(newValue);
 }
 
-class SignUpEmailField extends ConsumerStatefulWidget {
+class SignUpEmailField extends HookConsumerWidget {
   const SignUpEmailField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -330,70 +332,54 @@ class SignUpEmailField extends ConsumerStatefulWidget {
   final Widget Function(BuildContext context, SignUpEmailProxyWidgetRef ref)
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      SignUpEmailFieldState();
-}
-
-class SignUpEmailFieldState extends ConsumerState<SignUpEmailField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
-    final initialValue = ref.read(signUpProvider).email;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
-
-    // Setup listener for provider changes
-    ref.listenManual(
-      signUpProvider.select((value) => value.email),
-      _handleFieldValueChange,
-      fireImmediately: false,
-    );
-
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next;
-      }
-    });
-  }
-
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-
-    ref.read(signUpProvider.notifier).updateEmail(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasSignUpForm(context);
 
-    final proxy = SignUpEmailProxyWidgetRef(
-      ref,
-      textController: _textController,
-    );
-    return widget.builder(context, proxy);
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
+    final initialValue = ref.read(signUpProvider).email;
+
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
+    ref.listenManual(signUpProvider.select((value) => value.email), (
+      previous,
+      next,
+    ) {
+      if (previous != next && controller.text != next) {
+        controller.text = next;
+      }
+      onChanged?.call(previous, next);
+    });
+
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue;
+      }
+      return null;
+    }, []);
+
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(signUpProvider).email;
+        if (currentValue != controller.text) {
+          ref.read(signUpProvider.notifier).updateEmail(controller.text);
+        }
+      }
+
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
+
+    final proxy = SignUpEmailProxyWidgetRef(ref, textController: controller);
+
+    return builder(context, proxy);
   }
 }
 
@@ -410,10 +396,11 @@ class SignUpPasswordProxyWidgetRef extends SignUpProxyWidgetRef {
   void updatePassword(String newValue) => notifier.updatePassword(newValue);
 }
 
-class SignUpPasswordField extends ConsumerStatefulWidget {
+class SignUpPasswordField extends HookConsumerWidget {
   const SignUpPasswordField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -425,70 +412,54 @@ class SignUpPasswordField extends ConsumerStatefulWidget {
   final Widget Function(BuildContext context, SignUpPasswordProxyWidgetRef ref)
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      SignUpPasswordFieldState();
-}
-
-class SignUpPasswordFieldState extends ConsumerState<SignUpPasswordField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
-    final initialValue = ref.read(signUpProvider).password;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
-
-    // Setup listener for provider changes
-    ref.listenManual(
-      signUpProvider.select((value) => value.password),
-      _handleFieldValueChange,
-      fireImmediately: false,
-    );
-
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next;
-      }
-    });
-  }
-
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-
-    ref.read(signUpProvider.notifier).updatePassword(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasSignUpForm(context);
 
-    final proxy = SignUpPasswordProxyWidgetRef(
-      ref,
-      textController: _textController,
-    );
-    return widget.builder(context, proxy);
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
+    final initialValue = ref.read(signUpProvider).password;
+
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
+    ref.listenManual(signUpProvider.select((value) => value.password), (
+      previous,
+      next,
+    ) {
+      if (previous != next && controller.text != next) {
+        controller.text = next;
+      }
+      onChanged?.call(previous, next);
+    });
+
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue;
+      }
+      return null;
+    }, []);
+
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(signUpProvider).password;
+        if (currentValue != controller.text) {
+          ref.read(signUpProvider.notifier).updatePassword(controller.text);
+        }
+      }
+
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
+
+    final proxy = SignUpPasswordProxyWidgetRef(ref, textController: controller);
+
+    return builder(context, proxy);
   }
 }
 
@@ -505,10 +476,11 @@ class SignUpNameProxyWidgetRef extends SignUpProxyWidgetRef {
   void updateName(String newValue) => notifier.updateName(newValue);
 }
 
-class SignUpNameField extends ConsumerStatefulWidget {
+class SignUpNameField extends HookConsumerWidget {
   const SignUpNameField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -520,69 +492,54 @@ class SignUpNameField extends ConsumerStatefulWidget {
   final Widget Function(BuildContext context, SignUpNameProxyWidgetRef ref)
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => SignUpNameFieldState();
-}
-
-class SignUpNameFieldState extends ConsumerState<SignUpNameField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
-    final initialValue = ref.read(signUpProvider).name;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
-
-    // Setup listener for provider changes
-    ref.listenManual(
-      signUpProvider.select((value) => value.name),
-      _handleFieldValueChange,
-      fireImmediately: false,
-    );
-
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next;
-      }
-    });
-  }
-
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-
-    ref.read(signUpProvider.notifier).updateName(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasSignUpForm(context);
 
-    final proxy = SignUpNameProxyWidgetRef(
-      ref,
-      textController: _textController,
-    );
-    return widget.builder(context, proxy);
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
+    final initialValue = ref.read(signUpProvider).name;
+
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
+    ref.listenManual(signUpProvider.select((value) => value.name), (
+      previous,
+      next,
+    ) {
+      if (previous != next && controller.text != next) {
+        controller.text = next;
+      }
+      onChanged?.call(previous, next);
+    });
+
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue;
+      }
+      return null;
+    }, []);
+
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(signUpProvider).name;
+        if (currentValue != controller.text) {
+          ref.read(signUpProvider.notifier).updateName(controller.text);
+        }
+      }
+
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
+
+    final proxy = SignUpNameProxyWidgetRef(ref, textController: controller);
+
+    return builder(context, proxy);
   }
 }
 

@@ -9,8 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:autoverpod/autoverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/book_rating/book_rating_schema.schema.dart';
 import 'package:book_swap/src/features/book_rating/i_book_rating_repo.dart';
@@ -201,6 +202,8 @@ class _BookRatingUpdateFormScopeState
             );
 
             return isInitializedAsync.when(
+              skipLoadingOnReload: true,
+              skipLoadingOnRefresh: true,
               data: (_) {
                 if (widget.builder != null) {
                   return widget.builder!(
@@ -448,10 +451,11 @@ class BookRatingUpdateCommentProxyWidgetRef
   void updateComment(String? newValue) => notifier.updateComment(newValue);
 }
 
-class BookRatingUpdateCommentField extends ConsumerStatefulWidget {
+class BookRatingUpdateCommentField extends HookConsumerWidget {
   const BookRatingUpdateCommentField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -466,79 +470,72 @@ class BookRatingUpdateCommentField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      BookRatingUpdateCommentFieldState();
-}
-
-class BookRatingUpdateCommentFieldState
-    extends ConsumerState<BookRatingUpdateCommentField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookRatingUpdateForm(context);
+
     final params = _BookRatingUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue =
         ref
             .read(bookRatingUpdateProvider(params.bookRatingId))
             .valueOrNull
             ?.comment;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       bookRatingUpdateProvider(
         params.bookRatingId,
-      ).select((value) => value.requireValue.comment),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      ).select((value) => value.valueOrNull?.comment),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-    final params = _BookRatingUpdateFormInheritedWidget.of(context).params;
-    ref
-        .read(bookRatingUpdateProvider(params.bookRatingId).notifier)
-        .updateComment(_textController.text);
-  }
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref
+                .read(bookRatingUpdateProvider(params.bookRatingId))
+                .valueOrNull
+                ?.comment;
+        if (currentValue != controller.text) {
+          ref
+              .read(bookRatingUpdateProvider(params.bookRatingId).notifier)
+              .updateComment(controller.text);
+        }
+      }
 
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasBookRatingUpdateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = BookRatingUpdateCommentProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }

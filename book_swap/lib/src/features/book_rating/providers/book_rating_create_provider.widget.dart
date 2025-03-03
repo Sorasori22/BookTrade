@@ -9,8 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:autoverpod/autoverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
@@ -430,10 +431,11 @@ class BookRatingCreateCommentProxyWidgetRef
   void updateComment(String? newValue) => notifier.updateComment(newValue);
 }
 
-class BookRatingCreateCommentField extends ConsumerStatefulWidget {
+class BookRatingCreateCommentField extends HookConsumerWidget {
   const BookRatingCreateCommentField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -448,72 +450,60 @@ class BookRatingCreateCommentField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      BookRatingCreateCommentFieldState();
-}
-
-class BookRatingCreateCommentFieldState
-    extends ConsumerState<BookRatingCreateCommentField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookRatingCreateForm(context);
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue = ref.read(bookRatingCreateProvider).comment;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       bookRatingCreateProvider.select((value) => value.comment),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(bookRatingCreateProvider).comment;
+        if (currentValue != controller.text) {
+          ref
+              .read(bookRatingCreateProvider.notifier)
+              .updateComment(controller.text);
+        }
+      }
 
-    ref
-        .read(bookRatingCreateProvider.notifier)
-        .updateComment(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasBookRatingCreateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = BookRatingCreateCommentProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }

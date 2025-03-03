@@ -9,8 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:autoverpod/autoverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/wishlist_item/i_wishlist_item_repo.dart';
@@ -374,10 +375,11 @@ class WishlistItemCreateTitleProxyWidgetRef
   void updateTitle(String newValue) => notifier.updateTitle(newValue);
 }
 
-class WishlistItemCreateTitleField extends ConsumerStatefulWidget {
+class WishlistItemCreateTitleField extends HookConsumerWidget {
   const WishlistItemCreateTitleField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -392,73 +394,59 @@ class WishlistItemCreateTitleField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      WishlistItemCreateTitleFieldState();
-}
-
-class WishlistItemCreateTitleFieldState
-    extends ConsumerState<WishlistItemCreateTitleField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasWishlistItemCreateForm(context);
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue = ref.read(wishlistItemCreateProvider).title;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       wishlistItemCreateProvider.select((value) => value.title),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next;
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next;
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(wishlistItemCreateProvider).title;
+        if (currentValue != controller.text) {
+          ref
+              .read(wishlistItemCreateProvider.notifier)
+              .updateTitle(controller.text);
+        }
+      }
 
-    ref
-        .read(wishlistItemCreateProvider.notifier)
-        .updateTitle(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasWishlistItemCreateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = WishlistItemCreateTitleProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }
 
@@ -479,10 +467,11 @@ class WishlistItemCreateAuthorProxyWidgetRef
   void updateAuthor(String? newValue) => notifier.updateAuthor(newValue);
 }
 
-class WishlistItemCreateAuthorField extends ConsumerStatefulWidget {
+class WishlistItemCreateAuthorField extends HookConsumerWidget {
   const WishlistItemCreateAuthorField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -497,73 +486,61 @@ class WishlistItemCreateAuthorField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      WishlistItemCreateAuthorFieldState();
-}
-
-class WishlistItemCreateAuthorFieldState
-    extends ConsumerState<WishlistItemCreateAuthorField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasWishlistItemCreateForm(context);
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
     final initialValue = ref.read(wishlistItemCreateProvider).author;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
 
-    // Setup listener for provider changes
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
     ref.listenManual(
       wishlistItemCreateProvider.select((value) => value.author),
-      _handleFieldValueChange,
-      fireImmediately: false,
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
     );
 
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
       }
-    });
-  }
+      return null;
+    }, []);
 
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(wishlistItemCreateProvider).author;
+        if (currentValue != controller.text) {
+          ref
+              .read(wishlistItemCreateProvider.notifier)
+              .updateAuthor(controller.text);
+        }
+      }
 
-    ref
-        .read(wishlistItemCreateProvider.notifier)
-        .updateAuthor(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _debugCheckHasWishlistItemCreateForm(context);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = WishlistItemCreateAuthorProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }
 
@@ -584,10 +561,11 @@ class WishlistItemCreateIsbnProxyWidgetRef
   void updateIsbn(String? newValue) => notifier.updateIsbn(newValue);
 }
 
-class WishlistItemCreateIsbnField extends ConsumerStatefulWidget {
+class WishlistItemCreateIsbnField extends HookConsumerWidget {
   const WishlistItemCreateIsbnField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -602,72 +580,60 @@ class WishlistItemCreateIsbnField extends ConsumerStatefulWidget {
   )
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      WishlistItemCreateIsbnFieldState();
-}
-
-class WishlistItemCreateIsbnFieldState
-    extends ConsumerState<WishlistItemCreateIsbnField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
-    final initialValue = ref.read(wishlistItemCreateProvider).isbn;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
-
-    // Setup listener for provider changes
-    ref.listenManual(
-      wishlistItemCreateProvider.select((value) => value.isbn),
-      _handleFieldValueChange,
-      fireImmediately: false,
-    );
-
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next ?? "";
-      }
-    });
-  }
-
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-
-    ref
-        .read(wishlistItemCreateProvider.notifier)
-        .updateIsbn(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasWishlistItemCreateForm(context);
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
+    final initialValue = ref.read(wishlistItemCreateProvider).isbn;
+
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
+    ref.listenManual(wishlistItemCreateProvider.select((value) => value.isbn), (
+      previous,
+      next,
+    ) {
+      if (previous != next && controller.text != next) {
+        controller.text = next ?? "";
+      }
+      onChanged?.call(previous, next);
+    });
+
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue;
+      }
+      return null;
+    }, []);
+
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(wishlistItemCreateProvider).isbn;
+        if (currentValue != controller.text) {
+          ref
+              .read(wishlistItemCreateProvider.notifier)
+              .updateIsbn(controller.text);
+        }
+      }
+
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = WishlistItemCreateIsbnProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }

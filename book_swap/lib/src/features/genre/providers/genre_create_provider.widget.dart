@@ -9,8 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:autoverpod/autoverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/genre/genre_schema.schema.dart';
 import 'package:book_swap/src/features/genre/i_genre_repo.dart';
@@ -327,10 +328,11 @@ class GenreCreateNameProxyWidgetRef extends GenreCreateProxyWidgetRef {
   void updateName(String newValue) => notifier.updateName(newValue);
 }
 
-class GenreCreateNameField extends ConsumerStatefulWidget {
+class GenreCreateNameField extends HookConsumerWidget {
   const GenreCreateNameField({
     super.key,
     this.textController,
+    this.onChanged,
     required this.builder,
   });
 
@@ -342,69 +344,56 @@ class GenreCreateNameField extends ConsumerStatefulWidget {
   final Widget Function(BuildContext context, GenreCreateNameProxyWidgetRef ref)
   builder;
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      GenreCreateNameFieldState();
-}
-
-class GenreCreateNameFieldState extends ConsumerState<GenreCreateNameField> {
-  late final TextEditingController _textController;
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String next)? onChanged;
 
   @override
-  void initState() {
-    super.initState();
-    final initialValue = ref.read(genreCreateProvider).name;
-    _textController =
-        widget.textController ?? TextEditingController(text: initialValue);
-
-    // Setup listener for provider changes
-    ref.listenManual(
-      genreCreateProvider.select((value) => value.name),
-      _handleFieldValueChange,
-      fireImmediately: false,
-    );
-
-    _textController.addListener(_syncTextToProvider);
-  }
-
-  /// Handles when the provider value changes and updates the text controller
-  void _handleFieldValueChange(dynamic previous, dynamic next) {
-    if (previous == next) return;
-    if (_textController.text == next) return;
-
-    // Ensure we're not updating a disposed controller
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _textController.text = next;
-      }
-    });
-  }
-
-  /// Syncs text field changes to the provider
-  void _syncTextToProvider() {
-    if (!mounted) return;
-
-    ref.read(genreCreateProvider.notifier).updateName(_textController.text);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_syncTextToProvider);
-    // Only dispose if we created the controller
-    if (widget.textController == null) {
-      _textController.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasGenreCreateForm(context);
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
+    final initialValue = ref.read(genreCreateProvider).name;
+
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
+    ref.listenManual(genreCreateProvider.select((value) => value.name), (
+      previous,
+      next,
+    ) {
+      if (previous != next && controller.text != next) {
+        controller.text = next;
+      }
+      onChanged?.call(previous, next);
+    });
+
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue;
+      }
+      return null;
+    }, []);
+
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue = ref.read(genreCreateProvider).name;
+        if (currentValue != controller.text) {
+          ref.read(genreCreateProvider.notifier).updateName(controller.text);
+        }
+      }
+
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
 
     final proxy = GenreCreateNameProxyWidgetRef(
       ref,
-      textController: _textController,
+      textController: controller,
     );
-    return widget.builder(context, proxy);
+
+    return builder(context, proxy);
   }
 }
