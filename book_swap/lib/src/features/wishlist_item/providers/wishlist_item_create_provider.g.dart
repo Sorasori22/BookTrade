@@ -13,16 +13,15 @@ final wishlistItemCreateCallStatusProvider =
 
 abstract class _$WishlistItemCreateWidget extends _$WishlistItemCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(WishlistItemModel result) {}
+  void onSuccess(WishlistItemModel result);
   @nonVirtual
   Future<AsyncValue<WishlistItemModel>> call() async {
     final _callStatus = ref.read(wishlistItemCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(wishlistItemCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -70,20 +69,6 @@ abstract class _$WishlistItemCreateWidget extends _$WishlistItemCreate {
           WishlistItemCreateParam Function(WishlistItemCreateParam state)
               update) =>
       state = update(state);
-
-  /// Update the userId field of WishlistItemCreateParam class.
-  void updateUserId(ProfileId newValue) =>
-      state = state.copyWith(userId: newValue);
-
-  /// Update the title field of WishlistItemCreateParam class.
-  void updateTitle(String newValue) => state = state.copyWith(title: newValue);
-
-  /// Update the author field of WishlistItemCreateParam class.
-  void updateAuthor(String? newValue) =>
-      state = state.copyWith(author: newValue);
-
-  /// Update the isbn field of WishlistItemCreateParam class.
-  void updateIsbn(String? newValue) => state = state.copyWith(isbn: newValue);
 }
 
 // **************************************************************************

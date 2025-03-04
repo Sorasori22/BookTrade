@@ -13,16 +13,15 @@ final bookRatingCreateCallStatusProvider =
 
 abstract class _$BookRatingCreateWidget extends _$BookRatingCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(BookRatingModel result) {}
+  void onSuccess(BookRatingModel result);
   @nonVirtual
   Future<AsyncValue<BookRatingModel>> call() async {
     final _callStatus = ref.read(bookRatingCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(bookRatingCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -69,21 +68,6 @@ abstract class _$BookRatingCreateWidget extends _$BookRatingCreate {
   void updateState(
           BookRatingCreateParam Function(BookRatingCreateParam state) update) =>
       state = update(state);
-
-  /// Update the userId field of BookRatingCreateParam class.
-  void updateUserId(ProfileId newValue) =>
-      state = state.copyWith(userId: newValue);
-
-  /// Update the bookId field of BookRatingCreateParam class.
-  void updateBookId(BookId newValue) =>
-      state = state.copyWith(bookId: newValue);
-
-  /// Update the rating field of BookRatingCreateParam class.
-  void updateRating(int newValue) => state = state.copyWith(rating: newValue);
-
-  /// Update the comment field of BookRatingCreateParam class.
-  void updateComment(String? newValue) =>
-      state = state.copyWith(comment: newValue);
 }
 
 // **************************************************************************

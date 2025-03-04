@@ -13,16 +13,15 @@ final notificationCreateCallStatusProvider =
 
 abstract class _$NotificationCreateWidget extends _$NotificationCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(NotificationModel result) {}
+  void onSuccess(NotificationModel result);
   @nonVirtual
   Future<AsyncValue<NotificationModel>> call() async {
     final _callStatus = ref.read(notificationCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(notificationCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -70,22 +69,6 @@ abstract class _$NotificationCreateWidget extends _$NotificationCreate {
           NotificationCreateParam Function(NotificationCreateParam state)
               update) =>
       state = update(state);
-
-  /// Update the userId field of NotificationCreateParam class.
-  void updateUserId(ProfileId newValue) =>
-      state = state.copyWith(userId: newValue);
-
-  /// Update the content field of NotificationCreateParam class.
-  void updateContent(String newValue) =>
-      state = state.copyWith(content: newValue);
-
-  /// Update the relatedTradeId field of NotificationCreateParam class.
-  void updateRelatedTradeId(int? newValue) =>
-      state = state.copyWith(relatedTradeId: newValue);
-
-  /// Update the notificationType field of NotificationCreateParam class.
-  void updateNotificationType(String newValue) =>
-      state = state.copyWith(notificationType: newValue);
 }
 
 // **************************************************************************

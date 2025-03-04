@@ -13,16 +13,15 @@ final messageCreateCallStatusProvider =
 
 abstract class _$MessageCreateWidget extends _$MessageCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(MessageModel result) {}
+  void onSuccess(MessageModel result);
   @nonVirtual
   Future<AsyncValue<MessageModel>> call() async {
     final _callStatus = ref.read(messageCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(messageCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -69,22 +68,6 @@ abstract class _$MessageCreateWidget extends _$MessageCreate {
   void updateState(
           MessageCreateParam Function(MessageCreateParam state) update) =>
       state = update(state);
-
-  /// Update the senderId field of MessageCreateParam class.
-  void updateSenderId(ProfileId newValue) =>
-      state = state.copyWith(senderId: newValue);
-
-  /// Update the recipientId field of MessageCreateParam class.
-  void updateRecipientId(ProfileId newValue) =>
-      state = state.copyWith(recipientId: newValue);
-
-  /// Update the content field of MessageCreateParam class.
-  void updateContent(String newValue) =>
-      state = state.copyWith(content: newValue);
-
-  /// Update the tradeRequestId field of MessageCreateParam class.
-  void updateTradeRequestId(int? newValue) =>
-      state = state.copyWith(tradeRequestId: newValue);
 }
 
 // **************************************************************************

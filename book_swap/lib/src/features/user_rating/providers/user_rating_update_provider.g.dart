@@ -14,9 +14,9 @@ final userRatingUpdateCallStatusProvider = StateProvider.autoDispose
 
 abstract class _$UserRatingUpdateWidget extends _$UserRatingUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(UserRatingModel result) {}
+  void onSuccess(UserRatingModel result);
   @nonVirtual
   Future<AsyncValue<UserRatingModel>> call() async {
     // Ignore if form is not loaded yet
@@ -30,7 +30,6 @@ abstract class _$UserRatingUpdateWidget extends _$UserRatingUpdate {
         userRatingUpdateCallStatusProvider((userRatingId: userRatingId))
             .notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -78,21 +77,13 @@ abstract class _$UserRatingUpdateWidget extends _$UserRatingUpdate {
   void updateState(
           UserRatingUpdateParam Function(UserRatingUpdateParam state) update) =>
       state = state.whenData(update);
-
-  /// Update the rating field of UserRatingUpdateParam class.
-  void updateRating(int? newValue) =>
-      state = state.whenData((state) => state.copyWith(rating: newValue));
-
-  /// Update the comment field of UserRatingUpdateParam class.
-  void updateComment(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(comment: newValue));
 }
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userRatingUpdateHash() => r'030f677402d8249a244038b29b36ac8931f8a8a0';
+String _$userRatingUpdateHash() => r'61809e342db32b2a653618d624cd0a4a89e33148';
 
 /// Copied from Dart SDK
 class _SystemHash {

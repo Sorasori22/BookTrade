@@ -13,16 +13,15 @@ final tradeRequestCreateCallStatusProvider =
 
 abstract class _$TradeRequestCreateWidget extends _$TradeRequestCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(TradeRequestModel result) {}
+  void onSuccess(TradeRequestModel result);
   @nonVirtual
   Future<AsyncValue<TradeRequestModel>> call() async {
     final _callStatus = ref.read(tradeRequestCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(tradeRequestCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -70,26 +69,6 @@ abstract class _$TradeRequestCreateWidget extends _$TradeRequestCreate {
           TradeRequestCreateParam Function(TradeRequestCreateParam state)
               update) =>
       state = update(state);
-
-  /// Update the requesterId field of TradeRequestCreateParam class.
-  void updateRequesterId(ProfileId newValue) =>
-      state = state.copyWith(requesterId: newValue);
-
-  /// Update the ownerId field of TradeRequestCreateParam class.
-  void updateOwnerId(ProfileId newValue) =>
-      state = state.copyWith(ownerId: newValue);
-
-  /// Update the bookId field of TradeRequestCreateParam class.
-  void updateBookId(BookId newValue) =>
-      state = state.copyWith(bookId: newValue);
-
-  /// Update the offeredBookId field of TradeRequestCreateParam class.
-  void updateOfferedBookId(BookId? newValue) =>
-      state = state.copyWith(offeredBookId: newValue);
-
-  /// Update the message field of TradeRequestCreateParam class.
-  void updateMessage(String? newValue) =>
-      state = state.copyWith(message: newValue);
 }
 
 // **************************************************************************

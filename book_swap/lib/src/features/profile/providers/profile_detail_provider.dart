@@ -12,7 +12,7 @@ part 'profile_detail_provider.g.dart';
 class ProfileDetail extends _$ProfileDetail {
   @override
   FutureOr<ProfileDetailModel> build(ProfileId profileId) {
-    ref.autoInvalidateSelf(const Duration(minutes: 3));
+    ref.autoInvalidateSelf(const Duration(minutes: 30));
 
     return ref.watch(profileRepoProvider).findOne(profileId).getOrThrow();
   }

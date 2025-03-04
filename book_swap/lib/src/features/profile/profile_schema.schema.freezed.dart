@@ -1146,8 +1146,6 @@ mixin _$ProfileUpdateParam {
   String? get location => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileUpdateParam.addressKey)
   String? get address => throw _privateConstructorUsedError;
-  @JsonKey(name: ProfileUpdateParam.testKey)
-  BookModel? get test => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileUpdateParam.phoneNumberKey)
   String? get phoneNumber => throw _privateConstructorUsedError;
 
@@ -1175,10 +1173,7 @@ abstract class $ProfileUpdateParamCopyWith<$Res> {
       @JsonKey(name: ProfileUpdateParam.ageKey) int? age,
       @JsonKey(name: ProfileUpdateParam.locationKey) String? location,
       @JsonKey(name: ProfileUpdateParam.addressKey) String? address,
-      @JsonKey(name: ProfileUpdateParam.testKey) BookModel? test,
       @JsonKey(name: ProfileUpdateParam.phoneNumberKey) String? phoneNumber});
-
-  $BookModelCopyWith<$Res>? get test;
 }
 
 /// @nodoc
@@ -1203,7 +1198,6 @@ class _$ProfileUpdateParamCopyWithImpl<$Res, $Val extends ProfileUpdateParam>
     Object? age = freezed,
     Object? location = freezed,
     Object? address = freezed,
-    Object? test = freezed,
     Object? phoneNumber = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1235,29 +1229,11 @@ class _$ProfileUpdateParamCopyWithImpl<$Res, $Val extends ProfileUpdateParam>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
-      test: freezed == test
-          ? _value.test
-          : test // ignore: cast_nullable_to_non_nullable
-              as BookModel?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
-  }
-
-  /// Create a copy of ProfileUpdateParam
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BookModelCopyWith<$Res>? get test {
-    if (_value.test == null) {
-      return null;
-    }
-
-    return $BookModelCopyWith<$Res>(_value.test!, (value) {
-      return _then(_value.copyWith(test: value) as $Val);
-    });
   }
 }
 
@@ -1277,11 +1253,7 @@ abstract class _$$ProfileUpdateParamImplCopyWith<$Res>
       @JsonKey(name: ProfileUpdateParam.ageKey) int? age,
       @JsonKey(name: ProfileUpdateParam.locationKey) String? location,
       @JsonKey(name: ProfileUpdateParam.addressKey) String? address,
-      @JsonKey(name: ProfileUpdateParam.testKey) BookModel? test,
       @JsonKey(name: ProfileUpdateParam.phoneNumberKey) String? phoneNumber});
-
-  @override
-  $BookModelCopyWith<$Res>? get test;
 }
 
 /// @nodoc
@@ -1304,7 +1276,6 @@ class __$$ProfileUpdateParamImplCopyWithImpl<$Res>
     Object? age = freezed,
     Object? location = freezed,
     Object? address = freezed,
-    Object? test = freezed,
     Object? phoneNumber = freezed,
   }) {
     return _then(_$ProfileUpdateParamImpl(
@@ -1336,10 +1307,6 @@ class __$$ProfileUpdateParamImplCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
-      test: freezed == test
-          ? _value.test
-          : test // ignore: cast_nullable_to_non_nullable
-              as BookModel?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -1360,7 +1327,6 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
       @JsonKey(name: ProfileUpdateParam.ageKey) required this.age,
       @JsonKey(name: ProfileUpdateParam.locationKey) required this.location,
       @JsonKey(name: ProfileUpdateParam.addressKey) required this.address,
-      @JsonKey(name: ProfileUpdateParam.testKey) required this.test,
       @JsonKey(name: ProfileUpdateParam.phoneNumberKey)
       required this.phoneNumber})
       : super._();
@@ -1390,15 +1356,12 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
   @JsonKey(name: ProfileUpdateParam.addressKey)
   final String? address;
   @override
-  @JsonKey(name: ProfileUpdateParam.testKey)
-  final BookModel? test;
-  @override
   @JsonKey(name: ProfileUpdateParam.phoneNumberKey)
   final String? phoneNumber;
 
   @override
   String toString() {
-    return 'ProfileUpdateParam(username: $username, fullname: $fullname, avatar: $avatar, bio: $bio, age: $age, location: $location, address: $address, test: $test, phoneNumber: $phoneNumber)';
+    return 'ProfileUpdateParam(username: $username, fullname: $fullname, avatar: $avatar, bio: $bio, age: $age, location: $location, address: $address, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -1416,7 +1379,6 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.test, test) || other.test == test) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber));
   }
@@ -1424,7 +1386,7 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, username, fullname, avatar, bio,
-      age, location, address, test, phoneNumber);
+      age, location, address, phoneNumber);
 
   /// Create a copy of ProfileUpdateParam
   /// with the given fields replaced by the non-null parameter values.
@@ -1457,7 +1419,6 @@ abstract class _ProfileUpdateParam extends ProfileUpdateParam {
       required final String? location,
       @JsonKey(name: ProfileUpdateParam.addressKey)
       required final String? address,
-      @JsonKey(name: ProfileUpdateParam.testKey) required final BookModel? test,
       @JsonKey(name: ProfileUpdateParam.phoneNumberKey)
       required final String? phoneNumber}) = _$ProfileUpdateParamImpl;
   const _ProfileUpdateParam._() : super._();
@@ -1486,9 +1447,6 @@ abstract class _ProfileUpdateParam extends ProfileUpdateParam {
   @override
   @JsonKey(name: ProfileUpdateParam.addressKey)
   String? get address;
-  @override
-  @JsonKey(name: ProfileUpdateParam.testKey)
-  BookModel? get test;
   @override
   @JsonKey(name: ProfileUpdateParam.phoneNumberKey)
   String? get phoneNumber;

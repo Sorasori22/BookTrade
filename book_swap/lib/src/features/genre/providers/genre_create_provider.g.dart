@@ -13,15 +13,14 @@ final genreCreateCallStatusProvider =
 
 abstract class _$GenreCreateWidget extends _$GenreCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(GenreModel result) {}
+  void onSuccess(GenreModel result);
   @nonVirtual
   Future<AsyncValue<GenreModel>> call() async {
     final _callStatus = ref.read(genreCreateCallStatusProvider);
     final _updateCallStatus = ref.read(genreCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -67,9 +66,6 @@ abstract class _$GenreCreateWidget extends _$GenreCreate {
   /// This allows for more flexible updates to specific fields.
   void updateState(GenreCreateParam Function(GenreCreateParam state) update) =>
       state = update(state);
-
-  /// Update the name field of GenreCreateParam class.
-  void updateName(String newValue) => state = state.copyWith(name: newValue);
 }
 
 // **************************************************************************

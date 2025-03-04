@@ -14,9 +14,9 @@ final messageUpdateCallStatusProvider = StateProvider.autoDispose
 
 abstract class _$MessageUpdateWidget extends _$MessageUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(MessageModel result) {}
+  void onSuccess(MessageModel result);
   @nonVirtual
   Future<AsyncValue<MessageModel>> call() async {
     // Ignore if form is not loaded yet
@@ -29,7 +29,6 @@ abstract class _$MessageUpdateWidget extends _$MessageUpdate {
     final _updateCallStatus = ref
         .read(messageUpdateCallStatusProvider((messageId: messageId)).notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -77,17 +76,13 @@ abstract class _$MessageUpdateWidget extends _$MessageUpdate {
   void updateState(
           MessageUpdateParam Function(MessageUpdateParam state) update) =>
       state = state.whenData(update);
-
-  /// Update the read field of MessageUpdateParam class.
-  void updateRead(bool? newValue) =>
-      state = state.whenData((state) => state.copyWith(read: newValue));
 }
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$messageUpdateHash() => r'402dd4005a565bf9900af58b14a4bc947742c478';
+String _$messageUpdateHash() => r'49a6a60aa4849dddc3026a82b85298acdae85eeb';
 
 /// Copied from Dart SDK
 class _SystemHash {

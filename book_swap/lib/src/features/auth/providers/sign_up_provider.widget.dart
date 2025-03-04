@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/auth/providers/sign_up_provider.dart';
@@ -11,10 +11,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/auth/auth.dart';
 import 'dart:core';
+
+/// Extension that adds field update methods to the form provider.
+/// These methods allow updating individual fields that have copyWith support.
+extension SignUpFieldUpdater on SignUp {
+  /// Update the email field of SignUpParam class.
+  void updateEmail(String newValue) => state = state.copyWith(email: newValue);
+
+  /// Update the password field of SignUpParam class.
+  void updatePassword(String newValue) =>
+      state = state.copyWith(password: newValue);
+
+  /// Update the name field of SignUpParam class.
+  void updateName(String newValue) => state = state.copyWith(name: newValue);
+
+  /// Update the age field of SignUpParam class.
+  void updateAge(int? newValue) => state = state.copyWith(age: newValue);
+}
 
 class _SignUpFormInheritedWidget extends InheritedWidget {
   const _SignUpFormInheritedWidget({
@@ -346,10 +366,7 @@ class SignUpEmailField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(signUpProvider.select((value) => value.email), (
-      previous,
-      next,
-    ) {
+    ref.listen(signUpProvider.select((value) => value.email), (previous, next) {
       if (previous != next && controller.text != next) {
         controller.text = next;
       }
@@ -426,7 +443,7 @@ class SignUpPasswordField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(signUpProvider.select((value) => value.password), (
+    ref.listen(signUpProvider.select((value) => value.password), (
       previous,
       next,
     ) {
@@ -506,10 +523,7 @@ class SignUpNameField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(signUpProvider.select((value) => value.name), (
-      previous,
-      next,
-    ) {
+    ref.listen(signUpProvider.select((value) => value.name), (previous, next) {
       if (previous != next && controller.text != next) {
         controller.text = next;
       }

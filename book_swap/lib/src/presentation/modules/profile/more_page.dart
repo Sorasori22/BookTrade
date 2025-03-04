@@ -54,7 +54,7 @@ class MorePage extends ConsumerWidget {
   Widget _buildProfileSection(BuildContext context) {
     return InkWell(
       onTap: () {
-        ProfileUpdateRoute().push(context);
+        context.pushRoute(const ProfileUpdateRoute());
       },
       borderRadius: BorderRadius.circular(AS.radiusM),
       child: Padding(

@@ -14,9 +14,9 @@ final completedSwapUpdateCallStatusProvider = StateProvider.autoDispose.family<
 
 abstract class _$CompletedSwapUpdateWidget extends _$CompletedSwapUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(CompletedSwapModel result) {}
+  void onSuccess(CompletedSwapModel result);
   @nonVirtual
   Future<AsyncValue<CompletedSwapModel>> call() async {
     // Ignore if form is not loaded yet
@@ -29,7 +29,6 @@ abstract class _$CompletedSwapUpdateWidget extends _$CompletedSwapUpdate {
     final _updateCallStatus = ref.read(completedSwapUpdateCallStatusProvider(
         (completedSwapId: completedSwapId)).notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -78,10 +77,6 @@ abstract class _$CompletedSwapUpdateWidget extends _$CompletedSwapUpdate {
           CompletedSwapUpdateParam Function(CompletedSwapUpdateParam state)
               update) =>
       state = state.whenData(update);
-
-  /// Update the completedAt field of CompletedSwapUpdateParam class.
-  void updateCompletedAt(DateTime? newValue) =>
-      state = state.whenData((state) => state.copyWith(completedAt: newValue));
 }
 
 // **************************************************************************
@@ -89,7 +84,7 @@ abstract class _$CompletedSwapUpdateWidget extends _$CompletedSwapUpdate {
 // **************************************************************************
 
 String _$completedSwapUpdateHash() =>
-    r'de597abfe3f1dc72a930c71f559e44043b45c1b1';
+    r'612f0c7a34a23504139d1e2a2ee07d32b96752ea';
 
 /// Copied from Dart SDK
 class _SystemHash {

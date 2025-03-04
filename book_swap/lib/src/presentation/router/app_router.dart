@@ -40,10 +40,13 @@ class AppRouter extends RootStackRouter {
             children: [
               AutoRoute(page: ProfileRoute.page, path: ''),
               AutoRoute(page: MoreRoute.page, path: 'more'),
-              AutoRoute(page: ProfileUpdateRoute.page, path: 'update'),
             ],
           ),
         ],
+      ),
+      AutoRoute(
+        page: ProfileUpdateRoute.page,
+        path: '/profile/update',
       ),
     ];
   }

@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/user_rating/providers/user_rating_detail_provider.dart';
@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/user_rating/user_rating_schema.schema.dart';

@@ -128,7 +128,7 @@ class _Impl implements IProfileRepo {
     return await errorHandler(() async {
       await _ref.supabaseClient
           .from(ProfileDetailModel.table.tableName)
-          .update({'avatar': image?.toJson()}).eq(ProfileTable.id, profileId.value);
+          .update({'avatar_url': image?.toJson()}).eq(ProfileTable.id, profileId.value);
 
       return right(unit);
     });

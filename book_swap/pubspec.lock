@@ -134,7 +134,7 @@ packages:
       path: "/Users/kim/Development/projects/kimapp/pubs/autoverpod_generator"
       relative: false
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -573,7 +573,7 @@ packages:
     source: hosted
     version: "0.20.5"
   flutter_image_compress:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_image_compress
       sha256: "51d23be39efc2185e72e290042a0da41aed70b14ef97db362a6b5368d0523b27"

@@ -13,9 +13,9 @@ final bookUpdateCallStatusProvider = StateProvider.autoDispose
 
 abstract class _$BookUpdateWidget extends _$BookUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(BookModel result) {}
+  void onSuccess(BookModel result);
   @nonVirtual
   Future<AsyncValue<BookModel>> call() async {
     // Ignore if form is not loaded yet
@@ -28,7 +28,6 @@ abstract class _$BookUpdateWidget extends _$BookUpdate {
     final _updateCallStatus =
         ref.read(bookUpdateCallStatusProvider((bookId: bookId)).notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -75,37 +74,13 @@ abstract class _$BookUpdateWidget extends _$BookUpdate {
   /// This allows for more flexible updates to specific fields.
   void updateState(BookUpdateParam Function(BookUpdateParam state) update) =>
       state = state.whenData(update);
-
-  /// Update the title field of BookUpdateParam class.
-  void updateTitle(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(title: newValue));
-
-  /// Update the author field of BookUpdateParam class.
-  void updateAuthor(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(author: newValue));
-
-  /// Update the isbn field of BookUpdateParam class.
-  void updateIsbn(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(isbn: newValue));
-
-  /// Update the description field of BookUpdateParam class.
-  void updateDescription(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(description: newValue));
-
-  /// Update the condition field of BookUpdateParam class.
-  void updateCondition(int? newValue) =>
-      state = state.whenData((state) => state.copyWith(condition: newValue));
-
-  /// Update the imageUrl field of BookUpdateParam class.
-  void updateImageUrl(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(imageUrl: newValue));
 }
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookUpdateHash() => r'd33357c960d5618045d3f168ebb61911c36f642f';
+String _$bookUpdateHash() => r'1dcbaad04c54d600b31841e1a7190bc7ac72ed83';
 
 /// Copied from Dart SDK
 class _SystemHash {

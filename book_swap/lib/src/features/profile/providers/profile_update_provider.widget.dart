@@ -1,39 +1,30 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
-import 'dart:core';
-
-import 'package:autoverpod/autoverpod.dart';
-import 'package:book_swap/src/core/storage/image_object.dart';
-import 'package:book_swap/src/features/profile/i_profile_repo.dart';
-import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
-import 'package:book_swap/src/features/profile/providers/profile_detail_provider.dart';
-import 'package:book_swap/src/features/profile/providers/profile_list_pagination_provider.dart';
-import 'package:book_swap/src/features/profile/providers/profile_list_provider.dart';
 import 'package:book_swap/src/features/profile/providers/profile_update_provider.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:kimapp_utils/kimapp_utils.dart';
-import 'package:riverpod/src/async_notifier.dart';
+import 'package:book_swap/src/features/profile/i_profile_repo.dart';
+import 'package:book_swap/src/features/profile/providers/profile_detail_provider.dart';
+import 'package:book_swap/src/features/profile/providers/profile_list_pagination_provider.dart';
+import 'package:book_swap/src/features/profile/providers/profile_list_provider.dart';
+import 'dart:core';
 
-import '../../book/book_schema.schema.dart';
-
-// abstract which will be use in generated provider, doing this allow generated provider no need to know about the data type
-// I cannot use extension here, because it won't allow to override the field which no copy with
-abstract class $ProfileUpdateWidget extends $ProfileUpdate {
-  /// Update the state of the form.
-  /// This allows for more flexible updates to specific fields.
-  void updateState(ProfileUpdateParam Function(ProfileUpdateParam state) update) =>
-      state = state.whenData(update);
-
+/// Extension that adds field update methods to the form provider.
+/// These methods allow updating individual fields that have copyWith support.
+extension ProfileUpdateFieldUpdater on ProfileUpdate {
   /// Update the username field of ProfileUpdateParam class.
   void updateUsername(String? newValue) =>
       state = state.whenData((state) => state.copyWith(username: newValue));
@@ -51,7 +42,8 @@ abstract class $ProfileUpdateWidget extends $ProfileUpdate {
       state = state.whenData((state) => state.copyWith(bio: newValue));
 
   /// Update the age field of ProfileUpdateParam class.
-  void updateAge(int? newValue) => state = state.whenData((state) => state.copyWith(age: newValue));
+  void updateAge(int? newValue) =>
+      state = state.whenData((state) => state.copyWith(age: newValue));
 
   /// Update the location field of ProfileUpdateParam class.
   void updateLocation(String? newValue) =>
@@ -60,10 +52,6 @@ abstract class $ProfileUpdateWidget extends $ProfileUpdate {
   /// Update the address field of ProfileUpdateParam class.
   void updateAddress(String? newValue) =>
       state = state.whenData((state) => state.copyWith(address: newValue));
-
-  /// Update the test field of ProfileUpdateParam class.
-  void updateTest(BookModel? newValue) =>
-      state = state.whenData((state) => state.copyWith(test: newValue));
 
   /// Update the phoneNumber field of ProfileUpdateParam class.
   void updatePhoneNumber(String? newValue) =>
@@ -81,7 +69,10 @@ class _ProfileUpdateFormInheritedWidget extends InheritedWidget {
   final ({ProfileId profileId}) params;
 
   static _ProfileUpdateFormInheritedWidget of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<_ProfileUpdateFormInheritedWidget>()!;
+    return context
+        .dependOnInheritedWidgetOfExactType<
+          _ProfileUpdateFormInheritedWidget
+        >()!;
   }
 
   @override
@@ -97,15 +88,18 @@ class ProfileUpdateProxyWidgetRef extends WidgetRef {
 
   final WidgetRef _ref;
 
-  ({ProfileId profileId}) get params => _ProfileUpdateFormInheritedWidget.of(context).params;
+  ({ProfileId profileId}) get params =>
+      _ProfileUpdateFormInheritedWidget.of(context).params;
 
   AsyncValue<ProfileDetailModel>? get status => _ref.watch(
-        profileUpdateCallStatusProvider((profileId: params.profileId)),
-      );
+    profileUpdateCallStatusProvider((profileId: params.profileId)),
+  );
 
-  GlobalKey<FormState> get formKey => _ProfileUpdateFormInheritedWidget.of(context).formKey;
+  GlobalKey<FormState> get formKey =>
+      _ProfileUpdateFormInheritedWidget.of(context).formKey;
 
-  ProfileUpdate get notifier => _ref.read(profileUpdateProvider(params.profileId).notifier);
+  ProfileUpdate get notifier =>
+      _ref.read(profileUpdateProvider(params.profileId).notifier);
 
   /// Submits the form. Internally this calls [notifier.submit] with the form key validated.
   Future<AsyncValue<ProfileDetailModel>> submit() async {
@@ -120,7 +114,8 @@ class ProfileUpdateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  Selected select<Selected>(Selected Function(ProfileUpdateParam) selector) => _ref.watch(
+  Selected select<Selected>(Selected Function(ProfileUpdateParam) selector) =>
+      _ref.watch(
         profileUpdateProvider(
           params.profileId,
         ).select((value) => selector(value.requireValue)),
@@ -140,8 +135,7 @@ class ProfileUpdateProxyWidgetRef extends WidgetRef {
     ProviderListenable<T> provider,
     void Function(T?, T) listener, {
     void Function(Object, StackTrace)? onError,
-  }) =>
-      _ref.listen(provider, listener, onError: onError);
+  }) => _ref.listen(provider, listener, onError: onError);
 
   @override
   ProviderSubscription<T> listenManual<T>(
@@ -149,13 +143,12 @@ class ProfileUpdateProxyWidgetRef extends WidgetRef {
     void Function(T?, T) listener, {
     void Function(Object, StackTrace)? onError,
     bool fireImmediately = false,
-  }) =>
-      _ref.listenManual(
-        provider,
-        listener,
-        onError: onError,
-        fireImmediately: fireImmediately,
-      );
+  }) => _ref.listenManual(
+    provider,
+    listener,
+    onError: onError,
+    fireImmediately: fireImmediately,
+  );
 
   @override
   T read<T>(ProviderListenable<T> provider) => _ref.read(provider);
@@ -180,28 +173,32 @@ class ProfileUpdateFormScope extends ConsumerStatefulWidget {
     this.onInitLoading,
     this.onInitError,
   }) : assert(
-          child != null || builder != null,
-          'Either child or builder must be provided',
-        );
+         child != null || builder != null,
+         'Either child or builder must be provided',
+       );
   final ProfileId profileId;
   final Widget Function(
     BuildContext context,
     ProfileUpdateProxyWidgetRef ref,
     Widget? child,
-  )? builder;
+  )?
+  builder;
   final Widget? child;
   final GlobalKey<FormState>? formKey;
   final AutovalidateMode? autovalidateMode;
   final void Function(bool, Object?)? onPopInvokedWithResult;
-  final void Function(BuildContext context, ProfileDetailModel value)? onSuccessed;
+  final void Function(BuildContext context, ProfileDetailModel value)?
+  onSuccessed;
   final Widget Function()? onInitLoading;
   final Widget Function(Object error, StackTrace stack)? onInitError;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ProfileUpdateFormScopeState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProfileUpdateFormScopeState();
 }
 
-class _ProfileUpdateFormScopeState extends ConsumerState<ProfileUpdateFormScope> {
+class _ProfileUpdateFormScopeState
+    extends ConsumerState<ProfileUpdateFormScope> {
   late final GlobalKey<FormState> _cachedFormKey;
 
   @override
@@ -256,13 +253,14 @@ class _ProfileUpdateFormScopeState extends ConsumerState<ProfileUpdateFormScope>
 
                 return widget.child!;
               },
-              error: (error, stack) =>
-                  widget.onInitError?.call(error, stack) ??
-                  Theme.of(context)
-                      .extension<KimappThemeExtension>()
-                      ?.defaultErrorStateWidget
-                      ?.call(context, ref, error) ??
-                  const SizedBox.shrink(),
+              error:
+                  (error, stack) =>
+                      widget.onInitError?.call(error, stack) ??
+                      Theme.of(context)
+                          .extension<KimappThemeExtension>()
+                          ?.defaultErrorStateWidget
+                          ?.call(context, ref, error) ??
+                      const SizedBox.shrink(),
               loading: () {
                 return widget.onInitLoading?.call() ??
                     Theme.of(context)
@@ -282,7 +280,8 @@ class _ProfileUpdateFormScopeState extends ConsumerState<ProfileUpdateFormScope>
 bool _debugCheckHasProfileUpdateForm(BuildContext context) {
   assert(() {
     if (context.widget is! ProfileUpdateFormScope &&
-        context.findAncestorWidgetOfExactType<ProfileUpdateFormScope>() == null) {
+        context.findAncestorWidgetOfExactType<ProfileUpdateFormScope>() ==
+            null) {
       // Check if we're in a navigation context (dialog or pushed screen)
       final isInNavigation = ModalRoute.of(context) != null;
 
@@ -312,7 +311,8 @@ class ProfileUpdateFormParams extends ConsumerWidget {
     BuildContext context,
     ProfileUpdateProxyWidgetRef ref,
     ({ProfileId profileId}) params,
-  ) builder;
+  )
+  builder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -336,7 +336,8 @@ class ProfileUpdateFormSelect<Selected> extends ConsumerWidget {
     BuildContext context,
     ProfileUpdateProxyWidgetRef ref,
     Selected value,
-  ) builder;
+  )
+  builder;
   final void Function(Selected? previous, Selected? next)? onStateChanged;
 
   @override
@@ -376,9 +377,11 @@ class ProfileUpdateFormState extends ConsumerWidget {
     BuildContext context,
     ProfileUpdateProxyWidgetRef ref,
     Widget? child,
-  ) builder;
+  )
+  builder;
   final Widget? child;
-  final void Function(ProfileUpdateParam? previous, ProfileUpdateParam? next)? onStateChanged;
+  final void Function(ProfileUpdateParam? previous, ProfileUpdateParam? next)?
+  onStateChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -391,7 +394,9 @@ class ProfileUpdateFormState extends ConsumerWidget {
       });
     }
     return ProfileUpdateFormParams(
-      builder: (context, ref, params) => builder(context, ProfileUpdateProxyWidgetRef(ref), child),
+      builder:
+          (context, ref, params) =>
+              builder(context, ProfileUpdateProxyWidgetRef(ref), child),
     );
   }
 }
@@ -407,11 +412,13 @@ class ProfileUpdateFormStatus extends ConsumerWidget {
     BuildContext context,
     ProfileUpdateProxyWidgetRef ref,
     AsyncValue<ProfileDetailModel>? status,
-  ) builder;
+  )
+  builder;
   final void Function(
     AsyncValue<ProfileDetailModel>? previous,
     AsyncValue<ProfileDetailModel>? next,
-  )? onChanged;
+  )?
+  onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -465,7 +472,8 @@ class ProfileUpdateUsernameField extends HookConsumerWidget {
   final Widget Function(
     BuildContext context,
     ProfileUpdateUsernameProxyWidgetRef ref,
-  ) builder;
+  )
+  builder;
 
   /// Optional callback that will be called when the field value changes
   final void Function(String? previous, String? next)? onChanged;
@@ -477,12 +485,14 @@ class ProfileUpdateUsernameField extends HookConsumerWidget {
     final params = _ProfileUpdateFormInheritedWidget.of(context).params;
 
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.username;
+    final initialValue =
+        ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.username;
 
-    final controller = textController ?? useTextEditingController(text: initialValue);
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       profileUpdateProvider(
         params.profileId,
       ).select((value) => value.valueOrNull?.username),
@@ -490,14 +500,16 @@ class ProfileUpdateUsernameField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null && initialValue != null && textController!.text.isEmpty) {
-        textController!.text = initialValue;
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -506,7 +518,10 @@ class ProfileUpdateUsernameField extends HookConsumerWidget {
     useEffect(() {
       void listener() {
         final currentValue =
-            ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.username;
+            ref
+                .read(profileUpdateProvider(params.profileId))
+                .valueOrNull
+                ?.username;
         if (currentValue != controller.text) {
           ref
               .read(profileUpdateProvider(params.profileId).notifier)
@@ -559,7 +574,8 @@ class ProfileUpdateFullnameField extends HookConsumerWidget {
   final Widget Function(
     BuildContext context,
     ProfileUpdateFullnameProxyWidgetRef ref,
-  ) builder;
+  )
+  builder;
 
   /// Optional callback that will be called when the field value changes
   final void Function(String? previous, String? next)? onChanged;
@@ -571,12 +587,14 @@ class ProfileUpdateFullnameField extends HookConsumerWidget {
     final params = _ProfileUpdateFormInheritedWidget.of(context).params;
 
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.fullname;
+    final initialValue =
+        ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.fullname;
 
-    final controller = textController ?? useTextEditingController(text: initialValue);
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       profileUpdateProvider(
         params.profileId,
       ).select((value) => value.valueOrNull?.fullname),
@@ -584,14 +602,16 @@ class ProfileUpdateFullnameField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null && initialValue != null && textController!.text.isEmpty) {
-        textController!.text = initialValue;
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -600,7 +620,10 @@ class ProfileUpdateFullnameField extends HookConsumerWidget {
     useEffect(() {
       void listener() {
         final currentValue =
-            ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.fullname;
+            ref
+                .read(profileUpdateProvider(params.profileId))
+                .valueOrNull
+                ?.fullname;
         if (currentValue != controller.text) {
           ref
               .read(profileUpdateProvider(params.profileId).notifier)
@@ -637,7 +660,8 @@ class ProfileUpdateAvatarField extends ConsumerWidget {
   final Widget Function(
     BuildContext context,
     ProfileUpdateAvatarProxyWidgetRef ref,
-  ) builder;
+  )
+  builder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -677,7 +701,8 @@ class ProfileUpdateBioField extends HookConsumerWidget {
   final Widget Function(
     BuildContext context,
     ProfileUpdateBioProxyWidgetRef ref,
-  ) builder;
+  )
+  builder;
 
   /// Optional callback that will be called when the field value changes
   final void Function(String? previous, String? next)? onChanged;
@@ -689,12 +714,14 @@ class ProfileUpdateBioField extends HookConsumerWidget {
     final params = _ProfileUpdateFormInheritedWidget.of(context).params;
 
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.bio;
+    final initialValue =
+        ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.bio;
 
-    final controller = textController ?? useTextEditingController(text: initialValue);
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       profileUpdateProvider(
         params.profileId,
       ).select((value) => value.valueOrNull?.bio),
@@ -702,14 +729,16 @@ class ProfileUpdateBioField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null && initialValue != null && textController!.text.isEmpty) {
-        textController!.text = initialValue;
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -717,9 +746,12 @@ class ProfileUpdateBioField extends HookConsumerWidget {
     // Setup text listener
     useEffect(() {
       void listener() {
-        final currentValue = ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.bio;
+        final currentValue =
+            ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.bio;
         if (currentValue != controller.text) {
-          ref.read(profileUpdateProvider(params.profileId).notifier).updateBio(controller.text);
+          ref
+              .read(profileUpdateProvider(params.profileId).notifier)
+              .updateBio(controller.text);
         }
       }
 
@@ -752,7 +784,8 @@ class ProfileUpdateAgeField extends ConsumerWidget {
   final Widget Function(
     BuildContext context,
     ProfileUpdateAgeProxyWidgetRef ref,
-  ) builder;
+  )
+  builder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -795,7 +828,8 @@ class ProfileUpdateLocationField extends HookConsumerWidget {
   final Widget Function(
     BuildContext context,
     ProfileUpdateLocationProxyWidgetRef ref,
-  ) builder;
+  )
+  builder;
 
   /// Optional callback that will be called when the field value changes
   final void Function(String? previous, String? next)? onChanged;
@@ -807,12 +841,14 @@ class ProfileUpdateLocationField extends HookConsumerWidget {
     final params = _ProfileUpdateFormInheritedWidget.of(context).params;
 
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.location;
+    final initialValue =
+        ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.location;
 
-    final controller = textController ?? useTextEditingController(text: initialValue);
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       profileUpdateProvider(
         params.profileId,
       ).select((value) => value.valueOrNull?.location),
@@ -820,14 +856,16 @@ class ProfileUpdateLocationField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null && initialValue != null && textController!.text.isEmpty) {
-        textController!.text = initialValue;
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -836,7 +874,10 @@ class ProfileUpdateLocationField extends HookConsumerWidget {
     useEffect(() {
       void listener() {
         final currentValue =
-            ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.location;
+            ref
+                .read(profileUpdateProvider(params.profileId))
+                .valueOrNull
+                ?.location;
         if (currentValue != controller.text) {
           ref
               .read(profileUpdateProvider(params.profileId).notifier)
@@ -889,7 +930,8 @@ class ProfileUpdateAddressField extends HookConsumerWidget {
   final Widget Function(
     BuildContext context,
     ProfileUpdateAddressProxyWidgetRef ref,
-  ) builder;
+  )
+  builder;
 
   /// Optional callback that will be called when the field value changes
   final void Function(String? previous, String? next)? onChanged;
@@ -901,12 +943,14 @@ class ProfileUpdateAddressField extends HookConsumerWidget {
     final params = _ProfileUpdateFormInheritedWidget.of(context).params;
 
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.address;
+    final initialValue =
+        ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.address;
 
-    final controller = textController ?? useTextEditingController(text: initialValue);
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       profileUpdateProvider(
         params.profileId,
       ).select((value) => value.valueOrNull?.address),
@@ -914,14 +958,16 @@ class ProfileUpdateAddressField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null && initialValue != null && textController!.text.isEmpty) {
-        textController!.text = initialValue;
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -929,9 +975,15 @@ class ProfileUpdateAddressField extends HookConsumerWidget {
     // Setup text listener
     useEffect(() {
       void listener() {
-        final currentValue = ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.address;
+        final currentValue =
+            ref
+                .read(profileUpdateProvider(params.profileId))
+                .valueOrNull
+                ?.address;
         if (currentValue != controller.text) {
-          ref.read(profileUpdateProvider(params.profileId).notifier).updateAddress(controller.text);
+          ref
+              .read(profileUpdateProvider(params.profileId).notifier)
+              .updateAddress(controller.text);
         }
       }
 
@@ -948,34 +1000,8 @@ class ProfileUpdateAddressField extends HookConsumerWidget {
   }
 }
 
-class ProfileUpdateTestProxyWidgetRef extends ProfileUpdateProxyWidgetRef {
-  ProfileUpdateTestProxyWidgetRef(super._ref);
-
-  /// Access the field value directly.
-  BookModel? get test => select((state) => state.test);
-
-  /// Update the field value directly.
-  void updateTest(BookModel? newValue) => notifier.updateTest(newValue);
-}
-
-class ProfileUpdateTestField extends ConsumerWidget {
-  const ProfileUpdateTestField({super.key, required this.builder});
-
-  final Widget Function(
-    BuildContext context,
-    ProfileUpdateTestProxyWidgetRef ref,
-  ) builder;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasProfileUpdateForm(context);
-
-    final proxy = ProfileUpdateTestProxyWidgetRef(ref);
-    return builder(context, proxy);
-  }
-}
-
-class ProfileUpdatePhoneNumberProxyWidgetRef extends ProfileUpdateProxyWidgetRef {
+class ProfileUpdatePhoneNumberProxyWidgetRef
+    extends ProfileUpdateProxyWidgetRef {
   ProfileUpdatePhoneNumberProxyWidgetRef(
     super._ref, {
     required this.textController,
@@ -988,7 +1014,8 @@ class ProfileUpdatePhoneNumberProxyWidgetRef extends ProfileUpdateProxyWidgetRef
   String? get phoneNumber => select((state) => state.phoneNumber);
 
   /// Update the field value directly.
-  void updatePhoneNumber(String? newValue) => notifier.updatePhoneNumber(newValue);
+  void updatePhoneNumber(String? newValue) =>
+      notifier.updatePhoneNumber(newValue);
 }
 
 class ProfileUpdatePhoneNumberField extends HookConsumerWidget {
@@ -1007,7 +1034,8 @@ class ProfileUpdatePhoneNumberField extends HookConsumerWidget {
   final Widget Function(
     BuildContext context,
     ProfileUpdatePhoneNumberProxyWidgetRef ref,
-  ) builder;
+  )
+  builder;
 
   /// Optional callback that will be called when the field value changes
   final void Function(String? previous, String? next)? onChanged;
@@ -1019,12 +1047,17 @@ class ProfileUpdatePhoneNumberField extends HookConsumerWidget {
     final params = _ProfileUpdateFormInheritedWidget.of(context).params;
 
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.phoneNumber;
+    final initialValue =
+        ref
+            .read(profileUpdateProvider(params.profileId))
+            .valueOrNull
+            ?.phoneNumber;
 
-    final controller = textController ?? useTextEditingController(text: initialValue);
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       profileUpdateProvider(
         params.profileId,
       ).select((value) => value.valueOrNull?.phoneNumber),
@@ -1032,14 +1065,16 @@ class ProfileUpdatePhoneNumberField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null && initialValue != null && textController!.text.isEmpty) {
-        textController!.text = initialValue;
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -1048,7 +1083,10 @@ class ProfileUpdatePhoneNumberField extends HookConsumerWidget {
     useEffect(() {
       void listener() {
         final currentValue =
-            ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.phoneNumber;
+            ref
+                .read(profileUpdateProvider(params.profileId))
+                .valueOrNull
+                ?.phoneNumber;
         if (currentValue != controller.text) {
           ref
               .read(profileUpdateProvider(params.profileId).notifier)

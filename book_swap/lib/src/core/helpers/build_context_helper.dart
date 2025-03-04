@@ -1,4 +1,5 @@
 import 'package:book_swap/src/presentation/app/app_theme_extension.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -76,5 +77,16 @@ extension BuildContextX on BuildContext {
       isDismissible: isDismissible,
       enableDrag: enableDrag,
     );
+  }
+
+  /// Function to wrap a function with a loading indicator
+  /// This can help later use to change other loading mechanism with less effort
+  Future<T> loadingWrapper<T>(Future<T> Function() function) async {
+    final closeLoading = BotToast.showLoading();
+    try {
+      return await function();
+    } finally {
+      closeLoading();
+    }
   }
 }

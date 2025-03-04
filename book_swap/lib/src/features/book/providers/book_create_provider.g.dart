@@ -13,15 +13,14 @@ final bookCreateCallStatusProvider =
 
 abstract class _$BookCreateWidget extends _$BookCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(BookModel result) {}
+  void onSuccess(BookModel result);
   @nonVirtual
   Future<AsyncValue<BookModel>> call() async {
     final _callStatus = ref.read(bookCreateCallStatusProvider);
     final _updateCallStatus = ref.read(bookCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -67,32 +66,6 @@ abstract class _$BookCreateWidget extends _$BookCreate {
   /// This allows for more flexible updates to specific fields.
   void updateState(BookCreateParam Function(BookCreateParam state) update) =>
       state = update(state);
-
-  /// Update the ownerId field of BookCreateParam class.
-  void updateOwnerId(ProfileId newValue) =>
-      state = state.copyWith(ownerId: newValue);
-
-  /// Update the title field of BookCreateParam class.
-  void updateTitle(String newValue) => state = state.copyWith(title: newValue);
-
-  /// Update the author field of BookCreateParam class.
-  void updateAuthor(String newValue) =>
-      state = state.copyWith(author: newValue);
-
-  /// Update the isbn field of BookCreateParam class.
-  void updateIsbn(String? newValue) => state = state.copyWith(isbn: newValue);
-
-  /// Update the description field of BookCreateParam class.
-  void updateDescription(String? newValue) =>
-      state = state.copyWith(description: newValue);
-
-  /// Update the condition field of BookCreateParam class.
-  void updateCondition(int newValue) =>
-      state = state.copyWith(condition: newValue);
-
-  /// Update the imageUrl field of BookCreateParam class.
-  void updateImageUrl(String? newValue) =>
-      state = state.copyWith(imageUrl: newValue);
 }
 
 // **************************************************************************

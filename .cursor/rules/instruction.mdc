@@ -1,0 +1,43 @@
+---
+description: Instruction
+globs: 
+alwaysApply: true
+---
+# Instructions
+
+During your interaction with the user, if you find anything reusable in this project, document it in the appropriate file:
+
+- `lessons.md`: For learned lessons, best practices, and important findings
+- `scratchpad.md`: For current task planning and progress tracking
+- `patterns.md`: For reusable code patterns and solutions
+- `prompts.md`: For effective prompt templates and strategies
+- `architecture.md`: For system design decisions and rationale
+- `troubleshooting.md`: For common issues and their solutions
+
+## Working Memory Management
+
+1. Always start by reviewing relevant documentation files
+2. Use the scratchpad for active task planning
+3. Document decisions and their rationale in real-time
+4. Cross-reference between files using markdown links
+5. Tag important items with categories for easy searching
+
+## Task Workflow
+
+1. Review existing documentation
+2. Plan in scratchpad with clear milestones
+3. Document new patterns and lessons as discovered
+4. Update architecture decisions if needed
+5. Maintain troubleshooting guide for encountered issues
+
+## Documentation Standards
+
+Use these prefixes for better organization:
+- 🎯 Goal/Objective
+- 📝 Note
+- ⚠️ Warning/Important
+- 💡 Idea/Suggestion
+- 🔄 Process/Workflow
+- 🏗️ Architecture Decision
+- 🐛 Bug/Issue
+- ✅ Solution/Resolution

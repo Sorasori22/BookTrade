@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/user_rating/providers/user_rating_create_provider.dart';
@@ -11,14 +11,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/user_rating/i_user_rating_repo.dart';
 import 'package:book_swap/src/features/user_rating/user_rating_schema.schema.dart';
 import 'package:book_swap/src/features/user_rating/providers/user_rating_list_pagination_provider.dart';
 import 'package:book_swap/src/features/user_rating/providers/user_rating_list_provider.dart';
 import 'dart:core';
+
+/// Extension that adds field update methods to the form provider.
+/// These methods allow updating individual fields that have copyWith support.
+extension UserRatingCreateFieldUpdater on UserRatingCreate {
+  /// Update the raterId field of UserRatingCreateParam class.
+  void updateRaterId(ProfileId newValue) =>
+      state = state.copyWith(raterId: newValue);
+
+  /// Update the ratedUserId field of UserRatingCreateParam class.
+  void updateRatedUserId(ProfileId newValue) =>
+      state = state.copyWith(ratedUserId: newValue);
+
+  /// Update the tradeRequestId field of UserRatingCreateParam class.
+  void updateTradeRequestId(int? newValue) =>
+      state = state.copyWith(tradeRequestId: newValue);
+
+  /// Update the rating field of UserRatingCreateParam class.
+  void updateRating(int newValue) => state = state.copyWith(rating: newValue);
+
+  /// Update the comment field of UserRatingCreateParam class.
+  void updateComment(String? newValue) =>
+      state = state.copyWith(comment: newValue);
+}
 
 class _UserRatingCreateFormInheritedWidget extends InheritedWidget {
   const _UserRatingCreateFormInheritedWidget({
@@ -494,15 +519,15 @@ class UserRatingCreateCommentField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
-      userRatingCreateProvider.select((value) => value.comment),
-      (previous, next) {
-        if (previous != next && controller.text != next) {
-          controller.text = next ?? "";
-        }
-        onChanged?.call(previous, next);
-      },
-    );
+    ref.listen(userRatingCreateProvider.select((value) => value.comment), (
+      previous,
+      next,
+    ) {
+      if (previous != next && controller.text != next) {
+        controller.text = next ?? "";
+      }
+      onChanged?.call(previous, next);
+    });
 
     // Initialize external controller if provided
     useEffect(() {

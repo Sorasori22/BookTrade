@@ -14,9 +14,9 @@ final bookGenreUpdateCallStatusProvider = StateProvider.autoDispose
 
 abstract class _$BookGenreUpdateWidget extends _$BookGenreUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(BookGenreModel result) {}
+  void onSuccess(BookGenreModel result);
   @nonVirtual
   Future<AsyncValue<BookGenreModel>> call() async {
     // Ignore if form is not loaded yet
@@ -29,7 +29,6 @@ abstract class _$BookGenreUpdateWidget extends _$BookGenreUpdate {
     final _updateCallStatus = ref.read(
         bookGenreUpdateCallStatusProvider((bookGenreId: bookGenreId)).notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -83,7 +82,7 @@ abstract class _$BookGenreUpdateWidget extends _$BookGenreUpdate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookGenreUpdateHash() => r'5d80cf7b2b6a614a46c545297a0059a7dc36cfad';
+String _$bookGenreUpdateHash() => r'affc0ef76ba4019ddf4ed47e6a22617ab365ce1d';
 
 /// Copied from Dart SDK
 class _SystemHash {

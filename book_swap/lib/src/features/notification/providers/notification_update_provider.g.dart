@@ -14,9 +14,9 @@ final notificationUpdateCallStatusProvider = StateProvider.autoDispose
 
 abstract class _$NotificationUpdateWidget extends _$NotificationUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(NotificationModel result) {}
+  void onSuccess(NotificationModel result);
   @nonVirtual
   Future<AsyncValue<NotificationModel>> call() async {
     // Ignore if form is not loaded yet
@@ -30,7 +30,6 @@ abstract class _$NotificationUpdateWidget extends _$NotificationUpdate {
         notificationUpdateCallStatusProvider((notificationId: notificationId))
             .notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -79,10 +78,6 @@ abstract class _$NotificationUpdateWidget extends _$NotificationUpdate {
           NotificationUpdateParam Function(NotificationUpdateParam state)
               update) =>
       state = state.whenData(update);
-
-  /// Update the read field of NotificationUpdateParam class.
-  void updateRead(bool? newValue) =>
-      state = state.whenData((state) => state.copyWith(read: newValue));
 }
 
 // **************************************************************************
@@ -90,7 +85,7 @@ abstract class _$NotificationUpdateWidget extends _$NotificationUpdate {
 // **************************************************************************
 
 String _$notificationUpdateHash() =>
-    r'c9ce4fc77f1ec12e9829f4f96f460c45f27b315c';
+    r'5fd981527f5e09cd5dc69b40db7faed8725c8cfb';
 
 /// Copied from Dart SDK
 class _SystemHash {

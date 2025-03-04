@@ -14,9 +14,9 @@ final tradeRequestUpdateCallStatusProvider = StateProvider.autoDispose
 
 abstract class _$TradeRequestUpdateWidget extends _$TradeRequestUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(TradeRequestModel result) {}
+  void onSuccess(TradeRequestModel result);
   @nonVirtual
   Future<AsyncValue<TradeRequestModel>> call() async {
     // Ignore if form is not loaded yet
@@ -30,7 +30,6 @@ abstract class _$TradeRequestUpdateWidget extends _$TradeRequestUpdate {
         tradeRequestUpdateCallStatusProvider((tradeRequestId: tradeRequestId))
             .notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -79,14 +78,6 @@ abstract class _$TradeRequestUpdateWidget extends _$TradeRequestUpdate {
           TradeRequestUpdateParam Function(TradeRequestUpdateParam state)
               update) =>
       state = state.whenData(update);
-
-  /// Update the status field of TradeRequestUpdateParam class.
-  void updateStatus(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(status: newValue));
-
-  /// Update the message field of TradeRequestUpdateParam class.
-  void updateMessage(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(message: newValue));
 }
 
 // **************************************************************************
@@ -94,7 +85,7 @@ abstract class _$TradeRequestUpdateWidget extends _$TradeRequestUpdate {
 // **************************************************************************
 
 String _$tradeRequestUpdateHash() =>
-    r'72ca86397da8b8ee3ca43c9d99fb94c694cabc07';
+    r'ff8cb5d672a05b5457dc62b2f42c5d2c15233296';
 
 /// Copied from Dart SDK
 class _SystemHash {

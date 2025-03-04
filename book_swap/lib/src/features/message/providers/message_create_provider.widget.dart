@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/message/providers/message_create_provider.dart';
@@ -11,14 +11,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/message/i_message_repo.dart';
 import 'package:book_swap/src/features/message/message_schema.schema.dart';
 import 'package:book_swap/src/features/message/providers/message_list_pagination_provider.dart';
 import 'package:book_swap/src/features/message/providers/message_list_provider.dart';
 import 'dart:core';
+
+/// Extension that adds field update methods to the form provider.
+/// These methods allow updating individual fields that have copyWith support.
+extension MessageCreateFieldUpdater on MessageCreate {
+  /// Update the senderId field of MessageCreateParam class.
+  void updateSenderId(ProfileId newValue) =>
+      state = state.copyWith(senderId: newValue);
+
+  /// Update the recipientId field of MessageCreateParam class.
+  void updateRecipientId(ProfileId newValue) =>
+      state = state.copyWith(recipientId: newValue);
+
+  /// Update the content field of MessageCreateParam class.
+  void updateContent(String newValue) =>
+      state = state.copyWith(content: newValue);
+
+  /// Update the tradeRequestId field of MessageCreateParam class.
+  void updateTradeRequestId(int? newValue) =>
+      state = state.copyWith(tradeRequestId: newValue);
+}
 
 class _MessageCreateFormInheritedWidget extends InheritedWidget {
   const _MessageCreateFormInheritedWidget({
@@ -429,7 +451,7 @@ class MessageCreateContentField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(messageCreateProvider.select((value) => value.content), (
+    ref.listen(messageCreateProvider.select((value) => value.content), (
       previous,
       next,
     ) {

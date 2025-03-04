@@ -122,11 +122,11 @@ abstract final class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
-        borderSide: BorderSide(color: _primaryLight, width: 1.5),
+        borderSide: BorderSide(color: BookThemeExtension.light.dividerColor, width: 1.5),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
-        borderSide: BorderSide(color: _primaryLight, width: 1.5),
+        borderSide: BorderSide(color: BookThemeExtension.light.dividerColor, width: 1.5),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
@@ -226,11 +226,11 @@ abstract final class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
-        borderSide: BorderSide(color: _primaryDark, width: 1.5),
+        borderSide: BorderSide(color: BookThemeExtension.dark.dividerColor, width: 1.5),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
-        borderSide: BorderSide(color: _primaryDark, width: 1.5),
+        borderSide: BorderSide(color: BookThemeExtension.dark.dividerColor, width: 1.5),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),

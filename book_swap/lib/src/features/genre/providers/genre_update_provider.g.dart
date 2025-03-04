@@ -13,9 +13,9 @@ final genreUpdateCallStatusProvider = StateProvider.autoDispose
 
 abstract class _$GenreUpdateWidget extends _$GenreUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(GenreModel result) {}
+  void onSuccess(GenreModel result);
   @nonVirtual
   Future<AsyncValue<GenreModel>> call() async {
     // Ignore if form is not loaded yet
@@ -28,7 +28,6 @@ abstract class _$GenreUpdateWidget extends _$GenreUpdate {
     final _updateCallStatus =
         ref.read(genreUpdateCallStatusProvider((genreId: genreId)).notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -75,17 +74,13 @@ abstract class _$GenreUpdateWidget extends _$GenreUpdate {
   /// This allows for more flexible updates to specific fields.
   void updateState(GenreUpdateParam Function(GenreUpdateParam state) update) =>
       state = state.whenData(update);
-
-  /// Update the name field of GenreUpdateParam class.
-  void updateName(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(name: newValue));
 }
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$genreUpdateHash() => r'c77207e22a967d97092163cd0a2de1c3da07a574';
+String _$genreUpdateHash() => r'4020e5a7113749f09421fa2b6728e6f0a50ab4ca';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/book/providers/book_create_provider.dart';
@@ -11,14 +11,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
-import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:autoverpod/autoverpod.dart';
+import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/book/i_book_repo.dart';
 import 'package:book_swap/src/features/book/providers/book_list_pagination_provider.dart';
 import 'package:book_swap/src/features/book/providers/book_list_provider.dart';
 import 'dart:core';
+
+/// Extension that adds field update methods to the form provider.
+/// These methods allow updating individual fields that have copyWith support.
+extension BookCreateFieldUpdater on BookCreate {
+  /// Update the ownerId field of BookCreateParam class.
+  void updateOwnerId(ProfileId newValue) =>
+      state = state.copyWith(ownerId: newValue);
+
+  /// Update the title field of BookCreateParam class.
+  void updateTitle(String newValue) => state = state.copyWith(title: newValue);
+
+  /// Update the author field of BookCreateParam class.
+  void updateAuthor(String newValue) =>
+      state = state.copyWith(author: newValue);
+
+  /// Update the isbn field of BookCreateParam class.
+  void updateIsbn(String? newValue) => state = state.copyWith(isbn: newValue);
+
+  /// Update the description field of BookCreateParam class.
+  void updateDescription(String? newValue) =>
+      state = state.copyWith(description: newValue);
+
+  /// Update the condition field of BookCreateParam class.
+  void updateCondition(int newValue) =>
+      state = state.copyWith(condition: newValue);
+
+  /// Update the imageUrl field of BookCreateParam class.
+  void updateImageUrl(String? newValue) =>
+      state = state.copyWith(imageUrl: newValue);
+}
 
 class _BookCreateFormInheritedWidget extends InheritedWidget {
   const _BookCreateFormInheritedWidget({
@@ -386,7 +417,7 @@ class BookCreateTitleField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(bookCreateProvider.select((value) => value.title), (
+    ref.listen(bookCreateProvider.select((value) => value.title), (
       previous,
       next,
     ) {
@@ -472,7 +503,7 @@ class BookCreateAuthorField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(bookCreateProvider.select((value) => value.author), (
+    ref.listen(bookCreateProvider.select((value) => value.author), (
       previous,
       next,
     ) {
@@ -555,7 +586,7 @@ class BookCreateIsbnField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(bookCreateProvider.select((value) => value.isbn), (
+    ref.listen(bookCreateProvider.select((value) => value.isbn), (
       previous,
       next,
     ) {
@@ -644,7 +675,7 @@ class BookCreateDescriptionField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(bookCreateProvider.select((value) => value.description), (
+    ref.listen(bookCreateProvider.select((value) => value.description), (
       previous,
       next,
     ) {
@@ -762,7 +793,7 @@ class BookCreateImageUrlField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(bookCreateProvider.select((value) => value.imageUrl), (
+    ref.listen(bookCreateProvider.select((value) => value.imageUrl), (
       previous,
       next,
     ) {

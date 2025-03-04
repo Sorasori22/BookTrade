@@ -13,16 +13,15 @@ final bookGenreCreateCallStatusProvider =
 
 abstract class _$BookGenreCreateWidget extends _$BookGenreCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(BookGenreModel result) {}
+  void onSuccess(BookGenreModel result);
   @nonVirtual
   Future<AsyncValue<BookGenreModel>> call() async {
     final _callStatus = ref.read(bookGenreCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(bookGenreCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {

@@ -14,9 +14,9 @@ final wishlistItemUpdateCallStatusProvider = StateProvider.autoDispose
 
 abstract class _$WishlistItemUpdateWidget extends _$WishlistItemUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(WishlistItemModel result) {}
+  void onSuccess(WishlistItemModel result);
   @nonVirtual
   Future<AsyncValue<WishlistItemModel>> call() async {
     // Ignore if form is not loaded yet
@@ -30,7 +30,6 @@ abstract class _$WishlistItemUpdateWidget extends _$WishlistItemUpdate {
         wishlistItemUpdateCallStatusProvider((wishlistItemId: wishlistItemId))
             .notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -79,18 +78,6 @@ abstract class _$WishlistItemUpdateWidget extends _$WishlistItemUpdate {
           WishlistItemUpdateParam Function(WishlistItemUpdateParam state)
               update) =>
       state = state.whenData(update);
-
-  /// Update the title field of WishlistItemUpdateParam class.
-  void updateTitle(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(title: newValue));
-
-  /// Update the author field of WishlistItemUpdateParam class.
-  void updateAuthor(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(author: newValue));
-
-  /// Update the isbn field of WishlistItemUpdateParam class.
-  void updateIsbn(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(isbn: newValue));
 }
 
 // **************************************************************************
@@ -98,7 +85,7 @@ abstract class _$WishlistItemUpdateWidget extends _$WishlistItemUpdate {
 // **************************************************************************
 
 String _$wishlistItemUpdateHash() =>
-    r'91611350e05c882a1beed39b386e62ee7d2a3ca4';
+    r'4466f685c60f4f0b7e48005838edb61d3f448ae7';
 
 /// Copied from Dart SDK
 class _SystemHash {

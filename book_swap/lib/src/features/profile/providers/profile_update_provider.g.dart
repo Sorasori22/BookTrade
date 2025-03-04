@@ -9,25 +9,26 @@ part of 'profile_update_provider.dart';
 // **************************************************************************
 
 final profileUpdateCallStatusProvider = StateProvider.autoDispose
-    .family<AsyncValue<ProfileDetailModel>?, ({ProfileId profileId})>((ref, _) => null);
+    .family<AsyncValue<ProfileDetailModel>?, ({ProfileId profileId})>(
+        (ref, _) => null);
 
-abstract class $ProfileUpdate extends _$ProfileUpdate {
+abstract class _$ProfileUpdateWidget extends _$ProfileUpdate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
   void onSuccess(ProfileDetailModel result);
-
+  @nonVirtual
   Future<AsyncValue<ProfileDetailModel>> call() async {
     // Ignore if form is not loaded yet
     if (this.state.isLoading) return const AsyncValue.loading();
     // Cannot submit when form is not loaded yet
     if (this.state.hasValue == false) return const AsyncValue.loading();
 
-    final _callStatus = ref.read(profileUpdateCallStatusProvider((profileId: profileId)));
-    final _updateCallStatus =
-        ref.read(profileUpdateCallStatusProvider((profileId: profileId)).notifier);
+    final _callStatus =
+        ref.read(profileUpdateCallStatusProvider((profileId: profileId)));
+    final _updateCallStatus = ref
+        .read(profileUpdateCallStatusProvider((profileId: profileId)).notifier);
 
-    // If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -35,7 +36,8 @@ abstract class $ProfileUpdate extends _$ProfileUpdate {
     }
 
     _updateCallStatus.state = const AsyncValue.loading();
-    final result = await AsyncValue.guard(() async => await submit(this.state.requireValue));
+    final result = await AsyncValue.guard(
+        () async => await submit(this.state.requireValue));
 
     _updateCallStatus.state = result;
 
@@ -68,13 +70,19 @@ abstract class $ProfileUpdate extends _$ProfileUpdate {
   @visibleForOverriding
   @protected
   Future<ProfileDetailModel> submit(ProfileUpdateParam state);
+
+  /// Update the state of the form.
+  /// This allows for more flexible updates to specific fields.
+  void updateState(
+          ProfileUpdateParam Function(ProfileUpdateParam state) update) =>
+      state = state.whenData(update);
 }
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileUpdateHash() => r'56249f3f328876a20f4cee660ad284c5730312ff';
+String _$profileUpdateHash() => r'174685261f96fef4c29db072e888b191ead081f8';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -97,7 +105,8 @@ class _SystemHash {
   }
 }
 
-abstract class _$ProfileUpdate extends BuildlessAutoDisposeAsyncNotifier<ProfileUpdateParam> {
+abstract class _$ProfileUpdate
+    extends BuildlessAutoDisposeAsyncNotifier<ProfileUpdateParam> {
   late final ProfileId profileId;
 
   FutureOr<ProfileUpdateParam> build(
@@ -140,15 +149,16 @@ class ProfileUpdateFamily extends Family<AsyncValue<ProfileUpdateParam>> {
   static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies => _allTransitiveDependencies;
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
 
   @override
   String? get name => r'profileUpdateProvider';
 }
 
 /// See also [ProfileUpdate].
-class ProfileUpdateProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<ProfileUpdate, ProfileUpdateParam> {
+class ProfileUpdateProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    ProfileUpdate, ProfileUpdateParam> {
   /// See also [ProfileUpdate].
   ProfileUpdateProvider(
     ProfileId profileId,
@@ -157,9 +167,12 @@ class ProfileUpdateProvider
           from: profileUpdateProvider,
           name: r'profileUpdateProvider',
           debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product') ? null : _$profileUpdateHash,
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$profileUpdateHash,
           dependencies: ProfileUpdateFamily._dependencies,
-          allTransitiveDependencies: ProfileUpdateFamily._allTransitiveDependencies,
+          allTransitiveDependencies:
+              ProfileUpdateFamily._allTransitiveDependencies,
           profileId: profileId,
         );
 
@@ -201,7 +214,8 @@ class ProfileUpdateProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<ProfileUpdate, ProfileUpdateParam> createElement() {
+  AutoDisposeAsyncNotifierProviderElement<ProfileUpdate, ProfileUpdateParam>
+      createElement() {
     return _ProfileUpdateProviderElement(this);
   }
 
@@ -221,14 +235,15 @@ class ProfileUpdateProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ProfileUpdateRef on AutoDisposeAsyncNotifierProviderRef<ProfileUpdateParam> {
+mixin ProfileUpdateRef
+    on AutoDisposeAsyncNotifierProviderRef<ProfileUpdateParam> {
   /// The parameter `profileId` of this provider.
   ProfileId get profileId;
 }
 
 class _ProfileUpdateProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<ProfileUpdate, ProfileUpdateParam>
-    with ProfileUpdateRef {
+    extends AutoDisposeAsyncNotifierProviderElement<ProfileUpdate,
+        ProfileUpdateParam> with ProfileUpdateRef {
   _ProfileUpdateProviderElement(super.provider);
 
   @override

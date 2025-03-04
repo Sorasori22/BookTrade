@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/wishlist_item/providers/wishlist_item_update_provider.dart';
@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/wishlist_item/i_wishlist_item_repo.dart';
@@ -19,6 +22,22 @@ import 'package:book_swap/src/features/wishlist_item/providers/wishlist_item_det
 import 'package:book_swap/src/features/wishlist_item/providers/wishlist_item_list_pagination_provider.dart';
 import 'package:book_swap/src/features/wishlist_item/providers/wishlist_item_list_provider.dart';
 import 'dart:core';
+
+/// Extension that adds field update methods to the form provider.
+/// These methods allow updating individual fields that have copyWith support.
+extension WishlistItemUpdateFieldUpdater on WishlistItemUpdate {
+  /// Update the title field of WishlistItemUpdateParam class.
+  void updateTitle(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(title: newValue));
+
+  /// Update the author field of WishlistItemUpdateParam class.
+  void updateAuthor(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(author: newValue));
+
+  /// Update the isbn field of WishlistItemUpdateParam class.
+  void updateIsbn(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(isbn: newValue));
+}
 
 class _WishlistItemUpdateFormInheritedWidget extends InheritedWidget {
   const _WishlistItemUpdateFormInheritedWidget({
@@ -471,7 +490,7 @@ class WishlistItemUpdateTitleField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       wishlistItemUpdateProvider(
         params.wishlistItemId,
       ).select((value) => value.valueOrNull?.title),
@@ -479,7 +498,7 @@ class WishlistItemUpdateTitleField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
@@ -488,7 +507,7 @@ class WishlistItemUpdateTitleField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -577,7 +596,7 @@ class WishlistItemUpdateAuthorField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       wishlistItemUpdateProvider(
         params.wishlistItemId,
       ).select((value) => value.valueOrNull?.author),
@@ -585,7 +604,7 @@ class WishlistItemUpdateAuthorField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
@@ -594,7 +613,7 @@ class WishlistItemUpdateAuthorField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -683,7 +702,7 @@ class WishlistItemUpdateIsbnField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       wishlistItemUpdateProvider(
         params.wishlistItemId,
       ).select((value) => value.valueOrNull?.isbn),
@@ -691,7 +710,7 @@ class WishlistItemUpdateIsbnField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
@@ -700,7 +719,7 @@ class WishlistItemUpdateIsbnField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);

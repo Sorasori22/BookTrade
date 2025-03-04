@@ -13,16 +13,15 @@ final completedSwapCreateCallStatusProvider =
 
 abstract class _$CompletedSwapCreateWidget extends _$CompletedSwapCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(CompletedSwapModel result) {}
+  void onSuccess(CompletedSwapModel result);
   @nonVirtual
   Future<AsyncValue<CompletedSwapModel>> call() async {
     final _callStatus = ref.read(completedSwapCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(completedSwapCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -70,26 +69,6 @@ abstract class _$CompletedSwapCreateWidget extends _$CompletedSwapCreate {
           CompletedSwapCreateParam Function(CompletedSwapCreateParam state)
               update) =>
       state = update(state);
-
-  /// Update the requesterId field of CompletedSwapCreateParam class.
-  void updateRequesterId(ProfileId newValue) =>
-      state = state.copyWith(requesterId: newValue);
-
-  /// Update the ownerId field of CompletedSwapCreateParam class.
-  void updateOwnerId(ProfileId newValue) =>
-      state = state.copyWith(ownerId: newValue);
-
-  /// Update the requesterBookId field of CompletedSwapCreateParam class.
-  void updateRequesterBookId(BookId newValue) =>
-      state = state.copyWith(requesterBookId: newValue);
-
-  /// Update the ownerBookId field of CompletedSwapCreateParam class.
-  void updateOwnerBookId(BookId newValue) =>
-      state = state.copyWith(ownerBookId: newValue);
-
-  /// Update the tradeRequestId field of CompletedSwapCreateParam class.
-  void updateTradeRequestId(int? newValue) =>
-      state = state.copyWith(tradeRequestId: newValue);
 }
 
 // **************************************************************************

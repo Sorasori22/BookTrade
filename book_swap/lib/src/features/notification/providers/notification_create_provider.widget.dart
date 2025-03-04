@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/notification/providers/notification_create_provider.dart';
@@ -11,14 +11,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/notification/i_notification_repo.dart';
 import 'package:book_swap/src/features/notification/notification_schema.schema.dart';
 import 'package:book_swap/src/features/notification/providers/notification_list_pagination_provider.dart';
 import 'package:book_swap/src/features/notification/providers/notification_list_provider.dart';
 import 'dart:core';
+
+/// Extension that adds field update methods to the form provider.
+/// These methods allow updating individual fields that have copyWith support.
+extension NotificationCreateFieldUpdater on NotificationCreate {
+  /// Update the userId field of NotificationCreateParam class.
+  void updateUserId(ProfileId newValue) =>
+      state = state.copyWith(userId: newValue);
+
+  /// Update the content field of NotificationCreateParam class.
+  void updateContent(String newValue) =>
+      state = state.copyWith(content: newValue);
+
+  /// Update the relatedTradeId field of NotificationCreateParam class.
+  void updateRelatedTradeId(int? newValue) =>
+      state = state.copyWith(relatedTradeId: newValue);
+
+  /// Update the notificationType field of NotificationCreateParam class.
+  void updateNotificationType(String newValue) =>
+      state = state.copyWith(notificationType: newValue);
+}
 
 class _NotificationCreateFormInheritedWidget extends InheritedWidget {
   const _NotificationCreateFormInheritedWidget({
@@ -408,15 +430,15 @@ class NotificationCreateContentField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
-      notificationCreateProvider.select((value) => value.content),
-      (previous, next) {
-        if (previous != next && controller.text != next) {
-          controller.text = next;
-        }
-        onChanged?.call(previous, next);
-      },
-    );
+    ref.listen(notificationCreateProvider.select((value) => value.content), (
+      previous,
+      next,
+    ) {
+      if (previous != next && controller.text != next) {
+        controller.text = next;
+      }
+      onChanged?.call(previous, next);
+    });
 
     // Initialize external controller if provided
     useEffect(() {
@@ -534,7 +556,7 @@ class NotificationCreateNotificationTypeField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       notificationCreateProvider.select((value) => value.notificationType),
       (previous, next) {
         if (previous != next && controller.text != next) {

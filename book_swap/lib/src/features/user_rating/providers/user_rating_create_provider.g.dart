@@ -13,16 +13,15 @@ final userRatingCreateCallStatusProvider =
 
 abstract class _$UserRatingCreateWidget extends _$UserRatingCreate {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(UserRatingModel result) {}
+  void onSuccess(UserRatingModel result);
   @nonVirtual
   Future<AsyncValue<UserRatingModel>> call() async {
     final _callStatus = ref.read(userRatingCreateCallStatusProvider);
     final _updateCallStatus =
         ref.read(userRatingCreateCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -69,25 +68,6 @@ abstract class _$UserRatingCreateWidget extends _$UserRatingCreate {
   void updateState(
           UserRatingCreateParam Function(UserRatingCreateParam state) update) =>
       state = update(state);
-
-  /// Update the raterId field of UserRatingCreateParam class.
-  void updateRaterId(ProfileId newValue) =>
-      state = state.copyWith(raterId: newValue);
-
-  /// Update the ratedUserId field of UserRatingCreateParam class.
-  void updateRatedUserId(ProfileId newValue) =>
-      state = state.copyWith(ratedUserId: newValue);
-
-  /// Update the tradeRequestId field of UserRatingCreateParam class.
-  void updateTradeRequestId(int? newValue) =>
-      state = state.copyWith(tradeRequestId: newValue);
-
-  /// Update the rating field of UserRatingCreateParam class.
-  void updateRating(int newValue) => state = state.copyWith(rating: newValue);
-
-  /// Update the comment field of UserRatingCreateParam class.
-  void updateComment(String? newValue) =>
-      state = state.copyWith(comment: newValue);
 }
 
 // **************************************************************************

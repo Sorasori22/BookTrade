@@ -1,6 +1,6 @@
 import 'package:kimapp_supabase_helper/kimapp_supabase_helper.dart';
 
-class ImageObject extends CompressibleImageObject {
+class ImageObject extends StorageObject {
   @override
   String get bucket => 'images';
 

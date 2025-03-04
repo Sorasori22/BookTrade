@@ -8,13 +8,12 @@ import '../profile_schema.schema.dart';
 import 'profile_detail_provider.dart';
 import 'profile_list_pagination_provider.dart';
 import 'profile_list_provider.dart';
-import 'profile_update_provider.widget.dart';
 
 part 'profile_update_provider.g.dart';
 
 @formWidget
 @riverpod
-class ProfileUpdate extends $ProfileUpdateWidget {
+class ProfileUpdate extends _$ProfileUpdateWidget {
   @override
   Future<ProfileUpdateParam> build(ProfileId profileId) async {
     final result = await ref.read(profileRepoProvider).findOne(profileId).getOrThrow();
@@ -27,7 +26,6 @@ class ProfileUpdate extends $ProfileUpdateWidget {
       age: result.age,
       address: result.address,
       phoneNumber: result.phoneNumber,
-      test: null,
     );
   }
 

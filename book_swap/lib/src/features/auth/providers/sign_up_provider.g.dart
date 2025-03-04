@@ -13,15 +13,16 @@ final signUpCallStatusProvider =
 
 abstract class _$SignUpWidget extends _$SignUp {
   /// Callback for when the form is successfully submitted.
-  /// Override this method to handle the result or perform side effects.
+  /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(UserId result) {}
+  void onSuccess(UserId result) => throw UnimplementedError(
+      'This error occurred because you overrode the method without running build_runner. Please run [dart pub run build_runner build] to generate the necessary code.');
+
   @nonVirtual
   Future<AsyncValue<UserId>> call() async {
     final _callStatus = ref.read(signUpCallStatusProvider);
     final _updateCallStatus = ref.read(signUpCallStatusProvider.notifier);
 
-// If it's already loading, return loading
     if (_callStatus?.isLoading == true) return const AsyncValue.loading();
 
     if (_callStatus?.hasValue == true) {
@@ -32,10 +33,6 @@ abstract class _$SignUpWidget extends _$SignUp {
     final result = await AsyncValue.guard(() async => await submit(this.state));
 
     _updateCallStatus.state = result;
-
-    if (result.hasValue) {
-      onSuccess(result.requireValue);
-    }
 
     return result;
   }
@@ -67,19 +64,6 @@ abstract class _$SignUpWidget extends _$SignUp {
   /// This allows for more flexible updates to specific fields.
   void updateState(SignUpParam Function(SignUpParam state) update) =>
       state = update(state);
-
-  /// Update the email field of SignUpParam class.
-  void updateEmail(String newValue) => state = state.copyWith(email: newValue);
-
-  /// Update the password field of SignUpParam class.
-  void updatePassword(String newValue) =>
-      state = state.copyWith(password: newValue);
-
-  /// Update the name field of SignUpParam class.
-  void updateName(String newValue) => state = state.copyWith(name: newValue);
-
-  /// Update the age field of SignUpParam class.
-  void updateAge(int? newValue) => state = state.copyWith(age: newValue);
 }
 
 // **************************************************************************

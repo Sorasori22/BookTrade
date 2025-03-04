@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/book/providers/book_update_provider.dart';
@@ -11,14 +11,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/book/i_book_repo.dart';
 import 'package:book_swap/src/features/book/providers/book_detail_provider.dart';
 import 'package:book_swap/src/features/book/providers/book_list_pagination_provider.dart';
 import 'package:book_swap/src/features/book/providers/book_list_provider.dart';
 import 'dart:core';
+
+/// Extension that adds field update methods to the form provider.
+/// These methods allow updating individual fields that have copyWith support.
+extension BookUpdateFieldUpdater on BookUpdate {
+  /// Update the title field of BookUpdateParam class.
+  void updateTitle(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(title: newValue));
+
+  /// Update the author field of BookUpdateParam class.
+  void updateAuthor(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(author: newValue));
+
+  /// Update the isbn field of BookUpdateParam class.
+  void updateIsbn(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(isbn: newValue));
+
+  /// Update the description field of BookUpdateParam class.
+  void updateDescription(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(description: newValue));
+
+  /// Update the condition field of BookUpdateParam class.
+  void updateCondition(int? newValue) =>
+      state = state.whenData((state) => state.copyWith(condition: newValue));
+
+  /// Update the imageUrl field of BookUpdateParam class.
+  void updateImageUrl(String? newValue) =>
+      state = state.whenData((state) => state.copyWith(imageUrl: newValue));
+}
 
 class _BookUpdateFormInheritedWidget extends InheritedWidget {
   const _BookUpdateFormInheritedWidget({
@@ -440,7 +470,7 @@ class BookUpdateTitleField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       bookUpdateProvider(
         params.bookId,
       ).select((value) => value.valueOrNull?.title),
@@ -448,7 +478,7 @@ class BookUpdateTitleField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
@@ -457,7 +487,7 @@ class BookUpdateTitleField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -536,7 +566,7 @@ class BookUpdateAuthorField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       bookUpdateProvider(
         params.bookId,
       ).select((value) => value.valueOrNull?.author),
@@ -544,7 +574,7 @@ class BookUpdateAuthorField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
@@ -553,7 +583,7 @@ class BookUpdateAuthorField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -629,7 +659,7 @@ class BookUpdateIsbnField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       bookUpdateProvider(
         params.bookId,
       ).select((value) => value.valueOrNull?.isbn),
@@ -637,7 +667,7 @@ class BookUpdateIsbnField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
@@ -646,7 +676,7 @@ class BookUpdateIsbnField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -726,7 +756,7 @@ class BookUpdateDescriptionField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       bookUpdateProvider(
         params.bookId,
       ).select((value) => value.valueOrNull?.description),
@@ -734,7 +764,7 @@ class BookUpdateDescriptionField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
@@ -743,7 +773,7 @@ class BookUpdateDescriptionField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -853,7 +883,7 @@ class BookUpdateImageUrlField extends HookConsumerWidget {
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listenManual(
+    ref.listen(
       bookUpdateProvider(
         params.bookId,
       ).select((value) => value.valueOrNull?.imageUrl),
@@ -861,7 +891,7 @@ class BookUpdateImageUrlField extends HookConsumerWidget {
         if (previous != next && controller.text != next) {
           controller.text = next ?? "";
         }
-        onChanged?.call(previous, next);
+        onChanged?.call(previous, next ?? "");
       },
     );
 
@@ -870,7 +900,7 @@ class BookUpdateImageUrlField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);

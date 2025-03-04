@@ -1,5 +1,4 @@
 import 'package:book_swap/src/core/storage/image_object.dart';
-import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:kimapp/kimapp.dart';
 
 @Schema(
@@ -45,7 +44,6 @@ class ProfileSchema extends KimappSchema {
           'age': age,
           'location': location,
           'address': address,
-          'test': Field<BookModel?>('test'),
           'phoneNumber': phoneNumber,
         }),
     ];

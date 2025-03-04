@@ -6,6 +6,7 @@ class AppTextFormField extends StatelessWidget {
   const AppTextFormField({
     super.key,
     this.controller,
+    this.initialValue,
     this.hintText,
     this.isRequired = false,
     this.validator,
@@ -35,6 +36,7 @@ class AppTextFormField extends StatelessWidget {
         );
 
   final TextEditingController? controller;
+  final String? initialValue;
   final String? hintText;
   final bool isRequired;
   final String? Function(String?)? validator;
@@ -63,6 +65,7 @@ class AppTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     final textField = TextFormField(
       controller: controller,
+      initialValue: initialValue,
       enabled: enabled,
       autofocus: autofocus,
       maxLines: maxLines,
@@ -81,12 +84,8 @@ class AppTextFormField extends StatelessWidget {
         hintText: hintText,
         filled: filled,
         fillColor: filled ? backgroundColor ?? Theme.of(context).colorScheme.surface : null,
-        enabledBorder: inactiveBorderColor != null
-            ? OutlineInputBorder(
-                borderSide: BorderSide(color: inactiveBorderColor!),
-              )
-            : null,
         contentPadding: padding,
+        isDense: true,
         prefixIcon: leading != null
             ? IconTheme(
                 data: IconThemeData(
