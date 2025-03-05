@@ -113,6 +113,11 @@ class ProfileId extends Identity<String> {
   factory ProfileId.fromValue(String value) {
     return ProfileId._(value);
   }
+
+  /// Creates an instance of ProfileId with a value of "".
+  /// This is used to represent an empty or invalid ProfileId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid ProfileId access it value through [value] or [call] will throw an error.
+  factory ProfileId.empty() => ProfileId._("");
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema
@@ -404,7 +409,6 @@ class ProfileUpdateParam
   /// Fields:
   /// - String? username : JsonKey('username')
   /// - String? fullname : JsonKey('fullname')
-  /// - ImageObject? avatar : JsonKey('avatar_url')
   /// - String? bio : JsonKey('bio')
   /// - int? age : JsonKey('age')
   /// - String? location : JsonKey('location')
@@ -414,7 +418,6 @@ class ProfileUpdateParam
   const factory ProfileUpdateParam({
     @JsonKey(name: ProfileUpdateParam.usernameKey) required String? username,
     @JsonKey(name: ProfileUpdateParam.fullnameKey) required String? fullname,
-    @JsonKey(name: ProfileUpdateParam.avatarKey) required ImageObject? avatar,
     @JsonKey(name: ProfileUpdateParam.bioKey) required String? bio,
     @JsonKey(name: ProfileUpdateParam.ageKey) required int? age,
     @JsonKey(name: ProfileUpdateParam.locationKey) required String? location,
@@ -432,9 +435,6 @@ class ProfileUpdateParam
 
   /// Field name for fullname field with JsonKey('fullname')
   static const String fullnameKey = "fullname";
-
-  /// Field name for avatar field with JsonKey('avatar_url')
-  static const String avatarKey = "avatar_url";
 
   /// Field name for bio field with JsonKey('bio')
   static const String bioKey = "bio";

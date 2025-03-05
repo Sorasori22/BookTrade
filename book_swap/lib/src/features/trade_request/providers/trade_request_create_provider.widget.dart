@@ -43,7 +43,9 @@ extension TradeRequestCreateFieldUpdater on TradeRequestCreate {
 
   /// Update the message field of TradeRequestCreateParam class.
   void updateMessage(String? newValue) =>
-      state = state.copyWith(message: newValue);
+      state = state.copyWith(
+        message: newValue == null || newValue.isEmpty ? null : newValue,
+      );
 }
 
 class _TradeRequestCreateFormInheritedWidget extends InheritedWidget {

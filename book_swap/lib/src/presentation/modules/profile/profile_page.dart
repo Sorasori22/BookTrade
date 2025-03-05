@@ -49,7 +49,7 @@ class ProfilePage extends ConsumerWidget {
           children: [
             Align(
               alignment: Alignment.topCenter,
-              child: CurrentUserAvatar(size: 68),
+              child: CurrentUserAvatar(size: 72),
             ),
             AS.hGap12,
             Align(
@@ -59,7 +59,9 @@ class ProfilePage extends ConsumerWidget {
                 builder: (context, ref, value) {
                   return Text(
                     value,
-                    style: context.textTheme.bodyLarge,
+                    style: context.textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   );
                 },
               ),
@@ -73,7 +75,7 @@ class ProfilePage extends ConsumerWidget {
             ),
             AS.hGap12,
             SizedBox(
-              height: 200,
+              height: 220,
               child: MyBookListProviderScope(
                 child: MyBookListStateWidget(
                   builder: (context, ref, child) {
@@ -97,8 +99,11 @@ class ProfilePage extends ConsumerWidget {
                       );
                     }
 
-                    return ListView.builder(
+                    return ListView.separated(
+                      padding: EdgeInsets.symmetric(vertical: 2),
                       itemCount: length,
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (context, index) => AS.wGap16,
                       itemBuilder: (context, index) {
                         return MyBookListSelectWidget(
                           selector: (state) => state.getOrNull(index),
@@ -106,11 +111,43 @@ class ProfilePage extends ConsumerWidget {
                             if (value == null) {
                               return const SizedBox.shrink();
                             }
-                            return AppCard(
-                              child: Column(
-                                children: [
-                                  BookCover(cover: value.image),
-                                ],
+                            return InkWell(
+                              onTap: () {
+                                context
+                                    .pushRoute(BookDetailRoute(bookIdString: value.id.toString()));
+                              },
+                              child: SizedBox(
+                                width: 170,
+                                child: AppCard(
+                                  borderRadius: AS.radiusS,
+                                  padding: EdgeInsets.all(AS.paddingS),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 150,
+                                        child: Center(child: BookCover(cover: value.image)),
+                                      ),
+                                      AS.hGap8,
+                                      Text(
+                                        value.title,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: context.textTheme.bodyMedium
+                                            ?.copyWith(fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        value.author,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: context.textTheme.bodySmall?.copyWith(
+                                          color: context.colors.onSurface.withValues(alpha: 0.6),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             );
                           },

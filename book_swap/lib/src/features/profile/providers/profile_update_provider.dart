@@ -20,7 +20,6 @@ class ProfileUpdate extends _$ProfileUpdateWidget {
     return ProfileUpdateParam(
       username: result.username,
       fullname: result.fullname,
-      avatar: result.avatar,
       bio: result.bio,
       location: result.location,
       age: result.age,

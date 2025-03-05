@@ -187,8 +187,6 @@ bool _debugCheckHasMessageListProviderScope(BuildContext context) {
 class _MessageListStateProxyWidgetRef extends _MessageListProxyWidgetRef {
   _MessageListStateProxyWidgetRef(super._ref);
 
-  IList<MessageModel> get state => _ref.watch(messageListProvider).requireValue;
-
   Selected select<Selected>(Selected Function(IList<MessageModel>) selector) =>
       _ref.watch(
         messageListProvider.select((value) => selector(value.requireValue)),

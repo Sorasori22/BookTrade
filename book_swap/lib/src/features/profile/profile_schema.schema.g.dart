@@ -105,9 +105,6 @@ _$ProfileUpdateParamImpl _$$ProfileUpdateParamImplFromJson(
     _$ProfileUpdateParamImpl(
       username: json['username'] as String?,
       fullname: json['fullname'] as String?,
-      avatar: json['avatar_url'] == null
-          ? null
-          : ImageObject.fromJson(json['avatar_url']),
       bio: json['bio'] as String?,
       age: (json['age'] as num?)?.toInt(),
       location: json['location'] as String?,
@@ -120,7 +117,6 @@ Map<String, dynamic> _$$ProfileUpdateParamImplToJson(
     <String, dynamic>{
       'username': instance.username,
       'fullname': instance.fullname,
-      'avatar_url': instance.avatar?.toJson(),
       'bio': instance.bio,
       'age': instance.age,
       'location': instance.location,

@@ -29,7 +29,9 @@ class AppTextFormField extends StatelessWidget {
     this.backgroundColor,
     this.focusNode,
     this.inactiveBorderColor,
+    this.textInputAction,
     this.helper,
+    this.minLines,
   }) : assert(
           !isRequired || validator == null,
           'validator must not be provided if isRequired is true',
@@ -60,7 +62,8 @@ class AppTextFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final Color? inactiveBorderColor;
   final Widget? helper;
-
+  final TextInputAction? textInputAction;
+  final int? minLines;
   @override
   Widget build(BuildContext context) {
     final textField = TextFormField(
@@ -78,8 +81,10 @@ class AppTextFormField extends StatelessWidget {
           FormBuilderValidators.compose([if (isRequired) FormBuilderValidators.required()]),
       textCapitalization: textCapitalization,
       keyboardType: keyboardType,
+      textInputAction: textInputAction,
       mouseCursor: mouseCursor,
       canRequestFocus: canRequestFocus,
+      minLines: minLines,
       decoration: InputDecoration(
         hintText: hintText,
         filled: filled,

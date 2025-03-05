@@ -27,19 +27,27 @@ import 'dart:core';
 extension ProfileUpdateFieldUpdater on ProfileUpdate {
   /// Update the username field of ProfileUpdateParam class.
   void updateUsername(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(username: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          username: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the fullname field of ProfileUpdateParam class.
   void updateFullname(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(fullname: newValue));
-
-  /// Update the avatar field of ProfileUpdateParam class.
-  void updateAvatar(ImageObject? newValue) =>
-      state = state.whenData((state) => state.copyWith(avatar: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          fullname: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the bio field of ProfileUpdateParam class.
   void updateBio(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(bio: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          bio: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the age field of ProfileUpdateParam class.
   void updateAge(int? newValue) =>
@@ -47,15 +55,27 @@ extension ProfileUpdateFieldUpdater on ProfileUpdate {
 
   /// Update the location field of ProfileUpdateParam class.
   void updateLocation(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(location: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          location: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the address field of ProfileUpdateParam class.
   void updateAddress(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(address: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          address: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the phoneNumber field of ProfileUpdateParam class.
   void updatePhoneNumber(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(phoneNumber: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          phoneNumber: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 }
 
 class _ProfileUpdateFormInheritedWidget extends InheritedWidget {
@@ -640,34 +660,6 @@ class ProfileUpdateFullnameField extends HookConsumerWidget {
       textController: controller,
     );
 
-    return builder(context, proxy);
-  }
-}
-
-class ProfileUpdateAvatarProxyWidgetRef extends ProfileUpdateProxyWidgetRef {
-  ProfileUpdateAvatarProxyWidgetRef(super._ref);
-
-  /// Access the field value directly.
-  ImageObject? get avatar => select((state) => state.avatar);
-
-  /// Update the field value directly.
-  void updateAvatar(ImageObject? newValue) => notifier.updateAvatar(newValue);
-}
-
-class ProfileUpdateAvatarField extends ConsumerWidget {
-  const ProfileUpdateAvatarField({super.key, required this.builder});
-
-  final Widget Function(
-    BuildContext context,
-    ProfileUpdateAvatarProxyWidgetRef ref,
-  )
-  builder;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasProfileUpdateForm(context);
-
-    final proxy = ProfileUpdateAvatarProxyWidgetRef(ref);
     return builder(context, proxy);
   }
 }

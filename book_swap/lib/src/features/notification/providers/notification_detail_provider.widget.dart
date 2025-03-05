@@ -241,9 +241,6 @@ class _NotificationDetailStateProxyWidgetRef
     extends _NotificationDetailProxyWidgetRef {
   _NotificationDetailStateProxyWidgetRef(super._ref);
 
-  NotificationModel get state =>
-      _ref.watch(notificationDetailProvider(params.id)).requireValue;
-
   Selected select<Selected>(Selected Function(NotificationModel) selector) =>
       _ref.watch(
         notificationDetailProvider(

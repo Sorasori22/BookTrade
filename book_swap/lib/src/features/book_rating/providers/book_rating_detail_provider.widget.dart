@@ -241,9 +241,6 @@ class _BookRatingDetailStateProxyWidgetRef
     extends _BookRatingDetailProxyWidgetRef {
   _BookRatingDetailStateProxyWidgetRef(super._ref);
 
-  BookRatingModel get state =>
-      _ref.watch(bookRatingDetailProvider(params.id)).requireValue;
-
   Selected select<Selected>(Selected Function(BookRatingModel) selector) =>
       _ref.watch(
         bookRatingDetailProvider(

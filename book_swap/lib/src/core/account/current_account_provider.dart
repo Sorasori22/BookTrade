@@ -15,6 +15,10 @@ part 'current_account_provider.g.dart';
 UserId? currentUserId(Ref ref) =>
     ref.watch(authStateProvider).whenOrNull(authenticated: (id) => id);
 
+@riverpod
+ProfileId? currentProfileId(Ref ref) =>
+    ref.watch(currentAccountProvider.select((state) => state.valueOrNull?.profile?.id));
+
 @freezed
 class CurrentAccountState with _$CurrentAccountState {
   const CurrentAccountState._();

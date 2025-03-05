@@ -9,15 +9,15 @@ part of 'book_update_provider.dart';
 // **************************************************************************
 
 final bookUpdateCallStatusProvider = StateProvider.autoDispose
-    .family<AsyncValue<BookModel>?, ({BookId bookId})>((ref, _) => null);
+    .family<AsyncValue<BookDetailModel>?, ({BookId bookId})>((ref, _) => null);
 
 abstract class _$BookUpdateWidget extends _$BookUpdate {
   /// Callback for when the form is successfully submitted.
   /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(BookModel result);
+  void onSuccess(BookDetailModel result);
   @nonVirtual
-  Future<AsyncValue<BookModel>> call() async {
+  Future<AsyncValue<BookDetailModel>> call({required XFile? image}) async {
     // Ignore if form is not loaded yet
     if (this.state.isLoading) return const AsyncValue.loading();
     // Cannot submit when form is not loaded yet
@@ -36,7 +36,7 @@ abstract class _$BookUpdateWidget extends _$BookUpdate {
 
     _updateCallStatus.state = const AsyncValue.loading();
     final result = await AsyncValue.guard(
-        () async => await submit(this.state.requireValue));
+        () async => await submit(this.state.requireValue, image: image));
 
     _updateCallStatus.state = result;
 
@@ -68,7 +68,10 @@ abstract class _$BookUpdateWidget extends _$BookUpdate {
   /// 4. Return success/failure result
   @visibleForOverriding
   @protected
-  Future<BookModel> submit(BookUpdateParam state);
+  Future<BookDetailModel> submit(
+    BookUpdateParam state, {
+    required XFile? image,
+  });
 
   /// Update the state of the form.
   /// This allows for more flexible updates to specific fields.
@@ -80,7 +83,7 @@ abstract class _$BookUpdateWidget extends _$BookUpdate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookUpdateHash() => r'6300437d3ac079bdd5aacff1d6e49cdce6e250e0';
+String _$bookUpdateHash() => r'7233f7a1022084889961a6a4f4d7233a0a9048d3';
 
 /// Copied from Dart SDK
 class _SystemHash {

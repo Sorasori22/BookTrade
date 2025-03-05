@@ -38,7 +38,9 @@ extension BookRatingCreateFieldUpdater on BookRatingCreate {
 
   /// Update the comment field of BookRatingCreateParam class.
   void updateComment(String? newValue) =>
-      state = state.copyWith(comment: newValue);
+      state = state.copyWith(
+        comment: newValue == null || newValue.isEmpty ? null : newValue,
+      );
 }
 
 class _BookRatingCreateFormInheritedWidget extends InheritedWidget {

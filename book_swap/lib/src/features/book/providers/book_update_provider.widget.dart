@@ -16,7 +16,9 @@ import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/features/book/providers/my_book_list_provider.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:kimapp/kimapp.dart';
+import 'package:kimapp_supabase_helper/kimapp_supabase_helper.dart';
 import 'package:book_swap/src/features/book/i_book_repo.dart';
 import 'package:book_swap/src/features/book/providers/book_detail_provider.dart';
 import 'package:book_swap/src/features/book/providers/book_list_pagination_provider.dart';
@@ -25,21 +27,33 @@ import 'dart:core';
 /// Extension that adds field update methods to the form provider.
 /// These methods allow updating individual fields that have copyWith support.
 extension BookUpdateFieldUpdater on BookUpdate {
+  /// Update the ownerId field of BookUpdateParam class.
+  void updateOwnerId(ProfileId newValue) =>
+      state = state.whenData((state) => state.copyWith(ownerId: newValue));
+
   /// Update the title field of BookUpdateParam class.
-  void updateTitle(String? newValue) =>
+  void updateTitle(String newValue) =>
       state = state.whenData((state) => state.copyWith(title: newValue));
 
   /// Update the author field of BookUpdateParam class.
-  void updateAuthor(String? newValue) =>
+  void updateAuthor(String newValue) =>
       state = state.whenData((state) => state.copyWith(author: newValue));
 
   /// Update the description field of BookUpdateParam class.
   void updateDescription(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(description: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          description: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the image field of BookUpdateParam class.
   void updateImage(ImageObject? newValue) =>
       state = state.whenData((state) => state.copyWith(image: newValue));
+
+  /// Update the condition field of BookUpdateParam class.
+  void updateCondition(int newValue) =>
+      state = state.whenData((state) => state.copyWith(condition: newValue));
 }
 
 class _BookUpdateFormInheritedWidget extends InheritedWidget {
@@ -71,7 +85,7 @@ class BookUpdateProxyWidgetRef extends WidgetRef {
   ({BookId bookId}) get params =>
       _BookUpdateFormInheritedWidget.of(context).params;
 
-  AsyncValue<BookModel>? get status =>
+  AsyncValue<BookDetailModel>? get status =>
       _ref.watch(bookUpdateCallStatusProvider((bookId: params.bookId)));
 
   GlobalKey<FormState> get formKey =>
@@ -81,7 +95,7 @@ class BookUpdateProxyWidgetRef extends WidgetRef {
       _ref.read(bookUpdateProvider(params.bookId).notifier);
 
   /// Submits the form. Internally this calls [notifier.submit] with the form key validated.
-  Future<AsyncValue<BookModel>> submit() async {
+  Future<AsyncValue<BookDetailModel>> submit({required XFile? image}) async {
     if (!(formKey.currentState?.validate() ?? false)) {
       return AsyncValue.error(
         Exception('Form is not valid'),
@@ -90,7 +104,7 @@ class BookUpdateProxyWidgetRef extends WidgetRef {
     }
     formKey.currentState?.save();
 
-    return await notifier();
+    return await notifier(image: image);
   }
 
   Selected select<Selected>(Selected Function(BookUpdateParam) selector) =>
@@ -166,7 +180,7 @@ class BookUpdateFormScope extends ConsumerStatefulWidget {
   final GlobalKey<FormState>? formKey;
   final AutovalidateMode? autovalidateMode;
   final void Function(bool, Object?)? onPopInvokedWithResult;
-  final void Function(BuildContext context, BookModel value)? onSuccessed;
+  final void Function(BuildContext context, BookDetailModel value)? onSuccessed;
   final Widget Function()? onInitLoading;
   final Widget Function(Object error, StackTrace stack)? onInitError;
 
@@ -387,12 +401,12 @@ class BookUpdateFormStatus extends ConsumerWidget {
   final Widget Function(
     BuildContext context,
     BookUpdateProxyWidgetRef ref,
-    AsyncValue<BookModel>? status,
+    AsyncValue<BookDetailModel>? status,
   )
   builder;
   final void Function(
-    AsyncValue<BookModel>? previous,
-    AsyncValue<BookModel>? next,
+    AsyncValue<BookDetailModel>? previous,
+    AsyncValue<BookDetailModel>? next,
   )?
   onChanged;
 
@@ -416,6 +430,34 @@ class BookUpdateFormStatus extends ConsumerWidget {
   }
 }
 
+class BookUpdateOwnerIdProxyWidgetRef extends BookUpdateProxyWidgetRef {
+  BookUpdateOwnerIdProxyWidgetRef(super._ref);
+
+  /// Access the field value directly.
+  ProfileId get ownerId => select((state) => state.ownerId);
+
+  /// Update the field value directly.
+  void updateOwnerId(ProfileId newValue) => notifier.updateOwnerId(newValue);
+}
+
+class BookUpdateOwnerIdField extends ConsumerWidget {
+  const BookUpdateOwnerIdField({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    BookUpdateOwnerIdProxyWidgetRef ref,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookUpdateForm(context);
+
+    final proxy = BookUpdateOwnerIdProxyWidgetRef(ref);
+    return builder(context, proxy);
+  }
+}
+
 class BookUpdateTitleProxyWidgetRef extends BookUpdateProxyWidgetRef {
   BookUpdateTitleProxyWidgetRef(super._ref, {required this.textController});
 
@@ -423,10 +465,10 @@ class BookUpdateTitleProxyWidgetRef extends BookUpdateProxyWidgetRef {
   final TextEditingController textController;
 
   /// Access the field value directly.
-  String? get title => select((state) => state.title);
+  String get title => select((state) => state.title);
 
   /// Update the field value directly.
-  void updateTitle(String? newValue) => notifier.updateTitle(newValue);
+  void updateTitle(String newValue) => notifier.updateTitle(newValue);
 }
 
 class BookUpdateTitleField extends HookConsumerWidget {
@@ -446,7 +488,7 @@ class BookUpdateTitleField extends HookConsumerWidget {
   builder;
 
   /// Optional callback that will be called when the field value changes
-  final void Function(String? previous, String? next)? onChanged;
+  final void Function(String? previous, String next)? onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -476,9 +518,7 @@ class BookUpdateTitleField extends HookConsumerWidget {
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null &&
-          initialValue != null &&
-          textController!.text.isEmpty) {
+      if (textController != null && textController!.text.isEmpty) {
         textController!.text = initialValue ?? "";
       }
       return null;
@@ -516,10 +556,10 @@ class BookUpdateAuthorProxyWidgetRef extends BookUpdateProxyWidgetRef {
   final TextEditingController textController;
 
   /// Access the field value directly.
-  String? get author => select((state) => state.author);
+  String get author => select((state) => state.author);
 
   /// Update the field value directly.
-  void updateAuthor(String? newValue) => notifier.updateAuthor(newValue);
+  void updateAuthor(String newValue) => notifier.updateAuthor(newValue);
 }
 
 class BookUpdateAuthorField extends HookConsumerWidget {
@@ -542,7 +582,7 @@ class BookUpdateAuthorField extends HookConsumerWidget {
   builder;
 
   /// Optional callback that will be called when the field value changes
-  final void Function(String? previous, String? next)? onChanged;
+  final void Function(String? previous, String next)? onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -572,9 +612,7 @@ class BookUpdateAuthorField extends HookConsumerWidget {
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null &&
-          initialValue != null &&
-          textController!.text.isEmpty) {
+      if (textController != null && textController!.text.isEmpty) {
         textController!.text = initialValue ?? "";
       }
       return null;
@@ -729,6 +767,34 @@ class BookUpdateImageField extends ConsumerWidget {
     _debugCheckHasBookUpdateForm(context);
 
     final proxy = BookUpdateImageProxyWidgetRef(ref);
+    return builder(context, proxy);
+  }
+}
+
+class BookUpdateConditionProxyWidgetRef extends BookUpdateProxyWidgetRef {
+  BookUpdateConditionProxyWidgetRef(super._ref);
+
+  /// Access the field value directly.
+  int get condition => select((state) => state.condition);
+
+  /// Update the field value directly.
+  void updateCondition(int newValue) => notifier.updateCondition(newValue);
+}
+
+class BookUpdateConditionField extends ConsumerWidget {
+  const BookUpdateConditionField({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    BookUpdateConditionProxyWidgetRef ref,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookUpdateForm(context);
+
+    final proxy = BookUpdateConditionProxyWidgetRef(ref);
     return builder(context, proxy);
   }
 }

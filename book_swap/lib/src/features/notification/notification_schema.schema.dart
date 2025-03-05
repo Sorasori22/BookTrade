@@ -94,6 +94,11 @@ class NotificationId extends Identity<int> {
   factory NotificationId.fromValue(int value) {
     return NotificationId._(value);
   }
+
+  /// Creates an instance of NotificationId with a value of -1.
+  /// This is used to represent an empty or invalid NotificationId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid NotificationId access it value through [value] or [call] will throw an error.
+  factory NotificationId.empty() => NotificationId._(-1);
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema

@@ -191,9 +191,6 @@ class _NotificationListStateProxyWidgetRef
     extends _NotificationListProxyWidgetRef {
   _NotificationListStateProxyWidgetRef(super._ref);
 
-  IList<NotificationModel> get state =>
-      _ref.watch(notificationListProvider).requireValue;
-
   Selected select<Selected>(
     Selected Function(IList<NotificationModel>) selector,
   ) => _ref.watch(

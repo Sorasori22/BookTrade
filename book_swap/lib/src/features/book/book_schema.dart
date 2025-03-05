@@ -13,13 +13,10 @@ class BookSchema extends KimappSchema {
   final ownerId = Field<ProfileId>('owner_id');
   final title = Field<String>('title');
   final author = Field<String>('author');
-  final description = Field<String?>('description');
+  final condition = Field<int>('condition');
   final image = Field<ImageObject?>('image_url');
   final createdAt = Field<DateTime>('created_at');
   final updatedAt = Field<DateTime>('updated_at');
-
-  // Join field for owner
-  final owner = Field.join<ProfileLiteModel?>().withForeignKey('owner_id').withCandidateKey('id');
 
   @override
   List<Model> get models {
@@ -37,8 +34,9 @@ class BookSchema extends KimappSchema {
         ..table()
         ..inheritAllFromBase()
         ..addFields({
-          'owner': owner,
-          'description': description,
+          'owner':
+              Field.join<ProfileLiteModel?>().withForeignKey('owner_id').withCandidateKey('id'),
+          'description': Field<String?>('description'),
         }),
 
       // Params
@@ -47,15 +45,18 @@ class BookSchema extends KimappSchema {
           'ownerId': ownerId,
           'title': title,
           'author': author,
-          'description': description,
+          'description': Field<String?>('description'),
           'image': image,
+          'condition': Field<int?>('condition'),
         }),
       Model('BookUpdateParam')
         ..addFields({
-          'title': Field<String?>('title'),
-          'author': Field<String?>('author'),
-          'description': description,
+          'ownerId': ownerId, // not gonna change, but keep for just help hold the state
+          'title': title,
+          'author': author,
+          'description': Field<String?>('description'),
           'image': image,
+          'condition': condition,
         }),
     ];
   }

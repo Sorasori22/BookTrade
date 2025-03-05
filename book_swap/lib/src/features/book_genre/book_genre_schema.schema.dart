@@ -62,6 +62,11 @@ class BookGenreId extends Identity<int> {
   factory BookGenreId.fromValue(int value) {
     return BookGenreId._(value);
   }
+
+  /// Creates an instance of BookGenreId with a value of -1.
+  /// This is used to represent an empty or invalid BookGenreId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid BookGenreId access it value through [value] or [call] will throw an error.
+  factory BookGenreId.empty() => BookGenreId._(-1);
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema

@@ -241,9 +241,6 @@ class _CompletedSwapDetailStateProxyWidgetRef
     extends _CompletedSwapDetailProxyWidgetRef {
   _CompletedSwapDetailStateProxyWidgetRef(super._ref);
 
-  CompletedSwapModel get state =>
-      _ref.watch(completedSwapDetailProvider(params.id)).requireValue;
-
   Selected select<Selected>(Selected Function(CompletedSwapModel) selector) =>
       _ref.watch(
         completedSwapDetailProvider(

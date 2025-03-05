@@ -9,7 +9,7 @@ class BookCover extends ConsumerWidget {
   const BookCover({
     super.key,
     required this.cover,
-    this.edgeShadow = true,
+    this.edgeShadow = false,
     this.borderRadius = AS.radiusM,
     this.cacheImage = true,
   });
@@ -25,13 +25,6 @@ class BookCover extends ConsumerWidget {
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(borderRadius),
-        boxShadow: const [
-          BoxShadow(
-            offset: Offset(1.2, 0),
-            blurRadius: 1,
-            color: Colors.black45,
-          ),
-        ],
       ),
       child: AspectRatio(
         aspectRatio: AS.bookCoverAspectRatio,

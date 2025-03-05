@@ -32,7 +32,11 @@ extension BookRatingUpdateFieldUpdater on BookRatingUpdate {
 
   /// Update the comment field of BookRatingUpdateParam class.
   void updateComment(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(comment: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          comment: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 }
 
 class _BookRatingUpdateFormInheritedWidget extends InheritedWidget {

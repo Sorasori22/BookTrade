@@ -241,9 +241,6 @@ class _TradeRequestDetailStateProxyWidgetRef
     extends _TradeRequestDetailProxyWidgetRef {
   _TradeRequestDetailStateProxyWidgetRef(super._ref);
 
-  TradeRequestModel get state =>
-      _ref.watch(tradeRequestDetailProvider(params.id)).requireValue;
-
   Selected select<Selected>(Selected Function(TradeRequestModel) selector) =>
       _ref.watch(
         tradeRequestDetailProvider(

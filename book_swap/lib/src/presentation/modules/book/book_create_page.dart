@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/presentation/app/app_style.dart';
+import 'package:book_swap/src/presentation/modules/book/widget/book_condition_field.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:book_swap/src/presentation/widgets/forms/app_text_form_field.dart';
@@ -54,6 +55,18 @@ class BookCreatePage extends HookConsumerWidget {
                     child: AppTextFormField(
                       controller: ref.textController,
                       validator: FormBuilderValidators.required(),
+                    ),
+                  ),
+                ),
+                AS.hGap16,
+                BookCreateConditionField(
+                  builder: (context, ref) => InfoLabel(
+                    label: 'Condition',
+                    child: BookConditionField(
+                      value: ref.condition,
+                      onChanged: (value) {
+                        ref.updateCondition(value);
+                      },
                     ),
                   ),
                 ),

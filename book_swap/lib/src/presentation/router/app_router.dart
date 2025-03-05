@@ -40,6 +40,8 @@ class AppRouter extends RootStackRouter {
             children: [
               AutoRoute(page: ProfileRoute.page, path: ''),
               AutoRoute(page: MoreRoute.page, path: 'more'),
+              AutoRoute(page: BookDetailRoute.page, path: 'book/:bookId'),
+              AutoRoute(page: BookUpdateRoute.page, path: 'book/:bookId/update'),
             ],
           ),
         ],
@@ -53,6 +55,31 @@ class AppRouter extends RootStackRouter {
         page: BookCreateRoute.page,
         guards: [AuthGuard(_ref)],
         path: '/book/create',
+      ),
+      AutoRoute(
+        page: BookDetailRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/book/:bookId',
+      ),
+      AutoRoute(
+        page: BookUpdateRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/book/:bookId/update',
+      ),
+      AutoRoute(
+        page: PrivacySecurityRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/profile/privacy-security',
+      ),
+      AutoRoute(
+        page: HelpCenterRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/help',
+      ),
+      AutoRoute(
+        page: ContactUsRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/contact',
       ),
     ];
   }

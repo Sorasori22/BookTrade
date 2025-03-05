@@ -100,6 +100,11 @@ class UserRatingId extends Identity<int> {
   factory UserRatingId.fromValue(int value) {
     return UserRatingId._(value);
   }
+
+  /// Creates an instance of UserRatingId with a value of -1.
+  /// This is used to represent an empty or invalid UserRatingId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid UserRatingId access it value through [value] or [call] will throw an error.
+  factory UserRatingId.empty() => UserRatingId._(-1);
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema

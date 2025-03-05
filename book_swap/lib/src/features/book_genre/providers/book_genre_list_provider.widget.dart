@@ -187,9 +187,6 @@ bool _debugCheckHasBookGenreListProviderScope(BuildContext context) {
 class _BookGenreListStateProxyWidgetRef extends _BookGenreListProxyWidgetRef {
   _BookGenreListStateProxyWidgetRef(super._ref);
 
-  IList<BookGenreModel> get state =>
-      _ref.watch(bookGenreListProvider).requireValue;
-
   Selected select<Selected>(
     Selected Function(IList<BookGenreModel>) selector,
   ) => _ref.watch(

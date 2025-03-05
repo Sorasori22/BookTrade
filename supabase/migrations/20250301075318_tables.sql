@@ -28,6 +28,7 @@ CREATE TABLE public.books (
   author TEXT NOT NULL,
   description TEXT,
   image_url TEXT,
+  condition INTEGER NOT NULL CHECK (condition BETWEEN 1 AND 5),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );

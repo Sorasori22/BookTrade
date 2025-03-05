@@ -8,7 +8,7 @@ part of 'book_detail_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookDetailHash() => r'b526cb8fbee6ba225cf57b490e0349a8bb098599';
+String _$bookDetailHash() => r'be00a35a0df1305ab6758edfba714857a1165087';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -32,10 +32,10 @@ class _SystemHash {
 }
 
 abstract class _$BookDetail
-    extends BuildlessAutoDisposeAsyncNotifier<BookModel> {
+    extends BuildlessAutoDisposeAsyncNotifier<BookDetailModel> {
   late final BookId id;
 
-  FutureOr<BookModel> build(
+  FutureOr<BookDetailModel> build(
     BookId id,
   );
 }
@@ -45,7 +45,7 @@ abstract class _$BookDetail
 const bookDetailProvider = BookDetailFamily();
 
 /// See also [BookDetail].
-class BookDetailFamily extends Family<AsyncValue<BookModel>> {
+class BookDetailFamily extends Family<AsyncValue<BookDetailModel>> {
   /// See also [BookDetail].
   const BookDetailFamily();
 
@@ -84,7 +84,7 @@ class BookDetailFamily extends Family<AsyncValue<BookModel>> {
 
 /// See also [BookDetail].
 class BookDetailProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<BookDetail, BookModel> {
+    extends AutoDisposeAsyncNotifierProviderImpl<BookDetail, BookDetailModel> {
   /// See also [BookDetail].
   BookDetailProvider(
     BookId id,
@@ -115,7 +115,7 @@ class BookDetailProvider
   final BookId id;
 
   @override
-  FutureOr<BookModel> runNotifierBuild(
+  FutureOr<BookDetailModel> runNotifierBuild(
     covariant BookDetail notifier,
   ) {
     return notifier.build(
@@ -140,7 +140,7 @@ class BookDetailProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<BookDetail, BookModel>
+  AutoDisposeAsyncNotifierProviderElement<BookDetail, BookDetailModel>
       createElement() {
     return _BookDetailProviderElement(this);
   }
@@ -161,13 +161,13 @@ class BookDetailProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin BookDetailRef on AutoDisposeAsyncNotifierProviderRef<BookModel> {
+mixin BookDetailRef on AutoDisposeAsyncNotifierProviderRef<BookDetailModel> {
   /// The parameter `id` of this provider.
   BookId get id;
 }
 
 class _BookDetailProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<BookDetail, BookModel>
+    extends AutoDisposeAsyncNotifierProviderElement<BookDetail, BookDetailModel>
     with BookDetailRef {
   _BookDetailProviderElement(super.provider);
 

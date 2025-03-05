@@ -123,6 +123,11 @@ class TradeRequestId extends Identity<int> {
   factory TradeRequestId.fromValue(int value) {
     return TradeRequestId._(value);
   }
+
+  /// Creates an instance of TradeRequestId with a value of -1.
+  /// This is used to represent an empty or invalid TradeRequestId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid TradeRequestId access it value through [value] or [call] will throw an error.
+  factory TradeRequestId.empty() => TradeRequestId._(-1);
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema

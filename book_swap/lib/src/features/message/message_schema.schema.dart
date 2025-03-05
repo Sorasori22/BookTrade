@@ -100,6 +100,11 @@ class MessageId extends Identity<int> {
   factory MessageId.fromValue(int value) {
     return MessageId._(value);
   }
+
+  /// Creates an instance of MessageId with a value of -1.
+  /// This is used to represent an empty or invalid MessageId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid MessageId access it value through [value] or [call] will throw an error.
+  factory MessageId.empty() => MessageId._(-1);
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema

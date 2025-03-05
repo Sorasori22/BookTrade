@@ -28,7 +28,11 @@ import 'dart:core';
 extension GenreUpdateFieldUpdater on GenreUpdate {
   /// Update the name field of GenreUpdateParam class.
   void updateName(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(name: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          name: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 }
 
 class _GenreUpdateFormInheritedWidget extends InheritedWidget {

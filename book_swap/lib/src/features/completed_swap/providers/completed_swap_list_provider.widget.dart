@@ -192,9 +192,6 @@ class _CompletedSwapListStateProxyWidgetRef
     extends _CompletedSwapListProxyWidgetRef {
   _CompletedSwapListStateProxyWidgetRef(super._ref);
 
-  IList<CompletedSwapModel> get state =>
-      _ref.watch(completedSwapListProvider).requireValue;
-
   Selected select<Selected>(
     Selected Function(IList<CompletedSwapModel>) selector,
   ) => _ref.watch(

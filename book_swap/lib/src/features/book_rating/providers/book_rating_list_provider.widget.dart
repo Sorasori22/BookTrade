@@ -187,9 +187,6 @@ bool _debugCheckHasBookRatingListProviderScope(BuildContext context) {
 class _BookRatingListStateProxyWidgetRef extends _BookRatingListProxyWidgetRef {
   _BookRatingListStateProxyWidgetRef(super._ref);
 
-  IList<BookRatingModel> get state =>
-      _ref.watch(bookRatingListProvider).requireValue;
-
   Selected select<Selected>(
     Selected Function(IList<BookRatingModel>) selector,
   ) => _ref.watch(

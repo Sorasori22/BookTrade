@@ -103,20 +103,20 @@ class BookDetailProviderScope extends ConsumerWidget {
   final BookId id;
   final Widget Function()? loading;
   final Widget Function(Object error, StackTrace? stackTrace)? error;
-  final Widget Function(BookModel data)? data;
+  final Widget Function(BookDetailModel data)? data;
   final bool skipLoadingOnReload;
   final bool skipLoadingOnRefresh;
   final Widget Function(
     BuildContext context,
     _BookDetailProxyWidgetRef ref,
-    AsyncValue<BookModel> asyncValue,
+    AsyncValue<BookDetailModel> asyncValue,
     Widget? child,
   )?
   builder;
   final Widget? child;
   final void Function(
-    AsyncValue<BookModel>? previous,
-    AsyncValue<BookModel> next,
+    AsyncValue<BookDetailModel>? previous,
+    AsyncValue<BookDetailModel> next,
   )?
   onStateChanged;
 
@@ -230,9 +230,7 @@ class BookDetailParamsWidget extends ConsumerWidget {
 class _BookDetailStateProxyWidgetRef extends _BookDetailProxyWidgetRef {
   _BookDetailStateProxyWidgetRef(super._ref);
 
-  BookModel get state => _ref.watch(bookDetailProvider(params.id)).requireValue;
-
-  Selected select<Selected>(Selected Function(BookModel) selector) =>
+  Selected select<Selected>(Selected Function(BookDetailModel) selector) =>
       _ref.watch(
         bookDetailProvider(
           params.id,
@@ -260,7 +258,8 @@ class BookDetailStateWidget extends ConsumerWidget {
   )
   builder;
   final Widget? child;
-  final void Function(BookModel? previous, BookModel? next)? onStateChanged;
+  final void Function(BookDetailModel? previous, BookDetailModel? next)?
+  onStateChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -284,7 +283,7 @@ class BookDetailSelectWidget<Selected> extends ConsumerWidget {
     this.onStateChanged,
   });
 
-  final Selected Function(BookModel state) selector;
+  final Selected Function(BookDetailModel state) selector;
   final Widget Function(
     BuildContext context,
     _BookDetailStateProxyWidgetRef ref,

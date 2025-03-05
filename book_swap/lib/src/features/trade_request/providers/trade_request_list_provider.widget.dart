@@ -191,9 +191,6 @@ class _TradeRequestListStateProxyWidgetRef
     extends _TradeRequestListProxyWidgetRef {
   _TradeRequestListStateProxyWidgetRef(super._ref);
 
-  IList<TradeRequestModel> get state =>
-      _ref.watch(tradeRequestListProvider).requireValue;
-
   Selected select<Selected>(
     Selected Function(IList<TradeRequestModel>) selector,
   ) => _ref.watch(

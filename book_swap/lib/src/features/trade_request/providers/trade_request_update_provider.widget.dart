@@ -28,11 +28,19 @@ import 'dart:core';
 extension TradeRequestUpdateFieldUpdater on TradeRequestUpdate {
   /// Update the status field of TradeRequestUpdateParam class.
   void updateStatus(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(status: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          status: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the message field of TradeRequestUpdateParam class.
   void updateMessage(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(message: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          message: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 }
 
 class _TradeRequestUpdateFormInheritedWidget extends InheritedWidget {

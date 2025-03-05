@@ -32,7 +32,11 @@ extension UserRatingUpdateFieldUpdater on UserRatingUpdate {
 
   /// Update the comment field of UserRatingUpdateParam class.
   void updateComment(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(comment: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          comment: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 }
 
 class _UserRatingUpdateFormInheritedWidget extends InheritedWidget {

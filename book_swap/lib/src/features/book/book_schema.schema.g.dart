@@ -14,15 +14,12 @@ _$BookModelImpl _$$BookModelImplFromJson(Map<String, dynamic> json) =>
       ownerId: ProfileId.fromJson(json['owner_id']),
       title: json['title'] as String,
       author: json['author'] as String,
-      description: json['description'] as String?,
+      condition: (json['condition'] as num).toInt(),
       image: json['image_url'] == null
           ? null
           : ImageObject.fromJson(json['image_url']),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
-      owner: json['owner'] == null
-          ? null
-          : ProfileLiteModel.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$BookModelImplToJson(_$BookModelImpl instance) =>
@@ -31,11 +28,10 @@ Map<String, dynamic> _$$BookModelImplToJson(_$BookModelImpl instance) =>
       'owner_id': instance.ownerId.toJson(),
       'title': instance.title,
       'author': instance.author,
-      'description': instance.description,
+      'condition': instance.condition,
       'image_url': instance.image?.toJson(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
-      'owner': instance.owner?.toJson(),
     };
 
 _$BookLiteModelImpl _$$BookLiteModelImplFromJson(Map<String, dynamic> json) =>
@@ -65,7 +61,7 @@ _$BookDetailModelImpl _$$BookDetailModelImplFromJson(
       ownerId: ProfileId.fromJson(json['owner_id']),
       title: json['title'] as String,
       author: json['author'] as String,
-      description: json['description'] as String?,
+      condition: (json['condition'] as num).toInt(),
       image: json['image_url'] == null
           ? null
           : ImageObject.fromJson(json['image_url']),
@@ -74,6 +70,7 @@ _$BookDetailModelImpl _$$BookDetailModelImplFromJson(
       owner: json['owner'] == null
           ? null
           : ProfileLiteModel.fromJson(json['owner'] as Map<String, dynamic>),
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$$BookDetailModelImplToJson(
@@ -83,11 +80,12 @@ Map<String, dynamic> _$$BookDetailModelImplToJson(
       'owner_id': instance.ownerId.toJson(),
       'title': instance.title,
       'author': instance.author,
-      'description': instance.description,
+      'condition': instance.condition,
       'image_url': instance.image?.toJson(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'owner': instance.owner?.toJson(),
+      'description': instance.description,
     };
 
 _$BookCreateParamImpl _$$BookCreateParamImplFromJson(
@@ -100,6 +98,7 @@ _$BookCreateParamImpl _$$BookCreateParamImplFromJson(
       image: json['image_url'] == null
           ? null
           : ImageObject.fromJson(json['image_url']),
+      condition: (json['condition'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$BookCreateParamImplToJson(
@@ -110,26 +109,31 @@ Map<String, dynamic> _$$BookCreateParamImplToJson(
       'author': instance.author,
       'description': instance.description,
       'image_url': instance.image?.toJson(),
+      'condition': instance.condition,
     };
 
 _$BookUpdateParamImpl _$$BookUpdateParamImplFromJson(
         Map<String, dynamic> json) =>
     _$BookUpdateParamImpl(
-      title: json['title'] as String?,
-      author: json['author'] as String?,
+      ownerId: ProfileId.fromJson(json['owner_id']),
+      title: json['title'] as String,
+      author: json['author'] as String,
       description: json['description'] as String?,
       image: json['image_url'] == null
           ? null
           : ImageObject.fromJson(json['image_url']),
+      condition: (json['condition'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$BookUpdateParamImplToJson(
         _$BookUpdateParamImpl instance) =>
     <String, dynamic>{
+      'owner_id': instance.ownerId.toJson(),
       'title': instance.title,
       'author': instance.author,
       'description': instance.description,
       'image_url': instance.image?.toJson(),
+      'condition': instance.condition,
     };
 
 // **************************************************************************
@@ -143,12 +147,10 @@ const _tableBookModel = TableBuilder(
     ColumnBuilder('owner_id'),
     ColumnBuilder('title'),
     ColumnBuilder('author'),
-    ColumnBuilder('description'),
+    ColumnBuilder('condition'),
     ColumnBuilder('image_url'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
-    ColumnBuilder.join(ProfileLiteModel.table,
-        key: "owner", candidateKey: 'id', foreignKey: 'owner_id'),
   ],
 );
 
@@ -170,11 +172,12 @@ const _tableBookDetailModel = TableBuilder(
     ColumnBuilder('owner_id'),
     ColumnBuilder('title'),
     ColumnBuilder('author'),
-    ColumnBuilder('description'),
+    ColumnBuilder('condition'),
     ColumnBuilder('image_url'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
         key: "owner", candidateKey: 'id', foreignKey: 'owner_id'),
+    ColumnBuilder('description'),
   ],
 );

@@ -234,9 +234,6 @@ class _BookGenreDetailStateProxyWidgetRef
     extends _BookGenreDetailProxyWidgetRef {
   _BookGenreDetailStateProxyWidgetRef(super._ref);
 
-  BookGenreModel get state =>
-      _ref.watch(bookGenreDetailProvider(params.id)).requireValue;
-
   Selected select<Selected>(Selected Function(BookGenreModel) selector) =>
       _ref.watch(
         bookGenreDetailProvider(

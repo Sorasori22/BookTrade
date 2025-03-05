@@ -113,6 +113,11 @@ class CompletedSwapId extends Identity<int> {
   factory CompletedSwapId.fromValue(int value) {
     return CompletedSwapId._(value);
   }
+
+  /// Creates an instance of CompletedSwapId with a value of -1.
+  /// This is used to represent an empty or invalid CompletedSwapId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid CompletedSwapId access it value through [value] or [call] will throw an error.
+  factory CompletedSwapId.empty() => CompletedSwapId._(-1);
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema

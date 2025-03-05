@@ -232,9 +232,6 @@ class ProfileDetailParamsWidget extends ConsumerWidget {
 class _ProfileDetailStateProxyWidgetRef extends _ProfileDetailProxyWidgetRef {
   _ProfileDetailStateProxyWidgetRef(super._ref);
 
-  ProfileDetailModel get state =>
-      _ref.watch(profileDetailProvider(params.profileId)).requireValue;
-
   Selected select<Selected>(Selected Function(ProfileDetailModel) selector) =>
       _ref.watch(
         profileDetailProvider(

@@ -186,9 +186,6 @@ bool _debugCheckHasCurrentAccountProviderScope(BuildContext context) {
 class _CurrentAccountStateProxyWidgetRef extends _CurrentAccountProxyWidgetRef {
   _CurrentAccountStateProxyWidgetRef(super._ref);
 
-  CurrentAccountState get state =>
-      _ref.watch(currentAccountProvider).requireValue;
-
   Selected select<Selected>(Selected Function(CurrentAccountState) selector) =>
       _ref.watch(
         currentAccountProvider.select((value) => selector(value.requireValue)),

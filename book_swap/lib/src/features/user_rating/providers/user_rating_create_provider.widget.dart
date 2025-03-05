@@ -42,7 +42,9 @@ extension UserRatingCreateFieldUpdater on UserRatingCreate {
 
   /// Update the comment field of UserRatingCreateParam class.
   void updateComment(String? newValue) =>
-      state = state.copyWith(comment: newValue);
+      state = state.copyWith(
+        comment: newValue == null || newValue.isEmpty ? null : newValue,
+      );
 }
 
 class _UserRatingCreateFormInheritedWidget extends InheritedWidget {

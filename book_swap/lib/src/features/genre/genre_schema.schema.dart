@@ -62,6 +62,11 @@ class GenreId extends Identity<int> {
   factory GenreId.fromValue(int value) {
     return GenreId._(value);
   }
+
+  /// Creates an instance of GenreId with a value of -1.
+  /// This is used to represent an empty or invalid GenreId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid GenreId access it value through [value] or [call] will throw an error.
+  factory GenreId.empty() => GenreId._(-1);
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema

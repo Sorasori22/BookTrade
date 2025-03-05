@@ -187,9 +187,6 @@ bool _debugCheckHasUserRatingListProviderScope(BuildContext context) {
 class _UserRatingListStateProxyWidgetRef extends _UserRatingListProxyWidgetRef {
   _UserRatingListStateProxyWidgetRef(super._ref);
 
-  IList<UserRatingModel> get state =>
-      _ref.watch(userRatingListProvider).requireValue;
-
   Selected select<Selected>(
     Selected Function(IList<UserRatingModel>) selector,
   ) => _ref.watch(

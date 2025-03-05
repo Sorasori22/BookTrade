@@ -82,7 +82,7 @@ abstract class _$ProfileUpdateWidget extends _$ProfileUpdate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileUpdateHash() => r'174685261f96fef4c29db072e888b191ead081f8';
+String _$profileUpdateHash() => r'906a16bcc528b9f72d41313f0571267663711f11';
 
 /// Copied from Dart SDK
 class _SystemHash {

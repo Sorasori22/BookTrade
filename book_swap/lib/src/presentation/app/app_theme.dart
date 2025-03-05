@@ -9,6 +9,9 @@ abstract final class AppTheme {
   static const Color lightGold = Color(0xFFF0E6C9);
   static const Color darkGold = Color(0xFF8C7A48);
 
+  static const Color scaffoldBgColorWhite = Color(0xFFFAFAFA);
+  static const Color scaffoldBgColorDark = Color(0xFF121212);
+
   static const Color _primaryLight = goldColor;
   static const Color _primaryDark = goldColor;
   static const Color _secondaryLight = Color(0xFF795548);
@@ -83,6 +86,7 @@ abstract final class AppTheme {
 
   static ThemeData light = ThemeData(
     useMaterial3: true,
+    scaffoldBackgroundColor: scaffoldBgColorWhite,
     brightness: Brightness.light,
     dividerTheme: DividerThemeData(
       color: BookThemeExtension.light.dividerColor,
@@ -107,7 +111,7 @@ abstract final class AppTheme {
       onSurface: Colors.black,
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white,
+      backgroundColor: scaffoldBgColorWhite,
       foregroundColor: Colors.black,
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -188,6 +192,7 @@ abstract final class AppTheme {
 
   static ThemeData dark = ThemeData(
     useMaterial3: true,
+    scaffoldBackgroundColor: scaffoldBgColorDark,
     brightness: Brightness.dark,
     colorScheme: ColorScheme.dark(
       primary: _primaryDark,
@@ -212,8 +217,8 @@ abstract final class AppTheme {
       thickness: 1,
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: _primaryDark,
-      foregroundColor: Colors.black,
+      backgroundColor: scaffoldBgColorDark,
+      foregroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
     ),

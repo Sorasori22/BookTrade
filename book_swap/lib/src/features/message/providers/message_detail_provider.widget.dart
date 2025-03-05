@@ -233,9 +233,6 @@ class MessageDetailParamsWidget extends ConsumerWidget {
 class _MessageDetailStateProxyWidgetRef extends _MessageDetailProxyWidgetRef {
   _MessageDetailStateProxyWidgetRef(super._ref);
 
-  MessageModel get state =>
-      _ref.watch(messageDetailProvider(params.id)).requireValue;
-
   Selected select<Selected>(Selected Function(MessageModel) selector) =>
       _ref.watch(
         messageDetailProvider(

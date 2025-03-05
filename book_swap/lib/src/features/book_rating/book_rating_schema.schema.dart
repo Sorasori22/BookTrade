@@ -96,6 +96,11 @@ class BookRatingId extends Identity<int> {
   factory BookRatingId.fromValue(int value) {
     return BookRatingId._(value);
   }
+
+  /// Creates an instance of BookRatingId with a value of -1.
+  /// This is used to represent an empty or invalid BookRatingId for placeholder or default values of form fields.
+  /// WARNING: This is not a valid BookRatingId access it value through [value] or [call] will throw an error.
+  factory BookRatingId.empty() => BookRatingId._(-1);
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema

@@ -232,9 +232,6 @@ class GenreDetailParamsWidget extends ConsumerWidget {
 class _GenreDetailStateProxyWidgetRef extends _GenreDetailProxyWidgetRef {
   _GenreDetailStateProxyWidgetRef(super._ref);
 
-  GenreModel get state =>
-      _ref.watch(genreDetailProvider(params.id)).requireValue;
-
   Selected select<Selected>(Selected Function(GenreModel) selector) =>
       _ref.watch(
         genreDetailProvider(

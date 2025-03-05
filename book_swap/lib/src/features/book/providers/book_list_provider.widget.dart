@@ -230,9 +230,6 @@ class BookListParamsWidget extends ConsumerWidget {
 class _BookListStateProxyWidgetRef extends _BookListProxyWidgetRef {
   _BookListStateProxyWidgetRef(super._ref);
 
-  IList<BookModel> get state =>
-      _ref.watch(bookListProvider(params.param)).requireValue;
-
   Selected select<Selected>(Selected Function(IList<BookModel>) selector) =>
       _ref.watch(
         bookListProvider(

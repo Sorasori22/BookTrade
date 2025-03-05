@@ -189,8 +189,6 @@ bool _debugCheckHasMyBookListProviderScope(BuildContext context) {
 class _MyBookListStateProxyWidgetRef extends _MyBookListProxyWidgetRef {
   _MyBookListStateProxyWidgetRef(super._ref);
 
-  IList<BookModel> get state => _ref.watch(myBookListProvider).requireValue;
-
   Selected select<Selected>(Selected Function(IList<BookModel>) selector) =>
       _ref.watch(
         myBookListProvider.select((value) => selector(value.requireValue)),

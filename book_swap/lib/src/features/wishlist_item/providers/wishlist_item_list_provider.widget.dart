@@ -191,9 +191,6 @@ class _WishlistItemListStateProxyWidgetRef
     extends _WishlistItemListProxyWidgetRef {
   _WishlistItemListStateProxyWidgetRef(super._ref);
 
-  IList<WishlistItemModel> get state =>
-      _ref.watch(wishlistItemListProvider).requireValue;
-
   Selected select<Selected>(
     Selected Function(IList<WishlistItemModel>) selector,
   ) => _ref.watch(

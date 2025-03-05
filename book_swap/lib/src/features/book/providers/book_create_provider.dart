@@ -24,12 +24,13 @@ class BookCreate extends _$BookCreateWidget {
         ownerId: ProfileId.fromValue(''),
         title: '',
         author: '',
-        description: '',
+        description: null,
         image: null,
+        condition: null,
       );
 
   @override
-  Future<BookModel> submit(
+  Future<BookDetailModel> submit(
     BookCreateParam state, {
     required XFile? image,
   }) async {
@@ -48,8 +49,8 @@ class BookCreate extends _$BookCreateWidget {
   }
 
   @override
-  void onSuccess(BookModel result) {
-    ref.read(myBookListProvider.notifier).insertItem(result);
+  void onSuccess(BookDetailModel result) {
+    ref.read(myBookListProvider.notifier).insertItem(result.toBookModel());
     ref.invalidate(bookListPaginationProvider);
   }
 }

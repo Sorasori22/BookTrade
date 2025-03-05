@@ -40,11 +40,17 @@ extension BookCreateFieldUpdater on BookCreate {
 
   /// Update the description field of BookCreateParam class.
   void updateDescription(String? newValue) =>
-      state = state.copyWith(description: newValue);
+      state = state.copyWith(
+        description: newValue == null || newValue.isEmpty ? null : newValue,
+      );
 
   /// Update the image field of BookCreateParam class.
   void updateImage(ImageObject? newValue) =>
       state = state.copyWith(image: newValue);
+
+  /// Update the condition field of BookCreateParam class.
+  void updateCondition(int? newValue) =>
+      state = state.copyWith(condition: newValue);
 }
 
 class _BookCreateFormInheritedWidget extends InheritedWidget {
@@ -71,7 +77,8 @@ class BookCreateProxyWidgetRef extends WidgetRef {
 
   final WidgetRef _ref;
 
-  AsyncValue<BookModel>? get status => _ref.watch(bookCreateCallStatusProvider);
+  AsyncValue<BookDetailModel>? get status =>
+      _ref.watch(bookCreateCallStatusProvider);
 
   GlobalKey<FormState> get formKey =>
       _BookCreateFormInheritedWidget.of(context).formKey;
@@ -79,7 +86,7 @@ class BookCreateProxyWidgetRef extends WidgetRef {
   BookCreate get notifier => _ref.read(bookCreateProvider.notifier);
 
   /// Submits the form. Internally this calls [notifier.submit] with the form key validated.
-  Future<AsyncValue<BookModel>> submit({required XFile? image}) async {
+  Future<AsyncValue<BookDetailModel>> submit({required XFile? image}) async {
     if (!(formKey.currentState?.validate() ?? false)) {
       return AsyncValue.error(
         Exception('Form is not valid'),
@@ -157,7 +164,7 @@ class BookCreateFormScope extends ConsumerStatefulWidget {
   final GlobalKey<FormState>? formKey;
   final AutovalidateMode? autovalidateMode;
   final void Function(bool, Object?)? onPopInvokedWithResult;
-  final void Function(BuildContext context, BookModel value)? onSuccessed;
+  final void Function(BuildContext context, BookDetailModel value)? onSuccessed;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -317,12 +324,12 @@ class BookCreateFormStatus extends ConsumerWidget {
   final Widget Function(
     BuildContext context,
     BookCreateProxyWidgetRef ref,
-    AsyncValue<BookModel>? status,
+    AsyncValue<BookDetailModel>? status,
   )
   builder;
   final void Function(
-    AsyncValue<BookModel>? previous,
-    AsyncValue<BookModel>? next,
+    AsyncValue<BookDetailModel>? previous,
+    AsyncValue<BookDetailModel>? next,
   )?
   onChanged;
 
@@ -654,6 +661,34 @@ class BookCreateImageField extends ConsumerWidget {
     _debugCheckHasBookCreateForm(context);
 
     final proxy = BookCreateImageProxyWidgetRef(ref);
+    return builder(context, proxy);
+  }
+}
+
+class BookCreateConditionProxyWidgetRef extends BookCreateProxyWidgetRef {
+  BookCreateConditionProxyWidgetRef(super._ref);
+
+  /// Access the field value directly.
+  int? get condition => select((state) => state.condition);
+
+  /// Update the field value directly.
+  void updateCondition(int? newValue) => notifier.updateCondition(newValue);
+}
+
+class BookCreateConditionField extends ConsumerWidget {
+  const BookCreateConditionField({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    BookCreateConditionProxyWidgetRef ref,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookCreateForm(context);
+
+    final proxy = BookCreateConditionProxyWidgetRef(ref);
     return builder(context, proxy);
   }
 }

@@ -182,8 +182,6 @@ bool _debugCheckHasGenreListProviderScope(BuildContext context) {
 class _GenreListStateProxyWidgetRef extends _GenreListProxyWidgetRef {
   _GenreListStateProxyWidgetRef(super._ref);
 
-  IList<GenreModel> get state => _ref.watch(genreListProvider).requireValue;
-
   Selected select<Selected>(Selected Function(IList<GenreModel>) selector) =>
       _ref.watch(
         genreListProvider.select((value) => selector(value.requireValue)),

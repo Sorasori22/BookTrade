@@ -34,10 +34,15 @@ extension WishlistItemCreateFieldUpdater on WishlistItemCreate {
 
   /// Update the author field of WishlistItemCreateParam class.
   void updateAuthor(String? newValue) =>
-      state = state.copyWith(author: newValue);
+      state = state.copyWith(
+        author: newValue == null || newValue.isEmpty ? null : newValue,
+      );
 
   /// Update the isbn field of WishlistItemCreateParam class.
-  void updateIsbn(String? newValue) => state = state.copyWith(isbn: newValue);
+  void updateIsbn(String? newValue) =>
+      state = state.copyWith(
+        isbn: newValue == null || newValue.isEmpty ? null : newValue,
+      );
 }
 
 class _WishlistItemCreateFormInheritedWidget extends InheritedWidget {

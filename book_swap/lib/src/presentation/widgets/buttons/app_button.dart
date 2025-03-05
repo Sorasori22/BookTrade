@@ -91,7 +91,7 @@ class AppButton extends AppBaseWidget {
     switch (variant) {
       case AppButtonVariant.primary:
       case AppButtonVariant.secondary:
-        button = ElevatedButton(
+        button = FilledButton(
           onPressed: isDisabled ? null : onPressed,
           style: baseStyle,
           child: buttonContent,
@@ -136,7 +136,7 @@ class AppButton extends AppBaseWidget {
 
     switch (variant) {
       case AppButtonVariant.primary:
-        return ElevatedButton.styleFrom(
+        return FilledButton.styleFrom(
           backgroundColor: colors.primary,
           foregroundColor: colors.onPrimary,
           elevation: AS.buttonElevation,

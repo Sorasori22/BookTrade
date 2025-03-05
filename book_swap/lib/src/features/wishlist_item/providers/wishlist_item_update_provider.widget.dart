@@ -28,15 +28,27 @@ import 'dart:core';
 extension WishlistItemUpdateFieldUpdater on WishlistItemUpdate {
   /// Update the title field of WishlistItemUpdateParam class.
   void updateTitle(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(title: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          title: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the author field of WishlistItemUpdateParam class.
   void updateAuthor(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(author: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          author: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 
   /// Update the isbn field of WishlistItemUpdateParam class.
   void updateIsbn(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(isbn: newValue));
+      state = state.whenData(
+        (state) => state.copyWith(
+          isbn: newValue == null || newValue.isEmpty ? null : newValue,
+        ),
+      );
 }
 
 class _WishlistItemUpdateFormInheritedWidget extends InheritedWidget {

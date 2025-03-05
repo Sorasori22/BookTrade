@@ -186,8 +186,6 @@ bool _debugCheckHasProfileListProviderScope(BuildContext context) {
 class _ProfileListStateProxyWidgetRef extends _ProfileListProxyWidgetRef {
   _ProfileListStateProxyWidgetRef(super._ref);
 
-  IList<ProfileModel> get state => _ref.watch(profileListProvider).requireValue;
-
   Selected select<Selected>(Selected Function(IList<ProfileModel>) selector) =>
       _ref.watch(
         profileListProvider.select((value) => selector(value.requireValue)),

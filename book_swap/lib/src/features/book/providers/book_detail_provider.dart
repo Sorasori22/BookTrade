@@ -11,12 +11,12 @@ part 'book_detail_provider.g.dart';
 @riverpod
 class BookDetail extends _$BookDetail {
   @override
-  FutureOr<BookModel> build(BookId id) {
+  FutureOr<BookDetailModel> build(BookId id) {
     return ref.watch(bookRepoProvider).findOne(id).then((value) => value.getOrThrow());
   }
 
   /// Perform side-effect update detail provider
-  void updateState(BookModel Function(BookModel oldState) newState) {
+  void updateState(BookDetailModel Function(BookDetailModel oldState) newState) {
     state = state.whenData(newState);
   }
 }

@@ -131,7 +131,7 @@ class MorePage extends ConsumerWidget {
           icon: Icons.security_outlined,
           title: 'Privacy & Security',
           onTap: () {
-            // Navigate to privacy & security page
+            context.pushRoute(const PrivacySecurityRoute());
           },
         ),
       ],
@@ -167,7 +167,7 @@ class MorePage extends ConsumerWidget {
           icon: Icons.help_outline,
           title: 'Help Center',
           onTap: () {
-            // Navigate to help center page
+            context.pushRoute(const HelpCenterRoute());
           },
         ),
         AS.hGap4,
@@ -175,7 +175,7 @@ class MorePage extends ConsumerWidget {
           icon: Icons.message_outlined,
           title: 'Contact Us',
           onTap: () {
-            // Navigate to contact us page
+            context.pushRoute(const ContactUsRoute());
           },
         ),
       ],

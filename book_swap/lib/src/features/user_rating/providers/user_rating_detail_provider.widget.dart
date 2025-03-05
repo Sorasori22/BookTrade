@@ -241,9 +241,6 @@ class _UserRatingDetailStateProxyWidgetRef
     extends _UserRatingDetailProxyWidgetRef {
   _UserRatingDetailStateProxyWidgetRef(super._ref);
 
-  UserRatingModel get state =>
-      _ref.watch(userRatingDetailProvider(params.id)).requireValue;
-
   Selected select<Selected>(Selected Function(UserRatingModel) selector) =>
       _ref.watch(
         userRatingDetailProvider(

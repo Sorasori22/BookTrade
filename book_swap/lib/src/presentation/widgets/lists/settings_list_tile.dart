@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 class SettingsListTile extends StatelessWidget {
   final IconData icon;
   final String title;
+  final String? subtitle;
   final VoidCallback onTap;
 
   const SettingsListTile({
     super.key,
     required this.icon,
     required this.title,
+    this.subtitle,
     required this.onTap,
   });
 
@@ -38,9 +40,15 @@ class SettingsListTile extends StatelessWidget {
             ),
             AS.wGap12,
             Expanded(
-              child: Text(
-                title,
-                style: context.textTheme.bodyLarge,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  if (subtitle != null) Text(subtitle!),
+                ],
               ),
             ),
             Icon(

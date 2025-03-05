@@ -16,11 +16,11 @@ IBookRepo bookRepo(Ref ref) => _Impl(ref);
 abstract class IBookRepo {
   Future<Either<Failure, IList<BookModel>>> findAll(BookListParam param);
 
-  Future<Either<Failure, BookModel>> findOne(BookId id);
+  Future<Either<Failure, BookDetailModel>> findOne(BookId id);
 
-  Future<Either<Failure, BookModel>> create(BookCreateParam data);
+  Future<Either<Failure, BookDetailModel>> create(BookCreateParam data);
 
-  Future<Either<Failure, BookModel>> update(BookId bookId, {required BookUpdateParam data});
+  Future<Either<Failure, BookDetailModel>> update(BookId bookId, {required BookUpdateParam data});
 
   Future<Either<Failure, Unit>> delete(BookId id);
 
@@ -37,14 +37,14 @@ class _Impl implements IBookRepo {
   final Ref _ref;
 
   @override
-  Future<Either<Failure, BookModel>> create(BookCreateParam data) async {
+  Future<Either<Failure, BookDetailModel>> create(BookCreateParam data) async {
     return await errorHandler(() async {
       return await _ref.supabaseClient
-          .from(BookModel.table.tableName)
+          .from(BookDetailModel.table.tableName)
           .insert(data.toJson())
-          .select(BookModel.table.selectStatement)
+          .select(BookDetailModel.table.selectStatement)
           .single()
-          .withConverter((data) => right(BookModel.fromJson(data)));
+          .withConverter((data) => right(BookDetailModel.fromJson(data)));
     });
   }
 
@@ -77,15 +77,15 @@ class _Impl implements IBookRepo {
   }
 
   @override
-  Future<Either<Failure, BookModel>> findOne(BookId id) async {
+  Future<Either<Failure, BookDetailModel>> findOne(BookId id) async {
     return await errorHandler(() async {
       final query = _ref.supabaseClient
-          .from(BookModel.table.tableName)
-          .select(BookModel.table.selectStatement)
+          .from(BookDetailModel.table.tableName)
+          .select(BookDetailModel.table.selectStatement)
           .eq(BookTable.id, id.value);
 
       final result = await query.single();
-      return right(BookModel.fromJson(result));
+      return right(BookDetailModel.fromJson(result));
     });
   }
 
@@ -113,15 +113,16 @@ class _Impl implements IBookRepo {
   }
 
   @override
-  Future<Either<Failure, BookModel>> update(BookId bookId, {required BookUpdateParam data}) async {
+  Future<Either<Failure, BookDetailModel>> update(BookId bookId,
+      {required BookUpdateParam data}) async {
     return await errorHandler(() async {
       return await _ref.supabaseClient
-          .from(BookModel.table.tableName)
+          .from(BookDetailModel.table.tableName)
           .update(data.toJson())
           .eq(BookTable.id, bookId.value)
-          .select(BookModel.table.selectStatement)
+          .select(BookDetailModel.table.selectStatement)
           .single()
-          .withConverter((data) => right(BookModel.fromJson(data)));
+          .withConverter((data) => right(BookDetailModel.fromJson(data)));
     });
   }
 }

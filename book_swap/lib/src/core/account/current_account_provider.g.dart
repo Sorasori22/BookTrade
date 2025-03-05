@@ -25,6 +25,23 @@ final currentUserIdProvider = Provider<UserId?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CurrentUserIdRef = ProviderRef<UserId?>;
+String _$currentProfileIdHash() => r'ea983b266e6666d6561ba559031bbcebea07c412';
+
+/// See also [currentProfileId].
+@ProviderFor(currentProfileId)
+final currentProfileIdProvider = AutoDisposeProvider<ProfileId?>.internal(
+  currentProfileId,
+  name: r'currentProfileIdProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentProfileIdHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef CurrentProfileIdRef = AutoDisposeProviderRef<ProfileId?>;
 String _$currentAccountHash() => r'48904e027fee12d744745e3518c7851515197bed';
 
 /// See also [CurrentAccount].

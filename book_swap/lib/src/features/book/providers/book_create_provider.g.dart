@@ -9,15 +9,15 @@ part of 'book_create_provider.dart';
 // **************************************************************************
 
 final bookCreateCallStatusProvider =
-    StateProvider.autoDispose<AsyncValue<BookModel>?>((ref) => null);
+    StateProvider.autoDispose<AsyncValue<BookDetailModel>?>((ref) => null);
 
 abstract class _$BookCreateWidget extends _$BookCreate {
   /// Callback for when the form is successfully submitted.
   /// Override this method and run "dart pub run build_runner build" to make it work. otherwise error will be thrown.
   @protected
-  void onSuccess(BookModel result);
+  void onSuccess(BookDetailModel result);
   @nonVirtual
-  Future<AsyncValue<BookModel>> call({required XFile? image}) async {
+  Future<AsyncValue<BookDetailModel>> call({required XFile? image}) async {
     final _callStatus = ref.read(bookCreateCallStatusProvider);
     final _updateCallStatus = ref.read(bookCreateCallStatusProvider.notifier);
 
@@ -61,7 +61,7 @@ abstract class _$BookCreateWidget extends _$BookCreate {
   /// 4. Return success/failure result
   @visibleForOverriding
   @protected
-  Future<BookModel> submit(
+  Future<BookDetailModel> submit(
     BookCreateParam state, {
     required XFile? image,
   });
@@ -76,7 +76,7 @@ abstract class _$BookCreateWidget extends _$BookCreate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookCreateHash() => r'e0eba37f2ae1c7c363f3346b0eb4539688f3cb89';
+String _$bookCreateHash() => r'9bf28eeb807e1011994f370b244455bb8239a4f0';
 
 /// See also [BookCreate].
 @ProviderFor(BookCreate)
