@@ -1,3 +1,4 @@
+import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -66,6 +67,8 @@ class SearchField extends HookConsumerWidget {
         child: AppTextFormField(
           textCapitalization: TextCapitalization.none,
           autofocus: autofocus,
+          filled: true,
+          backgroundColor: context.bookTheme.dividerColor.withValues(alpha: 0.6),
           controller: ctr,
           leading: const Icon(Icons.search),
           trailing: showClear.value

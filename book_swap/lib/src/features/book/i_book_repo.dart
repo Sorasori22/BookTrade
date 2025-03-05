@@ -96,11 +96,29 @@ class _Impl implements IBookRepo {
     required BookListParam param,
   }) async {
     return await errorHandler(() async {
-      final query = _ref.supabaseClient
+      var query = _ref.supabaseClient
           .from(BookModel.table.tableName)
           .select(BookModel.table.selectStatement);
 
-      if (true) {}
+      if (param.titleSearch != null && param.titleSearch!.isNotEmpty) {
+        query = query.ilike(BookTable.title, '%${param.titleSearch}%');
+      }
+
+      if (param.authorSearch != null && param.authorSearch!.isNotEmpty) {
+        query = query.ilike(BookTable.author, '%${param.authorSearch}%');
+      }
+
+      if (param.ownerId != null) {
+        query = query.eq(BookTable.ownerId, param.ownerId!);
+      }
+
+      if (param.minCondition != null) {
+        query = query.gte(BookTable.condition, param.minCondition!);
+      }
+
+      if (param.maxCondition != null) {
+        query = query.lte(BookTable.condition, param.maxCondition!);
+      }
 
       return await query.limit(limit).range(offset, offset + limit).withConverter((data) {
         final items = IList.fromJson(
@@ -113,8 +131,10 @@ class _Impl implements IBookRepo {
   }
 
   @override
-  Future<Either<Failure, BookDetailModel>> update(BookId bookId,
-      {required BookUpdateParam data}) async {
+  Future<Either<Failure, BookDetailModel>> update(
+    BookId bookId, {
+    required BookUpdateParam data,
+  }) async {
     return await errorHandler(() async {
       return await _ref.supabaseClient
           .from(BookDetailModel.table.tableName)

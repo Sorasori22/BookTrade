@@ -33,7 +33,19 @@ class AppRouter extends RootStackRouter {
         children: [
           AutoRoute(page: HomeRoute.page, path: 'home'),
           AutoRoute(page: MessageRoute.page, path: 'message'),
-          AutoRoute(page: BookRoute.page, path: 'book'),
+          AutoRoute(
+            page: BookRoute.page,
+            path: 'book',
+            maintainState: false,
+            children: [
+              AutoRoute(
+                page: SearchRoute.page,
+                path: 'search',
+                initial: true,
+                maintainState: false,
+              ),
+            ],
+          ),
           AutoRoute(
             page: ProfileRootRoute.page,
             path: 'profile',
