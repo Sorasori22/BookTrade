@@ -76,7 +76,10 @@ class BookCreatePage extends HookConsumerWidget {
                     label: 'Description',
                     child: AppTextFormField(
                       controller: ref.textController,
-                      maxLines: 3,
+                      maxLines: null,
+                      minLines: 3,
+                      keyboardType: TextInputType.multiline,
+                      textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
                 ),

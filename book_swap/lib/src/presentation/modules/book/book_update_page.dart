@@ -104,6 +104,7 @@ class BookUpdatePage extends HookConsumerWidget {
                         maxLines: null,
                         minLines: 3,
                         keyboardType: TextInputType.multiline,
+                        textCapitalization: TextCapitalization.sentences,
                       ),
                     );
                   },
