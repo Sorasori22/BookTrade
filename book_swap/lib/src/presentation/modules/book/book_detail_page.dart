@@ -1,17 +1,22 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:book_swap/src/core/helpers/build_context_helper.dart';
+import 'package:book_swap/src/features/book/providers/book_delete_provider.dart';
 import 'package:book_swap/src/features/book/providers/book_detail_provider.dart';
 import 'package:book_swap/src/features/book/providers/book_detail_provider.widget.dart';
 import 'package:book_swap/src/presentation/modules/book/widget/book_cover.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/components/label_text.dart';
+import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:dartx/dartx_io.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kimapp/kimapp.dart';
 
 import '../../../core/account/account.dart' show currentProfileIdProvider;
 import '../../../features/book/book_schema.schema.dart';
 import '../../app/app_style.dart';
+import '../../widgets/dialogs/app_dialog.dart';
 
 @RoutePage()
 class BookDetailPage extends ConsumerWidget {
@@ -29,13 +34,59 @@ class BookDetailPage extends ConsumerWidget {
         title: Text('Book Detail'),
         actions: [
           if (currentProfileId ==
-              ref.watch(bookDetailProvider(bookId).select((state) => state.valueOrNull?.ownerId)))
-            IconButton(
-              onPressed: () {
-                context.pushRoute(BookUpdateRoute(bookIdString: bookIdString));
+              ref.watch(
+                bookDetailProvider(bookId).select((state) => state.valueOrNull?.ownerId),
+              )) ...[
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                if (value == 'edit') {
+                  context.pushRoute(BookUpdateRoute(bookIdString: bookIdString));
+                } else if (value == 'delete') {
+                  AppDialog.showConfirmation(
+                    context: context,
+                    title: 'Delete Book',
+                    message: 'Are you sure you want to delete this book?',
+                    onConfirm: () async {
+                      context.loadingWrapper(() async {
+                        final result = await ref.read(bookDeleteProvider(bookId).notifier).call();
+                        if (result.isSuccess && context.mounted) {
+                          context.showSuccessSnackbar('Book deleted successfully');
+                          context.maybePop();
+                        }
+
+                        if (result.isFailure && context.mounted) {
+                          context.showErrorSnackbar(result.failure!.message());
+                        }
+                      });
+                    },
+                  );
+                }
               },
-              icon: Icon(Icons.edit),
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                  value: 'edit',
+                  child: Row(
+                    children: [
+                      Icon(Icons.edit),
+                      SizedBox(width: 8),
+                      Text('Edit'),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      Icon(Icons.delete),
+                      SizedBox(width: 8),
+                      Text('Delete'),
+                    ],
+                  ),
+                ),
+              ],
+              icon: const Icon(Icons.more_vert),
             ),
+          ],
         ],
       ),
       body: BookDetailProviderScope(
