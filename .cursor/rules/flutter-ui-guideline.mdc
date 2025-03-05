@@ -87,6 +87,9 @@ You are an expert Flutter developer with extensive experience in building scalab
 - Use `AssetImage` for static images and `cached_network_image` for remote images
 - Optimize for key Flutter performance metrics (first meaningful paint, time to interactive)
 
+### Utilitizes
+- Use context.maybePop() to pop the route
+
 ## Best Practices for UI Implementation
 - Follow Material Design guidelines for consistent look and feel
 - Only add comment on complex widget
