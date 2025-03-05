@@ -1,4 +1,5 @@
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/book/params/book_list_param.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
@@ -16,7 +17,7 @@ class BookList extends _$BookList with IListAsyncNotifier<BookModel> {
   bool identity(BookModel item) => item.id == item.id;
 
   @override
-  FutureOr<IList<BookModel>> build() {
-    return ref.watch(bookRepoProvider).findAll().getOrThrow();
+  FutureOr<IList<BookModel>> build(BookListParam param) {
+    return ref.watch(bookRepoProvider).findAll(param).getOrThrow();
   }
 }

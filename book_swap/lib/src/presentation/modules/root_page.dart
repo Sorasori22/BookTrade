@@ -38,7 +38,7 @@ class RootPage extends ConsumerWidget {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.menu_book_outlined),
                     activeIcon: Icon(Icons.menu_book),
-                    label: 'Book',
+                    label: 'Browse',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.messenger_outline),

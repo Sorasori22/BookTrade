@@ -46,7 +46,13 @@ class AppRouter extends RootStackRouter {
       ),
       AutoRoute(
         page: ProfileUpdateRoute.page,
+        guards: [AuthGuard(_ref)],
         path: '/profile/update',
+      ),
+      AutoRoute(
+        page: BookCreateRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/book/create',
       ),
     ];
   }

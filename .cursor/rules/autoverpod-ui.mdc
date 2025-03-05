@@ -1,6 +1,6 @@
 ---
 description: Implement UI with autoverpod generated widgets
-globs: **/lib/src/presentation/**/*_update_*.dart, **/lib/src/presentation/**/*_create_*.dart, 
+globs: **/lib/src/presentation/**/*_update_*.dart, **/lib/src/presentation/**/*_create_*.dart,
 alwaysApply: false
 ---
 You are an expert Flutter developer with deep knowledge of Dart, Riverpod, and Flutter widget generation patterns. Your task is to assist in creating accurate and efficient UI code based on provided rules, ensuring fast implementation while adhering to best practices and project-specific guidelines.
@@ -18,13 +18,14 @@ You are an expert Flutter developer with deep knowledge of Dart, Riverpod, and F
      - Implement the widget following the general flow of the application (standard widget creation logic).  
    - **If annotated with `@formWidget`:**  
      - Utilize the auto-generated widgets provided by `autoverpod`, located in the same folder as the provider, with the suffix `.widget.dart` (e.g., `feature_name.widget.dart`).
+     - Make sure to look throught it to see available widget wrapper you can use
 
 3. **UI Design Guidelines:**  
    - **Analyze Generated Widgets:**  
      - Review all related auto-generated widgets available in the feature folder to understand their structure and functionality.  
    - **Form Structure:**  
-     - Wrap the create/update form with a `FormScope` widget.  
-     - Provide required parameters to `FormScope` if specified (e.g., an `ID` for update forms).  
+     - Wrap the create/update form with a `[ProviderName]FormScope` widget.  
+     - Provide required parameters to `[ProviderName]FormScope` if specified (e.g., an `ID` for update forms).  
      - For update forms:  
        - If an `ID` is required but not provided in the existing empty update page/dialog, handle it as follows:  
          - Throw an `UnimplementedError` with a message like:  
@@ -34,7 +35,7 @@ You are an expert Flutter developer with deep knowledge of Dart, Riverpod, and F
      - Each form field is categorized into two types:  
        1. **Text Fields:**  
           - Use the pre-designed text field widget.  
-          - Access the controller using `ref.textController` (no need to call `ref.update[field]`).  
+          - Access the controller getter using `ref.textController` (no need to call `ref.update[field]`).  
        2. **General Fields (Non-Text):**  
           - Use the `ref.update[field]` method to update the field state.  
           - Access the field state using `ref.[fieldName]` (e.g., `ref.email` or `ref.quantity`).  
@@ -43,8 +44,8 @@ You are an expert Flutter developer with deep knowledge of Dart, Riverpod, and F
             - Throw an `UnimplementedError` with a message like:  
               `"[fieldName] field implementation is not yet available."`  
    - **Submit Button:**  
-     - Use the `FormStatus` widget to manage the form submission state.  
-     - The `FormStatus` widget provides an `AsyncValue` status to track submission (e.g., loading, success, error).  
+     - Use the `[ProviderName]FormStatus` widget to manage the form submission state.  
+     - The `[ProviderName]FormStatus` widget provides an `AsyncValue` status to track submission (e.g., loading, success, error).  
      - To submit the form:  
        - Use `ref.notifier()` to trigger the submission logic.  
        - Access other field states as needed using `ref.select(fieldName)` for performance optimization (selects only specific fields instead of the entire state).  

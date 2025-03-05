@@ -1,3 +1,4 @@
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:kimapp/kimapp.dart';
 
 import '../profile/profile_schema.schema.dart';
@@ -12,10 +13,8 @@ class BookSchema extends KimappSchema {
   final ownerId = Field<ProfileId>('owner_id');
   final title = Field<String>('title');
   final author = Field<String>('author');
-  final isbn = Field<String?>('isbn');
   final description = Field<String?>('description');
-  final condition = Field<int>('condition');
-  final imageUrl = Field<String?>('image_url');
+  final image = Field<ImageObject?>('image_url');
   final createdAt = Field<DateTime>('created_at');
   final updatedAt = Field<DateTime>('updated_at');
 
@@ -31,8 +30,7 @@ class BookSchema extends KimappSchema {
           'id': id,
           'title': title,
           'author': author,
-          'condition': condition,
-          'imageUrl': imageUrl,
+          'image': image,
           'ownerId': ownerId,
         }),
       Model('BookDetailModel')
@@ -40,7 +38,6 @@ class BookSchema extends KimappSchema {
         ..inheritAllFromBase()
         ..addFields({
           'owner': owner,
-          'isbn': isbn,
           'description': description,
         }),
 
@@ -50,19 +47,15 @@ class BookSchema extends KimappSchema {
           'ownerId': ownerId,
           'title': title,
           'author': author,
-          'isbn': isbn,
           'description': description,
-          'condition': condition,
-          'imageUrl': imageUrl,
+          'image': image,
         }),
       Model('BookUpdateParam')
         ..addFields({
           'title': Field<String?>('title'),
           'author': Field<String?>('author'),
-          'isbn': isbn,
           'description': description,
-          'condition': Field<int?>('condition'),
-          'imageUrl': imageUrl,
+          'image': image,
         }),
     ];
   }

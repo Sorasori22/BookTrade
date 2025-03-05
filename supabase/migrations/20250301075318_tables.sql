@@ -26,9 +26,7 @@ CREATE TABLE public.books (
   owner_id UUID REFERENCES public.profiles(id) NOT NULL,
   title TEXT NOT NULL,
   author TEXT NOT NULL,
-  isbn TEXT,
   description TEXT,
-  condition INTEGER NOT NULL CHECK (condition BETWEEN 1 AND 5),
   image_url TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL

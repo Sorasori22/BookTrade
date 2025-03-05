@@ -15,11 +15,11 @@ import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/book/providers/my_book_list_provider.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/book/i_book_repo.dart';
 import 'package:book_swap/src/features/book/providers/book_detail_provider.dart';
 import 'package:book_swap/src/features/book/providers/book_list_pagination_provider.dart';
-import 'package:book_swap/src/features/book/providers/book_list_provider.dart';
 import 'dart:core';
 
 /// Extension that adds field update methods to the form provider.
@@ -33,21 +33,13 @@ extension BookUpdateFieldUpdater on BookUpdate {
   void updateAuthor(String? newValue) =>
       state = state.whenData((state) => state.copyWith(author: newValue));
 
-  /// Update the isbn field of BookUpdateParam class.
-  void updateIsbn(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(isbn: newValue));
-
   /// Update the description field of BookUpdateParam class.
   void updateDescription(String? newValue) =>
       state = state.whenData((state) => state.copyWith(description: newValue));
 
-  /// Update the condition field of BookUpdateParam class.
-  void updateCondition(int? newValue) =>
-      state = state.whenData((state) => state.copyWith(condition: newValue));
-
-  /// Update the imageUrl field of BookUpdateParam class.
-  void updateImageUrl(String? newValue) =>
-      state = state.whenData((state) => state.copyWith(imageUrl: newValue));
+  /// Update the image field of BookUpdateParam class.
+  void updateImage(ImageObject? newValue) =>
+      state = state.whenData((state) => state.copyWith(image: newValue));
 }
 
 class _BookUpdateFormInheritedWidget extends InheritedWidget {
@@ -613,96 +605,6 @@ class BookUpdateAuthorField extends HookConsumerWidget {
   }
 }
 
-class BookUpdateIsbnProxyWidgetRef extends BookUpdateProxyWidgetRef {
-  BookUpdateIsbnProxyWidgetRef(super._ref, {required this.textController});
-
-  /// Text controller for the field. This is automatically created by the form widget and handles cleanup automatically.
-  final TextEditingController textController;
-
-  /// Access the field value directly.
-  String? get isbn => select((state) => state.isbn);
-
-  /// Update the field value directly.
-  void updateIsbn(String? newValue) => notifier.updateIsbn(newValue);
-}
-
-class BookUpdateIsbnField extends HookConsumerWidget {
-  const BookUpdateIsbnField({
-    super.key,
-    this.textController,
-    this.onChanged,
-    required this.builder,
-  });
-
-  /// Text controller for the field. If not provided, one will be created automatically.
-  final TextEditingController? textController;
-
-  /// Builder function that will be called with the context and ref.
-  /// Field utilities are accessible via [ref]
-  final Widget Function(BuildContext context, BookUpdateIsbnProxyWidgetRef ref)
-  builder;
-
-  /// Optional callback that will be called when the field value changes
-  final void Function(String? previous, String? next)? onChanged;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookUpdateForm(context);
-
-    final params = _BookUpdateFormInheritedWidget.of(context).params;
-
-    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue =
-        ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.isbn;
-
-    final controller =
-        textController ?? useTextEditingController(text: initialValue);
-
-    // Listen for provider changes
-    ref.listen(
-      bookUpdateProvider(
-        params.bookId,
-      ).select((value) => value.valueOrNull?.isbn),
-      (previous, next) {
-        if (previous != next && controller.text != next) {
-          controller.text = next ?? "";
-        }
-        onChanged?.call(previous, next ?? "");
-      },
-    );
-
-    // Initialize external controller if provided
-    useEffect(() {
-      if (textController != null &&
-          initialValue != null &&
-          textController!.text.isEmpty) {
-        textController!.text = initialValue ?? "";
-      }
-      return null;
-    }, []);
-
-    // Setup text listener
-    useEffect(() {
-      void listener() {
-        final currentValue =
-            ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.isbn;
-        if (currentValue != controller.text) {
-          ref
-              .read(bookUpdateProvider(params.bookId).notifier)
-              .updateIsbn(controller.text);
-        }
-      }
-
-      controller.addListener(listener);
-      return () => controller.removeListener(listener);
-    }, [controller]);
-
-    final proxy = BookUpdateIsbnProxyWidgetRef(ref, textController: controller);
-
-    return builder(context, proxy);
-  }
-}
-
 class BookUpdateDescriptionProxyWidgetRef extends BookUpdateProxyWidgetRef {
   BookUpdateDescriptionProxyWidgetRef(
     super._ref, {
@@ -806,126 +708,27 @@ class BookUpdateDescriptionField extends HookConsumerWidget {
   }
 }
 
-class BookUpdateConditionProxyWidgetRef extends BookUpdateProxyWidgetRef {
-  BookUpdateConditionProxyWidgetRef(super._ref);
+class BookUpdateImageProxyWidgetRef extends BookUpdateProxyWidgetRef {
+  BookUpdateImageProxyWidgetRef(super._ref);
 
   /// Access the field value directly.
-  int? get condition => select((state) => state.condition);
+  ImageObject? get image => select((state) => state.image);
 
   /// Update the field value directly.
-  void updateCondition(int? newValue) => notifier.updateCondition(newValue);
+  void updateImage(ImageObject? newValue) => notifier.updateImage(newValue);
 }
 
-class BookUpdateConditionField extends ConsumerWidget {
-  const BookUpdateConditionField({super.key, required this.builder});
+class BookUpdateImageField extends ConsumerWidget {
+  const BookUpdateImageField({super.key, required this.builder});
 
-  final Widget Function(
-    BuildContext context,
-    BookUpdateConditionProxyWidgetRef ref,
-  )
+  final Widget Function(BuildContext context, BookUpdateImageProxyWidgetRef ref)
   builder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasBookUpdateForm(context);
 
-    final proxy = BookUpdateConditionProxyWidgetRef(ref);
-    return builder(context, proxy);
-  }
-}
-
-class BookUpdateImageUrlProxyWidgetRef extends BookUpdateProxyWidgetRef {
-  BookUpdateImageUrlProxyWidgetRef(super._ref, {required this.textController});
-
-  /// Text controller for the field. This is automatically created by the form widget and handles cleanup automatically.
-  final TextEditingController textController;
-
-  /// Access the field value directly.
-  String? get imageUrl => select((state) => state.imageUrl);
-
-  /// Update the field value directly.
-  void updateImageUrl(String? newValue) => notifier.updateImageUrl(newValue);
-}
-
-class BookUpdateImageUrlField extends HookConsumerWidget {
-  const BookUpdateImageUrlField({
-    super.key,
-    this.textController,
-    this.onChanged,
-    required this.builder,
-  });
-
-  /// Text controller for the field. If not provided, one will be created automatically.
-  final TextEditingController? textController;
-
-  /// Builder function that will be called with the context and ref.
-  /// Field utilities are accessible via [ref]
-  final Widget Function(
-    BuildContext context,
-    BookUpdateImageUrlProxyWidgetRef ref,
-  )
-  builder;
-
-  /// Optional callback that will be called when the field value changes
-  final void Function(String? previous, String? next)? onChanged;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookUpdateForm(context);
-
-    final params = _BookUpdateFormInheritedWidget.of(context).params;
-
-    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue =
-        ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.imageUrl;
-
-    final controller =
-        textController ?? useTextEditingController(text: initialValue);
-
-    // Listen for provider changes
-    ref.listen(
-      bookUpdateProvider(
-        params.bookId,
-      ).select((value) => value.valueOrNull?.imageUrl),
-      (previous, next) {
-        if (previous != next && controller.text != next) {
-          controller.text = next ?? "";
-        }
-        onChanged?.call(previous, next ?? "");
-      },
-    );
-
-    // Initialize external controller if provided
-    useEffect(() {
-      if (textController != null &&
-          initialValue != null &&
-          textController!.text.isEmpty) {
-        textController!.text = initialValue ?? "";
-      }
-      return null;
-    }, []);
-
-    // Setup text listener
-    useEffect(() {
-      void listener() {
-        final currentValue =
-            ref.read(bookUpdateProvider(params.bookId)).valueOrNull?.imageUrl;
-        if (currentValue != controller.text) {
-          ref
-              .read(bookUpdateProvider(params.bookId).notifier)
-              .updateImageUrl(controller.text);
-        }
-      }
-
-      controller.addListener(listener);
-      return () => controller.removeListener(listener);
-    }, [controller]);
-
-    final proxy = BookUpdateImageUrlProxyWidgetRef(
-      ref,
-      textController: controller,
-    );
-
+    final proxy = BookUpdateImageProxyWidgetRef(ref);
     return builder(context, proxy);
   }
 }

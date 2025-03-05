@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:book_swap/src/core/account/current_account_provider.widget.dart';
 import 'package:book_swap/src/features/auth/auth.dart';
 import 'package:book_swap/src/presentation/modules/profile/widget/current_user_avatar.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
@@ -70,11 +71,16 @@ class MorePage extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'John Doe',
-                  style: context.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                CurrentAccountSelectWidget(
+                  selector: (state) => state.profile?.fullname ?? "...",
+                  builder: (context, ref, value) {
+                    return Text(
+                      value,
+                      style: context.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
                 Text(
                   'View Profile',

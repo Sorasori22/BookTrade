@@ -15,10 +15,13 @@ import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/core/account/account.dart';
+import 'package:book_swap/src/features/book/providers/my_book_list_provider.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:kimapp/kimapp.dart';
+import 'package:kimapp_supabase_helper/kimapp_supabase_helper.dart';
 import 'package:book_swap/src/features/book/i_book_repo.dart';
 import 'package:book_swap/src/features/book/providers/book_list_pagination_provider.dart';
-import 'package:book_swap/src/features/book/providers/book_list_provider.dart';
 import 'dart:core';
 
 /// Extension that adds field update methods to the form provider.
@@ -35,20 +38,13 @@ extension BookCreateFieldUpdater on BookCreate {
   void updateAuthor(String newValue) =>
       state = state.copyWith(author: newValue);
 
-  /// Update the isbn field of BookCreateParam class.
-  void updateIsbn(String? newValue) => state = state.copyWith(isbn: newValue);
-
   /// Update the description field of BookCreateParam class.
   void updateDescription(String? newValue) =>
       state = state.copyWith(description: newValue);
 
-  /// Update the condition field of BookCreateParam class.
-  void updateCondition(int newValue) =>
-      state = state.copyWith(condition: newValue);
-
-  /// Update the imageUrl field of BookCreateParam class.
-  void updateImageUrl(String? newValue) =>
-      state = state.copyWith(imageUrl: newValue);
+  /// Update the image field of BookCreateParam class.
+  void updateImage(ImageObject? newValue) =>
+      state = state.copyWith(image: newValue);
 }
 
 class _BookCreateFormInheritedWidget extends InheritedWidget {
@@ -83,7 +79,7 @@ class BookCreateProxyWidgetRef extends WidgetRef {
   BookCreate get notifier => _ref.read(bookCreateProvider.notifier);
 
   /// Submits the form. Internally this calls [notifier.submit] with the form key validated.
-  Future<AsyncValue<BookModel>> submit() async {
+  Future<AsyncValue<BookModel>> submit({required XFile? image}) async {
     if (!(formKey.currentState?.validate() ?? false)) {
       return AsyncValue.error(
         Exception('Form is not valid'),
@@ -92,7 +88,7 @@ class BookCreateProxyWidgetRef extends WidgetRef {
     }
     formKey.currentState?.save();
 
-    return await notifier();
+    return await notifier(image: image);
   }
 
   Selected select<Selected>(Selected Function(BookCreateParam) selector) =>
@@ -543,88 +539,6 @@ class BookCreateAuthorField extends HookConsumerWidget {
   }
 }
 
-class BookCreateIsbnProxyWidgetRef extends BookCreateProxyWidgetRef {
-  BookCreateIsbnProxyWidgetRef(super._ref, {required this.textController});
-
-  /// Text controller for the field. This is automatically created by the form widget and handles cleanup automatically.
-  final TextEditingController textController;
-
-  /// Access the field value directly.
-  String? get isbn => select((state) => state.isbn);
-
-  /// Update the field value directly.
-  void updateIsbn(String? newValue) => notifier.updateIsbn(newValue);
-}
-
-class BookCreateIsbnField extends HookConsumerWidget {
-  const BookCreateIsbnField({
-    super.key,
-    this.textController,
-    this.onChanged,
-    required this.builder,
-  });
-
-  /// Text controller for the field. If not provided, one will be created automatically.
-  final TextEditingController? textController;
-
-  /// Builder function that will be called with the context and ref.
-  /// Field utilities are accessible via [ref]
-  final Widget Function(BuildContext context, BookCreateIsbnProxyWidgetRef ref)
-  builder;
-
-  /// Optional callback that will be called when the field value changes
-  final void Function(String? previous, String? next)? onChanged;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookCreateForm(context);
-
-    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(bookCreateProvider).isbn;
-
-    final controller =
-        textController ?? useTextEditingController(text: initialValue);
-
-    // Listen for provider changes
-    ref.listen(bookCreateProvider.select((value) => value.isbn), (
-      previous,
-      next,
-    ) {
-      if (previous != next && controller.text != next) {
-        controller.text = next ?? "";
-      }
-      onChanged?.call(previous, next);
-    });
-
-    // Initialize external controller if provided
-    useEffect(() {
-      if (textController != null &&
-          initialValue != null &&
-          textController!.text.isEmpty) {
-        textController!.text = initialValue;
-      }
-      return null;
-    }, []);
-
-    // Setup text listener
-    useEffect(() {
-      void listener() {
-        final currentValue = ref.read(bookCreateProvider).isbn;
-        if (currentValue != controller.text) {
-          ref.read(bookCreateProvider.notifier).updateIsbn(controller.text);
-        }
-      }
-
-      controller.addListener(listener);
-      return () => controller.removeListener(listener);
-    }, [controller]);
-
-    final proxy = BookCreateIsbnProxyWidgetRef(ref, textController: controller);
-
-    return builder(context, proxy);
-  }
-}
-
 class BookCreateDescriptionProxyWidgetRef extends BookCreateProxyWidgetRef {
   BookCreateDescriptionProxyWidgetRef(
     super._ref, {
@@ -719,118 +633,27 @@ class BookCreateDescriptionField extends HookConsumerWidget {
   }
 }
 
-class BookCreateConditionProxyWidgetRef extends BookCreateProxyWidgetRef {
-  BookCreateConditionProxyWidgetRef(super._ref);
+class BookCreateImageProxyWidgetRef extends BookCreateProxyWidgetRef {
+  BookCreateImageProxyWidgetRef(super._ref);
 
   /// Access the field value directly.
-  int get condition => select((state) => state.condition);
+  ImageObject? get image => select((state) => state.image);
 
   /// Update the field value directly.
-  void updateCondition(int newValue) => notifier.updateCondition(newValue);
+  void updateImage(ImageObject? newValue) => notifier.updateImage(newValue);
 }
 
-class BookCreateConditionField extends ConsumerWidget {
-  const BookCreateConditionField({super.key, required this.builder});
+class BookCreateImageField extends ConsumerWidget {
+  const BookCreateImageField({super.key, required this.builder});
 
-  final Widget Function(
-    BuildContext context,
-    BookCreateConditionProxyWidgetRef ref,
-  )
+  final Widget Function(BuildContext context, BookCreateImageProxyWidgetRef ref)
   builder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasBookCreateForm(context);
 
-    final proxy = BookCreateConditionProxyWidgetRef(ref);
-    return builder(context, proxy);
-  }
-}
-
-class BookCreateImageUrlProxyWidgetRef extends BookCreateProxyWidgetRef {
-  BookCreateImageUrlProxyWidgetRef(super._ref, {required this.textController});
-
-  /// Text controller for the field. This is automatically created by the form widget and handles cleanup automatically.
-  final TextEditingController textController;
-
-  /// Access the field value directly.
-  String? get imageUrl => select((state) => state.imageUrl);
-
-  /// Update the field value directly.
-  void updateImageUrl(String? newValue) => notifier.updateImageUrl(newValue);
-}
-
-class BookCreateImageUrlField extends HookConsumerWidget {
-  const BookCreateImageUrlField({
-    super.key,
-    this.textController,
-    this.onChanged,
-    required this.builder,
-  });
-
-  /// Text controller for the field. If not provided, one will be created automatically.
-  final TextEditingController? textController;
-
-  /// Builder function that will be called with the context and ref.
-  /// Field utilities are accessible via [ref]
-  final Widget Function(
-    BuildContext context,
-    BookCreateImageUrlProxyWidgetRef ref,
-  )
-  builder;
-
-  /// Optional callback that will be called when the field value changes
-  final void Function(String? previous, String? next)? onChanged;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookCreateForm(context);
-
-    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(bookCreateProvider).imageUrl;
-
-    final controller =
-        textController ?? useTextEditingController(text: initialValue);
-
-    // Listen for provider changes
-    ref.listen(bookCreateProvider.select((value) => value.imageUrl), (
-      previous,
-      next,
-    ) {
-      if (previous != next && controller.text != next) {
-        controller.text = next ?? "";
-      }
-      onChanged?.call(previous, next);
-    });
-
-    // Initialize external controller if provided
-    useEffect(() {
-      if (textController != null &&
-          initialValue != null &&
-          textController!.text.isEmpty) {
-        textController!.text = initialValue;
-      }
-      return null;
-    }, []);
-
-    // Setup text listener
-    useEffect(() {
-      void listener() {
-        final currentValue = ref.read(bookCreateProvider).imageUrl;
-        if (currentValue != controller.text) {
-          ref.read(bookCreateProvider.notifier).updateImageUrl(controller.text);
-        }
-      }
-
-      controller.addListener(listener);
-      return () => controller.removeListener(listener);
-    }, [controller]);
-
-    final proxy = BookCreateImageUrlProxyWidgetRef(
-      ref,
-      textController: controller,
-    );
-
+    final proxy = BookCreateImageProxyWidgetRef(ref);
     return builder(context, proxy);
   }
 }

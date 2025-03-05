@@ -114,9 +114,15 @@ class _ThemeOverrider extends ConsumerWidget {
           // Add the KimappThemeExtension
           KimappThemeExtension(
             defaultLoadingStateWidget: (context, ref) {
-              return const Center(child: CircularProgressIndicator());
+              return const Scaffold(
+                primary: false,
+                body: Center(child: CircularProgressIndicator()),
+              );
             },
-            defaultErrorStateWidget: (_, __, error) => Center(child: MyErrorWidget(error: error)),
+            defaultErrorStateWidget: (_, __, error) => Scaffold(
+              primary: false,
+              body: Center(child: MyErrorWidget(error: error)),
+            ),
           ),
         ],
 

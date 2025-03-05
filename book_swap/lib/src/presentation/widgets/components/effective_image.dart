@@ -275,7 +275,7 @@ class EffectiveImage extends StatelessWidget {
 }
 
 class _ErrorWidget extends ConsumerWidget {
-  const _ErrorWidget({super.key});
+  const _ErrorWidget();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

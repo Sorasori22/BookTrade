@@ -1,4 +1,5 @@
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/book/providers/my_book_list_provider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -8,7 +9,6 @@ import '../book_schema.schema.dart';
 import '../i_book_repo.dart';
 import 'book_detail_provider.dart';
 import 'book_list_pagination_provider.dart';
-import 'book_list_provider.dart';
 
 part 'book_update_provider.g.dart';
 
@@ -21,10 +21,8 @@ class BookUpdate extends _$BookUpdateWidget {
     return BookUpdateParam(
       title: result.title,
       author: result.author,
-      isbn: result.isbn,
       description: result.description,
-      condition: result.condition,
-      imageUrl: result.imageUrl,
+      image: result.image,
     );
   }
 
@@ -35,7 +33,7 @@ class BookUpdate extends _$BookUpdateWidget {
 
   @override
   void onSuccess(BookModel result) {
-    ref.read(bookListProvider.notifier).updateItem(result);
+    ref.read(myBookListProvider.notifier).updateItem(result);
     ref.read(bookDetailProvider(bookId).notifier).updateState((_) => result);
 
     //! Use with caution

@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
-import 'package:book_swap/src/features/book/providers/book_list_provider.dart';
+import 'package:book_swap/src/features/book/providers/my_book_list_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
@@ -15,37 +15,20 @@ import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
-import 'package:book_swap/src/features/book/params/book_list_param.dart';
+import 'package:book_swap/src/features/book/i_book_repo.dart';
+import 'package:dartx/dartx.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/features/book/i_book_repo.dart';
+import 'package:book_swap/src/core/account/current_account_provider.dart';
+import 'package:book_swap/src/features/book/params/book_list_param.dart';
 import 'dart:core';
 
-class _BookListInheritedWidget extends InheritedWidget {
-  const _BookListInheritedWidget({required this.params, required super.child});
-
-  final ({BookListParam param}) params;
-
-  static _BookListInheritedWidget of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<_BookListInheritedWidget>()!;
-  }
-
-  @override
-  bool updateShouldNotify(covariant _BookListInheritedWidget oldWidget) {
-    return params != oldWidget.params;
-  }
-}
-
-class _BookListProxyWidgetRef extends WidgetRef {
-  _BookListProxyWidgetRef(this._ref);
+class _MyBookListProxyWidgetRef extends WidgetRef {
+  _MyBookListProxyWidgetRef(this._ref);
 
   final WidgetRef _ref;
 
-  BookList get notifier => _ref.read(bookListProvider(params.param).notifier);
-
-  ({BookListParam param}) get params =>
-      _BookListInheritedWidget.of(context).params;
+  MyBookList get notifier => _ref.read(myBookListProvider.notifier);
 
   @override
   BuildContext get context => _ref.context;
@@ -86,10 +69,9 @@ class _BookListProxyWidgetRef extends WidgetRef {
   T watch<T>(ProviderListenable<T> provider) => _ref.watch(provider);
 }
 
-class BookListProviderScope extends ConsumerWidget {
-  const BookListProviderScope({
+class MyBookListProviderScope extends ConsumerWidget {
+  const MyBookListProviderScope({
     super.key,
-    required this.param,
     this.loading,
     this.error,
     this.data,
@@ -100,7 +82,6 @@ class BookListProviderScope extends ConsumerWidget {
     this.onStateChanged,
   });
 
-  final BookListParam param;
   final Widget Function()? loading;
   final Widget Function(Object error, StackTrace? stackTrace)? error;
   final Widget Function(IList<BookModel> data)? data;
@@ -108,7 +89,7 @@ class BookListProviderScope extends ConsumerWidget {
   final bool skipLoadingOnRefresh;
   final Widget Function(
     BuildContext context,
-    _BookListProxyWidgetRef ref,
+    _MyBookListProxyWidgetRef ref,
     AsyncValue<IList<BookModel>> asyncValue,
     Widget? child,
   )?
@@ -123,84 +104,81 @@ class BookListProviderScope extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (onStateChanged != null) {
-      ref.listen(bookListProvider(param), onStateChanged!);
+      ref.listen(myBookListProvider, onStateChanged!);
     }
 
-    return _BookListInheritedWidget(
-      params: (param: param),
-      child: Consumer(
-        child: child,
-        builder: (context, ref, child) {
-          final state = ref.watch(bookListProvider(param));
+    return Consumer(
+      child: child,
+      builder: (context, ref, child) {
+        final state = ref.watch(myBookListProvider);
 
-          if (builder != null) {
-            return builder!(
-              context,
-              _BookListProxyWidgetRef(ref),
-              state,
-              child,
-            );
-          }
-
-          final themeExtension =
-              Theme.of(context).extension<KimappThemeExtension>();
-          return state.when(
-            skipLoadingOnReload: skipLoadingOnReload,
-            skipLoadingOnRefresh: skipLoadingOnRefresh,
-            data: (data) {
-              final result = this.data?.call(data) ?? child;
-              if (result == null) {
-                debugPrint(
-                  'No child provided for BookListProviderScope. Empty SizedBox will be returned.',
-                );
-                return const SizedBox.shrink();
-              }
-              return result;
-            },
-            error:
-                (error, stack) =>
-                    this.error?.call(error, stack) ??
-                    themeExtension?.defaultErrorStateWidget?.call(
-                      context,
-                      ref,
-                      error,
-                    ) ??
-                    const SizedBox.shrink(),
-            loading:
-                () =>
-                    loading?.call() ??
-                    themeExtension?.defaultLoadingStateWidget?.call(
-                      context,
-                      ref,
-                    ) ??
-                    const SizedBox.shrink(),
+        if (builder != null) {
+          return builder!(
+            context,
+            _MyBookListProxyWidgetRef(ref),
+            state,
+            child,
           );
-        },
-      ),
+        }
+
+        final themeExtension =
+            Theme.of(context).extension<KimappThemeExtension>();
+        return state.when(
+          skipLoadingOnReload: skipLoadingOnReload,
+          skipLoadingOnRefresh: skipLoadingOnRefresh,
+          data: (data) {
+            final result = this.data?.call(data) ?? child;
+            if (result == null) {
+              debugPrint(
+                'No child provided for MyBookListProviderScope. Empty SizedBox will be returned.',
+              );
+              return const SizedBox.shrink();
+            }
+            return result;
+          },
+          error:
+              (error, stack) =>
+                  this.error?.call(error, stack) ??
+                  themeExtension?.defaultErrorStateWidget?.call(
+                    context,
+                    ref,
+                    error,
+                  ) ??
+                  const SizedBox.shrink(),
+          loading:
+              () =>
+                  loading?.call() ??
+                  themeExtension?.defaultLoadingStateWidget?.call(
+                    context,
+                    ref,
+                  ) ??
+                  const SizedBox.shrink(),
+        );
+      },
     );
   }
 }
 
-bool _debugCheckHasBookListProviderScope(BuildContext context) {
+bool _debugCheckHasMyBookListProviderScope(BuildContext context) {
   assert(() {
-    if (context.widget is! BookListProviderScope &&
-        context.findAncestorWidgetOfExactType<BookListProviderScope>() ==
+    if (context.widget is! MyBookListProviderScope &&
+        context.findAncestorWidgetOfExactType<MyBookListProviderScope>() ==
             null) {
       // Check if we're in a navigation context (dialog or pushed screen)
       final isInNavigation = ModalRoute.of(context) != null;
 
       if (!isInNavigation) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
-          ErrorSummary('No BookListProviderScope found'),
+          ErrorSummary('No MyBookListProviderScope found'),
           ErrorDescription(
-            '${context.widget.runtimeType} widgets require a BookListProviderScope widget ancestor '
+            '${context.widget.runtimeType} widgets require a MyBookListProviderScope widget ancestor '
             'or to be used in a navigation context with proper state management.',
           ),
         ]);
       }
       // If in navigation context, we'll return true but log a warning
       debugPrint(
-        'Widget ${context.widget.runtimeType} used in navigation without direct BookListProviderScope',
+        'Widget ${context.widget.runtimeType} used in navigation without direct MyBookListProviderScope',
       );
     }
     return true;
@@ -208,41 +186,19 @@ bool _debugCheckHasBookListProviderScope(BuildContext context) {
   return true;
 }
 
-class BookListParamsWidget extends ConsumerWidget {
-  const BookListParamsWidget({super.key, required this.builder});
+class _MyBookListStateProxyWidgetRef extends _MyBookListProxyWidgetRef {
+  _MyBookListStateProxyWidgetRef(super._ref);
 
-  final Widget Function(
-    BuildContext context,
-    _BookListProxyWidgetRef ref,
-    ({BookListParam param}) params,
-  )
-  builder;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookListProviderScope(context);
-
-    final params = _BookListInheritedWidget.of(context).params;
-    return builder(context, _BookListProxyWidgetRef(ref), params);
-  }
-}
-
-class _BookListStateProxyWidgetRef extends _BookListProxyWidgetRef {
-  _BookListStateProxyWidgetRef(super._ref);
-
-  IList<BookModel> get state =>
-      _ref.watch(bookListProvider(params.param)).requireValue;
+  IList<BookModel> get state => _ref.watch(myBookListProvider).requireValue;
 
   Selected select<Selected>(Selected Function(IList<BookModel>) selector) =>
       _ref.watch(
-        bookListProvider(
-          params.param,
-        ).select((value) => selector(value.requireValue)),
+        myBookListProvider.select((value) => selector(value.requireValue)),
       );
 }
 
-class BookListStateWidget extends ConsumerWidget {
-  const BookListStateWidget({
+class MyBookListStateWidget extends ConsumerWidget {
+  const MyBookListStateWidget({
     super.key,
     required this.builder,
     this.child,
@@ -250,13 +206,13 @@ class BookListStateWidget extends ConsumerWidget {
   });
 
   /// The builder function that constructs the widget tree.
-  /// Access the state directly via ref.state, which is equivalent to ref.watch(bookListProvider(params.param))
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(myBookListProvider)
   ///
   /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
   /// The ref parameter provides type-safe access to the provider state and notifier
   final Widget Function(
     BuildContext context,
-    _BookListStateProxyWidgetRef ref,
+    _MyBookListStateProxyWidgetRef ref,
     Widget? child,
   )
   builder;
@@ -266,20 +222,19 @@ class BookListStateWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookListProviderScope(context);
+    _debugCheckHasMyBookListProviderScope(context);
 
     if (onStateChanged != null) {
-      final params = _BookListInheritedWidget.of(context).params;
-      ref.listen(bookListProvider(params.param), (pre, next) {
+      ref.listen(myBookListProvider, (pre, next) {
         if (pre != next) onStateChanged!(pre?.valueOrNull, next.valueOrNull);
       });
     }
-    return builder(context, _BookListStateProxyWidgetRef(ref), child);
+    return builder(context, _MyBookListStateProxyWidgetRef(ref), child);
   }
 }
 
-class BookListSelectWidget<Selected> extends ConsumerWidget {
-  const BookListSelectWidget({
+class MyBookListSelectWidget<Selected> extends ConsumerWidget {
+  const MyBookListSelectWidget({
     super.key,
     required this.selector,
     required this.builder,
@@ -289,7 +244,7 @@ class BookListSelectWidget<Selected> extends ConsumerWidget {
   final Selected Function(IList<BookModel> state) selector;
   final Widget Function(
     BuildContext context,
-    _BookListStateProxyWidgetRef ref,
+    _MyBookListStateProxyWidgetRef ref,
     Selected value,
   )
   builder;
@@ -297,20 +252,17 @@ class BookListSelectWidget<Selected> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookListProviderScope(context);
+    _debugCheckHasMyBookListProviderScope(context);
 
     if (onStateChanged != null) {
-      final params = _BookListInheritedWidget.of(context).params;
       ref.listen(
-        bookListProvider(
-          params.param,
-        ).select((value) => selector(value.requireValue)),
+        myBookListProvider.select((value) => selector(value.requireValue)),
         (pre, next) {
           if (pre != next) onStateChanged!(pre, next);
         },
       );
     }
-    final stateRef = _BookListStateProxyWidgetRef(ref);
+    final stateRef = _MyBookListStateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.select(selector));
   }
 }

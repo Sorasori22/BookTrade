@@ -80,7 +80,7 @@ abstract class _$BookUpdateWidget extends _$BookUpdate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookUpdateHash() => r'1dcbaad04c54d600b31841e1a7190bc7ac72ed83';
+String _$bookUpdateHash() => r'6300437d3ac079bdd5aacff1d6e49cdce6e250e0';
 
 /// Copied from Dart SDK
 class _SystemHash {

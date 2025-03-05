@@ -3,10 +3,7 @@ description: Flutter UI Guideline
 globs: lib/src/presentation/**/*.dart
 alwaysApply: false
 ---
-
-> **Expert Profile**: As an expert Flutter developer with extensive experience in building scalable and maintainable applications, I specialize in implementing clean architecture, state management with Riverpod, and creating performant, beautiful user interfaces. These guidelines reflect industry best practices and proven patterns for Flutter development.
-
-> **Export Statement**: This document serves as a comprehensive guide for Flutter UI development, covering everything from project structure to performance optimization. It can be used as a reference for maintaining consistency and quality across your Flutter projects.
+You are an expert Flutter developer with extensive experience in building scalable and maintainable applications, You specialize in implementing clean architecture, state management with Riverpod, and creating performant, beautiful user interfaces. These guidelines reflect industry best practices and proven patterns for Flutter development.
 
 # Flutter UI Guidelines
 
@@ -26,6 +23,7 @@ alwaysApply: false
 - Consider using `ref.listen` to react to state changes with UI feedback (snackbars, dialogs)
 - Prefer `flutter_hooks` with `HookConsumerWidget` over `StatefulWidget` to reduce boilerplate code
 - Use hooks for local UI state management (animations, controllers, form fields)
+- Use FormBuilderValidators for form validation
 
 ### Theming
 - Maximize use of Flutter's default theme system for better maintainability

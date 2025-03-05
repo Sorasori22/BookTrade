@@ -32,9 +32,10 @@ class ImagePickerCard extends StatefulWidget {
     this.allowCompression = false,
     this.isCircle = false,
     this.placeholderTitle = 'Upload Image',
-    this.placeholderSubTitle = 'or drag and drop',
+    this.placeholderSubTitle = '',
     this.placeholderIcon = const Icon(Icons.image),
     this.enableDragAndDrop = true,
+    this.borderColor,
   }) : assert(aspectRatio != null || width != null);
 
   final XFile? imageFile;
@@ -58,6 +59,7 @@ class ImagePickerCard extends StatefulWidget {
   final String placeholderTitle;
   final String placeholderSubTitle;
   final Widget placeholderIcon;
+  final Color? borderColor;
 
   @override
   State<ImagePickerCard> createState() => _ImagePickerCardState();
@@ -328,7 +330,7 @@ class _ImagePickerCardState extends State<ImagePickerCard> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: context.colors.outline.withValues(alpha: .5),
+          color: widget.borderColor ?? context.colors.outline.withValues(alpha: .3),
           width: 2,
         ),
         shape: widget.isCircle ? BoxShape.circle : BoxShape.rectangle,
@@ -346,7 +348,7 @@ class _ImagePickerCardState extends State<ImagePickerCard> {
   DottedBorder _buildPlaceholder() {
     return DottedBorder(
       dashPattern: [6, 4],
-      color: context.colors.outline.withValues(alpha: 0.8),
+      color: widget.borderColor ?? context.colors.outline.withValues(alpha: 0.3),
       strokeCap: StrokeCap.round,
       borderType: widget.isCircle ? BorderType.Circle : BorderType.RRect,
       radius: Radius.circular(widget.borderRadius),
@@ -379,12 +381,13 @@ class _ImagePickerCardState extends State<ImagePickerCard> {
             widget.placeholderTitle,
             style: context.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
           ),
-          Text(
-            widget.placeholderSubTitle,
-            style: context.textTheme.bodySmall?.copyWith(
-              color: context.colors.outline,
+          if (widget.placeholderSubTitle.isNotEmpty)
+            Text(
+              widget.placeholderSubTitle,
+              style: context.textTheme.bodySmall?.copyWith(
+                color: context.colors.outline,
+              ),
             ),
-          ),
         ],
       ),
     );

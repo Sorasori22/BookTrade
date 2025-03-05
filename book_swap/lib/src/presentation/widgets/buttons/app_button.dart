@@ -73,7 +73,7 @@ class AppButton extends AppBaseWidget {
       );
     }
 
-    final radius = borderRadius ?? AS.buttonRadius;
+    final radius = borderRadius ?? AS.radiusXL;
     baseStyle = baseStyle.copyWith(
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(

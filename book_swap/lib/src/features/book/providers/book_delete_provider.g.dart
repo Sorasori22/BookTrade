@@ -8,7 +8,7 @@ part of 'book_delete_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookDeleteHash() => r'75d6a7ddbb2f8487a5b81ed6f28b66aac6daff66';
+String _$bookDeleteHash() => r'fe46d438628527b55b00365ed6ac88c67972398b';
 
 /// Copied from Dart SDK
 class _SystemHash {

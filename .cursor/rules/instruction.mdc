@@ -5,39 +5,44 @@ alwaysApply: true
 ---
 # Instructions
 
-During your interaction with the user, if you find anything reusable in this project, document it in the appropriate file:
+## 🔄 MANDATORY STARTUP SEQUENCE
+Before responding to ANY query:
+1. Review current state in `scratchpad.md`
+2. Check relevant patterns in `patterns.md`
+3. Review applicable lessons in `lessons.md`
+4. Check if similar issues exist in `troubleshooting.md`
 
-- `lessons.md`: For learned lessons, best practices, and important findings
-- `scratchpad.md`: For current task planning and progress tracking
-- `patterns.md`: For reusable code patterns and solutions
-- `prompts.md`: For effective prompt templates and strategies
-- `architecture.md`: For system design decisions and rationale
-- `troubleshooting.md`: For common issues and their solutions
+⚠️ IMPORTANT: Never skip this review process. Always mention which files were checked and any relevant findings.
 
-## Working Memory Management
+## Documentation Structure
+Maintain and update these core files:
+- `scratchpad.md`: Active task tracking
+- `lessons.md`: Learned lessons and best practices
+- `patterns.md`: Reusable code patterns
+- `prompts.md`: Effective prompt templates
+- `architecture.md`: Design decisions
+- `troubleshooting.md`: Issue solutions
 
-1. Always start by reviewing relevant documentation files
-2. Use the scratchpad for active task planning
-3. Document decisions and their rationale in real-time
-4. Cross-reference between files using markdown links
-5. Tag important items with categories for easy searching
-
-## Task Workflow
-
-1. Review existing documentation
-2. Plan in scratchpad with clear milestones
-3. Document new patterns and lessons as discovered
-4. Update architecture decisions if needed
-5. Maintain troubleshooting guide for encountered issues
+## Response Format
+Structure all responses as:
+1. 📋 Files Reviewed: [List checked files]
+2. 📝 Relevant Findings: [Key points from review]
+3. 💭 Response: [Your actual answer]
+4. 🔄 Updates: [Any new information to document]
 
 ## Documentation Standards
-
-Use these prefixes for better organization:
+Use these prefixes:
 - 🎯 Goal/Objective
 - 📝 Note
-- ⚠️ Warning/Important
-- 💡 Idea/Suggestion
-- 🔄 Process/Workflow
-- 🏗️ Architecture Decision
-- 🐛 Bug/Issue
-- ✅ Solution/Resolution
+- ⚠️ Warning
+- 💡 Idea
+- 🔄 Process
+- 🏗️ Architecture
+- 🐛 Bug
+- ✅ Solution
+
+## Working Memory Protocol
+1. Start each session by loading context
+2. Document decisions in real-time
+3. Cross-reference between files
+4. Update documentation before ending response

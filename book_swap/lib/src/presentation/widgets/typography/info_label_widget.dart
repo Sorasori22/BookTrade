@@ -37,8 +37,8 @@ class InfoLabelTheme extends InheritedTheme {
   }
 }
 
-class AppInfoLabel extends StatelessWidget {
-  const AppInfoLabel({
+class InfoLabel extends StatelessWidget {
+  const InfoLabel({
     super.key,
     this.icon,
     this.isRequired = false,

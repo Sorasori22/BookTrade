@@ -9,6 +9,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kimapp/kimapp.dart';
 
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'book_schema.dart';
 
@@ -46,25 +47,15 @@ class BookTable {
   /// Key: `author`
   static const String author = "author";
 
-  /// Column: isbn
-  /// Data type: `String?`
-  /// Key: `isbn`
-  static const String isbn = "isbn";
-
   /// Column: description
   /// Data type: `String?`
   /// Key: `description`
   static const String description = "description";
 
-  /// Column: condition
-  /// Data type: `int`
-  /// Key: `condition`
-  static const String condition = "condition";
-
   /// Column: image_url
-  /// Data type: `String?`
+  /// Data type: `ImageObject?`
   /// Key: `image_url`
-  static const String imageUrl = "image_url";
+  static const String image = "image_url";
 
   /// Column: created_at
   /// Data type: `DateTime`
@@ -120,10 +111,8 @@ abstract class IBookModel {
   ProfileId get ownerId;
   String get title;
   String get author;
-  String? get isbn;
   String? get description;
-  int get condition;
-  String? get imageUrl;
+  ImageObject? get image;
   DateTime get createdAt;
   DateTime get updatedAt;
   ProfileLiteModel? get owner;
@@ -145,10 +134,8 @@ class BookModel with _$BookModel implements BaseBookSchema, IBookModel {
   /// - ProfileId ownerId : JsonKey('owner_id')
   /// - String title : JsonKey('title')
   /// - String author : JsonKey('author')
-  /// - String? isbn : JsonKey('isbn')
   /// - String? description : JsonKey('description')
-  /// - int condition : JsonKey('condition')
-  /// - String? imageUrl : JsonKey('image_url')
+  /// - ImageObject? image : JsonKey('image_url')
   /// - DateTime createdAt : JsonKey('created_at')
   /// - DateTime updatedAt : JsonKey('updated_at')
   /// - ProfileLiteModel? owner : JsonKey('owner')
@@ -159,10 +146,8 @@ class BookModel with _$BookModel implements BaseBookSchema, IBookModel {
     @JsonKey(name: BookModel.ownerIdKey) required ProfileId ownerId,
     @JsonKey(name: BookModel.titleKey) required String title,
     @JsonKey(name: BookModel.authorKey) required String author,
-    @JsonKey(name: BookModel.isbnKey) required String? isbn,
     @JsonKey(name: BookModel.descriptionKey) required String? description,
-    @JsonKey(name: BookModel.conditionKey) required int condition,
-    @JsonKey(name: BookModel.imageUrlKey) required String? imageUrl,
+    @JsonKey(name: BookModel.imageKey) required ImageObject? image,
     @JsonKey(name: BookModel.createdAtKey) required DateTime createdAt,
     @JsonKey(name: BookModel.updatedAtKey) required DateTime updatedAt,
     @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
@@ -192,17 +177,11 @@ class BookModel with _$BookModel implements BaseBookSchema, IBookModel {
   /// Field name for author field with JsonKey('author')
   static const String authorKey = "author";
 
-  /// Field name for isbn field with JsonKey('isbn')
-  static const String isbnKey = "isbn";
-
   /// Field name for description field with JsonKey('description')
   static const String descriptionKey = "description";
 
-  /// Field name for condition field with JsonKey('condition')
-  static const String conditionKey = "condition";
-
-  /// Field name for imageUrl field with JsonKey('image_url')
-  static const String imageUrlKey = "image_url";
+  /// Field name for image field with JsonKey('image_url')
+  static const String imageKey = "image_url";
 
   /// Field name for createdAt field with JsonKey('created_at')
   static const String createdAtKey = "created_at";
@@ -231,8 +210,7 @@ class BookLiteModel with _$BookLiteModel implements BaseBookSchema {
   /// - BookId id : JsonKey('id')
   /// - String title : JsonKey('title')
   /// - String author : JsonKey('author')
-  /// - int condition : JsonKey('condition')
-  /// - String? imageUrl : JsonKey('image_url')
+  /// - ImageObject? image : JsonKey('image_url')
   /// - ProfileId ownerId : JsonKey('owner_id')
   @TableModel(BookLiteModel.tableName)
   @JsonSerializable(explicitToJson: true)
@@ -240,8 +218,7 @@ class BookLiteModel with _$BookLiteModel implements BaseBookSchema {
     @JsonKey(name: BookLiteModel.idKey) required BookId id,
     @JsonKey(name: BookLiteModel.titleKey) required String title,
     @JsonKey(name: BookLiteModel.authorKey) required String author,
-    @JsonKey(name: BookLiteModel.conditionKey) required int condition,
-    @JsonKey(name: BookLiteModel.imageUrlKey) required String? imageUrl,
+    @JsonKey(name: BookLiteModel.imageKey) required ImageObject? image,
     @JsonKey(name: BookLiteModel.ownerIdKey) required ProfileId ownerId,
   }) = _BookLiteModel;
 
@@ -264,11 +241,8 @@ class BookLiteModel with _$BookLiteModel implements BaseBookSchema {
   /// Field name for author field with JsonKey('author')
   static const String authorKey = "author";
 
-  /// Field name for condition field with JsonKey('condition')
-  static const String conditionKey = "condition";
-
-  /// Field name for imageUrl field with JsonKey('image_url')
-  static const String imageUrlKey = "image_url";
+  /// Field name for image field with JsonKey('image_url')
+  static const String imageKey = "image_url";
 
   /// Field name for ownerId field with JsonKey('owner_id')
   static const String ownerIdKey = "owner_id";
@@ -293,10 +267,8 @@ class BookDetailModel
   /// - ProfileId ownerId : JsonKey('owner_id')
   /// - String title : JsonKey('title')
   /// - String author : JsonKey('author')
-  /// - String? isbn : JsonKey('isbn')
   /// - String? description : JsonKey('description')
-  /// - int condition : JsonKey('condition')
-  /// - String? imageUrl : JsonKey('image_url')
+  /// - ImageObject? image : JsonKey('image_url')
   /// - DateTime createdAt : JsonKey('created_at')
   /// - DateTime updatedAt : JsonKey('updated_at')
   /// - ProfileLiteModel? owner : JsonKey('owner')
@@ -307,10 +279,8 @@ class BookDetailModel
     @JsonKey(name: BookDetailModel.ownerIdKey) required ProfileId ownerId,
     @JsonKey(name: BookDetailModel.titleKey) required String title,
     @JsonKey(name: BookDetailModel.authorKey) required String author,
-    @JsonKey(name: BookDetailModel.isbnKey) required String? isbn,
     @JsonKey(name: BookDetailModel.descriptionKey) required String? description,
-    @JsonKey(name: BookDetailModel.conditionKey) required int condition,
-    @JsonKey(name: BookDetailModel.imageUrlKey) required String? imageUrl,
+    @JsonKey(name: BookDetailModel.imageKey) required ImageObject? image,
     @JsonKey(name: BookDetailModel.createdAtKey) required DateTime createdAt,
     @JsonKey(name: BookDetailModel.updatedAtKey) required DateTime updatedAt,
     @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
@@ -340,17 +310,11 @@ class BookDetailModel
   /// Field name for author field with JsonKey('author')
   static const String authorKey = "author";
 
-  /// Field name for isbn field with JsonKey('isbn')
-  static const String isbnKey = "isbn";
-
   /// Field name for description field with JsonKey('description')
   static const String descriptionKey = "description";
 
-  /// Field name for condition field with JsonKey('condition')
-  static const String conditionKey = "condition";
-
-  /// Field name for imageUrl field with JsonKey('image_url')
-  static const String imageUrlKey = "image_url";
+  /// Field name for image field with JsonKey('image_url')
+  static const String imageKey = "image_url";
 
   /// Field name for createdAt field with JsonKey('created_at')
   static const String createdAtKey = "created_at";
@@ -369,10 +333,8 @@ class BookDetailModel
       ownerId: ownerId,
       title: title,
       author: author,
-      isbn: isbn,
       description: description,
-      condition: condition,
-      imageUrl: imageUrl,
+      image: image,
       createdAt: createdAt,
       updatedAt: updatedAt,
       owner: owner,
@@ -395,19 +357,15 @@ class BookCreateParam with _$BookCreateParam implements BaseBookSchema {
   /// - ProfileId ownerId : JsonKey('owner_id')
   /// - String title : JsonKey('title')
   /// - String author : JsonKey('author')
-  /// - String? isbn : JsonKey('isbn')
   /// - String? description : JsonKey('description')
-  /// - int condition : JsonKey('condition')
-  /// - String? imageUrl : JsonKey('image_url')
+  /// - ImageObject? image : JsonKey('image_url')
   @JsonSerializable(explicitToJson: true)
   const factory BookCreateParam({
     @JsonKey(name: BookCreateParam.ownerIdKey) required ProfileId ownerId,
     @JsonKey(name: BookCreateParam.titleKey) required String title,
     @JsonKey(name: BookCreateParam.authorKey) required String author,
-    @JsonKey(name: BookCreateParam.isbnKey) required String? isbn,
     @JsonKey(name: BookCreateParam.descriptionKey) required String? description,
-    @JsonKey(name: BookCreateParam.conditionKey) required int condition,
-    @JsonKey(name: BookCreateParam.imageUrlKey) required String? imageUrl,
+    @JsonKey(name: BookCreateParam.imageKey) required ImageObject? image,
   }) = _BookCreateParam;
 
   /// Creates an instance of BookCreateParam from a JSON map.
@@ -423,17 +381,11 @@ class BookCreateParam with _$BookCreateParam implements BaseBookSchema {
   /// Field name for author field with JsonKey('author')
   static const String authorKey = "author";
 
-  /// Field name for isbn field with JsonKey('isbn')
-  static const String isbnKey = "isbn";
-
   /// Field name for description field with JsonKey('description')
   static const String descriptionKey = "description";
 
-  /// Field name for condition field with JsonKey('condition')
-  static const String conditionKey = "condition";
-
-  /// Field name for imageUrl field with JsonKey('image_url')
-  static const String imageUrlKey = "image_url";
+  /// Field name for image field with JsonKey('image_url')
+  static const String imageKey = "image_url";
 }
 
 /// Represents the BookUpdateParam model. generated by kimapp_generator
@@ -450,18 +402,14 @@ class BookUpdateParam with _$BookUpdateParam implements BaseBookSchema {
   /// Fields:
   /// - String? title : JsonKey('title')
   /// - String? author : JsonKey('author')
-  /// - String? isbn : JsonKey('isbn')
   /// - String? description : JsonKey('description')
-  /// - int? condition : JsonKey('condition')
-  /// - String? imageUrl : JsonKey('image_url')
+  /// - ImageObject? image : JsonKey('image_url')
   @JsonSerializable(explicitToJson: true)
   const factory BookUpdateParam({
     @JsonKey(name: BookUpdateParam.titleKey) required String? title,
     @JsonKey(name: BookUpdateParam.authorKey) required String? author,
-    @JsonKey(name: BookUpdateParam.isbnKey) required String? isbn,
     @JsonKey(name: BookUpdateParam.descriptionKey) required String? description,
-    @JsonKey(name: BookUpdateParam.conditionKey) required int? condition,
-    @JsonKey(name: BookUpdateParam.imageUrlKey) required String? imageUrl,
+    @JsonKey(name: BookUpdateParam.imageKey) required ImageObject? image,
   }) = _BookUpdateParam;
 
   /// Creates an instance of BookUpdateParam from a JSON map.
@@ -474,15 +422,9 @@ class BookUpdateParam with _$BookUpdateParam implements BaseBookSchema {
   /// Field name for author field with JsonKey('author')
   static const String authorKey = "author";
 
-  /// Field name for isbn field with JsonKey('isbn')
-  static const String isbnKey = "isbn";
-
   /// Field name for description field with JsonKey('description')
   static const String descriptionKey = "description";
 
-  /// Field name for condition field with JsonKey('condition')
-  static const String conditionKey = "condition";
-
-  /// Field name for imageUrl field with JsonKey('image_url')
-  static const String imageUrlKey = "image_url";
+  /// Field name for image field with JsonKey('image_url')
+  static const String imageKey = "image_url";
 }

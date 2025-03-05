@@ -17,7 +17,7 @@ abstract class _$BookCreateWidget extends _$BookCreate {
   @protected
   void onSuccess(BookModel result);
   @nonVirtual
-  Future<AsyncValue<BookModel>> call() async {
+  Future<AsyncValue<BookModel>> call({required XFile? image}) async {
     final _callStatus = ref.read(bookCreateCallStatusProvider);
     final _updateCallStatus = ref.read(bookCreateCallStatusProvider.notifier);
 
@@ -28,7 +28,8 @@ abstract class _$BookCreateWidget extends _$BookCreate {
     }
 
     _updateCallStatus.state = const AsyncValue.loading();
-    final result = await AsyncValue.guard(() async => await submit(this.state));
+    final result = await AsyncValue.guard(
+        () async => await submit(this.state, image: image));
 
     _updateCallStatus.state = result;
 
@@ -60,7 +61,10 @@ abstract class _$BookCreateWidget extends _$BookCreate {
   /// 4. Return success/failure result
   @visibleForOverriding
   @protected
-  Future<BookModel> submit(BookCreateParam state);
+  Future<BookModel> submit(
+    BookCreateParam state, {
+    required XFile? image,
+  });
 
   /// Update the state of the form.
   /// This allows for more flexible updates to specific fields.
@@ -72,7 +76,7 @@ abstract class _$BookCreateWidget extends _$BookCreate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookCreateHash() => r'ee11c62cf9bf591d58e964456a562674c595603c';
+String _$bookCreateHash() => r'e0eba37f2ae1c7c363f3346b0eb4539688f3cb89';
 
 /// See also [BookCreate].
 @ProviderFor(BookCreate)
