@@ -36,34 +36,15 @@ CREATE TABLE public.books (
 -- Enable RLS
 ALTER TABLE public.books ENABLE ROW LEVEL SECURITY;
 
--- Book genres for categorization
-CREATE TABLE public.genres (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  name TEXT UNIQUE NOT NULL
-);
-
--- Enable RLS
-ALTER TABLE public.genres ENABLE ROW LEVEL SECURITY;
-
--- Many-to-many relationship between books and genres
-CREATE TABLE public.book_genres (
-  book_id BIGINT REFERENCES public.books(id) ON DELETE CASCADE,
-  genre_id BIGINT REFERENCES public.genres(id) ON DELETE CASCADE,
-  PRIMARY KEY (book_id, genre_id)
-);
-
--- Enable RLS
-ALTER TABLE public.book_genres ENABLE ROW LEVEL SECURITY;
-
 -- Trade requests table
 CREATE TABLE public.trade_requests (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   requester_id UUID REFERENCES public.profiles(id) NOT NULL,
+  -- just for easy query and realtime
   owner_id UUID REFERENCES public.profiles(id) NOT NULL,
   book_id BIGINT REFERENCES public.books(id) NOT NULL,
   offered_book_id BIGINT REFERENCES public.books(id),
   status TEXT NOT NULL DEFAULT 'pending',
-  message TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );

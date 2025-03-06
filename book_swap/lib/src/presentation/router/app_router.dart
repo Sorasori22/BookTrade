@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:book_swap/src/features/trade_request/providers/trade_request_create_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'app_router.gr.dart';
@@ -32,7 +33,20 @@ class AppRouter extends RootStackRouter {
         path: '/',
         children: [
           AutoRoute(page: HomeRoute.page, path: 'home'),
-          AutoRoute(page: MessageRoute.page, path: 'message'),
+          AutoRoute(
+            page: MessageRoute.page,
+            path: 'messages',
+            children: [
+              AutoRoute(
+                page: MessageListRoute.page,
+                path: '',
+              ),
+              AutoRoute(
+                page: TradeRequestListRoute.page,
+                path: 'trade-requests',
+              ),
+            ],
+          ),
           AutoRoute(
             page: BookRoute.page,
             path: 'book',
@@ -92,6 +106,11 @@ class AppRouter extends RootStackRouter {
         page: ContactUsRoute.page,
         guards: [AuthGuard(_ref)],
         path: '/contact',
+      ),
+      AutoRoute(
+        page: TradeRequestCreateRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/trade-request/:bookId/create',
       ),
     ];
   }

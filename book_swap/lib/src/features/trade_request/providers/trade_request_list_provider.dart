@@ -1,4 +1,5 @@
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/trade_request/params/trade_request_list_param.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
@@ -16,7 +17,7 @@ class TradeRequestList extends _$TradeRequestList with IListAsyncNotifier<TradeR
   bool identity(TradeRequestModel item) => item.id == item.id;
 
   @override
-  FutureOr<IList<TradeRequestModel>> build() {
-    return ref.watch(tradeRequestRepoProvider).findAll().getOrThrow();
+  FutureOr<IList<TradeRequestModel>> build(TradeRequestListParam param) {
+    return ref.watch(tradeRequestRepoProvider).findAll(param).getOrThrow();
   }
 }

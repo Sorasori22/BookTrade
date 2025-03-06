@@ -20,7 +20,7 @@ mixin _$TradeRequestListParam {
   ProfileId? get ownerId => throw _privateConstructorUsedError;
   BookId? get bookId => throw _privateConstructorUsedError;
   BookId? get offeredBookId => throw _privateConstructorUsedError;
-  String? get status => throw _privateConstructorUsedError;
+  TradeRequestStatus? get status => throw _privateConstructorUsedError;
 
   /// Create a copy of TradeRequestListParam
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +40,7 @@ abstract class $TradeRequestListParamCopyWith<$Res> {
       ProfileId? ownerId,
       BookId? bookId,
       BookId? offeredBookId,
-      String? status});
+      TradeRequestStatus? status});
 }
 
 /// @nodoc
@@ -85,7 +85,7 @@ class _$TradeRequestListParamCopyWithImpl<$Res,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as TradeRequestStatus?,
     ) as $Val);
   }
 }
@@ -104,7 +104,7 @@ abstract class _$$TradeRequestListParamImplCopyWith<$Res>
       ProfileId? ownerId,
       BookId? bookId,
       BookId? offeredBookId,
-      String? status});
+      TradeRequestStatus? status});
 }
 
 /// @nodoc
@@ -147,7 +147,7 @@ class __$$TradeRequestListParamImplCopyWithImpl<$Res>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as TradeRequestStatus?,
     ));
   }
 }
@@ -171,7 +171,7 @@ class _$TradeRequestListParamImpl implements _TradeRequestListParam {
   @override
   final BookId? offeredBookId;
   @override
-  final String? status;
+  final TradeRequestStatus? status;
 
   @override
   String toString() {
@@ -212,7 +212,7 @@ abstract class _TradeRequestListParam implements TradeRequestListParam {
       final ProfileId? ownerId,
       final BookId? bookId,
       final BookId? offeredBookId,
-      final String? status}) = _$TradeRequestListParamImpl;
+      final TradeRequestStatus? status}) = _$TradeRequestListParamImpl;
 
   @override
   ProfileId? get requesterId;
@@ -223,7 +223,7 @@ abstract class _TradeRequestListParam implements TradeRequestListParam {
   @override
   BookId? get offeredBookId;
   @override
-  String? get status;
+  TradeRequestStatus? get status;
 
   /// Create a copy of TradeRequestListParam
   /// with the given fields replaced by the non-null parameter values.

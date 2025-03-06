@@ -2,8 +2,8 @@ import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../trade_request_schema.schema.dart';
 import '../i_trade_request_repo.dart';
+import '../trade_request_schema.schema.dart';
 
 part 'trade_request_detail_provider.g.dart';
 

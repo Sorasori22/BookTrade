@@ -85,7 +85,7 @@ abstract class _$TradeRequestUpdateWidget extends _$TradeRequestUpdate {
 // **************************************************************************
 
 String _$tradeRequestUpdateHash() =>
-    r'ff8cb5d672a05b5457dc62b2f42c5d2c15233296';
+    r'ef11625fde2e0216acf513f944b4c103788ee443';
 
 /// Copied from Dart SDK
 class _SystemHash {

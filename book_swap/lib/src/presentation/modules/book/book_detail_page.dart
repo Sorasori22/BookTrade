@@ -132,7 +132,11 @@ class BookDetailPage extends ConsumerWidget {
                               SizedBox(
                                 width: 90,
                                 child: AppButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.pushRoute(
+                                      TradeRequestCreateRoute(bookId: bookId.value),
+                                    );
+                                  },
                                   label: 'Swap',
                                   borderRadius: AS.radiusS,
                                   size: AppButtonSize.medium,

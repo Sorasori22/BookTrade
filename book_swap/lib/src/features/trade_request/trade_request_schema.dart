@@ -3,6 +3,13 @@ import 'package:kimapp/kimapp.dart';
 import '../book/book_schema.schema.dart';
 import '../profile/profile_schema.schema.dart';
 
+enum TradeRequestStatus {
+  pending,
+  accepted,
+  rejected,
+  completed,
+}
+
 @Schema(
   tableName: 'trade_requests',
   className: 'TradeRequest',
@@ -14,18 +21,15 @@ class TradeRequestSchema extends KimappSchema {
   final ownerId = Field<ProfileId>('owner_id');
   final bookId = Field<BookId>('book_id');
   final offeredBookId = Field<BookId?>('offered_book_id');
-  final status = Field<String>('status');
-  final message = Field<String?>('message');
+  final status = Field<TradeRequestStatus>('status');
   final createdAt = Field<DateTime>('created_at');
   final updatedAt = Field<DateTime>('updated_at');
 
   // Join fields
-  final requester =
-      Field.join<ProfileLiteModel>().withForeignKey('requester_id').withCandidateKey('id');
-  final owner = Field.join<ProfileLiteModel>().withForeignKey('owner_id').withCandidateKey('id');
-  final book = Field.join<BookLiteModel>().withForeignKey('book_id').withCandidateKey('id');
-  final offeredBook =
-      Field.join<BookLiteModel?>().withForeignKey('offered_book_id').withCandidateKey('id');
+  final requester = Field.join<ProfileLiteModel>().withForeignKey('requester_id');
+  final owner = Field.join<ProfileLiteModel>().withForeignKey('owner_id');
+  final book = Field.join<BookLiteModel>().withForeignKey('book_id');
+  final offeredBook = Field.join<BookLiteModel?>().withForeignKey('offered_book_id');
 
   @override
   List<Model> get models => [
@@ -54,13 +58,10 @@ class TradeRequestSchema extends KimappSchema {
             'requesterId': requesterId,
             'ownerId': ownerId,
             'bookId': bookId,
-            'offeredBookId': offeredBookId,
-            'message': message,
           }),
         Model('TradeRequestUpdateParam')
           ..addFields({
-            'status': Field<String?>('status'),
-            'message': Field<String?>('message'),
+            'status': status,
           }),
       ];
 }

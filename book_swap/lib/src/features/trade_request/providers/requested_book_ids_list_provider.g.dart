@@ -2,28 +2,30 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'i_book_genre_repo.dart';
+part of 'requested_book_ids_list_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookGenreRepoHash() => r'57fd9be8f46651d00a449f39d8006b2856c11e7b';
+String _$requestedBookIdsListHash() =>
+    r'6a0cbe9a3269d8e0a5c04a924dadca2639264396';
 
-/// See also [bookGenreRepo].
-@ProviderFor(bookGenreRepo)
-final bookGenreRepoProvider = Provider<IBookGenreRepo>.internal(
-  bookGenreRepo,
-  name: r'bookGenreRepoProvider',
+/// List of book ids which I requested and is pending
+///
+/// Copied from [RequestedBookIdsList].
+@ProviderFor(RequestedBookIdsList)
+final requestedBookIdsListProvider = AutoDisposeAsyncNotifierProvider<
+    RequestedBookIdsList, IList<BookId>>.internal(
+  RequestedBookIdsList.new,
+  name: r'requestedBookIdsListProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$bookGenreRepoHash,
+      : _$requestedBookIdsListHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef BookGenreRepoRef = ProviderRef<IBookGenreRepo>;
+typedef _$RequestedBookIdsList = AutoDisposeAsyncNotifier<IList<BookId>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

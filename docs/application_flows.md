@@ -81,35 +81,40 @@ flowchart TD
 ```mermaid
 flowchart TD
     A[Browse Books] --> B[View Book Details]
-    B --> C[Request Trade]
+    B --> C[Click Swap]
     
-    C --> D[Select Book to Offer]
-    D --> E[Add Message]
-    E --> F[Submit Request]
-    
+    C --> F[Submit Request]
     F --> G[Store Trade Request]
     G --> H[Notify Book Owner]
     
     H --> I{Owner Decision}
-    I -->|Accept| J[Update Trade Status]
+    I -->|Accept| J[Create Message Thread]
     I -->|Decline| K[Update Trade Status]
-    I -->|Message| L[Send Message]
-    L --> I
     
-    J --> M[Create Completed Swap]
-    J --> N[Update Book Ownership]
-    J --> O[Notify Requester]
+    J --> L[Notify Requester]
+    J --> M[Enable Book Offering]
     
-    K --> P[Notify Requester]
+    M --> N[Attach Book to Offer]
+    N --> O[Discuss Trade Details]
+    O --> P{Both Agree?}
     
-    O --> Q[Rate Trade Experience]
-    P --> R[View Other Books]
+    P -->|Yes| Q[Complete Trade]
+    P -->|No| O
+    P -->|Cancel| R[Cancel Trade]
     
-    Q --> S[Submit User Rating]
-    Q --> T[Submit Book Rating]
-    S & T --> U[Update Ratings in DB]
+    Q --> S[Update Book Ownership]
+    S --> T[Create Completed Swap]
+    T --> U[Enable Ratings]
     
-    M & N & U --> V[Trade Complete]
+    U --> V[Rate Trade Experience]
+    V --> W[Submit User Rating]
+    V --> X[Submit Book Rating]
+    W & X --> Y[Update Ratings in DB]
+    
+    K --> Z[Notify Requester]
+    R --> Z
+    
+    Y --> AA[Trade Complete]
 ```
 
 ## Messaging System Flow

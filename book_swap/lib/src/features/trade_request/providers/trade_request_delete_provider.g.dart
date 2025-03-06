@@ -9,7 +9,7 @@ part of 'trade_request_delete_provider.dart';
 // **************************************************************************
 
 String _$tradeRequestDeleteHash() =>
-    r'2fa26f451103cd874ed33e13b77780d7ae0f0934';
+    r'd15df7584635d0d2b2760f347672a92e98110fc0';
 
 /// Copied from Dart SDK
 class _SystemHash {

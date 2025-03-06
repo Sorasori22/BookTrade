@@ -53,14 +53,9 @@ class TradeRequestTable {
   static const String offeredBookId = "offered_book_id";
 
   /// Column: status
-  /// Data type: `String`
+  /// Data type: `TradeRequestStatus`
   /// Key: `status`
   static const String status = "status";
-
-  /// Column: message
-  /// Data type: `String?`
-  /// Key: `message`
-  static const String message = "message";
 
   /// Column: created_at
   /// Data type: `DateTime`
@@ -140,8 +135,7 @@ abstract class ITradeRequestModel {
   ProfileId get ownerId;
   BookId get bookId;
   BookId? get offeredBookId;
-  String get status;
-  String? get message;
+  TradeRequestStatus get status;
   DateTime get createdAt;
   DateTime get updatedAt;
   ProfileLiteModel get requester;
@@ -169,8 +163,7 @@ class TradeRequestModel
   /// - ProfileId ownerId : JsonKey('owner_id')
   /// - BookId bookId : JsonKey('book_id')
   /// - BookId? offeredBookId : JsonKey('offered_book_id')
-  /// - String status : JsonKey('status')
-  /// - String? message : JsonKey('message')
+  /// - TradeRequestStatus status : JsonKey('status')
   /// - DateTime createdAt : JsonKey('created_at')
   /// - DateTime updatedAt : JsonKey('updated_at')
   /// - ProfileLiteModel requester : JsonKey('requester')
@@ -187,20 +180,20 @@ class TradeRequestModel
     @JsonKey(name: TradeRequestModel.bookIdKey) required BookId bookId,
     @JsonKey(name: TradeRequestModel.offeredBookIdKey)
     required BookId? offeredBookId,
-    @JsonKey(name: TradeRequestModel.statusKey) required String status,
-    @JsonKey(name: TradeRequestModel.messageKey) required String? message,
+    @JsonKey(name: TradeRequestModel.statusKey)
+    required TradeRequestStatus status,
     @JsonKey(name: TradeRequestModel.createdAtKey) required DateTime createdAt,
     @JsonKey(name: TradeRequestModel.updatedAtKey) required DateTime updatedAt,
-    @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
     @JsonKey(name: TradeRequestModel.requesterKey)
     required ProfileLiteModel requester,
-    @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
     @JsonKey(name: TradeRequestModel.ownerKey)
     required ProfileLiteModel owner,
-    @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "book_id", candidateKey: null)
     @JsonKey(name: TradeRequestModel.bookKey)
     required BookLiteModel book,
-    @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
     @JsonKey(name: TradeRequestModel.offeredBookKey)
     required BookLiteModel? offeredBook,
   }) = _TradeRequestModel;
@@ -233,9 +226,6 @@ class TradeRequestModel
   /// Field name for status field with JsonKey('status')
   static const String statusKey = "status";
 
-  /// Field name for message field with JsonKey('message')
-  static const String messageKey = "message";
-
   /// Field name for createdAt field with JsonKey('created_at')
   static const String createdAtKey = "created_at";
 
@@ -243,19 +233,19 @@ class TradeRequestModel
   static const String updatedAtKey = "updated_at";
 
   /// Field name for requester field with JsonKey('requester')
-  /// This is json key for joined field. with foreign key: requester_id and candidate key: id
+  /// This is json key for joined field. with foreign key: requester_id and candidate key: null
   static const String requesterKey = "requester";
 
   /// Field name for owner field with JsonKey('owner')
-  /// This is json key for joined field. with foreign key: owner_id and candidate key: id
+  /// This is json key for joined field. with foreign key: owner_id and candidate key: null
   static const String ownerKey = "owner";
 
   /// Field name for book field with JsonKey('book')
-  /// This is json key for joined field. with foreign key: book_id and candidate key: id
+  /// This is json key for joined field. with foreign key: book_id and candidate key: null
   static const String bookKey = "book";
 
   /// Field name for offeredBook field with JsonKey('offeredBook')
-  /// This is json key for joined field. with foreign key: offered_book_id and candidate key: id
+  /// This is json key for joined field. with foreign key: offered_book_id and candidate key: null
   static const String offeredBookKey = "offeredBook";
 }
 
@@ -279,7 +269,7 @@ class TradeRequestLiteModel
   /// - ProfileId ownerId : JsonKey('owner_id')
   /// - BookId bookId : JsonKey('book_id')
   /// - BookId? offeredBookId : JsonKey('offered_book_id')
-  /// - String status : JsonKey('status')
+  /// - TradeRequestStatus status : JsonKey('status')
   /// - DateTime createdAt : JsonKey('created_at')
   @TableModel(TradeRequestLiteModel.tableName)
   @JsonSerializable(explicitToJson: true)
@@ -291,7 +281,8 @@ class TradeRequestLiteModel
     @JsonKey(name: TradeRequestLiteModel.bookIdKey) required BookId bookId,
     @JsonKey(name: TradeRequestLiteModel.offeredBookIdKey)
     required BookId? offeredBookId,
-    @JsonKey(name: TradeRequestLiteModel.statusKey) required String status,
+    @JsonKey(name: TradeRequestLiteModel.statusKey)
+    required TradeRequestStatus status,
     @JsonKey(name: TradeRequestLiteModel.createdAtKey)
     required DateTime createdAt,
   }) = _TradeRequestLiteModel;
@@ -348,8 +339,7 @@ class TradeRequestDetailModel
   /// - ProfileId ownerId : JsonKey('owner_id')
   /// - BookId bookId : JsonKey('book_id')
   /// - BookId? offeredBookId : JsonKey('offered_book_id')
-  /// - String status : JsonKey('status')
-  /// - String? message : JsonKey('message')
+  /// - TradeRequestStatus status : JsonKey('status')
   /// - DateTime createdAt : JsonKey('created_at')
   /// - DateTime updatedAt : JsonKey('updated_at')
   /// - ProfileLiteModel requester : JsonKey('requester')
@@ -367,22 +357,22 @@ class TradeRequestDetailModel
     @JsonKey(name: TradeRequestDetailModel.bookIdKey) required BookId bookId,
     @JsonKey(name: TradeRequestDetailModel.offeredBookIdKey)
     required BookId? offeredBookId,
-    @JsonKey(name: TradeRequestDetailModel.statusKey) required String status,
-    @JsonKey(name: TradeRequestDetailModel.messageKey) required String? message,
+    @JsonKey(name: TradeRequestDetailModel.statusKey)
+    required TradeRequestStatus status,
     @JsonKey(name: TradeRequestDetailModel.createdAtKey)
     required DateTime createdAt,
     @JsonKey(name: TradeRequestDetailModel.updatedAtKey)
     required DateTime updatedAt,
-    @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
     @JsonKey(name: TradeRequestDetailModel.requesterKey)
     required ProfileLiteModel requester,
-    @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
     @JsonKey(name: TradeRequestDetailModel.ownerKey)
     required ProfileLiteModel owner,
-    @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "book_id", candidateKey: null)
     @JsonKey(name: TradeRequestDetailModel.bookKey)
     required BookLiteModel book,
-    @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
     @JsonKey(name: TradeRequestDetailModel.offeredBookKey)
     required BookLiteModel? offeredBook,
   }) = _TradeRequestDetailModel;
@@ -415,9 +405,6 @@ class TradeRequestDetailModel
   /// Field name for status field with JsonKey('status')
   static const String statusKey = "status";
 
-  /// Field name for message field with JsonKey('message')
-  static const String messageKey = "message";
-
   /// Field name for createdAt field with JsonKey('created_at')
   static const String createdAtKey = "created_at";
 
@@ -425,19 +412,19 @@ class TradeRequestDetailModel
   static const String updatedAtKey = "updated_at";
 
   /// Field name for requester field with JsonKey('requester')
-  /// This is json key for joined field. with foreign key: requester_id and candidate key: id
+  /// This is json key for joined field. with foreign key: requester_id and candidate key: null
   static const String requesterKey = "requester";
 
   /// Field name for owner field with JsonKey('owner')
-  /// This is json key for joined field. with foreign key: owner_id and candidate key: id
+  /// This is json key for joined field. with foreign key: owner_id and candidate key: null
   static const String ownerKey = "owner";
 
   /// Field name for book field with JsonKey('book')
-  /// This is json key for joined field. with foreign key: book_id and candidate key: id
+  /// This is json key for joined field. with foreign key: book_id and candidate key: null
   static const String bookKey = "book";
 
   /// Field name for offeredBook field with JsonKey('offeredBook')
-  /// This is json key for joined field. with foreign key: offered_book_id and candidate key: id
+  /// This is json key for joined field. with foreign key: offered_book_id and candidate key: null
   static const String offeredBookKey = "offeredBook";
 
   /// Converts this model to a base model.
@@ -449,7 +436,6 @@ class TradeRequestDetailModel
       bookId: bookId,
       offeredBookId: offeredBookId,
       status: status,
-      message: message,
       createdAt: createdAt,
       updatedAt: updatedAt,
       requester: requester,
@@ -477,8 +463,6 @@ class TradeRequestCreateParam
   /// - ProfileId requesterId : JsonKey('requester_id')
   /// - ProfileId ownerId : JsonKey('owner_id')
   /// - BookId bookId : JsonKey('book_id')
-  /// - BookId? offeredBookId : JsonKey('offered_book_id')
-  /// - String? message : JsonKey('message')
   @JsonSerializable(explicitToJson: true)
   const factory TradeRequestCreateParam({
     @JsonKey(name: TradeRequestCreateParam.requesterIdKey)
@@ -486,9 +470,6 @@ class TradeRequestCreateParam
     @JsonKey(name: TradeRequestCreateParam.ownerIdKey)
     required ProfileId ownerId,
     @JsonKey(name: TradeRequestCreateParam.bookIdKey) required BookId bookId,
-    @JsonKey(name: TradeRequestCreateParam.offeredBookIdKey)
-    required BookId? offeredBookId,
-    @JsonKey(name: TradeRequestCreateParam.messageKey) required String? message,
   }) = _TradeRequestCreateParam;
 
   /// Creates an instance of TradeRequestCreateParam from a JSON map.
@@ -503,12 +484,6 @@ class TradeRequestCreateParam
 
   /// Field name for bookId field with JsonKey('book_id')
   static const String bookIdKey = "book_id";
-
-  /// Field name for offeredBookId field with JsonKey('offered_book_id')
-  static const String offeredBookIdKey = "offered_book_id";
-
-  /// Field name for message field with JsonKey('message')
-  static const String messageKey = "message";
 }
 
 /// Represents the TradeRequestUpdateParam model. generated by kimapp_generator
@@ -525,12 +500,11 @@ class TradeRequestUpdateParam
   /// Table Mode: `disabled`
   ///
   /// Fields:
-  /// - String? status : JsonKey('status')
-  /// - String? message : JsonKey('message')
+  /// - TradeRequestStatus status : JsonKey('status')
   @JsonSerializable(explicitToJson: true)
   const factory TradeRequestUpdateParam({
-    @JsonKey(name: TradeRequestUpdateParam.statusKey) required String? status,
-    @JsonKey(name: TradeRequestUpdateParam.messageKey) required String? message,
+    @JsonKey(name: TradeRequestUpdateParam.statusKey)
+    required TradeRequestStatus status,
   }) = _TradeRequestUpdateParam;
 
   /// Creates an instance of TradeRequestUpdateParam from a JSON map.
@@ -539,7 +513,4 @@ class TradeRequestUpdateParam
 
   /// Field name for status field with JsonKey('status')
   static const String statusKey = "status";
-
-  /// Field name for message field with JsonKey('message')
-  static const String messageKey = "message";
 }

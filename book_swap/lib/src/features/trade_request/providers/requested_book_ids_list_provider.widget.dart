@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint, duplicate_import, unnecessary_import, unused_import, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
-import 'package:book_swap/src/features/book_genre/providers/book_genre_list_provider.dart';
+import 'package:book_swap/src/features/trade_request/providers/requested_book_ids_list_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
@@ -13,20 +13,22 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
-import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/features/book_genre/book_genre_schema.schema.dart';
-import 'package:book_swap/src/features/book_genre/i_book_genre_repo.dart';
+import 'package:book_swap/src/core/account/current_account_provider.dart';
+import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
+import 'package:book_swap/src/features/trade_request/params/trade_request_list_param.dart';
 import 'dart:core';
 
-class _BookGenreListProxyWidgetRef extends WidgetRef {
-  _BookGenreListProxyWidgetRef(this._ref);
+class _RequestedBookIdsListProxyWidgetRef extends WidgetRef {
+  _RequestedBookIdsListProxyWidgetRef(this._ref);
 
   final WidgetRef _ref;
 
-  BookGenreList get notifier => _ref.read(bookGenreListProvider.notifier);
+  RequestedBookIdsList get notifier =>
+      _ref.read(requestedBookIdsListProvider.notifier);
 
   @override
   BuildContext get context => _ref.context;
@@ -67,8 +69,8 @@ class _BookGenreListProxyWidgetRef extends WidgetRef {
   T watch<T>(ProviderListenable<T> provider) => _ref.watch(provider);
 }
 
-class BookGenreListProviderScope extends ConsumerWidget {
-  const BookGenreListProviderScope({
+class RequestedBookIdsListProviderScope extends ConsumerWidget {
+  const RequestedBookIdsListProviderScope({
     super.key,
     this.loading,
     this.error,
@@ -82,38 +84,38 @@ class BookGenreListProviderScope extends ConsumerWidget {
 
   final Widget Function()? loading;
   final Widget Function(Object error, StackTrace? stackTrace)? error;
-  final Widget Function(IList<BookGenreModel> data)? data;
+  final Widget Function(IList<BookId> data)? data;
   final bool skipLoadingOnReload;
   final bool skipLoadingOnRefresh;
   final Widget Function(
     BuildContext context,
-    _BookGenreListProxyWidgetRef ref,
-    AsyncValue<IList<BookGenreModel>> asyncValue,
+    _RequestedBookIdsListProxyWidgetRef ref,
+    AsyncValue<IList<BookId>> asyncValue,
     Widget? child,
   )?
   builder;
   final Widget? child;
   final void Function(
-    AsyncValue<IList<BookGenreModel>>? previous,
-    AsyncValue<IList<BookGenreModel>> next,
+    AsyncValue<IList<BookId>>? previous,
+    AsyncValue<IList<BookId>> next,
   )?
   onStateChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (onStateChanged != null) {
-      ref.listen(bookGenreListProvider, onStateChanged!);
+      ref.listen(requestedBookIdsListProvider, onStateChanged!);
     }
 
     return Consumer(
       child: child,
       builder: (context, ref, child) {
-        final state = ref.watch(bookGenreListProvider);
+        final state = ref.watch(requestedBookIdsListProvider);
 
         if (builder != null) {
           return builder!(
             context,
-            _BookGenreListProxyWidgetRef(ref),
+            _RequestedBookIdsListProxyWidgetRef(ref),
             state,
             child,
           );
@@ -128,7 +130,7 @@ class BookGenreListProviderScope extends ConsumerWidget {
             final result = this.data?.call(data) ?? child;
             if (result == null) {
               debugPrint(
-                'No child provided for BookGenreListProviderScope. Empty SizedBox will be returned.',
+                'No child provided for RequestedBookIdsListProviderScope. Empty SizedBox will be returned.',
               );
               return const SizedBox.shrink();
             }
@@ -157,26 +159,29 @@ class BookGenreListProviderScope extends ConsumerWidget {
   }
 }
 
-bool _debugCheckHasBookGenreListProviderScope(BuildContext context) {
+bool _debugCheckHasRequestedBookIdsListProviderScope(BuildContext context) {
   assert(() {
-    if (context.widget is! BookGenreListProviderScope &&
-        context.findAncestorWidgetOfExactType<BookGenreListProviderScope>() ==
+    if (context.widget is! RequestedBookIdsListProviderScope &&
+        context
+                .findAncestorWidgetOfExactType<
+                  RequestedBookIdsListProviderScope
+                >() ==
             null) {
       // Check if we're in a navigation context (dialog or pushed screen)
       final isInNavigation = ModalRoute.of(context) != null;
 
       if (!isInNavigation) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
-          ErrorSummary('No BookGenreListProviderScope found'),
+          ErrorSummary('No RequestedBookIdsListProviderScope found'),
           ErrorDescription(
-            '${context.widget.runtimeType} widgets require a BookGenreListProviderScope widget ancestor '
+            '${context.widget.runtimeType} widgets require a RequestedBookIdsListProviderScope widget ancestor '
             'or to be used in a navigation context with proper state management.',
           ),
         ]);
       }
       // If in navigation context, we'll return true but log a warning
       debugPrint(
-        'Widget ${context.widget.runtimeType} used in navigation without direct BookGenreListProviderScope',
+        'Widget ${context.widget.runtimeType} used in navigation without direct RequestedBookIdsListProviderScope',
       );
     }
     return true;
@@ -184,18 +189,20 @@ bool _debugCheckHasBookGenreListProviderScope(BuildContext context) {
   return true;
 }
 
-class _BookGenreListStateProxyWidgetRef extends _BookGenreListProxyWidgetRef {
-  _BookGenreListStateProxyWidgetRef(super._ref);
+class _RequestedBookIdsListStateProxyWidgetRef
+    extends _RequestedBookIdsListProxyWidgetRef {
+  _RequestedBookIdsListStateProxyWidgetRef(super._ref);
 
-  Selected select<Selected>(
-    Selected Function(IList<BookGenreModel>) selector,
-  ) => _ref.watch(
-    bookGenreListProvider.select((value) => selector(value.requireValue)),
-  );
+  Selected select<Selected>(Selected Function(IList<BookId>) selector) =>
+      _ref.watch(
+        requestedBookIdsListProvider.select(
+          (value) => selector(value.requireValue),
+        ),
+      );
 }
 
-class BookGenreListStateWidget extends ConsumerWidget {
-  const BookGenreListStateWidget({
+class RequestedBookIdsListStateWidget extends ConsumerWidget {
+  const RequestedBookIdsListStateWidget({
     super.key,
     required this.builder,
     this.child,
@@ -203,48 +210,49 @@ class BookGenreListStateWidget extends ConsumerWidget {
   });
 
   /// The builder function that constructs the widget tree.
-  /// Access the state directly via ref.state, which is equivalent to ref.watch(bookGenreListProvider)
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(requestedBookIdsListProvider)
   ///
   /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
   /// The ref parameter provides type-safe access to the provider state and notifier
   final Widget Function(
     BuildContext context,
-    _BookGenreListStateProxyWidgetRef ref,
+    _RequestedBookIdsListStateProxyWidgetRef ref,
     Widget? child,
   )
   builder;
   final Widget? child;
-  final void Function(
-    IList<BookGenreModel>? previous,
-    IList<BookGenreModel>? next,
-  )?
+  final void Function(IList<BookId>? previous, IList<BookId>? next)?
   onStateChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookGenreListProviderScope(context);
+    _debugCheckHasRequestedBookIdsListProviderScope(context);
 
     if (onStateChanged != null) {
-      ref.listen(bookGenreListProvider, (pre, next) {
+      ref.listen(requestedBookIdsListProvider, (pre, next) {
         if (pre != next) onStateChanged!(pre?.valueOrNull, next.valueOrNull);
       });
     }
-    return builder(context, _BookGenreListStateProxyWidgetRef(ref), child);
+    return builder(
+      context,
+      _RequestedBookIdsListStateProxyWidgetRef(ref),
+      child,
+    );
   }
 }
 
-class BookGenreListSelectWidget<Selected> extends ConsumerWidget {
-  const BookGenreListSelectWidget({
+class RequestedBookIdsListSelectWidget<Selected> extends ConsumerWidget {
+  const RequestedBookIdsListSelectWidget({
     super.key,
     required this.selector,
     required this.builder,
     this.onStateChanged,
   });
 
-  final Selected Function(IList<BookGenreModel> state) selector;
+  final Selected Function(IList<BookId> state) selector;
   final Widget Function(
     BuildContext context,
-    _BookGenreListStateProxyWidgetRef ref,
+    _RequestedBookIdsListStateProxyWidgetRef ref,
     Selected value,
   )
   builder;
@@ -252,17 +260,19 @@ class BookGenreListSelectWidget<Selected> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasBookGenreListProviderScope(context);
+    _debugCheckHasRequestedBookIdsListProviderScope(context);
 
     if (onStateChanged != null) {
       ref.listen(
-        bookGenreListProvider.select((value) => selector(value.requireValue)),
+        requestedBookIdsListProvider.select(
+          (value) => selector(value.requireValue),
+        ),
         (pre, next) {
           if (pre != next) onStateChanged!(pre, next);
         },
       );
     }
-    final stateRef = _BookGenreListStateProxyWidgetRef(ref);
+    final stateRef = _RequestedBookIdsListStateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.select(selector));
   }
 }

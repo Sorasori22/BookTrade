@@ -31,23 +31,21 @@ mixin _$TradeRequestModel {
   @JsonKey(name: TradeRequestModel.offeredBookIdKey)
   BookId? get offeredBookId => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestModel.statusKey)
-  String get status => throw _privateConstructorUsedError;
-  @JsonKey(name: TradeRequestModel.messageKey)
-  String? get message => throw _privateConstructorUsedError;
+  TradeRequestStatus get status => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestModel.createdAtKey)
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestModel.updatedAtKey)
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.requesterKey)
   ProfileLiteModel get requester => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.ownerKey)
   ProfileLiteModel get owner => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.bookKey)
   BookLiteModel get book => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.offeredBookKey)
   BookLiteModel? get offeredBook => throw _privateConstructorUsedError;
 
@@ -73,20 +71,19 @@ abstract class $TradeRequestModelCopyWith<$Res> {
       @JsonKey(name: TradeRequestModel.ownerIdKey) ProfileId ownerId,
       @JsonKey(name: TradeRequestModel.bookIdKey) BookId bookId,
       @JsonKey(name: TradeRequestModel.offeredBookIdKey) BookId? offeredBookId,
-      @JsonKey(name: TradeRequestModel.statusKey) String status,
-      @JsonKey(name: TradeRequestModel.messageKey) String? message,
+      @JsonKey(name: TradeRequestModel.statusKey) TradeRequestStatus status,
       @JsonKey(name: TradeRequestModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: TradeRequestModel.updatedAtKey) DateTime updatedAt,
-      @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.requesterKey)
       ProfileLiteModel requester,
-      @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.ownerKey)
       ProfileLiteModel owner,
-      @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.bookKey)
       BookLiteModel book,
-      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.offeredBookKey)
       BookLiteModel? offeredBook});
 
@@ -117,7 +114,6 @@ class _$TradeRequestModelCopyWithImpl<$Res, $Val extends TradeRequestModel>
     Object? bookId = null,
     Object? offeredBookId = freezed,
     Object? status = null,
-    Object? message = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? requester = null,
@@ -149,11 +145,7 @@ class _$TradeRequestModelCopyWithImpl<$Res, $Val extends TradeRequestModel>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as TradeRequestStatus,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -240,20 +232,19 @@ abstract class _$$TradeRequestModelImplCopyWith<$Res>
       @JsonKey(name: TradeRequestModel.ownerIdKey) ProfileId ownerId,
       @JsonKey(name: TradeRequestModel.bookIdKey) BookId bookId,
       @JsonKey(name: TradeRequestModel.offeredBookIdKey) BookId? offeredBookId,
-      @JsonKey(name: TradeRequestModel.statusKey) String status,
-      @JsonKey(name: TradeRequestModel.messageKey) String? message,
+      @JsonKey(name: TradeRequestModel.statusKey) TradeRequestStatus status,
       @JsonKey(name: TradeRequestModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: TradeRequestModel.updatedAtKey) DateTime updatedAt,
-      @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.requesterKey)
       ProfileLiteModel requester,
-      @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.ownerKey)
       ProfileLiteModel owner,
-      @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.bookKey)
       BookLiteModel book,
-      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.offeredBookKey)
       BookLiteModel? offeredBook});
 
@@ -286,7 +277,6 @@ class __$$TradeRequestModelImplCopyWithImpl<$Res>
     Object? bookId = null,
     Object? offeredBookId = freezed,
     Object? status = null,
-    Object? message = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? requester = null,
@@ -318,11 +308,7 @@ class __$$TradeRequestModelImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as TradeRequestStatus,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -365,19 +351,18 @@ class _$TradeRequestModelImpl extends _TradeRequestModel {
       @JsonKey(name: TradeRequestModel.offeredBookIdKey)
       required this.offeredBookId,
       @JsonKey(name: TradeRequestModel.statusKey) required this.status,
-      @JsonKey(name: TradeRequestModel.messageKey) required this.message,
       @JsonKey(name: TradeRequestModel.createdAtKey) required this.createdAt,
       @JsonKey(name: TradeRequestModel.updatedAtKey) required this.updatedAt,
-      @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.requesterKey)
       required this.requester,
-      @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.ownerKey)
       required this.owner,
-      @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.bookKey)
       required this.book,
-      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.offeredBookKey)
       required this.offeredBook})
       : super._();
@@ -402,10 +387,7 @@ class _$TradeRequestModelImpl extends _TradeRequestModel {
   final BookId? offeredBookId;
   @override
   @JsonKey(name: TradeRequestModel.statusKey)
-  final String status;
-  @override
-  @JsonKey(name: TradeRequestModel.messageKey)
-  final String? message;
+  final TradeRequestStatus status;
   @override
   @JsonKey(name: TradeRequestModel.createdAtKey)
   final DateTime createdAt;
@@ -413,25 +395,25 @@ class _$TradeRequestModelImpl extends _TradeRequestModel {
   @JsonKey(name: TradeRequestModel.updatedAtKey)
   final DateTime updatedAt;
   @override
-  @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.requesterKey)
   final ProfileLiteModel requester;
   @override
-  @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.ownerKey)
   final ProfileLiteModel owner;
   @override
-  @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.bookKey)
   final BookLiteModel book;
   @override
-  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.offeredBookKey)
   final BookLiteModel? offeredBook;
 
   @override
   String toString() {
-    return 'TradeRequestModel(id: $id, requesterId: $requesterId, ownerId: $ownerId, bookId: $bookId, offeredBookId: $offeredBookId, status: $status, message: $message, createdAt: $createdAt, updatedAt: $updatedAt, requester: $requester, owner: $owner, book: $book, offeredBook: $offeredBook)';
+    return 'TradeRequestModel(id: $id, requesterId: $requesterId, ownerId: $ownerId, bookId: $bookId, offeredBookId: $offeredBookId, status: $status, createdAt: $createdAt, updatedAt: $updatedAt, requester: $requester, owner: $owner, book: $book, offeredBook: $offeredBook)';
   }
 
   @override
@@ -447,7 +429,6 @@ class _$TradeRequestModelImpl extends _TradeRequestModel {
             (identical(other.offeredBookId, offeredBookId) ||
                 other.offeredBookId == offeredBookId) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.message, message) || other.message == message) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -470,7 +451,6 @@ class _$TradeRequestModelImpl extends _TradeRequestModel {
       bookId,
       offeredBookId,
       status,
-      message,
       createdAt,
       updatedAt,
       requester,
@@ -505,23 +485,22 @@ abstract class _TradeRequestModel extends TradeRequestModel {
       @JsonKey(name: TradeRequestModel.bookIdKey) required final BookId bookId,
       @JsonKey(name: TradeRequestModel.offeredBookIdKey)
       required final BookId? offeredBookId,
-      @JsonKey(name: TradeRequestModel.statusKey) required final String status,
-      @JsonKey(name: TradeRequestModel.messageKey)
-      required final String? message,
+      @JsonKey(name: TradeRequestModel.statusKey)
+      required final TradeRequestStatus status,
       @JsonKey(name: TradeRequestModel.createdAtKey)
       required final DateTime createdAt,
       @JsonKey(name: TradeRequestModel.updatedAtKey)
       required final DateTime updatedAt,
-      @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.requesterKey)
       required final ProfileLiteModel requester,
-      @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.ownerKey)
       required final ProfileLiteModel owner,
-      @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.bookKey)
       required final BookLiteModel book,
-      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
       @JsonKey(name: TradeRequestModel.offeredBookKey)
       required final BookLiteModel? offeredBook}) = _$TradeRequestModelImpl;
   const _TradeRequestModel._() : super._();
@@ -546,10 +525,7 @@ abstract class _TradeRequestModel extends TradeRequestModel {
   BookId? get offeredBookId;
   @override
   @JsonKey(name: TradeRequestModel.statusKey)
-  String get status;
-  @override
-  @JsonKey(name: TradeRequestModel.messageKey)
-  String? get message;
+  TradeRequestStatus get status;
   @override
   @JsonKey(name: TradeRequestModel.createdAtKey)
   DateTime get createdAt;
@@ -557,19 +533,19 @@ abstract class _TradeRequestModel extends TradeRequestModel {
   @JsonKey(name: TradeRequestModel.updatedAtKey)
   DateTime get updatedAt;
   @override
-  @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.requesterKey)
   ProfileLiteModel get requester;
   @override
-  @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.ownerKey)
   ProfileLiteModel get owner;
   @override
-  @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.bookKey)
   BookLiteModel get book;
   @override
-  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
   @JsonKey(name: TradeRequestModel.offeredBookKey)
   BookLiteModel? get offeredBook;
 
@@ -599,7 +575,7 @@ mixin _$TradeRequestLiteModel {
   @JsonKey(name: TradeRequestLiteModel.offeredBookIdKey)
   BookId? get offeredBookId => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestLiteModel.statusKey)
-  String get status => throw _privateConstructorUsedError;
+  TradeRequestStatus get status => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestLiteModel.createdAtKey)
   DateTime get createdAt => throw _privateConstructorUsedError;
 
@@ -627,7 +603,7 @@ abstract class $TradeRequestLiteModelCopyWith<$Res> {
       @JsonKey(name: TradeRequestLiteModel.bookIdKey) BookId bookId,
       @JsonKey(name: TradeRequestLiteModel.offeredBookIdKey)
       BookId? offeredBookId,
-      @JsonKey(name: TradeRequestLiteModel.statusKey) String status,
+      @JsonKey(name: TradeRequestLiteModel.statusKey) TradeRequestStatus status,
       @JsonKey(name: TradeRequestLiteModel.createdAtKey) DateTime createdAt});
 }
 
@@ -679,7 +655,7 @@ class _$TradeRequestLiteModelCopyWithImpl<$Res,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TradeRequestStatus,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -705,7 +681,7 @@ abstract class _$$TradeRequestLiteModelImplCopyWith<$Res>
       @JsonKey(name: TradeRequestLiteModel.bookIdKey) BookId bookId,
       @JsonKey(name: TradeRequestLiteModel.offeredBookIdKey)
       BookId? offeredBookId,
-      @JsonKey(name: TradeRequestLiteModel.statusKey) String status,
+      @JsonKey(name: TradeRequestLiteModel.statusKey) TradeRequestStatus status,
       @JsonKey(name: TradeRequestLiteModel.createdAtKey) DateTime createdAt});
 }
 
@@ -755,7 +731,7 @@ class __$$TradeRequestLiteModelImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TradeRequestStatus,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -802,7 +778,7 @@ class _$TradeRequestLiteModelImpl extends _TradeRequestLiteModel {
   final BookId? offeredBookId;
   @override
   @JsonKey(name: TradeRequestLiteModel.statusKey)
-  final String status;
+  final TradeRequestStatus status;
   @override
   @JsonKey(name: TradeRequestLiteModel.createdAtKey)
   final DateTime createdAt;
@@ -864,7 +840,7 @@ abstract class _TradeRequestLiteModel extends TradeRequestLiteModel {
       @JsonKey(name: TradeRequestLiteModel.offeredBookIdKey)
       required final BookId? offeredBookId,
       @JsonKey(name: TradeRequestLiteModel.statusKey)
-      required final String status,
+      required final TradeRequestStatus status,
       @JsonKey(name: TradeRequestLiteModel.createdAtKey)
       required final DateTime createdAt}) = _$TradeRequestLiteModelImpl;
   const _TradeRequestLiteModel._() : super._();
@@ -889,7 +865,7 @@ abstract class _TradeRequestLiteModel extends TradeRequestLiteModel {
   BookId? get offeredBookId;
   @override
   @JsonKey(name: TradeRequestLiteModel.statusKey)
-  String get status;
+  TradeRequestStatus get status;
   @override
   @JsonKey(name: TradeRequestLiteModel.createdAtKey)
   DateTime get createdAt;
@@ -920,23 +896,21 @@ mixin _$TradeRequestDetailModel {
   @JsonKey(name: TradeRequestDetailModel.offeredBookIdKey)
   BookId? get offeredBookId => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestDetailModel.statusKey)
-  String get status => throw _privateConstructorUsedError;
-  @JsonKey(name: TradeRequestDetailModel.messageKey)
-  String? get message => throw _privateConstructorUsedError;
+  TradeRequestStatus get status => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestDetailModel.createdAtKey)
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestDetailModel.updatedAtKey)
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.requesterKey)
   ProfileLiteModel get requester => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.ownerKey)
   ProfileLiteModel get owner => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.bookKey)
   BookLiteModel get book => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.offeredBookKey)
   BookLiteModel? get offeredBook => throw _privateConstructorUsedError;
 
@@ -964,20 +938,20 @@ abstract class $TradeRequestDetailModelCopyWith<$Res> {
       @JsonKey(name: TradeRequestDetailModel.bookIdKey) BookId bookId,
       @JsonKey(name: TradeRequestDetailModel.offeredBookIdKey)
       BookId? offeredBookId,
-      @JsonKey(name: TradeRequestDetailModel.statusKey) String status,
-      @JsonKey(name: TradeRequestDetailModel.messageKey) String? message,
+      @JsonKey(name: TradeRequestDetailModel.statusKey)
+      TradeRequestStatus status,
       @JsonKey(name: TradeRequestDetailModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: TradeRequestDetailModel.updatedAtKey) DateTime updatedAt,
-      @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.requesterKey)
       ProfileLiteModel requester,
-      @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.ownerKey)
       ProfileLiteModel owner,
-      @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.bookKey)
       BookLiteModel book,
-      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.offeredBookKey)
       BookLiteModel? offeredBook});
 
@@ -1009,7 +983,6 @@ class _$TradeRequestDetailModelCopyWithImpl<$Res,
     Object? bookId = null,
     Object? offeredBookId = freezed,
     Object? status = null,
-    Object? message = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? requester = null,
@@ -1041,11 +1014,7 @@ class _$TradeRequestDetailModelCopyWithImpl<$Res,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as TradeRequestStatus,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1135,20 +1104,20 @@ abstract class _$$TradeRequestDetailModelImplCopyWith<$Res>
       @JsonKey(name: TradeRequestDetailModel.bookIdKey) BookId bookId,
       @JsonKey(name: TradeRequestDetailModel.offeredBookIdKey)
       BookId? offeredBookId,
-      @JsonKey(name: TradeRequestDetailModel.statusKey) String status,
-      @JsonKey(name: TradeRequestDetailModel.messageKey) String? message,
+      @JsonKey(name: TradeRequestDetailModel.statusKey)
+      TradeRequestStatus status,
       @JsonKey(name: TradeRequestDetailModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: TradeRequestDetailModel.updatedAtKey) DateTime updatedAt,
-      @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.requesterKey)
       ProfileLiteModel requester,
-      @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.ownerKey)
       ProfileLiteModel owner,
-      @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.bookKey)
       BookLiteModel book,
-      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.offeredBookKey)
       BookLiteModel? offeredBook});
 
@@ -1183,7 +1152,6 @@ class __$$TradeRequestDetailModelImplCopyWithImpl<$Res>
     Object? bookId = null,
     Object? offeredBookId = freezed,
     Object? status = null,
-    Object? message = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? requester = null,
@@ -1215,11 +1183,7 @@ class __$$TradeRequestDetailModelImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as TradeRequestStatus,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1262,21 +1226,20 @@ class _$TradeRequestDetailModelImpl extends _TradeRequestDetailModel {
       @JsonKey(name: TradeRequestDetailModel.offeredBookIdKey)
       required this.offeredBookId,
       @JsonKey(name: TradeRequestDetailModel.statusKey) required this.status,
-      @JsonKey(name: TradeRequestDetailModel.messageKey) required this.message,
       @JsonKey(name: TradeRequestDetailModel.createdAtKey)
       required this.createdAt,
       @JsonKey(name: TradeRequestDetailModel.updatedAtKey)
       required this.updatedAt,
-      @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.requesterKey)
       required this.requester,
-      @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.ownerKey)
       required this.owner,
-      @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.bookKey)
       required this.book,
-      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
       @JsonKey(name: TradeRequestDetailModel.offeredBookKey)
       required this.offeredBook})
       : super._();
@@ -1301,10 +1264,7 @@ class _$TradeRequestDetailModelImpl extends _TradeRequestDetailModel {
   final BookId? offeredBookId;
   @override
   @JsonKey(name: TradeRequestDetailModel.statusKey)
-  final String status;
-  @override
-  @JsonKey(name: TradeRequestDetailModel.messageKey)
-  final String? message;
+  final TradeRequestStatus status;
   @override
   @JsonKey(name: TradeRequestDetailModel.createdAtKey)
   final DateTime createdAt;
@@ -1312,25 +1272,25 @@ class _$TradeRequestDetailModelImpl extends _TradeRequestDetailModel {
   @JsonKey(name: TradeRequestDetailModel.updatedAtKey)
   final DateTime updatedAt;
   @override
-  @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.requesterKey)
   final ProfileLiteModel requester;
   @override
-  @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.ownerKey)
   final ProfileLiteModel owner;
   @override
-  @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.bookKey)
   final BookLiteModel book;
   @override
-  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.offeredBookKey)
   final BookLiteModel? offeredBook;
 
   @override
   String toString() {
-    return 'TradeRequestDetailModel(id: $id, requesterId: $requesterId, ownerId: $ownerId, bookId: $bookId, offeredBookId: $offeredBookId, status: $status, message: $message, createdAt: $createdAt, updatedAt: $updatedAt, requester: $requester, owner: $owner, book: $book, offeredBook: $offeredBook)';
+    return 'TradeRequestDetailModel(id: $id, requesterId: $requesterId, ownerId: $ownerId, bookId: $bookId, offeredBookId: $offeredBookId, status: $status, createdAt: $createdAt, updatedAt: $updatedAt, requester: $requester, owner: $owner, book: $book, offeredBook: $offeredBook)';
   }
 
   @override
@@ -1346,7 +1306,6 @@ class _$TradeRequestDetailModelImpl extends _TradeRequestDetailModel {
             (identical(other.offeredBookId, offeredBookId) ||
                 other.offeredBookId == offeredBookId) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.message, message) || other.message == message) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -1369,7 +1328,6 @@ class _$TradeRequestDetailModelImpl extends _TradeRequestDetailModel {
       bookId,
       offeredBookId,
       status,
-      message,
       createdAt,
       updatedAt,
       requester,
@@ -1407,23 +1365,21 @@ abstract class _TradeRequestDetailModel extends TradeRequestDetailModel {
           @JsonKey(name: TradeRequestDetailModel.offeredBookIdKey)
           required final BookId? offeredBookId,
           @JsonKey(name: TradeRequestDetailModel.statusKey)
-          required final String status,
-          @JsonKey(name: TradeRequestDetailModel.messageKey)
-          required final String? message,
+          required final TradeRequestStatus status,
           @JsonKey(name: TradeRequestDetailModel.createdAtKey)
           required final DateTime createdAt,
           @JsonKey(name: TradeRequestDetailModel.updatedAtKey)
           required final DateTime updatedAt,
-          @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+          @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
           @JsonKey(name: TradeRequestDetailModel.requesterKey)
           required final ProfileLiteModel requester,
-          @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+          @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
           @JsonKey(name: TradeRequestDetailModel.ownerKey)
           required final ProfileLiteModel owner,
-          @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+          @JoinedColumn(foreignKey: "book_id", candidateKey: null)
           @JsonKey(name: TradeRequestDetailModel.bookKey)
           required final BookLiteModel book,
-          @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+          @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
           @JsonKey(name: TradeRequestDetailModel.offeredBookKey)
           required final BookLiteModel? offeredBook}) =
       _$TradeRequestDetailModelImpl;
@@ -1449,10 +1405,7 @@ abstract class _TradeRequestDetailModel extends TradeRequestDetailModel {
   BookId? get offeredBookId;
   @override
   @JsonKey(name: TradeRequestDetailModel.statusKey)
-  String get status;
-  @override
-  @JsonKey(name: TradeRequestDetailModel.messageKey)
-  String? get message;
+  TradeRequestStatus get status;
   @override
   @JsonKey(name: TradeRequestDetailModel.createdAtKey)
   DateTime get createdAt;
@@ -1460,19 +1413,19 @@ abstract class _TradeRequestDetailModel extends TradeRequestDetailModel {
   @JsonKey(name: TradeRequestDetailModel.updatedAtKey)
   DateTime get updatedAt;
   @override
-  @JoinedColumn(foreignKey: "requester_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "requester_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.requesterKey)
   ProfileLiteModel get requester;
   @override
-  @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "owner_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.ownerKey)
   ProfileLiteModel get owner;
   @override
-  @JoinedColumn(foreignKey: "book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.bookKey)
   BookLiteModel get book;
   @override
-  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
   @JsonKey(name: TradeRequestDetailModel.offeredBookKey)
   BookLiteModel? get offeredBook;
 
@@ -1497,10 +1450,6 @@ mixin _$TradeRequestCreateParam {
   ProfileId get ownerId => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestCreateParam.bookIdKey)
   BookId get bookId => throw _privateConstructorUsedError;
-  @JsonKey(name: TradeRequestCreateParam.offeredBookIdKey)
-  BookId? get offeredBookId => throw _privateConstructorUsedError;
-  @JsonKey(name: TradeRequestCreateParam.messageKey)
-  String? get message => throw _privateConstructorUsedError;
 
   /// Serializes this TradeRequestCreateParam to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1522,10 +1471,7 @@ abstract class $TradeRequestCreateParamCopyWith<$Res> {
       {@JsonKey(name: TradeRequestCreateParam.requesterIdKey)
       ProfileId requesterId,
       @JsonKey(name: TradeRequestCreateParam.ownerIdKey) ProfileId ownerId,
-      @JsonKey(name: TradeRequestCreateParam.bookIdKey) BookId bookId,
-      @JsonKey(name: TradeRequestCreateParam.offeredBookIdKey)
-      BookId? offeredBookId,
-      @JsonKey(name: TradeRequestCreateParam.messageKey) String? message});
+      @JsonKey(name: TradeRequestCreateParam.bookIdKey) BookId bookId});
 }
 
 /// @nodoc
@@ -1547,8 +1493,6 @@ class _$TradeRequestCreateParamCopyWithImpl<$Res,
     Object? requesterId = null,
     Object? ownerId = null,
     Object? bookId = null,
-    Object? offeredBookId = freezed,
-    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
       requesterId: null == requesterId
@@ -1563,14 +1507,6 @@ class _$TradeRequestCreateParamCopyWithImpl<$Res,
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
               as BookId,
-      offeredBookId: freezed == offeredBookId
-          ? _value.offeredBookId
-          : offeredBookId // ignore: cast_nullable_to_non_nullable
-              as BookId?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -1588,10 +1524,7 @@ abstract class _$$TradeRequestCreateParamImplCopyWith<$Res>
       {@JsonKey(name: TradeRequestCreateParam.requesterIdKey)
       ProfileId requesterId,
       @JsonKey(name: TradeRequestCreateParam.ownerIdKey) ProfileId ownerId,
-      @JsonKey(name: TradeRequestCreateParam.bookIdKey) BookId bookId,
-      @JsonKey(name: TradeRequestCreateParam.offeredBookIdKey)
-      BookId? offeredBookId,
-      @JsonKey(name: TradeRequestCreateParam.messageKey) String? message});
+      @JsonKey(name: TradeRequestCreateParam.bookIdKey) BookId bookId});
 }
 
 /// @nodoc
@@ -1612,8 +1545,6 @@ class __$$TradeRequestCreateParamImplCopyWithImpl<$Res>
     Object? requesterId = null,
     Object? ownerId = null,
     Object? bookId = null,
-    Object? offeredBookId = freezed,
-    Object? message = freezed,
   }) {
     return _then(_$TradeRequestCreateParamImpl(
       requesterId: null == requesterId
@@ -1628,14 +1559,6 @@ class __$$TradeRequestCreateParamImplCopyWithImpl<$Res>
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
               as BookId,
-      offeredBookId: freezed == offeredBookId
-          ? _value.offeredBookId
-          : offeredBookId // ignore: cast_nullable_to_non_nullable
-              as BookId?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -1648,10 +1571,7 @@ class _$TradeRequestCreateParamImpl extends _TradeRequestCreateParam {
       {@JsonKey(name: TradeRequestCreateParam.requesterIdKey)
       required this.requesterId,
       @JsonKey(name: TradeRequestCreateParam.ownerIdKey) required this.ownerId,
-      @JsonKey(name: TradeRequestCreateParam.bookIdKey) required this.bookId,
-      @JsonKey(name: TradeRequestCreateParam.offeredBookIdKey)
-      required this.offeredBookId,
-      @JsonKey(name: TradeRequestCreateParam.messageKey) required this.message})
+      @JsonKey(name: TradeRequestCreateParam.bookIdKey) required this.bookId})
       : super._();
 
   factory _$TradeRequestCreateParamImpl.fromJson(Map<String, dynamic> json) =>
@@ -1666,16 +1586,10 @@ class _$TradeRequestCreateParamImpl extends _TradeRequestCreateParam {
   @override
   @JsonKey(name: TradeRequestCreateParam.bookIdKey)
   final BookId bookId;
-  @override
-  @JsonKey(name: TradeRequestCreateParam.offeredBookIdKey)
-  final BookId? offeredBookId;
-  @override
-  @JsonKey(name: TradeRequestCreateParam.messageKey)
-  final String? message;
 
   @override
   String toString() {
-    return 'TradeRequestCreateParam(requesterId: $requesterId, ownerId: $ownerId, bookId: $bookId, offeredBookId: $offeredBookId, message: $message)';
+    return 'TradeRequestCreateParam(requesterId: $requesterId, ownerId: $ownerId, bookId: $bookId)';
   }
 
   @override
@@ -1686,16 +1600,12 @@ class _$TradeRequestCreateParamImpl extends _TradeRequestCreateParam {
             (identical(other.requesterId, requesterId) ||
                 other.requesterId == requesterId) &&
             (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
-            (identical(other.bookId, bookId) || other.bookId == bookId) &&
-            (identical(other.offeredBookId, offeredBookId) ||
-                other.offeredBookId == offeredBookId) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.bookId, bookId) || other.bookId == bookId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, requesterId, ownerId, bookId, offeredBookId, message);
+  int get hashCode => Object.hash(runtimeType, requesterId, ownerId, bookId);
 
   /// Create a copy of TradeRequestCreateParam
   /// with the given fields replaced by the non-null parameter values.
@@ -1721,11 +1631,7 @@ abstract class _TradeRequestCreateParam extends TradeRequestCreateParam {
       @JsonKey(name: TradeRequestCreateParam.ownerIdKey)
       required final ProfileId ownerId,
       @JsonKey(name: TradeRequestCreateParam.bookIdKey)
-      required final BookId bookId,
-      @JsonKey(name: TradeRequestCreateParam.offeredBookIdKey)
-      required final BookId? offeredBookId,
-      @JsonKey(name: TradeRequestCreateParam.messageKey)
-      required final String? message}) = _$TradeRequestCreateParamImpl;
+      required final BookId bookId}) = _$TradeRequestCreateParamImpl;
   const _TradeRequestCreateParam._() : super._();
 
   factory _TradeRequestCreateParam.fromJson(Map<String, dynamic> json) =
@@ -1740,12 +1646,6 @@ abstract class _TradeRequestCreateParam extends TradeRequestCreateParam {
   @override
   @JsonKey(name: TradeRequestCreateParam.bookIdKey)
   BookId get bookId;
-  @override
-  @JsonKey(name: TradeRequestCreateParam.offeredBookIdKey)
-  BookId? get offeredBookId;
-  @override
-  @JsonKey(name: TradeRequestCreateParam.messageKey)
-  String? get message;
 
   /// Create a copy of TradeRequestCreateParam
   /// with the given fields replaced by the non-null parameter values.
@@ -1763,9 +1663,7 @@ TradeRequestUpdateParam _$TradeRequestUpdateParamFromJson(
 /// @nodoc
 mixin _$TradeRequestUpdateParam {
   @JsonKey(name: TradeRequestUpdateParam.statusKey)
-  String? get status => throw _privateConstructorUsedError;
-  @JsonKey(name: TradeRequestUpdateParam.messageKey)
-  String? get message => throw _privateConstructorUsedError;
+  TradeRequestStatus get status => throw _privateConstructorUsedError;
 
   /// Serializes this TradeRequestUpdateParam to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1784,8 +1682,8 @@ abstract class $TradeRequestUpdateParamCopyWith<$Res> {
       _$TradeRequestUpdateParamCopyWithImpl<$Res, TradeRequestUpdateParam>;
   @useResult
   $Res call(
-      {@JsonKey(name: TradeRequestUpdateParam.statusKey) String? status,
-      @JsonKey(name: TradeRequestUpdateParam.messageKey) String? message});
+      {@JsonKey(name: TradeRequestUpdateParam.statusKey)
+      TradeRequestStatus status});
 }
 
 /// @nodoc
@@ -1804,18 +1702,13 @@ class _$TradeRequestUpdateParamCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? message = freezed,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
-      status: freezed == status
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as TradeRequestStatus,
     ) as $Val);
   }
 }
@@ -1830,8 +1723,8 @@ abstract class _$$TradeRequestUpdateParamImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: TradeRequestUpdateParam.statusKey) String? status,
-      @JsonKey(name: TradeRequestUpdateParam.messageKey) String? message});
+      {@JsonKey(name: TradeRequestUpdateParam.statusKey)
+      TradeRequestStatus status});
 }
 
 /// @nodoc
@@ -1849,18 +1742,13 @@ class __$$TradeRequestUpdateParamImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? message = freezed,
+    Object? status = null,
   }) {
     return _then(_$TradeRequestUpdateParamImpl(
-      status: freezed == status
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as TradeRequestStatus,
     ));
   }
 }
@@ -1870,8 +1758,7 @@ class __$$TradeRequestUpdateParamImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$TradeRequestUpdateParamImpl extends _TradeRequestUpdateParam {
   const _$TradeRequestUpdateParamImpl(
-      {@JsonKey(name: TradeRequestUpdateParam.statusKey) required this.status,
-      @JsonKey(name: TradeRequestUpdateParam.messageKey) required this.message})
+      {@JsonKey(name: TradeRequestUpdateParam.statusKey) required this.status})
       : super._();
 
   factory _$TradeRequestUpdateParamImpl.fromJson(Map<String, dynamic> json) =>
@@ -1879,14 +1766,11 @@ class _$TradeRequestUpdateParamImpl extends _TradeRequestUpdateParam {
 
   @override
   @JsonKey(name: TradeRequestUpdateParam.statusKey)
-  final String? status;
-  @override
-  @JsonKey(name: TradeRequestUpdateParam.messageKey)
-  final String? message;
+  final TradeRequestStatus status;
 
   @override
   String toString() {
-    return 'TradeRequestUpdateParam(status: $status, message: $message)';
+    return 'TradeRequestUpdateParam(status: $status)';
   }
 
   @override
@@ -1894,13 +1778,12 @@ class _$TradeRequestUpdateParamImpl extends _TradeRequestUpdateParam {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TradeRequestUpdateParamImpl &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, status, message);
+  int get hashCode => Object.hash(runtimeType, status);
 
   /// Create a copy of TradeRequestUpdateParam
   /// with the given fields replaced by the non-null parameter values.
@@ -1921,10 +1804,9 @@ class _$TradeRequestUpdateParamImpl extends _TradeRequestUpdateParam {
 
 abstract class _TradeRequestUpdateParam extends TradeRequestUpdateParam {
   const factory _TradeRequestUpdateParam(
-      {@JsonKey(name: TradeRequestUpdateParam.statusKey)
-      required final String? status,
-      @JsonKey(name: TradeRequestUpdateParam.messageKey)
-      required final String? message}) = _$TradeRequestUpdateParamImpl;
+          {@JsonKey(name: TradeRequestUpdateParam.statusKey)
+          required final TradeRequestStatus status}) =
+      _$TradeRequestUpdateParamImpl;
   const _TradeRequestUpdateParam._() : super._();
 
   factory _TradeRequestUpdateParam.fromJson(Map<String, dynamic> json) =
@@ -1932,10 +1814,7 @@ abstract class _TradeRequestUpdateParam extends TradeRequestUpdateParam {
 
   @override
   @JsonKey(name: TradeRequestUpdateParam.statusKey)
-  String? get status;
-  @override
-  @JsonKey(name: TradeRequestUpdateParam.messageKey)
-  String? get message;
+  TradeRequestStatus get status;
 
   /// Create a copy of TradeRequestUpdateParam
   /// with the given fields replaced by the non-null parameter values.

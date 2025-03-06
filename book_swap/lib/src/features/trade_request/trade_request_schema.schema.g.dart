@@ -18,8 +18,7 @@ _$TradeRequestModelImpl _$$TradeRequestModelImplFromJson(
       offeredBookId: json['offered_book_id'] == null
           ? null
           : BookId.fromJson(json['offered_book_id']),
-      status: json['status'] as String,
-      message: json['message'] as String?,
+      status: $enumDecode(_$TradeRequestStatusEnumMap, json['status']),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
       requester:
@@ -39,8 +38,7 @@ Map<String, dynamic> _$$TradeRequestModelImplToJson(
       'owner_id': instance.ownerId.toJson(),
       'book_id': instance.bookId.toJson(),
       'offered_book_id': instance.offeredBookId?.toJson(),
-      'status': instance.status,
-      'message': instance.message,
+      'status': _$TradeRequestStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'requester': instance.requester.toJson(),
@@ -48,6 +46,13 @@ Map<String, dynamic> _$$TradeRequestModelImplToJson(
       'book': instance.book.toJson(),
       'offeredBook': instance.offeredBook?.toJson(),
     };
+
+const _$TradeRequestStatusEnumMap = {
+  TradeRequestStatus.pending: 'pending',
+  TradeRequestStatus.accepted: 'accepted',
+  TradeRequestStatus.rejected: 'rejected',
+  TradeRequestStatus.completed: 'completed',
+};
 
 _$TradeRequestLiteModelImpl _$$TradeRequestLiteModelImplFromJson(
         Map<String, dynamic> json) =>
@@ -59,7 +64,7 @@ _$TradeRequestLiteModelImpl _$$TradeRequestLiteModelImplFromJson(
       offeredBookId: json['offered_book_id'] == null
           ? null
           : BookId.fromJson(json['offered_book_id']),
-      status: json['status'] as String,
+      status: $enumDecode(_$TradeRequestStatusEnumMap, json['status']),
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
@@ -71,7 +76,7 @@ Map<String, dynamic> _$$TradeRequestLiteModelImplToJson(
       'owner_id': instance.ownerId.toJson(),
       'book_id': instance.bookId.toJson(),
       'offered_book_id': instance.offeredBookId?.toJson(),
-      'status': instance.status,
+      'status': _$TradeRequestStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt.toIso8601String(),
     };
 
@@ -85,8 +90,7 @@ _$TradeRequestDetailModelImpl _$$TradeRequestDetailModelImplFromJson(
       offeredBookId: json['offered_book_id'] == null
           ? null
           : BookId.fromJson(json['offered_book_id']),
-      status: json['status'] as String,
-      message: json['message'] as String?,
+      status: $enumDecode(_$TradeRequestStatusEnumMap, json['status']),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
       requester:
@@ -106,8 +110,7 @@ Map<String, dynamic> _$$TradeRequestDetailModelImplToJson(
       'owner_id': instance.ownerId.toJson(),
       'book_id': instance.bookId.toJson(),
       'offered_book_id': instance.offeredBookId?.toJson(),
-      'status': instance.status,
-      'message': instance.message,
+      'status': _$TradeRequestStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'requester': instance.requester.toJson(),
@@ -122,10 +125,6 @@ _$TradeRequestCreateParamImpl _$$TradeRequestCreateParamImplFromJson(
       requesterId: ProfileId.fromJson(json['requester_id']),
       ownerId: ProfileId.fromJson(json['owner_id']),
       bookId: BookId.fromJson(json['book_id']),
-      offeredBookId: json['offered_book_id'] == null
-          ? null
-          : BookId.fromJson(json['offered_book_id']),
-      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$$TradeRequestCreateParamImplToJson(
@@ -134,22 +133,18 @@ Map<String, dynamic> _$$TradeRequestCreateParamImplToJson(
       'requester_id': instance.requesterId.toJson(),
       'owner_id': instance.ownerId.toJson(),
       'book_id': instance.bookId.toJson(),
-      'offered_book_id': instance.offeredBookId?.toJson(),
-      'message': instance.message,
     };
 
 _$TradeRequestUpdateParamImpl _$$TradeRequestUpdateParamImplFromJson(
         Map<String, dynamic> json) =>
     _$TradeRequestUpdateParamImpl(
-      status: json['status'] as String?,
-      message: json['message'] as String?,
+      status: $enumDecode(_$TradeRequestStatusEnumMap, json['status']),
     );
 
 Map<String, dynamic> _$$TradeRequestUpdateParamImplToJson(
         _$TradeRequestUpdateParamImpl instance) =>
     <String, dynamic>{
-      'status': instance.status,
-      'message': instance.message,
+      'status': _$TradeRequestStatusEnumMap[instance.status]!,
     };
 
 // **************************************************************************
@@ -165,17 +160,16 @@ const _tableTradeRequestModel = TableBuilder(
     ColumnBuilder('book_id'),
     ColumnBuilder('offered_book_id'),
     ColumnBuilder('status'),
-    ColumnBuilder('message'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "requester", candidateKey: 'id', foreignKey: 'requester_id'),
+        key: "requester", candidateKey: null, foreignKey: 'requester_id'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "owner", candidateKey: 'id', foreignKey: 'owner_id'),
+        key: "owner", candidateKey: null, foreignKey: 'owner_id'),
     ColumnBuilder.join(BookLiteModel.table,
-        key: "book", candidateKey: 'id', foreignKey: 'book_id'),
+        key: "book", candidateKey: null, foreignKey: 'book_id'),
     ColumnBuilder.join(BookLiteModel.table,
-        key: "offeredBook", candidateKey: 'id', foreignKey: 'offered_book_id'),
+        key: "offeredBook", candidateKey: null, foreignKey: 'offered_book_id'),
   ],
 );
 
@@ -201,16 +195,15 @@ const _tableTradeRequestDetailModel = TableBuilder(
     ColumnBuilder('book_id'),
     ColumnBuilder('offered_book_id'),
     ColumnBuilder('status'),
-    ColumnBuilder('message'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "requester", candidateKey: 'id', foreignKey: 'requester_id'),
+        key: "requester", candidateKey: null, foreignKey: 'requester_id'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "owner", candidateKey: 'id', foreignKey: 'owner_id'),
+        key: "owner", candidateKey: null, foreignKey: 'owner_id'),
     ColumnBuilder.join(BookLiteModel.table,
-        key: "book", candidateKey: 'id', foreignKey: 'book_id'),
+        key: "book", candidateKey: null, foreignKey: 'book_id'),
     ColumnBuilder.join(BookLiteModel.table,
-        key: "offeredBook", candidateKey: 'id', foreignKey: 'offered_book_id'),
+        key: "offeredBook", candidateKey: null, foreignKey: 'offered_book_id'),
   ],
 );

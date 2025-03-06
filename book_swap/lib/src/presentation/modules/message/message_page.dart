@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,16 +11,30 @@ class MessagePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('MessagePage'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(AS.sidePadding).copyWith(top: 4),
-        child: Column(
-          children: [],
-        ),
-      ),
+    return AutoTabsRouter.tabBar(
+      routes: [
+        MessageListRoute(),
+        TradeRequestListRoute(),
+      ],
+      builder: (context, child, tabController) {
+        return Scaffold(
+          body: SafeArea(
+            child: Column(
+              children: [
+                AS.hGap16,
+                TabBar(
+                  controller: tabController,
+                  tabs: [
+                    Tab(text: 'Messages'),
+                    Tab(text: 'Trade Requests'),
+                  ],
+                ),
+                Expanded(child: child),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

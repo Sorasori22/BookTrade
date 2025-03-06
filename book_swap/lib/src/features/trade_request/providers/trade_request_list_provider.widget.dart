@@ -13,20 +13,48 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
-import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/trade_request/params/trade_request_list_param.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'dart:core';
 
+class _TradeRequestListInheritedWidget extends InheritedWidget {
+  const _TradeRequestListInheritedWidget({
+    required this.params,
+    required super.child,
+  });
+
+  final ({TradeRequestListParam param}) params;
+
+  static _TradeRequestListInheritedWidget of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<
+          _TradeRequestListInheritedWidget
+        >()!;
+  }
+
+  @override
+  bool updateShouldNotify(
+    covariant _TradeRequestListInheritedWidget oldWidget,
+  ) {
+    return params != oldWidget.params;
+  }
+}
+
 class _TradeRequestListProxyWidgetRef extends WidgetRef {
   _TradeRequestListProxyWidgetRef(this._ref);
 
   final WidgetRef _ref;
 
-  TradeRequestList get notifier => _ref.read(tradeRequestListProvider.notifier);
+  TradeRequestList get notifier =>
+      _ref.read(tradeRequestListProvider(params.param).notifier);
+
+  ({TradeRequestListParam param}) get params =>
+      _TradeRequestListInheritedWidget.of(context).params;
 
   @override
   BuildContext get context => _ref.context;
@@ -70,6 +98,7 @@ class _TradeRequestListProxyWidgetRef extends WidgetRef {
 class TradeRequestListProviderScope extends ConsumerWidget {
   const TradeRequestListProviderScope({
     super.key,
+    required this.param,
     this.loading,
     this.error,
     this.data,
@@ -80,6 +109,7 @@ class TradeRequestListProviderScope extends ConsumerWidget {
     this.onStateChanged,
   });
 
+  final TradeRequestListParam param;
   final Widget Function()? loading;
   final Widget Function(Object error, StackTrace? stackTrace)? error;
   final Widget Function(IList<TradeRequestModel> data)? data;
@@ -102,57 +132,60 @@ class TradeRequestListProviderScope extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (onStateChanged != null) {
-      ref.listen(tradeRequestListProvider, onStateChanged!);
+      ref.listen(tradeRequestListProvider(param), onStateChanged!);
     }
 
-    return Consumer(
-      child: child,
-      builder: (context, ref, child) {
-        final state = ref.watch(tradeRequestListProvider);
+    return _TradeRequestListInheritedWidget(
+      params: (param: param),
+      child: Consumer(
+        child: child,
+        builder: (context, ref, child) {
+          final state = ref.watch(tradeRequestListProvider(param));
 
-        if (builder != null) {
-          return builder!(
-            context,
-            _TradeRequestListProxyWidgetRef(ref),
-            state,
-            child,
+          if (builder != null) {
+            return builder!(
+              context,
+              _TradeRequestListProxyWidgetRef(ref),
+              state,
+              child,
+            );
+          }
+
+          final themeExtension =
+              Theme.of(context).extension<KimappThemeExtension>();
+          return state.when(
+            skipLoadingOnReload: skipLoadingOnReload,
+            skipLoadingOnRefresh: skipLoadingOnRefresh,
+            data: (data) {
+              final result = this.data?.call(data) ?? child;
+              if (result == null) {
+                debugPrint(
+                  'No child provided for TradeRequestListProviderScope. Empty SizedBox will be returned.',
+                );
+                return const SizedBox.shrink();
+              }
+              return result;
+            },
+            error:
+                (error, stack) =>
+                    this.error?.call(error, stack) ??
+                    themeExtension?.defaultErrorStateWidget?.call(
+                      context,
+                      ref,
+                      error,
+                    ) ??
+                    const SizedBox.shrink(),
+            loading:
+                () =>
+                    loading?.call() ??
+                    themeExtension?.defaultLoadingStateWidget?.call(
+                      context,
+                      ref,
+                    ) ??
+                    const SizedBox.shrink(),
           );
-        }
-
-        final themeExtension =
-            Theme.of(context).extension<KimappThemeExtension>();
-        return state.when(
-          skipLoadingOnReload: skipLoadingOnReload,
-          skipLoadingOnRefresh: skipLoadingOnRefresh,
-          data: (data) {
-            final result = this.data?.call(data) ?? child;
-            if (result == null) {
-              debugPrint(
-                'No child provided for TradeRequestListProviderScope. Empty SizedBox will be returned.',
-              );
-              return const SizedBox.shrink();
-            }
-            return result;
-          },
-          error:
-              (error, stack) =>
-                  this.error?.call(error, stack) ??
-                  themeExtension?.defaultErrorStateWidget?.call(
-                    context,
-                    ref,
-                    error,
-                  ) ??
-                  const SizedBox.shrink(),
-          loading:
-              () =>
-                  loading?.call() ??
-                  themeExtension?.defaultLoadingStateWidget?.call(
-                    context,
-                    ref,
-                  ) ??
-                  const SizedBox.shrink(),
-        );
-      },
+        },
+      ),
     );
   }
 }
@@ -187,6 +220,25 @@ bool _debugCheckHasTradeRequestListProviderScope(BuildContext context) {
   return true;
 }
 
+class TradeRequestListParamsWidget extends ConsumerWidget {
+  const TradeRequestListParamsWidget({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    _TradeRequestListProxyWidgetRef ref,
+    ({TradeRequestListParam param}) params,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasTradeRequestListProviderScope(context);
+
+    final params = _TradeRequestListInheritedWidget.of(context).params;
+    return builder(context, _TradeRequestListProxyWidgetRef(ref), params);
+  }
+}
+
 class _TradeRequestListStateProxyWidgetRef
     extends _TradeRequestListProxyWidgetRef {
   _TradeRequestListStateProxyWidgetRef(super._ref);
@@ -194,7 +246,9 @@ class _TradeRequestListStateProxyWidgetRef
   Selected select<Selected>(
     Selected Function(IList<TradeRequestModel>) selector,
   ) => _ref.watch(
-    tradeRequestListProvider.select((value) => selector(value.requireValue)),
+    tradeRequestListProvider(
+      params.param,
+    ).select((value) => selector(value.requireValue)),
   );
 }
 
@@ -207,7 +261,7 @@ class TradeRequestListStateWidget extends ConsumerWidget {
   });
 
   /// The builder function that constructs the widget tree.
-  /// Access the state directly via ref.state, which is equivalent to ref.watch(tradeRequestListProvider)
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(tradeRequestListProvider(params.param))
   ///
   /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
   /// The ref parameter provides type-safe access to the provider state and notifier
@@ -229,7 +283,8 @@ class TradeRequestListStateWidget extends ConsumerWidget {
     _debugCheckHasTradeRequestListProviderScope(context);
 
     if (onStateChanged != null) {
-      ref.listen(tradeRequestListProvider, (pre, next) {
+      final params = _TradeRequestListInheritedWidget.of(context).params;
+      ref.listen(tradeRequestListProvider(params.param), (pre, next) {
         if (pre != next) onStateChanged!(pre?.valueOrNull, next.valueOrNull);
       });
     }
@@ -259,10 +314,11 @@ class TradeRequestListSelectWidget<Selected> extends ConsumerWidget {
     _debugCheckHasTradeRequestListProviderScope(context);
 
     if (onStateChanged != null) {
+      final params = _TradeRequestListInheritedWidget.of(context).params;
       ref.listen(
-        tradeRequestListProvider.select(
-          (value) => selector(value.requireValue),
-        ),
+        tradeRequestListProvider(
+          params.param,
+        ).select((value) => selector(value.requireValue)),
         (pre, next) {
           if (pre != next) onStateChanged!(pre, next);
         },

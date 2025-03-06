@@ -1,38 +1,38 @@
-import 'package:autoverpod/autoverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:book_swap/src/core/account/current_account_provider.dart';
+import 'package:book_swap/src/features/book/providers/book_detail_provider.dart';
+import 'package:book_swap/src/features/trade_request/providers/requested_book_ids_list_provider.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../book/book_schema.schema.dart';
-import '../../profile/profile_schema.schema.dart';
 import '../i_trade_request_repo.dart';
 import '../trade_request_schema.schema.dart';
-import 'trade_request_list_pagination_provider.dart';
-import 'trade_request_list_provider.dart';
 
 part 'trade_request_create_provider.g.dart';
 
-@formWidget
 @riverpod
-class TradeRequestCreate extends _$TradeRequestCreateWidget {
+class TradeRequestCreate extends _$TradeRequestCreate {
   @override
-  TradeRequestCreateParam build() => TradeRequestCreateParam(
-        requesterId: ProfileId.fromValue(''),
-        ownerId: ProfileId.fromValue(''),
-        bookId: BookId.fromValue(0),
-        offeredBookId: BookId.fromValue(0),
-        message: '',
-      );
+  ProviderStatus<TradeRequestModel> build(BookId bookId) => const ProviderStatus.initial();
 
-  @override
-  Future<TradeRequestModel> submit(TradeRequestCreateParam state) async {
-    return await ref.read(tradeRequestRepoProvider).create(state).getOrThrow();
-  }
+  Future<ProviderStatus<TradeRequestModel>> call() async {
+    return await perform(
+      (state) async {
+        final requesterId = ref.read(currentProfileIdProvider)!;
+        final ownerId = await ref.read(bookDetailProvider(bookId).selectAsync((v) => v.ownerId));
+        final param = TradeRequestCreateParam(
+          requesterId: requesterId,
+          ownerId: ownerId,
+          bookId: bookId,
+        );
 
-  @override
-  void onSuccess(TradeRequestModel result) {
-    ref.read(tradeRequestListProvider.notifier).insertItem(result);
-    ref.invalidate(tradeRequestListPaginationProvider);
+        final result = await ref.read(tradeRequestRepoProvider).create(param).getOrThrow();
+
+        return result;
+      },
+      onSuccess: (success) {
+        ref.read(requestedBookIdsListProvider.notifier).insertItem(success.bookId);
+      },
+    );
   }
 }
