@@ -14,7 +14,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/core/account/current_account_provider.dart';
@@ -22,13 +24,13 @@ import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
 import 'package:book_swap/src/features/trade_request/params/trade_request_list_param.dart';
 import 'dart:core';
 
-class _RequestedBookIdsListProxyWidgetRef extends WidgetRef {
-  _RequestedBookIdsListProxyWidgetRef(this._ref);
+class _PrendingTradeRequestListProxyWidgetRef extends WidgetRef {
+  _PrendingTradeRequestListProxyWidgetRef(this._ref);
 
   final WidgetRef _ref;
 
-  RequestedBookIdsList get notifier =>
-      _ref.read(requestedBookIdsListProvider.notifier);
+  PrendingTradeRequestList get notifier =>
+      _ref.read(prendingTradeRequestListProvider.notifier);
 
   @override
   BuildContext get context => _ref.context;
@@ -69,8 +71,8 @@ class _RequestedBookIdsListProxyWidgetRef extends WidgetRef {
   T watch<T>(ProviderListenable<T> provider) => _ref.watch(provider);
 }
 
-class RequestedBookIdsListProviderScope extends ConsumerWidget {
-  const RequestedBookIdsListProviderScope({
+class PrendingTradeRequestListProviderScope extends ConsumerWidget {
+  const PrendingTradeRequestListProviderScope({
     super.key,
     this.loading,
     this.error,
@@ -84,38 +86,38 @@ class RequestedBookIdsListProviderScope extends ConsumerWidget {
 
   final Widget Function()? loading;
   final Widget Function(Object error, StackTrace? stackTrace)? error;
-  final Widget Function(IList<BookId> data)? data;
+  final Widget Function(IList<TradeRequestModel> data)? data;
   final bool skipLoadingOnReload;
   final bool skipLoadingOnRefresh;
   final Widget Function(
     BuildContext context,
-    _RequestedBookIdsListProxyWidgetRef ref,
-    AsyncValue<IList<BookId>> asyncValue,
+    _PrendingTradeRequestListProxyWidgetRef ref,
+    AsyncValue<IList<TradeRequestModel>> asyncValue,
     Widget? child,
   )?
   builder;
   final Widget? child;
   final void Function(
-    AsyncValue<IList<BookId>>? previous,
-    AsyncValue<IList<BookId>> next,
+    AsyncValue<IList<TradeRequestModel>>? previous,
+    AsyncValue<IList<TradeRequestModel>> next,
   )?
   onStateChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (onStateChanged != null) {
-      ref.listen(requestedBookIdsListProvider, onStateChanged!);
+      ref.listen(prendingTradeRequestListProvider, onStateChanged!);
     }
 
     return Consumer(
       child: child,
       builder: (context, ref, child) {
-        final state = ref.watch(requestedBookIdsListProvider);
+        final state = ref.watch(prendingTradeRequestListProvider);
 
         if (builder != null) {
           return builder!(
             context,
-            _RequestedBookIdsListProxyWidgetRef(ref),
+            _PrendingTradeRequestListProxyWidgetRef(ref),
             state,
             child,
           );
@@ -130,7 +132,7 @@ class RequestedBookIdsListProviderScope extends ConsumerWidget {
             final result = this.data?.call(data) ?? child;
             if (result == null) {
               debugPrint(
-                'No child provided for RequestedBookIdsListProviderScope. Empty SizedBox will be returned.',
+                'No child provided for PrendingTradeRequestListProviderScope. Empty SizedBox will be returned.',
               );
               return const SizedBox.shrink();
             }
@@ -159,12 +161,12 @@ class RequestedBookIdsListProviderScope extends ConsumerWidget {
   }
 }
 
-bool _debugCheckHasRequestedBookIdsListProviderScope(BuildContext context) {
+bool _debugCheckHasPrendingTradeRequestListProviderScope(BuildContext context) {
   assert(() {
-    if (context.widget is! RequestedBookIdsListProviderScope &&
+    if (context.widget is! PrendingTradeRequestListProviderScope &&
         context
                 .findAncestorWidgetOfExactType<
-                  RequestedBookIdsListProviderScope
+                  PrendingTradeRequestListProviderScope
                 >() ==
             null) {
       // Check if we're in a navigation context (dialog or pushed screen)
@@ -172,16 +174,16 @@ bool _debugCheckHasRequestedBookIdsListProviderScope(BuildContext context) {
 
       if (!isInNavigation) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
-          ErrorSummary('No RequestedBookIdsListProviderScope found'),
+          ErrorSummary('No PrendingTradeRequestListProviderScope found'),
           ErrorDescription(
-            '${context.widget.runtimeType} widgets require a RequestedBookIdsListProviderScope widget ancestor '
+            '${context.widget.runtimeType} widgets require a PrendingTradeRequestListProviderScope widget ancestor '
             'or to be used in a navigation context with proper state management.',
           ),
         ]);
       }
       // If in navigation context, we'll return true but log a warning
       debugPrint(
-        'Widget ${context.widget.runtimeType} used in navigation without direct RequestedBookIdsListProviderScope',
+        'Widget ${context.widget.runtimeType} used in navigation without direct PrendingTradeRequestListProviderScope',
       );
     }
     return true;
@@ -189,20 +191,21 @@ bool _debugCheckHasRequestedBookIdsListProviderScope(BuildContext context) {
   return true;
 }
 
-class _RequestedBookIdsListStateProxyWidgetRef
-    extends _RequestedBookIdsListProxyWidgetRef {
-  _RequestedBookIdsListStateProxyWidgetRef(super._ref);
+class _PrendingTradeRequestListStateProxyWidgetRef
+    extends _PrendingTradeRequestListProxyWidgetRef {
+  _PrendingTradeRequestListStateProxyWidgetRef(super._ref);
 
-  Selected select<Selected>(Selected Function(IList<BookId>) selector) =>
-      _ref.watch(
-        requestedBookIdsListProvider.select(
-          (value) => selector(value.requireValue),
-        ),
-      );
+  Selected select<Selected>(
+    Selected Function(IList<TradeRequestModel>) selector,
+  ) => _ref.watch(
+    prendingTradeRequestListProvider.select(
+      (value) => selector(value.requireValue),
+    ),
+  );
 }
 
-class RequestedBookIdsListStateWidget extends ConsumerWidget {
-  const RequestedBookIdsListStateWidget({
+class PrendingTradeRequestListStateWidget extends ConsumerWidget {
+  const PrendingTradeRequestListStateWidget({
     super.key,
     required this.builder,
     this.child,
@@ -210,49 +213,52 @@ class RequestedBookIdsListStateWidget extends ConsumerWidget {
   });
 
   /// The builder function that constructs the widget tree.
-  /// Access the state directly via ref.state, which is equivalent to ref.watch(requestedBookIdsListProvider)
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(prendingTradeRequestListProvider)
   ///
   /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
   /// The ref parameter provides type-safe access to the provider state and notifier
   final Widget Function(
     BuildContext context,
-    _RequestedBookIdsListStateProxyWidgetRef ref,
+    _PrendingTradeRequestListStateProxyWidgetRef ref,
     Widget? child,
   )
   builder;
   final Widget? child;
-  final void Function(IList<BookId>? previous, IList<BookId>? next)?
+  final void Function(
+    IList<TradeRequestModel>? previous,
+    IList<TradeRequestModel>? next,
+  )?
   onStateChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasRequestedBookIdsListProviderScope(context);
+    _debugCheckHasPrendingTradeRequestListProviderScope(context);
 
     if (onStateChanged != null) {
-      ref.listen(requestedBookIdsListProvider, (pre, next) {
+      ref.listen(prendingTradeRequestListProvider, (pre, next) {
         if (pre != next) onStateChanged!(pre?.valueOrNull, next.valueOrNull);
       });
     }
     return builder(
       context,
-      _RequestedBookIdsListStateProxyWidgetRef(ref),
+      _PrendingTradeRequestListStateProxyWidgetRef(ref),
       child,
     );
   }
 }
 
-class RequestedBookIdsListSelectWidget<Selected> extends ConsumerWidget {
-  const RequestedBookIdsListSelectWidget({
+class PrendingTradeRequestListSelectWidget<Selected> extends ConsumerWidget {
+  const PrendingTradeRequestListSelectWidget({
     super.key,
     required this.selector,
     required this.builder,
     this.onStateChanged,
   });
 
-  final Selected Function(IList<BookId> state) selector;
+  final Selected Function(IList<TradeRequestModel> state) selector;
   final Widget Function(
     BuildContext context,
-    _RequestedBookIdsListStateProxyWidgetRef ref,
+    _PrendingTradeRequestListStateProxyWidgetRef ref,
     Selected value,
   )
   builder;
@@ -260,11 +266,11 @@ class RequestedBookIdsListSelectWidget<Selected> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasRequestedBookIdsListProviderScope(context);
+    _debugCheckHasPrendingTradeRequestListProviderScope(context);
 
     if (onStateChanged != null) {
       ref.listen(
-        requestedBookIdsListProvider.select(
+        prendingTradeRequestListProvider.select(
           (value) => selector(value.requireValue),
         ),
         (pre, next) {
@@ -272,7 +278,7 @@ class RequestedBookIdsListSelectWidget<Selected> extends ConsumerWidget {
         },
       );
     }
-    final stateRef = _RequestedBookIdsListStateProxyWidgetRef(ref);
+    final stateRef = _PrendingTradeRequestListStateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.select(selector));
   }
 }

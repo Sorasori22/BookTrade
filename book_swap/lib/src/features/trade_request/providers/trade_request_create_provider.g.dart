@@ -9,7 +9,7 @@ part of 'trade_request_create_provider.dart';
 // **************************************************************************
 
 String _$tradeRequestCreateHash() =>
-    r'82e777c800ed7b9a19e38bd7aa824838fb07294d';
+    r'b7f69b769c47858571e7942c80c17d16d965b9c2';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -17,12 +17,11 @@ class TradeRequestDelete extends _$TradeRequestDelete {
   Future<ProviderStatus<Unit>> call() async {
     return await perform(
       (state) async {
-        final bookId = await ref.read(tradeRequestDetailProvider(id).selectAsync((v) => v.bookId));
         final result = await ref.read(tradeRequestRepoProvider).delete(id);
-        ref.read(requestedBookIdsListProvider.notifier).removeItem(bookId);
         return result.getOrThrow();
       },
       onSuccess: (success) {
+        ref.read(prendingTradeRequestListProvider.notifier).removeWhere((e) => e.id == id);
         ref.invalidate(tradeRequestDetailProvider(id));
       },
     );

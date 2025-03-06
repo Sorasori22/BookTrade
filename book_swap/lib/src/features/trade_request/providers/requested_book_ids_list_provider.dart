@@ -1,5 +1,5 @@
 import 'package:autoverpod/autoverpod.dart';
-import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
@@ -12,15 +12,14 @@ import '../trade_request_schema.dart';
 
 part 'requested_book_ids_list_provider.g.dart';
 
-/// List of book ids which I requested and is pending
 @stateWidget
 @riverpod
-class RequestedBookIdsList extends _$RequestedBookIdsList with IListAsyncNotifier {
+class PrendingTradeRequestList extends _$PrendingTradeRequestList with IListAsyncNotifier {
   @override
-  bool identity(BookId item) => item == item;
+  bool identity(TradeRequestModel item) => item == item;
 
   @override
-  FutureOr<IList<BookId>> build() {
+  FutureOr<IList<TradeRequestModel>> build() {
     final myId = ref.watch(currentProfileIdProvider);
     if (myId == null) {
       return const IList.empty();
@@ -31,9 +30,6 @@ class RequestedBookIdsList extends _$RequestedBookIdsList with IListAsyncNotifie
       status: TradeRequestStatus.pending,
     );
 
-    return ref
-        .watch(tradeRequestRepoProvider)
-        .findAll(param)
-        .mapOrThrow((e) => e.map((e) => e.bookId).toIList());
+    return ref.watch(tradeRequestRepoProvider).findAll(param).getOrThrow();
   }
 }

@@ -31,7 +31,7 @@ class TradeRequestCreate extends _$TradeRequestCreate {
         return result;
       },
       onSuccess: (success) {
-        ref.read(requestedBookIdsListProvider.notifier).insertItem(success.bookId);
+        ref.read(prendingTradeRequestListProvider.notifier).insertItem(success);
       },
     );
   }

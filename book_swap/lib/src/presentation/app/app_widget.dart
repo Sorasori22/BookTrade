@@ -1,4 +1,5 @@
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
+import 'package:book_swap/src/features/trade_request/providers/requested_book_ids_list_provider.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
@@ -26,6 +27,8 @@ class _EagerInitialization extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Initialize app state
     ref.watch(appStateProvider);
+
+    ref.watch(prendingTradeRequestListProvider);
 
     return child;
   }
