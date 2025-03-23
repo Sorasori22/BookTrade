@@ -47,28 +47,37 @@ class _TradeRequestCreatePageState extends ConsumerState<TradeRequestCreatePage>
           children: [
             Expanded(
               flex: 3,
-              child: status.map(
-                initial: (_) => const SizedBox(),
-                inProgress: (_) => Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 72,
-                        height: 72,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 10,
+              child: () {
+                if (status.isInitial) {
+                  return SizedBox.shrink();
+                }
+
+                if (status.isInProgress) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 72,
+                          height: 72,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 10,
+                          ),
                         ),
-                      ),
-                      AS.hGap24,
-                      Text('Creating trade request...'),
-                    ],
-                  ),
-                ),
-                failure: (falure) => Center(
-                  child: MyErrorWidget(error: falure),
-                ),
-                success: (_) => Column(
+                        AS.hGap24,
+                        Text('Creating trade request...'),
+                      ],
+                    ),
+                  );
+                }
+
+                if (status.isFailure) {
+                  return Center(
+                    child: MyErrorWidget(error: status.failure),
+                  );
+                }
+
+                return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
@@ -102,8 +111,8 @@ class _TradeRequestCreatePageState extends ConsumerState<TradeRequestCreatePage>
                       ),
                     ),
                   ],
-                ),
-              ),
+                );
+              }(),
             ),
             Expanded(
               child: Column(

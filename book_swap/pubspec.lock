@@ -127,14 +127,14 @@ packages:
       path: "/Users/kim/Development/projects/kimapp/pubs/autoverpod"
       relative: false
     source: path
-    version: "0.0.3"
+    version: "0.0.4+1"
   autoverpod_generator:
     dependency: "direct dev"
     description:
       path: "/Users/kim/Development/projects/kimapp/pubs/autoverpod_generator"
       relative: false
     source: path
-    version: "0.0.3"
+    version: "0.0.4+1"
   boolean_selector:
     dependency: transitive
     description:
@@ -985,28 +985,28 @@ packages:
       path: "/Users/kim/Development/projects/kimapp/packages/kimapp"
       relative: false
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   kimapp_generator:
     dependency: "direct dev"
     description:
       path: "/Users/kim/Development/projects/kimapp/packages/kimapp_generator"
       relative: false
     source: path
-    version: "0.0.1+1"
+    version: "0.0.2"
   kimapp_supabase_helper:
     dependency: "direct main"
     description:
       path: "/Users/kim/Development/projects/kimapp/packages/kimapp_supabase_helper"
       relative: false
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   kimapp_utils:
     dependency: "direct main"
     description:
       path: "/Users/kim/Development/projects/kimapp/packages/kimapp_utils"
       relative: false
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   leak_tracker:
     dependency: transitive
     description:
