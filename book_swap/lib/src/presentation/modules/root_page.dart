@@ -1,16 +1,38 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/core/account/current_account_provider.widget.dart';
+import 'package:book_swap/src/features/banner/providers/banner_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../router/app_router.gr.dart';
 
 @RoutePage()
-class RootPage extends ConsumerWidget {
+class RootPage extends ConsumerStatefulWidget {
   const RootPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RootPage> createState() => _RootPageState();
+}
+
+class _RootPageState extends ConsumerState<RootPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showBanner();
+    });
+  }
+
+  Future<void> _showBanner() async {
+    final banner = await ref.read(bannerProvider.future);
+    if (banner == null) return;
+
+    context.pushRoute(BannerRoute());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return CurrentAccountProviderScope(
       child: AutoTabsScaffold(
         routes: const [

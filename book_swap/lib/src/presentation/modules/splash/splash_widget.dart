@@ -41,7 +41,7 @@ class SplashWidget extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topCenter,
                       heightFactor: 0.6,
-                      child: Assets.images.logo.image(
+                      child: Assets.images.logoNoBackground.image(
                         width: 300,
                         height: 300,
                       ),

@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, unnecessary_import, unused_import
 // coverage:ignore-file
 
-import 'package:book_swap/src/features/message/providers/message_create_provider.dart';
+import 'package:book_swap/src/features/banner/providers/banner_create_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:flutter/material.dart';
@@ -13,72 +13,75 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/banner/providers/banner_provider.dart';
 import 'package:kimapp/kimapp.dart';
-import 'package:book_swap/src/features/message/i_message_repo.dart';
-import 'package:book_swap/src/features/message/message_schema.schema.dart';
-import 'package:book_swap/src/features/message/providers/message_list_pagination_provider.dart';
-import 'package:book_swap/src/features/message/providers/message_list_provider.dart';
+import 'package:book_swap/src/features/banner/banner_schema.schema.dart';
+import 'package:book_swap/src/features/banner/i_banner_repo.dart';
 import 'dart:core';
 
 /// Extension that adds field update methods to the form provider.
 /// These methods allow updating individual fields that have copyWith support.
-extension MessageCreateFieldUpdater on MessageCreate {
-  /// Update the senderId field of MessageCreateParam class.
-  void updateSenderId(ProfileId newValue) =>
-      state = state.copyWith(senderId: newValue);
+extension BannerCreateFieldUpdater on BannerCreate {
+  /// Update the note field of BannerCreateParam class.
+  void updateNote(String? newValue) =>
+      state = state.copyWith(
+        note: newValue == null || newValue.isEmpty ? null : newValue,
+      );
 
-  /// Update the recipientId field of MessageCreateParam class.
-  void updateRecipientId(ProfileId newValue) =>
-      state = state.copyWith(recipientId: newValue);
+  /// Update the imagePath field of BannerCreateParam class.
+  void updateImagePath(ImageObject newValue) =>
+      state = state.copyWith(imagePath: newValue);
 
-  /// Update the content field of MessageCreateParam class.
-  void updateContent(String newValue) =>
-      state = state.copyWith(content: newValue);
+  /// Update the isActive field of BannerCreateParam class.
+  void updateIsActive(bool newValue) =>
+      state = state.copyWith(isActive: newValue);
 
-  /// Update the tradeRequestId field of MessageCreateParam class.
-  void updateTradeRequestId(int? newValue) =>
-      state = state.copyWith(tradeRequestId: newValue);
+  /// Update the skippableDurationSeconds field of BannerCreateParam class.
+  void updateSkippableDurationSeconds(int newValue) =>
+      state = state.copyWith(skippableDurationSeconds: newValue);
 }
 
-class _MessageCreateFormInheritedWidget extends InheritedWidget {
-  const _MessageCreateFormInheritedWidget({
+class _BannerCreateFormInheritedWidget extends InheritedWidget {
+  const _BannerCreateFormInheritedWidget({
     required this.formKey,
     required super.child,
   });
 
   final GlobalKey<FormState> formKey;
 
-  static _MessageCreateFormInheritedWidget of(BuildContext context) {
+  static _BannerCreateFormInheritedWidget of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<
-          _MessageCreateFormInheritedWidget
+          _BannerCreateFormInheritedWidget
         >()!;
   }
 
   @override
   bool updateShouldNotify(
-    covariant _MessageCreateFormInheritedWidget oldWidget,
+    covariant _BannerCreateFormInheritedWidget oldWidget,
   ) {
     return formKey != oldWidget.formKey;
   }
 }
 
-class MessageCreateProxyWidgetRef extends WidgetRef {
-  MessageCreateProxyWidgetRef(this._ref);
+class BannerCreateProxyWidgetRef extends WidgetRef {
+  BannerCreateProxyWidgetRef(this._ref);
 
   final WidgetRef _ref;
 
-  AsyncValue<MessageModel>? get status =>
-      _ref.watch(messageCreateCallStatusProvider);
+  AsyncValue<BannerModel>? get status =>
+      _ref.watch(bannerCreateCallStatusProvider);
 
   GlobalKey<FormState> get formKey =>
-      _MessageCreateFormInheritedWidget.of(context).formKey;
+      _BannerCreateFormInheritedWidget.of(context).formKey;
 
-  MessageCreate get notifier => _ref.read(messageCreateProvider.notifier);
+  BannerCreate get notifier => _ref.read(bannerCreateProvider.notifier);
 
   /// Submits the form. Internally this calls [notifier.submit] with the form key validated.
-  Future<AsyncValue<MessageModel>> submit() async {
+  Future<AsyncValue<BannerModel>> submit() async {
     if (!(formKey.currentState?.validate() ?? false)) {
       return AsyncValue.error(
         Exception('Form is not valid'),
@@ -90,8 +93,8 @@ class MessageCreateProxyWidgetRef extends WidgetRef {
     return await notifier();
   }
 
-  Selected select<Selected>(Selected Function(MessageCreateParam) selector) =>
-      _ref.watch(messageCreateProvider.select((value) => selector(value)));
+  Selected select<Selected>(Selected Function(BannerCreateParam) selector) =>
+      _ref.watch(bannerCreateProvider.select((value) => selector(value)));
 
   @override
   BuildContext get context => _ref.context;
@@ -132,8 +135,8 @@ class MessageCreateProxyWidgetRef extends WidgetRef {
   T watch<T>(ProviderListenable<T> provider) => _ref.watch(provider);
 }
 
-class MessageCreateFormScope extends ConsumerStatefulWidget {
-  const MessageCreateFormScope({
+class BannerCreateFormScope extends ConsumerStatefulWidget {
+  const BannerCreateFormScope({
     super.key,
     this.formKey,
     this.autovalidateMode,
@@ -148,7 +151,7 @@ class MessageCreateFormScope extends ConsumerStatefulWidget {
 
   final Widget Function(
     BuildContext context,
-    MessageCreateProxyWidgetRef ref,
+    BannerCreateProxyWidgetRef ref,
     Widget? child,
   )?
   builder;
@@ -156,15 +159,14 @@ class MessageCreateFormScope extends ConsumerStatefulWidget {
   final GlobalKey<FormState>? formKey;
   final AutovalidateMode? autovalidateMode;
   final void Function(bool, Object?)? onPopInvokedWithResult;
-  final void Function(BuildContext context, MessageModel value)? onSuccessed;
+  final void Function(BuildContext context, BannerModel value)? onSuccessed;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _MessageCreateFormScopeState();
+      _BannerCreateFormScopeState();
 }
 
-class _MessageCreateFormScopeState
-    extends ConsumerState<MessageCreateFormScope> {
+class _BannerCreateFormScopeState extends ConsumerState<BannerCreateFormScope> {
   late final GlobalKey<FormState> _cachedFormKey;
 
   @override
@@ -181,13 +183,13 @@ class _MessageCreateFormScopeState
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(messageCreateCallStatusProvider, (previous, next) {
+    ref.listen(bannerCreateCallStatusProvider, (previous, next) {
       if (previous?.hasValue == false && next?.hasValue == true) {
         widget.onSuccessed?.call(context, next!.requireValue);
       }
     });
 
-    return _MessageCreateFormInheritedWidget(
+    return _BannerCreateFormInheritedWidget(
       formKey: _cachedFormKey,
       child: Form(
         key: _cachedFormKey,
@@ -198,7 +200,7 @@ class _MessageCreateFormScopeState
             if (widget.builder != null) {
               return widget.builder!(
                 context,
-                MessageCreateProxyWidgetRef(ref),
+                BannerCreateProxyWidgetRef(ref),
                 widget.child,
               );
             }
@@ -211,26 +213,26 @@ class _MessageCreateFormScopeState
   }
 }
 
-bool _debugCheckHasMessageCreateForm(BuildContext context) {
+bool _debugCheckHasBannerCreateForm(BuildContext context) {
   assert(() {
-    if (context.widget is! MessageCreateFormScope &&
-        context.findAncestorWidgetOfExactType<MessageCreateFormScope>() ==
+    if (context.widget is! BannerCreateFormScope &&
+        context.findAncestorWidgetOfExactType<BannerCreateFormScope>() ==
             null) {
       // Check if we're in a navigation context (dialog or pushed screen)
       final isInNavigation = ModalRoute.of(context) != null;
 
       if (!isInNavigation) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
-          ErrorSummary('No MessageCreateFormScope found'),
+          ErrorSummary('No BannerCreateFormScope found'),
           ErrorDescription(
-            '${context.widget.runtimeType} widgets require a MessageCreateFormScope widget ancestor '
+            '${context.widget.runtimeType} widgets require a BannerCreateFormScope widget ancestor '
             'or to be used in a navigation context with proper state management.',
           ),
         ]);
       }
       // If in navigation context, we'll return true but log a warning
       debugPrint(
-        'Widget ${context.widget.runtimeType} used in navigation without direct MessageCreateFormScope',
+        'Widget ${context.widget.runtimeType} used in navigation without direct BannerCreateFormScope',
       );
     }
     return true;
@@ -238,18 +240,18 @@ bool _debugCheckHasMessageCreateForm(BuildContext context) {
   return true;
 }
 
-class MessageCreateFormSelect<Selected> extends ConsumerWidget {
-  const MessageCreateFormSelect({
+class BannerCreateFormSelect<Selected> extends ConsumerWidget {
+  const BannerCreateFormSelect({
     super.key,
     required this.selector,
     required this.builder,
     this.onStateChanged,
   });
 
-  final Selected Function(MessageCreateParam state) selector;
+  final Selected Function(BannerCreateParam state) selector;
   final Widget Function(
     BuildContext context,
-    MessageCreateProxyWidgetRef ref,
+    BannerCreateProxyWidgetRef ref,
     Selected value,
   )
   builder;
@@ -257,23 +259,23 @@ class MessageCreateFormSelect<Selected> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasMessageCreateForm(context);
+    _debugCheckHasBannerCreateForm(context);
 
     if (onStateChanged != null) {
-      ref.listen(messageCreateProvider.select((value) => selector(value)), (
+      ref.listen(bannerCreateProvider.select((value) => selector(value)), (
         pre,
         next,
       ) {
         if (pre != next) onStateChanged!(pre, next);
       });
     }
-    final stateRef = MessageCreateProxyWidgetRef(ref);
+    final stateRef = BannerCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.select(selector));
   }
 }
 
-class MessageCreateFormState extends ConsumerWidget {
-  const MessageCreateFormState({
+class BannerCreateFormState extends ConsumerWidget {
+  const BannerCreateFormState({
     super.key,
     required this.builder,
     this.child,
@@ -281,35 +283,35 @@ class MessageCreateFormState extends ConsumerWidget {
   });
 
   /// The builder function that constructs the widget tree.
-  /// Access the state directly via ref.state, which is equivalent to ref.watch(messageCreateProvider)
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(bannerCreateProvider)
   ///
   /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
   /// The ref parameter provides type-safe access to the provider state and notifier
   final Widget Function(
     BuildContext context,
-    MessageCreateProxyWidgetRef ref,
+    BannerCreateProxyWidgetRef ref,
     Widget? child,
   )
   builder;
   final Widget? child;
-  final void Function(MessageCreateParam? previous, MessageCreateParam? next)?
+  final void Function(BannerCreateParam? previous, BannerCreateParam? next)?
   onStateChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasMessageCreateForm(context);
+    _debugCheckHasBannerCreateForm(context);
 
     if (onStateChanged != null) {
-      ref.listen(messageCreateProvider, (pre, next) {
+      ref.listen(bannerCreateProvider, (pre, next) {
         if (pre != next) onStateChanged!(pre, next);
       });
     }
-    return builder(context, MessageCreateProxyWidgetRef(ref), child);
+    return builder(context, BannerCreateProxyWidgetRef(ref), child);
   }
 }
 
-class MessageCreateFormStatus extends ConsumerWidget {
-  const MessageCreateFormStatus({
+class BannerCreateFormStatus extends ConsumerWidget {
+  const BannerCreateFormStatus({
     super.key,
     required this.builder,
     this.onChanged,
@@ -317,108 +319,47 @@ class MessageCreateFormStatus extends ConsumerWidget {
 
   final Widget Function(
     BuildContext context,
-    MessageCreateProxyWidgetRef ref,
-    AsyncValue<MessageModel>? status,
+    BannerCreateProxyWidgetRef ref,
+    AsyncValue<BannerModel>? status,
   )
   builder;
   final void Function(
-    AsyncValue<MessageModel>? previous,
-    AsyncValue<MessageModel>? next,
+    AsyncValue<BannerModel>? previous,
+    AsyncValue<BannerModel>? next,
   )?
   onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasMessageCreateForm(context);
+    _debugCheckHasBannerCreateForm(context);
 
     if (onChanged != null) {
-      ref.listen(messageCreateCallStatusProvider, (previous, next) {
+      ref.listen(bannerCreateCallStatusProvider, (previous, next) {
         if (previous != next) {
           onChanged!(previous, next);
         }
       });
     }
-    final stateRef = MessageCreateProxyWidgetRef(ref);
+    final stateRef = BannerCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
   }
 }
 
-class MessageCreateSenderIdProxyWidgetRef extends MessageCreateProxyWidgetRef {
-  MessageCreateSenderIdProxyWidgetRef(super._ref);
-
-  /// Access the field value directly.
-  ProfileId get senderId => select((state) => state.senderId);
-
-  /// Update the field value directly.
-  void updateSenderId(ProfileId newValue) => notifier.updateSenderId(newValue);
-}
-
-class MessageCreateSenderIdField extends ConsumerWidget {
-  const MessageCreateSenderIdField({super.key, required this.builder});
-
-  final Widget Function(
-    BuildContext context,
-    MessageCreateSenderIdProxyWidgetRef ref,
-  )
-  builder;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasMessageCreateForm(context);
-
-    final proxy = MessageCreateSenderIdProxyWidgetRef(ref);
-    return builder(context, proxy);
-  }
-}
-
-class MessageCreateRecipientIdProxyWidgetRef
-    extends MessageCreateProxyWidgetRef {
-  MessageCreateRecipientIdProxyWidgetRef(super._ref);
-
-  /// Access the field value directly.
-  ProfileId get recipientId => select((state) => state.recipientId);
-
-  /// Update the field value directly.
-  void updateRecipientId(ProfileId newValue) =>
-      notifier.updateRecipientId(newValue);
-}
-
-class MessageCreateRecipientIdField extends ConsumerWidget {
-  const MessageCreateRecipientIdField({super.key, required this.builder});
-
-  final Widget Function(
-    BuildContext context,
-    MessageCreateRecipientIdProxyWidgetRef ref,
-  )
-  builder;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasMessageCreateForm(context);
-
-    final proxy = MessageCreateRecipientIdProxyWidgetRef(ref);
-    return builder(context, proxy);
-  }
-}
-
-class MessageCreateContentProxyWidgetRef extends MessageCreateProxyWidgetRef {
-  MessageCreateContentProxyWidgetRef(
-    super._ref, {
-    required this.textController,
-  });
+class BannerCreateNoteProxyWidgetRef extends BannerCreateProxyWidgetRef {
+  BannerCreateNoteProxyWidgetRef(super._ref, {required this.textController});
 
   /// Text controller for the field. This is automatically created by the form widget and handles cleanup automatically.
   final TextEditingController textController;
 
   /// Access the field value directly.
-  String get content => select((state) => state.content);
+  String? get note => select((state) => state.note);
 
   /// Update the field value directly.
-  void updateContent(String newValue) => notifier.updateContent(newValue);
+  void updateNote(String? newValue) => notifier.updateNote(newValue);
 }
 
-class MessageCreateContentField extends HookConsumerWidget {
-  const MessageCreateContentField({
+class BannerCreateNoteField extends HookConsumerWidget {
+  const BannerCreateNoteField({
     super.key,
     this.textController,
     this.onChanged,
@@ -432,37 +373,39 @@ class MessageCreateContentField extends HookConsumerWidget {
   /// Field utilities are accessible via [ref]
   final Widget Function(
     BuildContext context,
-    MessageCreateContentProxyWidgetRef ref,
+    BannerCreateNoteProxyWidgetRef ref,
   )
   builder;
 
   /// Optional callback that will be called when the field value changes
-  final void Function(String? previous, String next)? onChanged;
+  final void Function(String? previous, String? next)? onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasMessageCreateForm(context);
+    _debugCheckHasBannerCreateForm(context);
 
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(messageCreateProvider).content;
+    final initialValue = ref.read(bannerCreateProvider).note;
 
     final controller =
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listen(messageCreateProvider.select((value) => value.content), (
+    ref.listen(bannerCreateProvider.select((value) => value.note), (
       previous,
       next,
     ) {
       if (previous != next && controller.text != next) {
-        controller.text = next;
+        controller.text = next ?? "";
       }
       onChanged?.call(previous, next);
     });
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null && textController!.text.isEmpty) {
+      if (textController != null &&
+          initialValue != null &&
+          textController!.text.isEmpty) {
         textController!.text = initialValue;
       }
       return null;
@@ -471,11 +414,9 @@ class MessageCreateContentField extends HookConsumerWidget {
     // Setup text listener
     useEffect(() {
       void listener() {
-        final currentValue = ref.read(messageCreateProvider).content;
+        final currentValue = ref.read(bannerCreateProvider).note;
         if (currentValue != controller.text) {
-          ref
-              .read(messageCreateProvider.notifier)
-              .updateContent(controller.text);
+          ref.read(bannerCreateProvider.notifier).updateNote(controller.text);
         }
       }
 
@@ -483,7 +424,7 @@ class MessageCreateContentField extends HookConsumerWidget {
       return () => controller.removeListener(listener);
     }, [controller]);
 
-    final proxy = MessageCreateContentProxyWidgetRef(
+    final proxy = BannerCreateNoteProxyWidgetRef(
       ref,
       textController: controller,
     );
@@ -492,32 +433,93 @@ class MessageCreateContentField extends HookConsumerWidget {
   }
 }
 
-class MessageCreateTradeRequestIdProxyWidgetRef
-    extends MessageCreateProxyWidgetRef {
-  MessageCreateTradeRequestIdProxyWidgetRef(super._ref);
+class BannerCreateImagePathProxyWidgetRef extends BannerCreateProxyWidgetRef {
+  BannerCreateImagePathProxyWidgetRef(super._ref);
 
   /// Access the field value directly.
-  int? get tradeRequestId => select((state) => state.tradeRequestId);
+  ImageObject get imagePath => select((state) => state.imagePath);
 
   /// Update the field value directly.
-  void updateTradeRequestId(int? newValue) =>
-      notifier.updateTradeRequestId(newValue);
+  void updateImagePath(ImageObject newValue) =>
+      notifier.updateImagePath(newValue);
 }
 
-class MessageCreateTradeRequestIdField extends ConsumerWidget {
-  const MessageCreateTradeRequestIdField({super.key, required this.builder});
+class BannerCreateImagePathField extends ConsumerWidget {
+  const BannerCreateImagePathField({super.key, required this.builder});
 
   final Widget Function(
     BuildContext context,
-    MessageCreateTradeRequestIdProxyWidgetRef ref,
+    BannerCreateImagePathProxyWidgetRef ref,
   )
   builder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    _debugCheckHasMessageCreateForm(context);
+    _debugCheckHasBannerCreateForm(context);
 
-    final proxy = MessageCreateTradeRequestIdProxyWidgetRef(ref);
+    final proxy = BannerCreateImagePathProxyWidgetRef(ref);
+    return builder(context, proxy);
+  }
+}
+
+class BannerCreateIsActiveProxyWidgetRef extends BannerCreateProxyWidgetRef {
+  BannerCreateIsActiveProxyWidgetRef(super._ref);
+
+  /// Access the field value directly.
+  bool get isActive => select((state) => state.isActive);
+
+  /// Update the field value directly.
+  void updateIsActive(bool newValue) => notifier.updateIsActive(newValue);
+}
+
+class BannerCreateIsActiveField extends ConsumerWidget {
+  const BannerCreateIsActiveField({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    BannerCreateIsActiveProxyWidgetRef ref,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBannerCreateForm(context);
+
+    final proxy = BannerCreateIsActiveProxyWidgetRef(ref);
+    return builder(context, proxy);
+  }
+}
+
+class BannerCreateSkippableDurationSecondsProxyWidgetRef
+    extends BannerCreateProxyWidgetRef {
+  BannerCreateSkippableDurationSecondsProxyWidgetRef(super._ref);
+
+  /// Access the field value directly.
+  int get skippableDurationSeconds =>
+      select((state) => state.skippableDurationSeconds);
+
+  /// Update the field value directly.
+  void updateSkippableDurationSeconds(int newValue) =>
+      notifier.updateSkippableDurationSeconds(newValue);
+}
+
+class BannerCreateSkippableDurationSecondsField extends ConsumerWidget {
+  const BannerCreateSkippableDurationSecondsField({
+    super.key,
+    required this.builder,
+  });
+
+  final Widget Function(
+    BuildContext context,
+    BannerCreateSkippableDurationSecondsProxyWidgetRef ref,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBannerCreateForm(context);
+
+    final proxy = BannerCreateSkippableDurationSecondsProxyWidgetRef(ref);
     return builder(context, proxy);
   }
 }

@@ -71,6 +71,13 @@ class AppRouter extends RootStackRouter {
           ),
         ],
       ),
+      CustomRoute(
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        guards: [AuthGuard(_ref)],
+        page: BannerRoute.page,
+        path: '/banner',
+        fullscreenDialog: true,
+      ),
       AutoRoute(
         page: ProfileUpdateRoute.page,
         guards: [AuthGuard(_ref)],

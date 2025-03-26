@@ -1,0 +1,1 @@
+insert into banners (image_path) values ('https://printbucket.com/content/images/products/info/poster-print.png');
