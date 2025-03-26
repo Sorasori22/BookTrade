@@ -6,7 +6,7 @@ class Config {
   static const appName = "Book swap";
 
   static final riverpodObserverSetting = TalkerRiverpodLoggerSettings(
-    printStateFullData: false,
+    printStateFullData: true,
     printProviderFailed: true,
     printFailFullData: true,
     printProviderAdded: true,

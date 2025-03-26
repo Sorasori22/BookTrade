@@ -7,9 +7,6 @@ part 'message_list_param.freezed.dart';
 @freezed
 class MessageListParam with _$MessageListParam {
   const factory MessageListParam({
-    ProfileId? senderId,
-    ProfileId? recipientId,
-    int? tradeRequestId,
-    bool? read,
+    required ProfileId participantId,
   }) = _MessageListParam;
 }

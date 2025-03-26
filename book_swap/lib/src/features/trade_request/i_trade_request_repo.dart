@@ -1,3 +1,4 @@
+import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,6 +27,8 @@ abstract class ITradeRequestRepo {
   });
 
   Future<Either<Failure, Unit>> delete(TradeRequestId id);
+
+  AsyncFailureOr<Unit> updateStatus(TradeRequestId id, TradeRequestStatus status);
 }
 
 class _Impl implements ITradeRequestRepo {
@@ -60,28 +63,28 @@ class _Impl implements ITradeRequestRepo {
   @override
   Future<Either<Failure, IList<TradeRequestModel>>> findAll(TradeRequestListParam param) async {
     return await errorHandler(() async {
-      final query = _ref.supabaseClient
+      var query = _ref.supabaseClient
           .from(TradeRequestModel.table.tableName)
           .select(TradeRequestModel.table.selectStatement);
 
       if (param.requesterId != null) {
-        query.eq(TradeRequestTable.requesterId, param.requesterId!.value);
+        query = query.eq(TradeRequestTable.requesterId, param.requesterId!.value);
       }
 
       if (param.ownerId != null) {
-        query.eq(TradeRequestTable.ownerId, param.ownerId!.value);
+        query = query.eq(TradeRequestTable.ownerId, param.ownerId!.value);
       }
 
       if (param.bookId != null) {
-        query.eq(TradeRequestTable.bookId, param.bookId!.value);
+        query = query.eq(TradeRequestTable.bookId, param.bookId!.value);
       }
 
       if (param.offeredBookId != null) {
-        query.eq(TradeRequestTable.offeredBookId, param.offeredBookId!.value);
+        query = query.eq(TradeRequestTable.offeredBookId, param.offeredBookId!.value);
       }
 
       if (param.status != null) {
-        query.eq(TradeRequestTable.status, param.status!.name);
+        query = query.eq(TradeRequestTable.status, param.status!.name);
       }
 
       return await query.withConverter((data) {
@@ -120,6 +123,16 @@ class _Impl implements ITradeRequestRepo {
           .select(TradeRequestModel.table.selectStatement)
           .single()
           .withConverter((data) => right(TradeRequestModel.fromJson(data)));
+    });
+  }
+
+  @override
+  AsyncFailureOr<Unit> updateStatus(TradeRequestId id, TradeRequestStatus status) async {
+    return await errorHandler(() async {
+      await _ref.supabaseClient
+          .from(TradeRequestModel.table.tableName)
+          .update({TradeRequestTable.status: status.name}).eq(TradeRequestTable.id, id.value);
+      return right(unit);
     });
   }
 }

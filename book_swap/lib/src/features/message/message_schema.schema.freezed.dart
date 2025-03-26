@@ -34,10 +34,7 @@ mixin _$MessageModel {
   int? get tradeRequestId => throw _privateConstructorUsedError;
   @JsonKey(name: MessageModel.createdAtKey)
   DateTime get createdAt => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-  @JsonKey(name: MessageModel.senderKey)
-  ProfileLiteModel get sender => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
   ProfileLiteModel get recipient => throw _privateConstructorUsedError;
 
@@ -65,14 +62,10 @@ abstract class $MessageModelCopyWith<$Res> {
       @JsonKey(name: MessageModel.readKey) bool read,
       @JsonKey(name: MessageModel.tradeRequestIdKey) int? tradeRequestId,
       @JsonKey(name: MessageModel.createdAtKey) DateTime createdAt,
-      @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-      @JsonKey(name: MessageModel.senderKey)
-      ProfileLiteModel sender,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
       ProfileLiteModel recipient});
 
-  $ProfileLiteModelCopyWith<$Res> get sender;
   $ProfileLiteModelCopyWith<$Res> get recipient;
 }
 
@@ -98,7 +91,6 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
     Object? read = null,
     Object? tradeRequestId = freezed,
     Object? createdAt = null,
-    Object? sender = null,
     Object? recipient = null,
   }) {
     return _then(_value.copyWith(
@@ -130,25 +122,11 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as ProfileLiteModel,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as ProfileLiteModel,
     ) as $Val);
-  }
-
-  /// Create a copy of MessageModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileLiteModelCopyWith<$Res> get sender {
-    return $ProfileLiteModelCopyWith<$Res>(_value.sender, (value) {
-      return _then(_value.copyWith(sender: value) as $Val);
-    });
   }
 
   /// Create a copy of MessageModel
@@ -178,15 +156,10 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       @JsonKey(name: MessageModel.readKey) bool read,
       @JsonKey(name: MessageModel.tradeRequestIdKey) int? tradeRequestId,
       @JsonKey(name: MessageModel.createdAtKey) DateTime createdAt,
-      @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-      @JsonKey(name: MessageModel.senderKey)
-      ProfileLiteModel sender,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
       ProfileLiteModel recipient});
 
-  @override
-  $ProfileLiteModelCopyWith<$Res> get sender;
   @override
   $ProfileLiteModelCopyWith<$Res> get recipient;
 }
@@ -211,7 +184,6 @@ class __$$MessageModelImplCopyWithImpl<$Res>
     Object? read = null,
     Object? tradeRequestId = freezed,
     Object? createdAt = null,
-    Object? sender = null,
     Object? recipient = null,
   }) {
     return _then(_$MessageModelImpl(
@@ -243,10 +215,6 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as ProfileLiteModel,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
@@ -269,10 +237,7 @@ class _$MessageModelImpl extends _MessageModel {
       @JsonKey(name: MessageModel.tradeRequestIdKey)
       required this.tradeRequestId,
       @JsonKey(name: MessageModel.createdAtKey) required this.createdAt,
-      @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-      @JsonKey(name: MessageModel.senderKey)
-      required this.sender,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
       required this.recipient})
       : super._();
@@ -302,17 +267,13 @@ class _$MessageModelImpl extends _MessageModel {
   @JsonKey(name: MessageModel.createdAtKey)
   final DateTime createdAt;
   @override
-  @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-  @JsonKey(name: MessageModel.senderKey)
-  final ProfileLiteModel sender;
-  @override
-  @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
   final ProfileLiteModel recipient;
 
   @override
   String toString() {
-    return 'MessageModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, sender: $sender, recipient: $recipient)';
+    return 'MessageModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient)';
   }
 
   @override
@@ -331,7 +292,6 @@ class _$MessageModelImpl extends _MessageModel {
                 other.tradeRequestId == tradeRequestId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            (identical(other.sender, sender) || other.sender == sender) &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient));
   }
@@ -339,7 +299,7 @@ class _$MessageModelImpl extends _MessageModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, senderId, recipientId,
-      content, read, tradeRequestId, createdAt, sender, recipient);
+      content, read, tradeRequestId, createdAt, recipient);
 
   /// Create a copy of MessageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -370,10 +330,7 @@ abstract class _MessageModel extends MessageModel {
       required final int? tradeRequestId,
       @JsonKey(name: MessageModel.createdAtKey)
       required final DateTime createdAt,
-      @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-      @JsonKey(name: MessageModel.senderKey)
-      required final ProfileLiteModel sender,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
       required final ProfileLiteModel recipient}) = _$MessageModelImpl;
   const _MessageModel._() : super._();
@@ -403,11 +360,7 @@ abstract class _MessageModel extends MessageModel {
   @JsonKey(name: MessageModel.createdAtKey)
   DateTime get createdAt;
   @override
-  @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-  @JsonKey(name: MessageModel.senderKey)
-  ProfileLiteModel get sender;
-  @override
-  @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
   ProfileLiteModel get recipient;
 
@@ -722,10 +675,7 @@ mixin _$MessageDetailModel {
   int? get tradeRequestId => throw _privateConstructorUsedError;
   @JsonKey(name: MessageDetailModel.createdAtKey)
   DateTime get createdAt => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-  @JsonKey(name: MessageDetailModel.senderKey)
-  ProfileLiteModel get sender => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageDetailModel.recipientKey)
   ProfileLiteModel get recipient => throw _privateConstructorUsedError;
 
@@ -753,14 +703,10 @@ abstract class $MessageDetailModelCopyWith<$Res> {
       @JsonKey(name: MessageDetailModel.readKey) bool read,
       @JsonKey(name: MessageDetailModel.tradeRequestIdKey) int? tradeRequestId,
       @JsonKey(name: MessageDetailModel.createdAtKey) DateTime createdAt,
-      @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-      @JsonKey(name: MessageDetailModel.senderKey)
-      ProfileLiteModel sender,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageDetailModel.recipientKey)
       ProfileLiteModel recipient});
 
-  $ProfileLiteModelCopyWith<$Res> get sender;
   $ProfileLiteModelCopyWith<$Res> get recipient;
 }
 
@@ -786,7 +732,6 @@ class _$MessageDetailModelCopyWithImpl<$Res, $Val extends MessageDetailModel>
     Object? read = null,
     Object? tradeRequestId = freezed,
     Object? createdAt = null,
-    Object? sender = null,
     Object? recipient = null,
   }) {
     return _then(_value.copyWith(
@@ -818,25 +763,11 @@ class _$MessageDetailModelCopyWithImpl<$Res, $Val extends MessageDetailModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as ProfileLiteModel,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as ProfileLiteModel,
     ) as $Val);
-  }
-
-  /// Create a copy of MessageDetailModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileLiteModelCopyWith<$Res> get sender {
-    return $ProfileLiteModelCopyWith<$Res>(_value.sender, (value) {
-      return _then(_value.copyWith(sender: value) as $Val);
-    });
   }
 
   /// Create a copy of MessageDetailModel
@@ -866,15 +797,10 @@ abstract class _$$MessageDetailModelImplCopyWith<$Res>
       @JsonKey(name: MessageDetailModel.readKey) bool read,
       @JsonKey(name: MessageDetailModel.tradeRequestIdKey) int? tradeRequestId,
       @JsonKey(name: MessageDetailModel.createdAtKey) DateTime createdAt,
-      @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-      @JsonKey(name: MessageDetailModel.senderKey)
-      ProfileLiteModel sender,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageDetailModel.recipientKey)
       ProfileLiteModel recipient});
 
-  @override
-  $ProfileLiteModelCopyWith<$Res> get sender;
   @override
   $ProfileLiteModelCopyWith<$Res> get recipient;
 }
@@ -899,7 +825,6 @@ class __$$MessageDetailModelImplCopyWithImpl<$Res>
     Object? read = null,
     Object? tradeRequestId = freezed,
     Object? createdAt = null,
-    Object? sender = null,
     Object? recipient = null,
   }) {
     return _then(_$MessageDetailModelImpl(
@@ -931,10 +856,6 @@ class __$$MessageDetailModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as ProfileLiteModel,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
@@ -958,10 +879,7 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
       @JsonKey(name: MessageDetailModel.tradeRequestIdKey)
       required this.tradeRequestId,
       @JsonKey(name: MessageDetailModel.createdAtKey) required this.createdAt,
-      @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-      @JsonKey(name: MessageDetailModel.senderKey)
-      required this.sender,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageDetailModel.recipientKey)
       required this.recipient})
       : super._();
@@ -991,17 +909,13 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
   @JsonKey(name: MessageDetailModel.createdAtKey)
   final DateTime createdAt;
   @override
-  @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-  @JsonKey(name: MessageDetailModel.senderKey)
-  final ProfileLiteModel sender;
-  @override
-  @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageDetailModel.recipientKey)
   final ProfileLiteModel recipient;
 
   @override
   String toString() {
-    return 'MessageDetailModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, sender: $sender, recipient: $recipient)';
+    return 'MessageDetailModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient)';
   }
 
   @override
@@ -1020,7 +934,6 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
                 other.tradeRequestId == tradeRequestId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            (identical(other.sender, sender) || other.sender == sender) &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient));
   }
@@ -1028,7 +941,7 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, senderId, recipientId,
-      content, read, tradeRequestId, createdAt, sender, recipient);
+      content, read, tradeRequestId, createdAt, recipient);
 
   /// Create a copy of MessageDetailModel
   /// with the given fields replaced by the non-null parameter values.
@@ -1061,10 +974,7 @@ abstract class _MessageDetailModel extends MessageDetailModel {
       required final int? tradeRequestId,
       @JsonKey(name: MessageDetailModel.createdAtKey)
       required final DateTime createdAt,
-      @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-      @JsonKey(name: MessageDetailModel.senderKey)
-      required final ProfileLiteModel sender,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageDetailModel.recipientKey)
       required final ProfileLiteModel recipient}) = _$MessageDetailModelImpl;
   const _MessageDetailModel._() : super._();
@@ -1094,11 +1004,7 @@ abstract class _MessageDetailModel extends MessageDetailModel {
   @JsonKey(name: MessageDetailModel.createdAtKey)
   DateTime get createdAt;
   @override
-  @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-  @JsonKey(name: MessageDetailModel.senderKey)
-  ProfileLiteModel get sender;
-  @override
-  @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageDetailModel.recipientKey)
   ProfileLiteModel get recipient;
 

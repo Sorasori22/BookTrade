@@ -13,12 +13,12 @@ CREATE TABLE public.profiles (
   location TEXT,
   address TEXT,
   phone_number TEXT,
+  total_trades INTEGER DEFAULT 0 NOT NULL,
+  total_rating INTEGER DEFAULT 0 NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Enable RLS
-ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
 -- Books table to store book information
 CREATE TABLE public.books (
@@ -27,14 +27,12 @@ CREATE TABLE public.books (
   title TEXT NOT NULL,
   author TEXT NOT NULL,
   description TEXT,
-  image_url TEXT,
+  image_path TEXT,
   condition INTEGER NOT NULL CHECK (condition BETWEEN 1 AND 5),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Enable RLS
-ALTER TABLE public.books ENABLE ROW LEVEL SECURITY;
 
 -- Trade requests table
 CREATE TABLE public.trade_requests (
@@ -44,13 +42,11 @@ CREATE TABLE public.trade_requests (
   owner_id UUID REFERENCES public.profiles(id) NOT NULL,
   book_id BIGINT REFERENCES public.books(id) NOT NULL,
   offered_book_id BIGINT REFERENCES public.books(id),
-  status TEXT NOT NULL DEFAULT 'pending',
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (status in ('pending', 'accepted', 'rejected', 'completed')),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Enable RLS
-ALTER TABLE public.trade_requests ENABLE ROW LEVEL SECURITY;
 
 -- Completed swaps table to track swap history
 CREATE TABLE public.completed_swaps (
@@ -63,10 +59,9 @@ CREATE TABLE public.completed_swaps (
   completed_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Enable RLS
-ALTER TABLE public.completed_swaps ENABLE ROW LEVEL SECURITY;
 
 -- User ratings after trades
+-- This will be asked after trade is completed
 CREATE TABLE public.user_ratings (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   rater_id UUID REFERENCES public.profiles(id) NOT NULL,
@@ -77,8 +72,6 @@ CREATE TABLE public.user_ratings (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Enable RLS
-ALTER TABLE public.user_ratings ENABLE ROW LEVEL SECURITY;
 
 -- Book ratings system
 CREATE TABLE public.book_ratings (
@@ -91,8 +84,6 @@ CREATE TABLE public.book_ratings (
   UNIQUE(user_id, book_id)
 );
 
--- Enable RLS
-ALTER TABLE public.book_ratings ENABLE ROW LEVEL SECURITY;
 
 -- User wishlist for books they want
 CREATE TABLE public.wishlist_items (
@@ -104,8 +95,6 @@ CREATE TABLE public.wishlist_items (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Enable RLS
-ALTER TABLE public.wishlist_items ENABLE ROW LEVEL SECURITY;
 
 -- Messages table for chat functionality
 CREATE TABLE public.messages (
@@ -118,20 +107,17 @@ CREATE TABLE public.messages (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Enable RLS
-ALTER TABLE public.messages ENABLE ROW LEVEL SECURITY;
 
 -- User notifications
 CREATE TABLE public.notifications (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   user_id UUID REFERENCES public.profiles(id) NOT NULL,
+  title TEXT NOT NULL,
   content TEXT NOT NULL,
-  read BOOLEAN DEFAULT FALSE NOT NULL,
-  related_trade_id BIGINT REFERENCES public.trade_requests(id),
   notification_type TEXT NOT NULL,
+  payload JSONB,
+  read BOOLEAN DEFAULT FALSE NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
 
--- Enable RLS
-ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 

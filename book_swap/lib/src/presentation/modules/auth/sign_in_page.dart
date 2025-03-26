@@ -3,6 +3,7 @@ import 'package:book_swap/gen/assets.gen.dart';
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/presentation/modules/auth/forgot_password_page.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
+import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -186,9 +187,14 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
     );
   }
 
-  Future<String?> _signInPress(WidgetRef ref) async {
+  Future<void> _signInPress(WidgetRef ref) async {
     final param = SignInParam(email: _emailController.text, password: _passwordController.text);
     final result = await ref.read(signInProvider.notifier).call(param);
+
+    if (result.isFailure && context.mounted) {
+      context.showErrorSnackbar(result.failure!.message());
+      return;
+    }
 
     if (result.isSuccess) {
       if (widget.onSuccess != null) {
@@ -199,8 +205,8 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
         }
       }
 
-      return null;
+      return;
     }
-    return null;
+    return;
   }
 }

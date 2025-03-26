@@ -17,7 +17,6 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
       read: json['read'] as bool,
       tradeRequestId: (json['trade_request_id'] as num?)?.toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
-      sender: ProfileLiteModel.fromJson(json['sender'] as Map<String, dynamic>),
       recipient:
           ProfileLiteModel.fromJson(json['recipient'] as Map<String, dynamic>),
     );
@@ -31,7 +30,6 @@ Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
       'read': instance.read,
       'trade_request_id': instance.tradeRequestId,
       'created_at': instance.createdAt.toIso8601String(),
-      'sender': instance.sender.toJson(),
       'recipient': instance.recipient.toJson(),
     };
 
@@ -67,7 +65,6 @@ _$MessageDetailModelImpl _$$MessageDetailModelImplFromJson(
       read: json['read'] as bool,
       tradeRequestId: (json['trade_request_id'] as num?)?.toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
-      sender: ProfileLiteModel.fromJson(json['sender'] as Map<String, dynamic>),
       recipient:
           ProfileLiteModel.fromJson(json['recipient'] as Map<String, dynamic>),
     );
@@ -82,7 +79,6 @@ Map<String, dynamic> _$$MessageDetailModelImplToJson(
       'read': instance.read,
       'trade_request_id': instance.tradeRequestId,
       'created_at': instance.createdAt.toIso8601String(),
-      'sender': instance.sender.toJson(),
       'recipient': instance.recipient.toJson(),
     };
 
@@ -131,9 +127,7 @@ const _tableMessageModel = TableBuilder(
     ColumnBuilder('trade_request_id'),
     ColumnBuilder('created_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "sender", candidateKey: 'id', foreignKey: 'sender_id'),
-    ColumnBuilder.join(ProfileLiteModel.table,
-        key: "recipient", candidateKey: 'id', foreignKey: 'recipient_id'),
+        key: "recipient", candidateKey: null, foreignKey: 'recipient_id'),
   ],
 );
 
@@ -160,8 +154,6 @@ const _tableMessageDetailModel = TableBuilder(
     ColumnBuilder('trade_request_id'),
     ColumnBuilder('created_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "sender", candidateKey: 'id', foreignKey: 'sender_id'),
-    ColumnBuilder.join(ProfileLiteModel.table,
-        key: "recipient", candidateKey: 'id', foreignKey: 'recipient_id'),
+        key: "recipient", candidateKey: null, foreignKey: 'recipient_id'),
   ],
 );

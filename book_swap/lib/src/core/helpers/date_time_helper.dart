@@ -14,6 +14,14 @@ extension DateTimeX on DateTime {
         .format(this);
   }
 
+  String formatForChatList() {
+    if (isToday) {
+      return DateFormat('HH:mm').format(toLocal());
+    }
+
+    return DateFormat('EEE').format(this);
+  }
+
   DateTime dateOnly() => DateTime(year, month, day);
   DateTime firstMinuteOfDay() => DateTime(year, month, day);
   DateTime lastMinuteOfDay() => DateTime(year, month, day, 23, 59, 59, 59);

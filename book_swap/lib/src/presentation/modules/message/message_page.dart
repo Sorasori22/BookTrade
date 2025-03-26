@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,10 +24,13 @@ class MessagePage extends ConsumerWidget {
               children: [
                 AS.hGap16,
                 TabBar(
+                  dividerColor: context.bookTheme.dividerColor,
                   controller: tabController,
                   tabs: [
                     Tab(text: 'Messages'),
-                    Tab(text: 'Trade Requests'),
+                    Tab(
+                      text: 'Trade Requests',
+                    ),
                   ],
                 ),
                 Expanded(child: child),

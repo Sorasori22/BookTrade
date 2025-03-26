@@ -31,6 +31,7 @@ class ProfileSchema extends KimappSchema {
           'email': email,
           'fullname': fullname,
           'avatar': avatar,
+          'createdAt': createdAt,
         }),
       Model('ProfileDetailModel')
         ..table()

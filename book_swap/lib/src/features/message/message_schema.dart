@@ -16,10 +16,7 @@ class MessageSchema extends KimappSchema {
   final tradeRequestId = Field<int?>('trade_request_id');
   final createdAt = Field<DateTime>('created_at');
 
-  // Join fields
-  final sender = Field.join<ProfileLiteModel>().withForeignKey('sender_id').withCandidateKey('id');
-  final recipient =
-      Field.join<ProfileLiteModel>().withForeignKey('recipient_id').withCandidateKey('id');
+  final recipient = Field.join<ProfileLiteModel>().withForeignKey('recipient_id');
 
   @override
   List<Model> get models => [
@@ -37,7 +34,6 @@ class MessageSchema extends KimappSchema {
           ..table()
           ..inheritAllFromBase()
           ..addFields({
-            'sender': sender,
             'recipient': recipient,
           }),
         Model('MessageCreateParam')

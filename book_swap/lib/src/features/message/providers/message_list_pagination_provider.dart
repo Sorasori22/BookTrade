@@ -5,8 +5,8 @@ import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../i_message_repo.dart';
-import '../params/message_list_param.dart';
 import '../message_schema.schema.dart';
+import '../params/message_list_param.dart';
 
 part 'message_list_pagination_provider.g.dart';
 
@@ -78,6 +78,10 @@ class MessageListPagination extends _$MessageListPagination with LoggerMixin {
   void _removeAt(int index) {
     state = state.whenData((value) => value.removeAt(index));
   }
+
+  void _insertItem(int index, MessageModel item) {
+    state = state.whenData((value) => value.insert(index, item));
+  }
 }
 
 @riverpod
@@ -130,7 +134,11 @@ class MessagePaginationTracker {
     _items.clear();
   }
 
-  void invalidateVisibleItems(Ref ref, {required MessageListParam param, int visibleItemCount = 50}) {
+  void invalidateVisibleItems(
+    Ref ref, {
+    required MessageListParam param,
+    int visibleItemCount = 50,
+  }) {
     final visiblePages = (visibleItemCount / _pageMessageLimit).ceil();
 
     for (int page = 0; page < visiblePages; page++) {
@@ -145,6 +153,61 @@ class MessagePaginationTracker {
       ref
           .read(messageListPaginationProvider(page: entry.$1, param: entry.$2).notifier)
           ._updateItem(item);
+    }
+  }
+
+  /// Add item to first page, then shift items to the right
+  void addItem(WidgetRef ref, MessageModel item) {
+    // Track the item in the first page for each unique param that has loaded pages
+    final uniqueParams = <MessageListParam>{};
+    for (var page = 0; page < 10; page++) {
+      for (final entry in _items.values.expand((e) => e)) {
+        if (entry.$1 == page) uniqueParams.add(entry.$2);
+      }
+    }
+
+    // Track the item in first page for each param
+    for (final param in uniqueParams) {
+      trackMessage(item.id, 0, param);
+    }
+
+    final entries = getEntriesForMessage(item.id);
+    if (entries.isEmpty) return;
+
+    final entriesByParam = <MessageListParam, List<int>>{};
+    for (final entry in entries) {
+      entriesByParam.putIfAbsent(entry.$2, () => []).add(entry.$1);
+    }
+
+    for (final param in entriesByParam.keys) {
+      final pages = entriesByParam[param]!..sort();
+      final firstPage = pages.first;
+
+      // Add item to first page
+      ref
+          .read(messageListPaginationProvider(page: firstPage, param: param).notifier)
+          ._insertItem(0, item);
+
+      // Shift items to maintain page size
+      for (var page = firstPage;
+          ref.exists(messageListPaginationProvider(page: page, param: param));
+          page++) {
+        final currentPageItems =
+            ref.read(messageListPaginationProvider(page: page, param: param)).valueOrNull;
+        if (currentPageItems == null || currentPageItems.length <= _pageMessageLimit) break;
+
+        // Move last item to next page
+        final lastItem = currentPageItems.last;
+        ref
+            .read(messageListPaginationProvider(page: page, param: param).notifier)
+            ._removeAt(currentPageItems.length - 1);
+
+        if (ref.exists(messageListPaginationProvider(page: page + 1, param: param))) {
+          ref
+              .read(messageListPaginationProvider(page: page + 1, param: param).notifier)
+              ._insertItem(0, lastItem);
+        }
+      }
     }
   }
 
@@ -217,7 +280,9 @@ class MessagePaginationTracker {
         ref.invalidate(messageListPaginationProvider(page: page, param: param));
       } else {
         for (final item in updates) {
-          ref.read(messageListPaginationProvider(page: page, param: param).notifier)._updateItem(item);
+          ref
+              .read(messageListPaginationProvider(page: page, param: param).notifier)
+              ._updateItem(item);
         }
       }
     }
