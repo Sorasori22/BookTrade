@@ -1,3 +1,5 @@
+alter publication supabase_realtime add table public.trade_requests;
+
 -- Trigger to create message thread when trade request is accepted
 create or replace function public.create_message_thread_on_trade_request_accept()
 returns trigger as $$

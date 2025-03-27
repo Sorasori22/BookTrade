@@ -101,7 +101,7 @@ class BookDetailPage extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AS.hGap20,
+                    AS.hGap4,
                     Row(
                       children: [
                         SizedBox(
