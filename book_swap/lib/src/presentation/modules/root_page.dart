@@ -9,6 +9,8 @@ import 'package:kimapp_supabase_helper/supabase_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/account/account.dart';
+import '../../features/chat/providers/chat_list_pagination_provider.dart';
+import '../../features/message/message_schema.schema.dart';
 import '../router/app_router.gr.dart';
 
 @RoutePage()
@@ -21,7 +23,7 @@ class RootPage extends ConsumerStatefulWidget {
 
 class _RootPageState extends ConsumerState<RootPage> {
   RealtimeChannel? _tradeRequestChannel;
-
+  RealtimeChannel? _messageChannel;
   @override
   void initState() {
     super.initState();
@@ -29,7 +31,29 @@ class _RootPageState extends ConsumerState<RootPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showBanner();
       _listenTradeRequestRealtime();
+      _listenMessageRealtime();
     });
+  }
+
+  void _listenMessageRealtime() {
+    final sb = ref.read(supabaseProvider).client;
+    _messageChannel = sb.channel('messages');
+
+    _messageChannel!
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: MessageTable.table,
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: MessageTable.recipientId,
+            value: ref.read(currentProfileIdProvider),
+          ),
+          callback: (payload) {
+            ref.invalidate(chatListPaginationProvider);
+          },
+        )
+        .subscribe();
   }
 
   void _listenTradeRequestRealtime() {
@@ -63,6 +87,7 @@ class _RootPageState extends ConsumerState<RootPage> {
   @override
   void dispose() {
     _tradeRequestChannel?.unsubscribe();
+    _messageChannel?.unsubscribe();
     super.dispose();
   }
 

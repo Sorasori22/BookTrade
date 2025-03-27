@@ -19,6 +19,10 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['created_at'] as String),
       recipient:
           ProfileLiteModel.fromJson(json['recipient'] as Map<String, dynamic>),
+      tradeRequest: json['tradeRequest'] == null
+          ? null
+          : TradeRequestLiteModel.fromJson(
+              json['tradeRequest'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
@@ -31,6 +35,7 @@ Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
       'trade_request_id': instance.tradeRequestId,
       'created_at': instance.createdAt.toIso8601String(),
       'recipient': instance.recipient.toJson(),
+      'tradeRequest': instance.tradeRequest?.toJson(),
     };
 
 _$MessageLiteModelImpl _$$MessageLiteModelImplFromJson(
@@ -67,6 +72,10 @@ _$MessageDetailModelImpl _$$MessageDetailModelImplFromJson(
       createdAt: DateTime.parse(json['created_at'] as String),
       recipient:
           ProfileLiteModel.fromJson(json['recipient'] as Map<String, dynamic>),
+      tradeRequest: json['tradeRequest'] == null
+          ? null
+          : TradeRequestLiteModel.fromJson(
+              json['tradeRequest'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$MessageDetailModelImplToJson(
@@ -80,6 +89,7 @@ Map<String, dynamic> _$$MessageDetailModelImplToJson(
       'trade_request_id': instance.tradeRequestId,
       'created_at': instance.createdAt.toIso8601String(),
       'recipient': instance.recipient.toJson(),
+      'tradeRequest': instance.tradeRequest?.toJson(),
     };
 
 _$MessageCreateParamImpl _$$MessageCreateParamImplFromJson(
@@ -128,6 +138,10 @@ const _tableMessageModel = TableBuilder(
     ColumnBuilder('created_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
         key: "recipient", candidateKey: null, foreignKey: 'recipient_id'),
+    ColumnBuilder.join(TradeRequestLiteModel.table,
+        key: "tradeRequest",
+        candidateKey: null,
+        foreignKey: 'trade_request_id'),
   ],
 );
 
@@ -155,5 +169,9 @@ const _tableMessageDetailModel = TableBuilder(
     ColumnBuilder('created_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
         key: "recipient", candidateKey: null, foreignKey: 'recipient_id'),
+    ColumnBuilder.join(TradeRequestLiteModel.table,
+        key: "tradeRequest",
+        candidateKey: null,
+        foreignKey: 'trade_request_id'),
   ],
 );

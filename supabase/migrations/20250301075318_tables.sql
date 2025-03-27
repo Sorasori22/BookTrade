@@ -39,8 +39,8 @@ CREATE TABLE public.trade_requests (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   requester_id UUID REFERENCES public.profiles(id) NOT NULL,
   -- just for easy query and realtime
-  owner_id UUID REFERENCES public.profiles(id) NOT NULL,
-  book_id BIGINT REFERENCES public.books(id) NOT NULL,
+  owner_id UUID REFERENCES public.profiles(id) NOT NULL on delete cascade,
+  book_id BIGINT REFERENCES public.books(id) NOT NULL on delete cascade,
   offered_book_id BIGINT REFERENCES public.books(id),
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status in ('pending', 'accepted', 'rejected', 'completed')),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,

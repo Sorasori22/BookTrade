@@ -7,6 +7,7 @@ import 'package:book_swap/src/features/chat/providers/chat_clear_unread_count_pr
 import 'package:book_swap/src/features/message/providers/message_list_pagination_provider.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/profile/providers/profile_detail_provider.dart';
+import 'package:book_swap/src/presentation/modules/book/picker/book_list_picker_bottom_sheet.dart';
 import 'package:book_swap/src/presentation/modules/profile/widget/user_avatar_widget.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
@@ -86,7 +87,7 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
         .onBroadcast(
           event: 'message',
           callback: (payload) {
-            final message = MessageModel.fromJson(payload['data'] as Map<String, dynamic>);
+            final message = MessageModel.fromJson(payload);
             MessagePaginationTracker.instance.addItem(ref, message);
           },
         )
@@ -299,12 +300,17 @@ class _MessageItem extends ConsumerWidget {
                 ),
               ),
             ),
-            if (message.tradeRequestId != null) ...[
+            if (message.tradeRequestId != null && isSender) ...[
               AppButton(
                 size: AppButtonSize.small,
                 borderRadius: AS.radiusS,
-                onPressed: () {},
-                label: 'View Trade Request',
+                variant: AppButtonVariant.outline,
+                foregroundColor: context.colors.error,
+                onPressed: () async {
+                  final result = await BookListPickerBottomSheet.show(context);
+                  if (result != null) {}
+                },
+                label: 'Click here to select your offer',
               ),
             ],
           ],

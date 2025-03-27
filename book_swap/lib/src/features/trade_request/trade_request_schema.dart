@@ -43,6 +43,8 @@ class TradeRequestSchema extends KimappSchema {
             'offeredBookId': offeredBookId,
             'status': status,
             'createdAt': createdAt,
+            'book': book,
+            'offeredBook': offeredBook,
           }),
         Model('TradeRequestDetailModel')
           ..table()

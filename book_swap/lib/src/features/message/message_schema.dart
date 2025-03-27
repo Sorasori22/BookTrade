@@ -1,6 +1,7 @@
 import 'package:kimapp/kimapp.dart';
 
 import '../profile/profile_schema.schema.dart';
+import '../trade_request/trade_request_schema.schema.dart';
 
 @Schema(
   tableName: 'messages',
@@ -17,6 +18,7 @@ class MessageSchema extends KimappSchema {
   final createdAt = Field<DateTime>('created_at');
 
   final recipient = Field.join<ProfileLiteModel>().withForeignKey('recipient_id');
+  final tradeRequest = Field.join<TradeRequestLiteModel?>().withForeignKey('trade_request_id');
 
   @override
   List<Model> get models => [

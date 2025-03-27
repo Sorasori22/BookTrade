@@ -66,6 +66,10 @@ _$TradeRequestLiteModelImpl _$$TradeRequestLiteModelImplFromJson(
           : BookId.fromJson(json['offered_book_id']),
       status: $enumDecode(_$TradeRequestStatusEnumMap, json['status']),
       createdAt: DateTime.parse(json['created_at'] as String),
+      book: BookLiteModel.fromJson(json['book'] as Map<String, dynamic>),
+      offeredBook: json['offeredBook'] == null
+          ? null
+          : BookLiteModel.fromJson(json['offeredBook'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$TradeRequestLiteModelImplToJson(
@@ -78,6 +82,8 @@ Map<String, dynamic> _$$TradeRequestLiteModelImplToJson(
       'offered_book_id': instance.offeredBookId?.toJson(),
       'status': _$TradeRequestStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt.toIso8601String(),
+      'book': instance.book.toJson(),
+      'offeredBook': instance.offeredBook?.toJson(),
     };
 
 _$TradeRequestDetailModelImpl _$$TradeRequestDetailModelImplFromJson(
@@ -183,6 +189,10 @@ const _tableTradeRequestLiteModel = TableBuilder(
     ColumnBuilder('offered_book_id'),
     ColumnBuilder('status'),
     ColumnBuilder('created_at'),
+    ColumnBuilder.join(BookLiteModel.table,
+        key: "book", candidateKey: null, foreignKey: 'book_id'),
+    ColumnBuilder.join(BookLiteModel.table,
+        key: "offeredBook", candidateKey: null, foreignKey: 'offered_book_id'),
   ],
 );
 

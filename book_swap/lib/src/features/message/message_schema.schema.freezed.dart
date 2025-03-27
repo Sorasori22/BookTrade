@@ -37,6 +37,9 @@ mixin _$MessageModel {
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
   ProfileLiteModel get recipient => throw _privateConstructorUsedError;
+  @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+  @JsonKey(name: MessageModel.tradeRequestKey)
+  TradeRequestLiteModel? get tradeRequest => throw _privateConstructorUsedError;
 
   /// Serializes this MessageModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -64,9 +67,13 @@ abstract class $MessageModelCopyWith<$Res> {
       @JsonKey(name: MessageModel.createdAtKey) DateTime createdAt,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
-      ProfileLiteModel recipient});
+      ProfileLiteModel recipient,
+      @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+      @JsonKey(name: MessageModel.tradeRequestKey)
+      TradeRequestLiteModel? tradeRequest});
 
   $ProfileLiteModelCopyWith<$Res> get recipient;
+  $TradeRequestLiteModelCopyWith<$Res>? get tradeRequest;
 }
 
 /// @nodoc
@@ -92,6 +99,7 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
     Object? tradeRequestId = freezed,
     Object? createdAt = null,
     Object? recipient = null,
+    Object? tradeRequest = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -126,6 +134,10 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as ProfileLiteModel,
+      tradeRequest: freezed == tradeRequest
+          ? _value.tradeRequest
+          : tradeRequest // ignore: cast_nullable_to_non_nullable
+              as TradeRequestLiteModel?,
     ) as $Val);
   }
 
@@ -136,6 +148,20 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
   $ProfileLiteModelCopyWith<$Res> get recipient {
     return $ProfileLiteModelCopyWith<$Res>(_value.recipient, (value) {
       return _then(_value.copyWith(recipient: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MessageModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TradeRequestLiteModelCopyWith<$Res>? get tradeRequest {
+    if (_value.tradeRequest == null) {
+      return null;
+    }
+
+    return $TradeRequestLiteModelCopyWith<$Res>(_value.tradeRequest!, (value) {
+      return _then(_value.copyWith(tradeRequest: value) as $Val);
     });
   }
 }
@@ -158,10 +184,15 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       @JsonKey(name: MessageModel.createdAtKey) DateTime createdAt,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
-      ProfileLiteModel recipient});
+      ProfileLiteModel recipient,
+      @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+      @JsonKey(name: MessageModel.tradeRequestKey)
+      TradeRequestLiteModel? tradeRequest});
 
   @override
   $ProfileLiteModelCopyWith<$Res> get recipient;
+  @override
+  $TradeRequestLiteModelCopyWith<$Res>? get tradeRequest;
 }
 
 /// @nodoc
@@ -185,6 +216,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
     Object? tradeRequestId = freezed,
     Object? createdAt = null,
     Object? recipient = null,
+    Object? tradeRequest = freezed,
   }) {
     return _then(_$MessageModelImpl(
       id: null == id
@@ -219,6 +251,10 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as ProfileLiteModel,
+      tradeRequest: freezed == tradeRequest
+          ? _value.tradeRequest
+          : tradeRequest // ignore: cast_nullable_to_non_nullable
+              as TradeRequestLiteModel?,
     ));
   }
 }
@@ -239,7 +275,10 @@ class _$MessageModelImpl extends _MessageModel {
       @JsonKey(name: MessageModel.createdAtKey) required this.createdAt,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
-      required this.recipient})
+      required this.recipient,
+      @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+      @JsonKey(name: MessageModel.tradeRequestKey)
+      required this.tradeRequest})
       : super._();
 
   factory _$MessageModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -270,10 +309,14 @@ class _$MessageModelImpl extends _MessageModel {
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
   final ProfileLiteModel recipient;
+  @override
+  @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+  @JsonKey(name: MessageModel.tradeRequestKey)
+  final TradeRequestLiteModel? tradeRequest;
 
   @override
   String toString() {
-    return 'MessageModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient)';
+    return 'MessageModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient, tradeRequest: $tradeRequest)';
   }
 
   @override
@@ -293,13 +336,15 @@ class _$MessageModelImpl extends _MessageModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.recipient, recipient) ||
-                other.recipient == recipient));
+                other.recipient == recipient) &&
+            (identical(other.tradeRequest, tradeRequest) ||
+                other.tradeRequest == tradeRequest));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, senderId, recipientId,
-      content, read, tradeRequestId, createdAt, recipient);
+      content, read, tradeRequestId, createdAt, recipient, tradeRequest);
 
   /// Create a copy of MessageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -332,7 +377,10 @@ abstract class _MessageModel extends MessageModel {
       required final DateTime createdAt,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
-      required final ProfileLiteModel recipient}) = _$MessageModelImpl;
+      required final ProfileLiteModel recipient,
+      @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+      @JsonKey(name: MessageModel.tradeRequestKey)
+      required final TradeRequestLiteModel? tradeRequest}) = _$MessageModelImpl;
   const _MessageModel._() : super._();
 
   factory _MessageModel.fromJson(Map<String, dynamic> json) =
@@ -363,6 +411,10 @@ abstract class _MessageModel extends MessageModel {
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
   ProfileLiteModel get recipient;
+  @override
+  @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+  @JsonKey(name: MessageModel.tradeRequestKey)
+  TradeRequestLiteModel? get tradeRequest;
 
   /// Create a copy of MessageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -678,6 +730,9 @@ mixin _$MessageDetailModel {
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageDetailModel.recipientKey)
   ProfileLiteModel get recipient => throw _privateConstructorUsedError;
+  @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+  @JsonKey(name: MessageDetailModel.tradeRequestKey)
+  TradeRequestLiteModel? get tradeRequest => throw _privateConstructorUsedError;
 
   /// Serializes this MessageDetailModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -705,9 +760,13 @@ abstract class $MessageDetailModelCopyWith<$Res> {
       @JsonKey(name: MessageDetailModel.createdAtKey) DateTime createdAt,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageDetailModel.recipientKey)
-      ProfileLiteModel recipient});
+      ProfileLiteModel recipient,
+      @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+      @JsonKey(name: MessageDetailModel.tradeRequestKey)
+      TradeRequestLiteModel? tradeRequest});
 
   $ProfileLiteModelCopyWith<$Res> get recipient;
+  $TradeRequestLiteModelCopyWith<$Res>? get tradeRequest;
 }
 
 /// @nodoc
@@ -733,6 +792,7 @@ class _$MessageDetailModelCopyWithImpl<$Res, $Val extends MessageDetailModel>
     Object? tradeRequestId = freezed,
     Object? createdAt = null,
     Object? recipient = null,
+    Object? tradeRequest = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -767,6 +827,10 @@ class _$MessageDetailModelCopyWithImpl<$Res, $Val extends MessageDetailModel>
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as ProfileLiteModel,
+      tradeRequest: freezed == tradeRequest
+          ? _value.tradeRequest
+          : tradeRequest // ignore: cast_nullable_to_non_nullable
+              as TradeRequestLiteModel?,
     ) as $Val);
   }
 
@@ -777,6 +841,20 @@ class _$MessageDetailModelCopyWithImpl<$Res, $Val extends MessageDetailModel>
   $ProfileLiteModelCopyWith<$Res> get recipient {
     return $ProfileLiteModelCopyWith<$Res>(_value.recipient, (value) {
       return _then(_value.copyWith(recipient: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MessageDetailModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TradeRequestLiteModelCopyWith<$Res>? get tradeRequest {
+    if (_value.tradeRequest == null) {
+      return null;
+    }
+
+    return $TradeRequestLiteModelCopyWith<$Res>(_value.tradeRequest!, (value) {
+      return _then(_value.copyWith(tradeRequest: value) as $Val);
     });
   }
 }
@@ -799,10 +877,15 @@ abstract class _$$MessageDetailModelImplCopyWith<$Res>
       @JsonKey(name: MessageDetailModel.createdAtKey) DateTime createdAt,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageDetailModel.recipientKey)
-      ProfileLiteModel recipient});
+      ProfileLiteModel recipient,
+      @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+      @JsonKey(name: MessageDetailModel.tradeRequestKey)
+      TradeRequestLiteModel? tradeRequest});
 
   @override
   $ProfileLiteModelCopyWith<$Res> get recipient;
+  @override
+  $TradeRequestLiteModelCopyWith<$Res>? get tradeRequest;
 }
 
 /// @nodoc
@@ -826,6 +909,7 @@ class __$$MessageDetailModelImplCopyWithImpl<$Res>
     Object? tradeRequestId = freezed,
     Object? createdAt = null,
     Object? recipient = null,
+    Object? tradeRequest = freezed,
   }) {
     return _then(_$MessageDetailModelImpl(
       id: null == id
@@ -860,6 +944,10 @@ class __$$MessageDetailModelImplCopyWithImpl<$Res>
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as ProfileLiteModel,
+      tradeRequest: freezed == tradeRequest
+          ? _value.tradeRequest
+          : tradeRequest // ignore: cast_nullable_to_non_nullable
+              as TradeRequestLiteModel?,
     ));
   }
 }
@@ -881,7 +969,10 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
       @JsonKey(name: MessageDetailModel.createdAtKey) required this.createdAt,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageDetailModel.recipientKey)
-      required this.recipient})
+      required this.recipient,
+      @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+      @JsonKey(name: MessageDetailModel.tradeRequestKey)
+      required this.tradeRequest})
       : super._();
 
   factory _$MessageDetailModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -912,10 +1003,14 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageDetailModel.recipientKey)
   final ProfileLiteModel recipient;
+  @override
+  @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+  @JsonKey(name: MessageDetailModel.tradeRequestKey)
+  final TradeRequestLiteModel? tradeRequest;
 
   @override
   String toString() {
-    return 'MessageDetailModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient)';
+    return 'MessageDetailModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient, tradeRequest: $tradeRequest)';
   }
 
   @override
@@ -935,13 +1030,15 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.recipient, recipient) ||
-                other.recipient == recipient));
+                other.recipient == recipient) &&
+            (identical(other.tradeRequest, tradeRequest) ||
+                other.tradeRequest == tradeRequest));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, senderId, recipientId,
-      content, read, tradeRequestId, createdAt, recipient);
+      content, read, tradeRequestId, createdAt, recipient, tradeRequest);
 
   /// Create a copy of MessageDetailModel
   /// with the given fields replaced by the non-null parameter values.
@@ -962,21 +1059,25 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
 
 abstract class _MessageDetailModel extends MessageDetailModel {
   const factory _MessageDetailModel(
-      {@JsonKey(name: MessageDetailModel.idKey) required final MessageId id,
-      @JsonKey(name: MessageDetailModel.senderIdKey)
-      required final ProfileId senderId,
-      @JsonKey(name: MessageDetailModel.recipientIdKey)
-      required final ProfileId recipientId,
-      @JsonKey(name: MessageDetailModel.contentKey)
-      required final String content,
-      @JsonKey(name: MessageDetailModel.readKey) required final bool read,
-      @JsonKey(name: MessageDetailModel.tradeRequestIdKey)
-      required final int? tradeRequestId,
-      @JsonKey(name: MessageDetailModel.createdAtKey)
-      required final DateTime createdAt,
-      @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
-      @JsonKey(name: MessageDetailModel.recipientKey)
-      required final ProfileLiteModel recipient}) = _$MessageDetailModelImpl;
+          {@JsonKey(name: MessageDetailModel.idKey) required final MessageId id,
+          @JsonKey(name: MessageDetailModel.senderIdKey)
+          required final ProfileId senderId,
+          @JsonKey(name: MessageDetailModel.recipientIdKey)
+          required final ProfileId recipientId,
+          @JsonKey(name: MessageDetailModel.contentKey)
+          required final String content,
+          @JsonKey(name: MessageDetailModel.readKey) required final bool read,
+          @JsonKey(name: MessageDetailModel.tradeRequestIdKey)
+          required final int? tradeRequestId,
+          @JsonKey(name: MessageDetailModel.createdAtKey)
+          required final DateTime createdAt,
+          @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
+          @JsonKey(name: MessageDetailModel.recipientKey)
+          required final ProfileLiteModel recipient,
+          @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+          @JsonKey(name: MessageDetailModel.tradeRequestKey)
+          required final TradeRequestLiteModel? tradeRequest}) =
+      _$MessageDetailModelImpl;
   const _MessageDetailModel._() : super._();
 
   factory _MessageDetailModel.fromJson(Map<String, dynamic> json) =
@@ -1007,6 +1108,10 @@ abstract class _MessageDetailModel extends MessageDetailModel {
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageDetailModel.recipientKey)
   ProfileLiteModel get recipient;
+  @override
+  @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+  @JsonKey(name: MessageDetailModel.tradeRequestKey)
+  TradeRequestLiteModel? get tradeRequest;
 
   /// Create a copy of MessageDetailModel
   /// with the given fields replaced by the non-null parameter values.

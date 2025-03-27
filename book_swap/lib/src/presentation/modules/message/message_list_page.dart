@@ -40,7 +40,7 @@ class MessageListPage extends ConsumerWidget {
 
           return RiverpodPaginationListView(
             padding: const EdgeInsets.symmetric(vertical: AS.sidePadding, horizontal: 8),
-            loading: firstPageCountAsync.isLoading,
+            loading: firstPageCountAsync.isLoading && !firstPageCountAsync.isRefreshing,
             getData: (ref, index) => ref.watch(chatPaginatedAtIndexProvider(index, param: param)),
             loadingItemBuilder: (context, index) => const SizedBox.shrink(),
             itemBuilder: (index, data) {
