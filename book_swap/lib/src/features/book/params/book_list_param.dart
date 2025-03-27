@@ -14,5 +14,6 @@ class BookListParam with _$BookListParam {
     ProfileId? ownerId,
     int? minCondition,
     int? maxCondition,
+    ProfileId? toHideOwnerId,
   }) = _BookListParam;
 }

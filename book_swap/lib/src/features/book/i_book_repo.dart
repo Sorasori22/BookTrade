@@ -120,6 +120,10 @@ class _Impl implements IBookRepo {
         query = query.lte(BookTable.condition, param.maxCondition!);
       }
 
+      if (param.toHideOwnerId != null) {
+        query = query.not(BookTable.ownerId, 'eq', param.toHideOwnerId!());
+      }
+
       return await query.limit(limit).range(offset, offset + limit).withConverter((data) {
         final items = IList.fromJson(
           data,

@@ -21,6 +21,7 @@ mixin _$BookListParam {
   ProfileId? get ownerId => throw _privateConstructorUsedError;
   int? get minCondition => throw _privateConstructorUsedError;
   int? get maxCondition => throw _privateConstructorUsedError;
+  ProfileId? get toHideOwnerId => throw _privateConstructorUsedError;
 
   /// Create a copy of BookListParam
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +41,8 @@ abstract class $BookListParamCopyWith<$Res> {
       String? authorSearch,
       ProfileId? ownerId,
       int? minCondition,
-      int? maxCondition});
+      int? maxCondition,
+      ProfileId? toHideOwnerId});
 }
 
 /// @nodoc
@@ -63,6 +65,7 @@ class _$BookListParamCopyWithImpl<$Res, $Val extends BookListParam>
     Object? ownerId = freezed,
     Object? minCondition = freezed,
     Object? maxCondition = freezed,
+    Object? toHideOwnerId = freezed,
   }) {
     return _then(_value.copyWith(
       titleSearch: freezed == titleSearch
@@ -85,6 +88,10 @@ class _$BookListParamCopyWithImpl<$Res, $Val extends BookListParam>
           ? _value.maxCondition
           : maxCondition // ignore: cast_nullable_to_non_nullable
               as int?,
+      toHideOwnerId: freezed == toHideOwnerId
+          ? _value.toHideOwnerId
+          : toHideOwnerId // ignore: cast_nullable_to_non_nullable
+              as ProfileId?,
     ) as $Val);
   }
 }
@@ -102,7 +109,8 @@ abstract class _$$BookListParamImplCopyWith<$Res>
       String? authorSearch,
       ProfileId? ownerId,
       int? minCondition,
-      int? maxCondition});
+      int? maxCondition,
+      ProfileId? toHideOwnerId});
 }
 
 /// @nodoc
@@ -123,6 +131,7 @@ class __$$BookListParamImplCopyWithImpl<$Res>
     Object? ownerId = freezed,
     Object? minCondition = freezed,
     Object? maxCondition = freezed,
+    Object? toHideOwnerId = freezed,
   }) {
     return _then(_$BookListParamImpl(
       titleSearch: freezed == titleSearch
@@ -145,6 +154,10 @@ class __$$BookListParamImplCopyWithImpl<$Res>
           ? _value.maxCondition
           : maxCondition // ignore: cast_nullable_to_non_nullable
               as int?,
+      toHideOwnerId: freezed == toHideOwnerId
+          ? _value.toHideOwnerId
+          : toHideOwnerId // ignore: cast_nullable_to_non_nullable
+              as ProfileId?,
     ));
   }
 }
@@ -157,7 +170,8 @@ class _$BookListParamImpl extends _BookListParam {
       this.authorSearch,
       this.ownerId,
       this.minCondition,
-      this.maxCondition})
+      this.maxCondition,
+      this.toHideOwnerId})
       : super._();
 
   @override
@@ -170,10 +184,12 @@ class _$BookListParamImpl extends _BookListParam {
   final int? minCondition;
   @override
   final int? maxCondition;
+  @override
+  final ProfileId? toHideOwnerId;
 
   @override
   String toString() {
-    return 'BookListParam(titleSearch: $titleSearch, authorSearch: $authorSearch, ownerId: $ownerId, minCondition: $minCondition, maxCondition: $maxCondition)';
+    return 'BookListParam(titleSearch: $titleSearch, authorSearch: $authorSearch, ownerId: $ownerId, minCondition: $minCondition, maxCondition: $maxCondition, toHideOwnerId: $toHideOwnerId)';
   }
 
   @override
@@ -189,12 +205,14 @@ class _$BookListParamImpl extends _BookListParam {
             (identical(other.minCondition, minCondition) ||
                 other.minCondition == minCondition) &&
             (identical(other.maxCondition, maxCondition) ||
-                other.maxCondition == maxCondition));
+                other.maxCondition == maxCondition) &&
+            (identical(other.toHideOwnerId, toHideOwnerId) ||
+                other.toHideOwnerId == toHideOwnerId));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, titleSearch, authorSearch,
-      ownerId, minCondition, maxCondition);
+      ownerId, minCondition, maxCondition, toHideOwnerId);
 
   /// Create a copy of BookListParam
   /// with the given fields replaced by the non-null parameter values.
@@ -211,7 +229,8 @@ abstract class _BookListParam extends BookListParam {
       final String? authorSearch,
       final ProfileId? ownerId,
       final int? minCondition,
-      final int? maxCondition}) = _$BookListParamImpl;
+      final int? maxCondition,
+      final ProfileId? toHideOwnerId}) = _$BookListParamImpl;
   const _BookListParam._() : super._();
 
   @override
@@ -224,6 +243,8 @@ abstract class _BookListParam extends BookListParam {
   int? get minCondition;
   @override
   int? get maxCondition;
+  @override
+  ProfileId? get toHideOwnerId;
 
   /// Create a copy of BookListParam
   /// with the given fields replaced by the non-null parameter values.
