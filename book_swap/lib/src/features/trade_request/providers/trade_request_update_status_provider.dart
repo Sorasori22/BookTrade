@@ -1,31 +1,28 @@
-import 'package:book_swap/src/features/message/providers/message_list_pagination_provider.dart';
 import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
-import 'package:book_swap/src/features/trade_request/providers/trade_request_list_provider.dart';
-import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../chat/providers/chat_list_pagination_provider.dart';
+import '../../message/providers/message_list_pagination_provider.dart';
 import '../trade_request_schema.dart';
+import '../trade_request_schema.schema.dart';
 
-part 'trade_request_accept_provider.g.dart';
+part 'trade_request_update_status_provider.g.dart';
 
 @riverpod
-class TradeRequestAccept extends _$TradeRequestAccept {
+class TradeRequestUpdateStatus extends _$TradeRequestUpdateStatus {
   @override
   ProviderStatus<Unit> build(TradeRequestId id) => const ProviderStatus.initial();
 
-  Future<ProviderStatus<Unit>> call() async {
+  Future<ProviderStatus<Unit>> call({
+    required TradeRequestStatus status,
+  }) async {
     return await perform(
       (state) async {
-        return ref
-            .read(tradeRequestRepoProvider)
-            .updateStatus(id, TradeRequestStatus.accepted)
-            .getOrThrow();
+        return ref.read(tradeRequestRepoProvider).updateStatus(id, status).getOrThrow();
       },
       onSuccess: (success) {
-        ref.invalidate(tradeRequestListProvider);
         ref.invalidate(messageListPaginationProvider);
         ref.invalidate(chatListPaginationProvider);
         ref.invalidateSelf();

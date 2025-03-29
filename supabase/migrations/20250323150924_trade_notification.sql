@@ -103,6 +103,32 @@ for each row
 when (new.status = 'rejected')
 execute function public.create_trade_request_rejected_notification();
 
+--- Create notification when trade request is confirmed
+create or replace function public.create_trade_request_confirmed_notification()
+returns trigger as $$
+declare
+    v_book record;
+begin
+    select * from public.books where id = new.book_id into v_book;
+
+    perform public.create_notification(
+        'trade_request_confirmed',
+        new.owner_id,
+        'Trade Request Confirmed',
+        'Your trade request has been confirmed',
+        to_jsonb(new)
+    );
+
+    return new;
+end;
+$$ language plpgsql security definer;
+
+drop trigger if exists create_trade_request_confirmed_notification on public.trade_requests;
+create trigger create_trade_request_confirmed_notification
+after update of status on public.trade_requests
+for each row
+when (new.status = 'confirmed')
+execute function public.create_trade_request_confirmed_notification();
 
 -- Create notification when trade request is completed
 create or replace function public.create_trade_request_completed_notification()
@@ -114,9 +140,9 @@ begin
 
     perform public.create_notification(
         'trade_request_completed',
-        new.requester_id,
+        new.owner_id,
         'Trade Request Completed',
-        'Your trade request has been completed',
+        'The trade has been completed. Thank you for your trade.',
         to_jsonb(new)
     );
 

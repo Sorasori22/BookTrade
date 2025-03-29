@@ -3,6 +3,13 @@ import 'package:kimapp/kimapp.dart';
 import '../profile/profile_schema.schema.dart';
 import '../trade_request/trade_request_schema.schema.dart';
 
+enum MessageType {
+  text,
+  requestStarted,
+  offeredBook,
+  tradeConfirmed,
+}
+
 @Schema(
   tableName: 'messages',
   className: 'Message',
@@ -10,6 +17,7 @@ import '../trade_request/trade_request_schema.schema.dart';
 )
 class MessageSchema extends KimappSchema {
   final id = Field.id<int>('id').generateAs('MessageId');
+  final type = Field<MessageType>('type');
   final senderId = Field<ProfileId>('sender_id');
   final recipientId = Field<ProfileId>('recipient_id');
   final content = Field<String>('content');

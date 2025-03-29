@@ -6,6 +6,7 @@ import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_supabase_helper/kimapp_supabase_helper.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../book/book_schema.schema.dart';
 import 'params/trade_request_list_param.dart';
 import 'trade_request_schema.schema.dart';
 
@@ -29,6 +30,8 @@ abstract class ITradeRequestRepo {
   Future<Either<Failure, Unit>> delete(TradeRequestId id);
 
   AsyncFailureOr<Unit> updateStatus(TradeRequestId id, TradeRequestStatus status);
+
+  AsyncFailureOr<Unit> updateOfferedBook(TradeRequestId id, BookId offeredBookId);
 }
 
 class _Impl implements ITradeRequestRepo {
@@ -132,6 +135,45 @@ class _Impl implements ITradeRequestRepo {
       await _ref.supabaseClient
           .from(TradeRequestModel.table.tableName)
           .update({TradeRequestTable.status: status.name}).eq(TradeRequestTable.id, id.value);
+      return right(unit);
+    });
+  }
+
+  @override
+  AsyncFailureOr<Unit> updateOfferedBook(TradeRequestId id, BookId offeredBookId) async {
+    return await errorHandler(() async {
+      await _ref.supabaseClient
+          .from(TradeRequestModel.table.tableName)
+          .update({TradeRequestTable.offeredBookId: offeredBookId.value}).eq(
+        TradeRequestTable.id,
+        id.value,
+      );
+      return right(unit);
+    });
+  }
+
+  @override
+  AsyncFailureOr<Unit> acceptOffer(TradeRequestId id) async {
+    return await errorHandler(() async {
+      await _ref.supabaseClient
+          .from(TradeRequestModel.table.tableName)
+          .update({TradeRequestTable.status: TradeRequestStatus.confirmed.name}).eq(
+        TradeRequestTable.id,
+        id.value,
+      );
+      return right(unit);
+    });
+  }
+
+  @override
+  AsyncFailureOr<Unit> rejectOffer(TradeRequestId id) async {
+    return await errorHandler(() async {
+      await _ref.supabaseClient
+          .from(TradeRequestModel.table.tableName)
+          .update({TradeRequestTable.status: TradeRequestStatus.accepted.name}).eq(
+        TradeRequestTable.id,
+        id.value,
+      );
       return right(unit);
     });
   }

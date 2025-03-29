@@ -30,6 +30,8 @@ mixin _$BookModel {
   String get author => throw _privateConstructorUsedError;
   @JsonKey(name: BookModel.conditionKey)
   int get condition => throw _privateConstructorUsedError;
+  @JsonKey(name: BookModel.averageRatingKey)
+  double? get averageRating => throw _privateConstructorUsedError;
   @JsonKey(name: BookModel.imageKey)
   ImageObject? get image => throw _privateConstructorUsedError;
   @JsonKey(name: BookModel.createdAtKey)
@@ -58,6 +60,7 @@ abstract class $BookModelCopyWith<$Res> {
       @JsonKey(name: BookModel.titleKey) String title,
       @JsonKey(name: BookModel.authorKey) String author,
       @JsonKey(name: BookModel.conditionKey) int condition,
+      @JsonKey(name: BookModel.averageRatingKey) double? averageRating,
       @JsonKey(name: BookModel.imageKey) ImageObject? image,
       @JsonKey(name: BookModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: BookModel.updatedAtKey) DateTime updatedAt});
@@ -83,6 +86,7 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
     Object? title = null,
     Object? author = null,
     Object? condition = null,
+    Object? averageRating = freezed,
     Object? image = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -108,6 +112,10 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
           ? _value.condition
           : condition // ignore: cast_nullable_to_non_nullable
               as int,
+      averageRating: freezed == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
+              as double?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -138,6 +146,7 @@ abstract class _$$BookModelImplCopyWith<$Res>
       @JsonKey(name: BookModel.titleKey) String title,
       @JsonKey(name: BookModel.authorKey) String author,
       @JsonKey(name: BookModel.conditionKey) int condition,
+      @JsonKey(name: BookModel.averageRatingKey) double? averageRating,
       @JsonKey(name: BookModel.imageKey) ImageObject? image,
       @JsonKey(name: BookModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: BookModel.updatedAtKey) DateTime updatedAt});
@@ -161,6 +170,7 @@ class __$$BookModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? author = null,
     Object? condition = null,
+    Object? averageRating = freezed,
     Object? image = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -186,6 +196,10 @@ class __$$BookModelImplCopyWithImpl<$Res>
           ? _value.condition
           : condition // ignore: cast_nullable_to_non_nullable
               as int,
+      averageRating: freezed == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
+              as double?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -213,6 +227,7 @@ class _$BookModelImpl extends _BookModel {
       @JsonKey(name: BookModel.titleKey) required this.title,
       @JsonKey(name: BookModel.authorKey) required this.author,
       @JsonKey(name: BookModel.conditionKey) required this.condition,
+      @JsonKey(name: BookModel.averageRatingKey) required this.averageRating,
       @JsonKey(name: BookModel.imageKey) required this.image,
       @JsonKey(name: BookModel.createdAtKey) required this.createdAt,
       @JsonKey(name: BookModel.updatedAtKey) required this.updatedAt})
@@ -237,6 +252,9 @@ class _$BookModelImpl extends _BookModel {
   @JsonKey(name: BookModel.conditionKey)
   final int condition;
   @override
+  @JsonKey(name: BookModel.averageRatingKey)
+  final double? averageRating;
+  @override
   @JsonKey(name: BookModel.imageKey)
   final ImageObject? image;
   @override
@@ -248,7 +266,7 @@ class _$BookModelImpl extends _BookModel {
 
   @override
   String toString() {
-    return 'BookModel(id: $id, ownerId: $ownerId, title: $title, author: $author, condition: $condition, image: $image, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'BookModel(id: $id, ownerId: $ownerId, title: $title, author: $author, condition: $condition, averageRating: $averageRating, image: $image, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -262,6 +280,8 @@ class _$BookModelImpl extends _BookModel {
             (identical(other.author, author) || other.author == author) &&
             (identical(other.condition, condition) ||
                 other.condition == condition) &&
+            (identical(other.averageRating, averageRating) ||
+                other.averageRating == averageRating) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -272,7 +292,7 @@ class _$BookModelImpl extends _BookModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, ownerId, title, author,
-      condition, image, createdAt, updatedAt);
+      condition, averageRating, image, createdAt, updatedAt);
 
   /// Create a copy of BookModel
   /// with the given fields replaced by the non-null parameter values.
@@ -297,6 +317,8 @@ abstract class _BookModel extends BookModel {
       @JsonKey(name: BookModel.titleKey) required final String title,
       @JsonKey(name: BookModel.authorKey) required final String author,
       @JsonKey(name: BookModel.conditionKey) required final int condition,
+      @JsonKey(name: BookModel.averageRatingKey)
+      required final double? averageRating,
       @JsonKey(name: BookModel.imageKey) required final ImageObject? image,
       @JsonKey(name: BookModel.createdAtKey) required final DateTime createdAt,
       @JsonKey(name: BookModel.updatedAtKey)
@@ -321,6 +343,9 @@ abstract class _BookModel extends BookModel {
   @override
   @JsonKey(name: BookModel.conditionKey)
   int get condition;
+  @override
+  @JsonKey(name: BookModel.averageRatingKey)
+  double? get averageRating;
   @override
   @JsonKey(name: BookModel.imageKey)
   ImageObject? get image;
@@ -355,6 +380,8 @@ mixin _$BookLiteModel {
   ImageObject? get image => throw _privateConstructorUsedError;
   @JsonKey(name: BookLiteModel.ownerIdKey)
   ProfileId get ownerId => throw _privateConstructorUsedError;
+  @JsonKey(name: BookLiteModel.averageRatingKey)
+  double? get averageRating => throw _privateConstructorUsedError;
 
   /// Serializes this BookLiteModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -377,7 +404,8 @@ abstract class $BookLiteModelCopyWith<$Res> {
       @JsonKey(name: BookLiteModel.titleKey) String title,
       @JsonKey(name: BookLiteModel.authorKey) String author,
       @JsonKey(name: BookLiteModel.imageKey) ImageObject? image,
-      @JsonKey(name: BookLiteModel.ownerIdKey) ProfileId ownerId});
+      @JsonKey(name: BookLiteModel.ownerIdKey) ProfileId ownerId,
+      @JsonKey(name: BookLiteModel.averageRatingKey) double? averageRating});
 }
 
 /// @nodoc
@@ -400,6 +428,7 @@ class _$BookLiteModelCopyWithImpl<$Res, $Val extends BookLiteModel>
     Object? author = null,
     Object? image = freezed,
     Object? ownerId = null,
+    Object? averageRating = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -422,6 +451,10 @@ class _$BookLiteModelCopyWithImpl<$Res, $Val extends BookLiteModel>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as ProfileId,
+      averageRating: freezed == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -439,7 +472,8 @@ abstract class _$$BookLiteModelImplCopyWith<$Res>
       @JsonKey(name: BookLiteModel.titleKey) String title,
       @JsonKey(name: BookLiteModel.authorKey) String author,
       @JsonKey(name: BookLiteModel.imageKey) ImageObject? image,
-      @JsonKey(name: BookLiteModel.ownerIdKey) ProfileId ownerId});
+      @JsonKey(name: BookLiteModel.ownerIdKey) ProfileId ownerId,
+      @JsonKey(name: BookLiteModel.averageRatingKey) double? averageRating});
 }
 
 /// @nodoc
@@ -460,6 +494,7 @@ class __$$BookLiteModelImplCopyWithImpl<$Res>
     Object? author = null,
     Object? image = freezed,
     Object? ownerId = null,
+    Object? averageRating = freezed,
   }) {
     return _then(_$BookLiteModelImpl(
       id: null == id
@@ -482,6 +517,10 @@ class __$$BookLiteModelImplCopyWithImpl<$Res>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as ProfileId,
+      averageRating: freezed == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -496,7 +535,9 @@ class _$BookLiteModelImpl extends _BookLiteModel {
       @JsonKey(name: BookLiteModel.titleKey) required this.title,
       @JsonKey(name: BookLiteModel.authorKey) required this.author,
       @JsonKey(name: BookLiteModel.imageKey) required this.image,
-      @JsonKey(name: BookLiteModel.ownerIdKey) required this.ownerId})
+      @JsonKey(name: BookLiteModel.ownerIdKey) required this.ownerId,
+      @JsonKey(name: BookLiteModel.averageRatingKey)
+      required this.averageRating})
       : super._();
 
   factory _$BookLiteModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -517,10 +558,13 @@ class _$BookLiteModelImpl extends _BookLiteModel {
   @override
   @JsonKey(name: BookLiteModel.ownerIdKey)
   final ProfileId ownerId;
+  @override
+  @JsonKey(name: BookLiteModel.averageRatingKey)
+  final double? averageRating;
 
   @override
   String toString() {
-    return 'BookLiteModel(id: $id, title: $title, author: $author, image: $image, ownerId: $ownerId)';
+    return 'BookLiteModel(id: $id, title: $title, author: $author, image: $image, ownerId: $ownerId, averageRating: $averageRating)';
   }
 
   @override
@@ -532,13 +576,15 @@ class _$BookLiteModelImpl extends _BookLiteModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.author, author) || other.author == author) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.ownerId, ownerId) || other.ownerId == ownerId));
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
+            (identical(other.averageRating, averageRating) ||
+                other.averageRating == averageRating));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, author, image, ownerId);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, author, image, ownerId, averageRating);
 
   /// Create a copy of BookLiteModel
   /// with the given fields replaced by the non-null parameter values.
@@ -562,8 +608,9 @@ abstract class _BookLiteModel extends BookLiteModel {
       @JsonKey(name: BookLiteModel.titleKey) required final String title,
       @JsonKey(name: BookLiteModel.authorKey) required final String author,
       @JsonKey(name: BookLiteModel.imageKey) required final ImageObject? image,
-      @JsonKey(name: BookLiteModel.ownerIdKey)
-      required final ProfileId ownerId}) = _$BookLiteModelImpl;
+      @JsonKey(name: BookLiteModel.ownerIdKey) required final ProfileId ownerId,
+      @JsonKey(name: BookLiteModel.averageRatingKey)
+      required final double? averageRating}) = _$BookLiteModelImpl;
   const _BookLiteModel._() : super._();
 
   factory _BookLiteModel.fromJson(Map<String, dynamic> json) =
@@ -584,6 +631,9 @@ abstract class _BookLiteModel extends BookLiteModel {
   @override
   @JsonKey(name: BookLiteModel.ownerIdKey)
   ProfileId get ownerId;
+  @override
+  @JsonKey(name: BookLiteModel.averageRatingKey)
+  double? get averageRating;
 
   /// Create a copy of BookLiteModel
   /// with the given fields replaced by the non-null parameter values.
@@ -609,6 +659,8 @@ mixin _$BookDetailModel {
   String get author => throw _privateConstructorUsedError;
   @JsonKey(name: BookDetailModel.conditionKey)
   int get condition => throw _privateConstructorUsedError;
+  @JsonKey(name: BookDetailModel.averageRatingKey)
+  double? get averageRating => throw _privateConstructorUsedError;
   @JsonKey(name: BookDetailModel.imageKey)
   ImageObject? get image => throw _privateConstructorUsedError;
   @JsonKey(name: BookDetailModel.createdAtKey)
@@ -643,6 +695,7 @@ abstract class $BookDetailModelCopyWith<$Res> {
       @JsonKey(name: BookDetailModel.titleKey) String title,
       @JsonKey(name: BookDetailModel.authorKey) String author,
       @JsonKey(name: BookDetailModel.conditionKey) int condition,
+      @JsonKey(name: BookDetailModel.averageRatingKey) double? averageRating,
       @JsonKey(name: BookDetailModel.imageKey) ImageObject? image,
       @JsonKey(name: BookDetailModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: BookDetailModel.updatedAtKey) DateTime updatedAt,
@@ -674,6 +727,7 @@ class _$BookDetailModelCopyWithImpl<$Res, $Val extends BookDetailModel>
     Object? title = null,
     Object? author = null,
     Object? condition = null,
+    Object? averageRating = freezed,
     Object? image = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -701,6 +755,10 @@ class _$BookDetailModelCopyWithImpl<$Res, $Val extends BookDetailModel>
           ? _value.condition
           : condition // ignore: cast_nullable_to_non_nullable
               as int,
+      averageRating: freezed == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
+              as double?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -753,6 +811,7 @@ abstract class _$$BookDetailModelImplCopyWith<$Res>
       @JsonKey(name: BookDetailModel.titleKey) String title,
       @JsonKey(name: BookDetailModel.authorKey) String author,
       @JsonKey(name: BookDetailModel.conditionKey) int condition,
+      @JsonKey(name: BookDetailModel.averageRatingKey) double? averageRating,
       @JsonKey(name: BookDetailModel.imageKey) ImageObject? image,
       @JsonKey(name: BookDetailModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: BookDetailModel.updatedAtKey) DateTime updatedAt,
@@ -783,6 +842,7 @@ class __$$BookDetailModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? author = null,
     Object? condition = null,
+    Object? averageRating = freezed,
     Object? image = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -810,6 +870,10 @@ class __$$BookDetailModelImplCopyWithImpl<$Res>
           ? _value.condition
           : condition // ignore: cast_nullable_to_non_nullable
               as int,
+      averageRating: freezed == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
+              as double?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -845,6 +909,8 @@ class _$BookDetailModelImpl extends _BookDetailModel {
       @JsonKey(name: BookDetailModel.titleKey) required this.title,
       @JsonKey(name: BookDetailModel.authorKey) required this.author,
       @JsonKey(name: BookDetailModel.conditionKey) required this.condition,
+      @JsonKey(name: BookDetailModel.averageRatingKey)
+      required this.averageRating,
       @JsonKey(name: BookDetailModel.imageKey) required this.image,
       @JsonKey(name: BookDetailModel.createdAtKey) required this.createdAt,
       @JsonKey(name: BookDetailModel.updatedAtKey) required this.updatedAt,
@@ -873,6 +939,9 @@ class _$BookDetailModelImpl extends _BookDetailModel {
   @JsonKey(name: BookDetailModel.conditionKey)
   final int condition;
   @override
+  @JsonKey(name: BookDetailModel.averageRatingKey)
+  final double? averageRating;
+  @override
   @JsonKey(name: BookDetailModel.imageKey)
   final ImageObject? image;
   @override
@@ -891,7 +960,7 @@ class _$BookDetailModelImpl extends _BookDetailModel {
 
   @override
   String toString() {
-    return 'BookDetailModel(id: $id, ownerId: $ownerId, title: $title, author: $author, condition: $condition, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, owner: $owner, description: $description)';
+    return 'BookDetailModel(id: $id, ownerId: $ownerId, title: $title, author: $author, condition: $condition, averageRating: $averageRating, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, owner: $owner, description: $description)';
   }
 
   @override
@@ -905,6 +974,8 @@ class _$BookDetailModelImpl extends _BookDetailModel {
             (identical(other.author, author) || other.author == author) &&
             (identical(other.condition, condition) ||
                 other.condition == condition) &&
+            (identical(other.averageRating, averageRating) ||
+                other.averageRating == averageRating) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -917,8 +988,19 @@ class _$BookDetailModelImpl extends _BookDetailModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, ownerId, title, author,
-      condition, image, createdAt, updatedAt, owner, description);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      ownerId,
+      title,
+      author,
+      condition,
+      averageRating,
+      image,
+      createdAt,
+      updatedAt,
+      owner,
+      description);
 
   /// Create a copy of BookDetailModel
   /// with the given fields replaced by the non-null parameter values.
@@ -945,6 +1027,8 @@ abstract class _BookDetailModel extends BookDetailModel {
       @JsonKey(name: BookDetailModel.titleKey) required final String title,
       @JsonKey(name: BookDetailModel.authorKey) required final String author,
       @JsonKey(name: BookDetailModel.conditionKey) required final int condition,
+      @JsonKey(name: BookDetailModel.averageRatingKey)
+      required final double? averageRating,
       @JsonKey(name: BookDetailModel.imageKey)
       required final ImageObject? image,
       @JsonKey(name: BookDetailModel.createdAtKey)
@@ -976,6 +1060,9 @@ abstract class _BookDetailModel extends BookDetailModel {
   @override
   @JsonKey(name: BookDetailModel.conditionKey)
   int get condition;
+  @override
+  @JsonKey(name: BookDetailModel.averageRatingKey)
+  double? get averageRating;
   @override
   @JsonKey(name: BookDetailModel.imageKey)
   ImageObject? get image;

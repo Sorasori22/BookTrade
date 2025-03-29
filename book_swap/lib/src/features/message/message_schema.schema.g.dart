@@ -11,6 +11,7 @@ part of 'message_schema.schema.dart';
 _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
     _$MessageModelImpl(
       id: MessageId.fromJson(json['id']),
+      type: $enumDecode(_$MessageTypeEnumMap, json['type']),
       senderId: ProfileId.fromJson(json['sender_id']),
       recipientId: ProfileId.fromJson(json['recipient_id']),
       content: json['content'] as String,
@@ -28,6 +29,7 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
+      'type': _$MessageTypeEnumMap[instance.type]!,
       'sender_id': instance.senderId.toJson(),
       'recipient_id': instance.recipientId.toJson(),
       'content': instance.content,
@@ -37,6 +39,13 @@ Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
       'recipient': instance.recipient.toJson(),
       'tradeRequest': instance.tradeRequest?.toJson(),
     };
+
+const _$MessageTypeEnumMap = {
+  MessageType.text: 'text',
+  MessageType.requestStarted: 'requestStarted',
+  MessageType.offeredBook: 'offeredBook',
+  MessageType.tradeConfirmed: 'tradeConfirmed',
+};
 
 _$MessageLiteModelImpl _$$MessageLiteModelImplFromJson(
         Map<String, dynamic> json) =>
@@ -64,6 +73,7 @@ _$MessageDetailModelImpl _$$MessageDetailModelImplFromJson(
         Map<String, dynamic> json) =>
     _$MessageDetailModelImpl(
       id: MessageId.fromJson(json['id']),
+      type: $enumDecode(_$MessageTypeEnumMap, json['type']),
       senderId: ProfileId.fromJson(json['sender_id']),
       recipientId: ProfileId.fromJson(json['recipient_id']),
       content: json['content'] as String,
@@ -82,6 +92,7 @@ Map<String, dynamic> _$$MessageDetailModelImplToJson(
         _$MessageDetailModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
+      'type': _$MessageTypeEnumMap[instance.type]!,
       'sender_id': instance.senderId.toJson(),
       'recipient_id': instance.recipientId.toJson(),
       'content': instance.content,
@@ -130,6 +141,7 @@ const _tableMessageModel = TableBuilder(
   tableName: "messages",
   columns: [
     ColumnBuilder('id'),
+    ColumnBuilder('type'),
     ColumnBuilder('sender_id'),
     ColumnBuilder('recipient_id'),
     ColumnBuilder('content'),
@@ -161,6 +173,7 @@ const _tableMessageDetailModel = TableBuilder(
   tableName: "messages",
   columns: [
     ColumnBuilder('id'),
+    ColumnBuilder('type'),
     ColumnBuilder('sender_id'),
     ColumnBuilder('recipient_id'),
     ColumnBuilder('content'),

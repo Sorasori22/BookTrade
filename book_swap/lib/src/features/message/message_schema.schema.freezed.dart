@@ -22,6 +22,8 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) {
 mixin _$MessageModel {
   @JsonKey(name: MessageModel.idKey)
   MessageId get id => throw _privateConstructorUsedError;
+  @JsonKey(name: MessageModel.typeKey)
+  MessageType get type => throw _privateConstructorUsedError;
   @JsonKey(name: MessageModel.senderIdKey)
   ProfileId get senderId => throw _privateConstructorUsedError;
   @JsonKey(name: MessageModel.recipientIdKey)
@@ -59,6 +61,7 @@ abstract class $MessageModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: MessageModel.idKey) MessageId id,
+      @JsonKey(name: MessageModel.typeKey) MessageType type,
       @JsonKey(name: MessageModel.senderIdKey) ProfileId senderId,
       @JsonKey(name: MessageModel.recipientIdKey) ProfileId recipientId,
       @JsonKey(name: MessageModel.contentKey) String content,
@@ -92,6 +95,7 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
   @override
   $Res call({
     Object? id = null,
+    Object? type = null,
     Object? senderId = null,
     Object? recipientId = null,
     Object? content = null,
@@ -106,6 +110,10 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as MessageId,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MessageType,
       senderId: null == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
@@ -176,6 +184,7 @@ abstract class _$$MessageModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: MessageModel.idKey) MessageId id,
+      @JsonKey(name: MessageModel.typeKey) MessageType type,
       @JsonKey(name: MessageModel.senderIdKey) ProfileId senderId,
       @JsonKey(name: MessageModel.recipientIdKey) ProfileId recipientId,
       @JsonKey(name: MessageModel.contentKey) String content,
@@ -209,6 +218,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? type = null,
     Object? senderId = null,
     Object? recipientId = null,
     Object? content = null,
@@ -223,6 +233,10 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as MessageId,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MessageType,
       senderId: null == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
@@ -266,6 +280,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
 class _$MessageModelImpl extends _MessageModel {
   const _$MessageModelImpl(
       {@JsonKey(name: MessageModel.idKey) required this.id,
+      @JsonKey(name: MessageModel.typeKey) required this.type,
       @JsonKey(name: MessageModel.senderIdKey) required this.senderId,
       @JsonKey(name: MessageModel.recipientIdKey) required this.recipientId,
       @JsonKey(name: MessageModel.contentKey) required this.content,
@@ -287,6 +302,9 @@ class _$MessageModelImpl extends _MessageModel {
   @override
   @JsonKey(name: MessageModel.idKey)
   final MessageId id;
+  @override
+  @JsonKey(name: MessageModel.typeKey)
+  final MessageType type;
   @override
   @JsonKey(name: MessageModel.senderIdKey)
   final ProfileId senderId;
@@ -316,7 +334,7 @@ class _$MessageModelImpl extends _MessageModel {
 
   @override
   String toString() {
-    return 'MessageModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient, tradeRequest: $tradeRequest)';
+    return 'MessageModel(id: $id, type: $type, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient, tradeRequest: $tradeRequest)';
   }
 
   @override
@@ -325,6 +343,7 @@ class _$MessageModelImpl extends _MessageModel {
         (other.runtimeType == runtimeType &&
             other is _$MessageModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
             (identical(other.recipientId, recipientId) ||
@@ -343,7 +362,7 @@ class _$MessageModelImpl extends _MessageModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, senderId, recipientId,
+  int get hashCode => Object.hash(runtimeType, id, type, senderId, recipientId,
       content, read, tradeRequestId, createdAt, recipient, tradeRequest);
 
   /// Create a copy of MessageModel
@@ -365,6 +384,7 @@ class _$MessageModelImpl extends _MessageModel {
 abstract class _MessageModel extends MessageModel {
   const factory _MessageModel(
       {@JsonKey(name: MessageModel.idKey) required final MessageId id,
+      @JsonKey(name: MessageModel.typeKey) required final MessageType type,
       @JsonKey(name: MessageModel.senderIdKey)
       required final ProfileId senderId,
       @JsonKey(name: MessageModel.recipientIdKey)
@@ -389,6 +409,9 @@ abstract class _MessageModel extends MessageModel {
   @override
   @JsonKey(name: MessageModel.idKey)
   MessageId get id;
+  @override
+  @JsonKey(name: MessageModel.typeKey)
+  MessageType get type;
   @override
   @JsonKey(name: MessageModel.senderIdKey)
   ProfileId get senderId;
@@ -715,6 +738,8 @@ MessageDetailModel _$MessageDetailModelFromJson(Map<String, dynamic> json) {
 mixin _$MessageDetailModel {
   @JsonKey(name: MessageDetailModel.idKey)
   MessageId get id => throw _privateConstructorUsedError;
+  @JsonKey(name: MessageDetailModel.typeKey)
+  MessageType get type => throw _privateConstructorUsedError;
   @JsonKey(name: MessageDetailModel.senderIdKey)
   ProfileId get senderId => throw _privateConstructorUsedError;
   @JsonKey(name: MessageDetailModel.recipientIdKey)
@@ -752,6 +777,7 @@ abstract class $MessageDetailModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: MessageDetailModel.idKey) MessageId id,
+      @JsonKey(name: MessageDetailModel.typeKey) MessageType type,
       @JsonKey(name: MessageDetailModel.senderIdKey) ProfileId senderId,
       @JsonKey(name: MessageDetailModel.recipientIdKey) ProfileId recipientId,
       @JsonKey(name: MessageDetailModel.contentKey) String content,
@@ -785,6 +811,7 @@ class _$MessageDetailModelCopyWithImpl<$Res, $Val extends MessageDetailModel>
   @override
   $Res call({
     Object? id = null,
+    Object? type = null,
     Object? senderId = null,
     Object? recipientId = null,
     Object? content = null,
@@ -799,6 +826,10 @@ class _$MessageDetailModelCopyWithImpl<$Res, $Val extends MessageDetailModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as MessageId,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MessageType,
       senderId: null == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
@@ -869,6 +900,7 @@ abstract class _$$MessageDetailModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: MessageDetailModel.idKey) MessageId id,
+      @JsonKey(name: MessageDetailModel.typeKey) MessageType type,
       @JsonKey(name: MessageDetailModel.senderIdKey) ProfileId senderId,
       @JsonKey(name: MessageDetailModel.recipientIdKey) ProfileId recipientId,
       @JsonKey(name: MessageDetailModel.contentKey) String content,
@@ -902,6 +934,7 @@ class __$$MessageDetailModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? type = null,
     Object? senderId = null,
     Object? recipientId = null,
     Object? content = null,
@@ -916,6 +949,10 @@ class __$$MessageDetailModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as MessageId,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MessageType,
       senderId: null == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
@@ -959,6 +996,7 @@ class __$$MessageDetailModelImplCopyWithImpl<$Res>
 class _$MessageDetailModelImpl extends _MessageDetailModel {
   const _$MessageDetailModelImpl(
       {@JsonKey(name: MessageDetailModel.idKey) required this.id,
+      @JsonKey(name: MessageDetailModel.typeKey) required this.type,
       @JsonKey(name: MessageDetailModel.senderIdKey) required this.senderId,
       @JsonKey(name: MessageDetailModel.recipientIdKey)
       required this.recipientId,
@@ -981,6 +1019,9 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
   @override
   @JsonKey(name: MessageDetailModel.idKey)
   final MessageId id;
+  @override
+  @JsonKey(name: MessageDetailModel.typeKey)
+  final MessageType type;
   @override
   @JsonKey(name: MessageDetailModel.senderIdKey)
   final ProfileId senderId;
@@ -1010,7 +1051,7 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
 
   @override
   String toString() {
-    return 'MessageDetailModel(id: $id, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient, tradeRequest: $tradeRequest)';
+    return 'MessageDetailModel(id: $id, type: $type, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, recipient: $recipient, tradeRequest: $tradeRequest)';
   }
 
   @override
@@ -1019,6 +1060,7 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
         (other.runtimeType == runtimeType &&
             other is _$MessageDetailModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
             (identical(other.recipientId, recipientId) ||
@@ -1037,7 +1079,7 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, senderId, recipientId,
+  int get hashCode => Object.hash(runtimeType, id, type, senderId, recipientId,
       content, read, tradeRequestId, createdAt, recipient, tradeRequest);
 
   /// Create a copy of MessageDetailModel
@@ -1060,6 +1102,8 @@ class _$MessageDetailModelImpl extends _MessageDetailModel {
 abstract class _MessageDetailModel extends MessageDetailModel {
   const factory _MessageDetailModel(
           {@JsonKey(name: MessageDetailModel.idKey) required final MessageId id,
+          @JsonKey(name: MessageDetailModel.typeKey)
+          required final MessageType type,
           @JsonKey(name: MessageDetailModel.senderIdKey)
           required final ProfileId senderId,
           @JsonKey(name: MessageDetailModel.recipientIdKey)
@@ -1086,6 +1130,9 @@ abstract class _MessageDetailModel extends MessageDetailModel {
   @override
   @JsonKey(name: MessageDetailModel.idKey)
   MessageId get id;
+  @override
+  @JsonKey(name: MessageDetailModel.typeKey)
+  MessageType get type;
   @override
   @JsonKey(name: MessageDetailModel.senderIdKey)
   ProfileId get senderId;

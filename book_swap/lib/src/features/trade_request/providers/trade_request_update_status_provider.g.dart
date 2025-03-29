@@ -2,14 +2,14 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'trade_request_accept_provider.dart';
+part of 'trade_request_update_status_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tradeRequestAcceptHash() =>
-    r'865b198a28d943f82ffa4f9e1d594b321aaff3b9';
+String _$tradeRequestUpdateStatusHash() =>
+    r'5d6d5815c417a2dfe570590c904c6d23160e7c4d';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -32,7 +32,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$TradeRequestAccept
+abstract class _$TradeRequestUpdateStatus
     extends BuildlessAutoDisposeNotifier<ProviderStatus<Unit>> {
   late final TradeRequestId id;
 
@@ -41,27 +41,27 @@ abstract class _$TradeRequestAccept
   );
 }
 
-/// See also [TradeRequestAccept].
-@ProviderFor(TradeRequestAccept)
-const tradeRequestAcceptProvider = TradeRequestAcceptFamily();
+/// See also [TradeRequestUpdateStatus].
+@ProviderFor(TradeRequestUpdateStatus)
+const tradeRequestUpdateStatusProvider = TradeRequestUpdateStatusFamily();
 
-/// See also [TradeRequestAccept].
-class TradeRequestAcceptFamily extends Family<ProviderStatus<Unit>> {
-  /// See also [TradeRequestAccept].
-  const TradeRequestAcceptFamily();
+/// See also [TradeRequestUpdateStatus].
+class TradeRequestUpdateStatusFamily extends Family<ProviderStatus<Unit>> {
+  /// See also [TradeRequestUpdateStatus].
+  const TradeRequestUpdateStatusFamily();
 
-  /// See also [TradeRequestAccept].
-  TradeRequestAcceptProvider call(
+  /// See also [TradeRequestUpdateStatus].
+  TradeRequestUpdateStatusProvider call(
     TradeRequestId id,
   ) {
-    return TradeRequestAcceptProvider(
+    return TradeRequestUpdateStatusProvider(
       id,
     );
   }
 
   @override
-  TradeRequestAcceptProvider getProviderOverride(
-    covariant TradeRequestAcceptProvider provider,
+  TradeRequestUpdateStatusProvider getProviderOverride(
+    covariant TradeRequestUpdateStatusProvider provider,
   ) {
     return call(
       provider.id,
@@ -80,30 +80,30 @@ class TradeRequestAcceptFamily extends Family<ProviderStatus<Unit>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'tradeRequestAcceptProvider';
+  String? get name => r'tradeRequestUpdateStatusProvider';
 }
 
-/// See also [TradeRequestAccept].
-class TradeRequestAcceptProvider extends AutoDisposeNotifierProviderImpl<
-    TradeRequestAccept, ProviderStatus<Unit>> {
-  /// See also [TradeRequestAccept].
-  TradeRequestAcceptProvider(
+/// See also [TradeRequestUpdateStatus].
+class TradeRequestUpdateStatusProvider extends AutoDisposeNotifierProviderImpl<
+    TradeRequestUpdateStatus, ProviderStatus<Unit>> {
+  /// See also [TradeRequestUpdateStatus].
+  TradeRequestUpdateStatusProvider(
     TradeRequestId id,
   ) : this._internal(
-          () => TradeRequestAccept()..id = id,
-          from: tradeRequestAcceptProvider,
-          name: r'tradeRequestAcceptProvider',
+          () => TradeRequestUpdateStatus()..id = id,
+          from: tradeRequestUpdateStatusProvider,
+          name: r'tradeRequestUpdateStatusProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$tradeRequestAcceptHash,
-          dependencies: TradeRequestAcceptFamily._dependencies,
+                  : _$tradeRequestUpdateStatusHash,
+          dependencies: TradeRequestUpdateStatusFamily._dependencies,
           allTransitiveDependencies:
-              TradeRequestAcceptFamily._allTransitiveDependencies,
+              TradeRequestUpdateStatusFamily._allTransitiveDependencies,
           id: id,
         );
 
-  TradeRequestAcceptProvider._internal(
+  TradeRequestUpdateStatusProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -117,7 +117,7 @@ class TradeRequestAcceptProvider extends AutoDisposeNotifierProviderImpl<
 
   @override
   ProviderStatus<Unit> runNotifierBuild(
-    covariant TradeRequestAccept notifier,
+    covariant TradeRequestUpdateStatus notifier,
   ) {
     return notifier.build(
       id,
@@ -125,10 +125,10 @@ class TradeRequestAcceptProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(TradeRequestAccept Function() create) {
+  Override overrideWith(TradeRequestUpdateStatus Function() create) {
     return ProviderOverride(
       origin: this,
-      override: TradeRequestAcceptProvider._internal(
+      override: TradeRequestUpdateStatusProvider._internal(
         () => create()..id = id,
         from: from,
         name: null,
@@ -141,14 +141,14 @@ class TradeRequestAcceptProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeNotifierProviderElement<TradeRequestAccept, ProviderStatus<Unit>>
-      createElement() {
-    return _TradeRequestAcceptProviderElement(this);
+  AutoDisposeNotifierProviderElement<TradeRequestUpdateStatus,
+      ProviderStatus<Unit>> createElement() {
+    return _TradeRequestUpdateStatusProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TradeRequestAcceptProvider && other.id == id;
+    return other is TradeRequestUpdateStatusProvider && other.id == id;
   }
 
   @override
@@ -162,19 +162,19 @@ class TradeRequestAcceptProvider extends AutoDisposeNotifierProviderImpl<
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin TradeRequestAcceptRef
+mixin TradeRequestUpdateStatusRef
     on AutoDisposeNotifierProviderRef<ProviderStatus<Unit>> {
   /// The parameter `id` of this provider.
   TradeRequestId get id;
 }
 
-class _TradeRequestAcceptProviderElement
-    extends AutoDisposeNotifierProviderElement<TradeRequestAccept,
-        ProviderStatus<Unit>> with TradeRequestAcceptRef {
-  _TradeRequestAcceptProviderElement(super.provider);
+class _TradeRequestUpdateStatusProviderElement
+    extends AutoDisposeNotifierProviderElement<TradeRequestUpdateStatus,
+        ProviderStatus<Unit>> with TradeRequestUpdateStatusRef {
+  _TradeRequestUpdateStatusProviderElement(super.provider);
 
   @override
-  TradeRequestId get id => (origin as TradeRequestAcceptProvider).id;
+  TradeRequestId get id => (origin as TradeRequestUpdateStatusProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

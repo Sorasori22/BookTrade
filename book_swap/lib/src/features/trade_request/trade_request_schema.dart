@@ -7,6 +7,7 @@ enum TradeRequestStatus {
   pending,
   accepted,
   rejected,
+  confirmed,
   completed,
 }
 

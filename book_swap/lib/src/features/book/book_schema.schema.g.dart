@@ -15,6 +15,7 @@ _$BookModelImpl _$$BookModelImplFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       author: json['author'] as String,
       condition: (json['condition'] as num).toInt(),
+      averageRating: (json['average_rating'] as num?)?.toDouble(),
       image: json['image_path'] == null
           ? null
           : ImageObject.fromJson(json['image_path']),
@@ -29,6 +30,7 @@ Map<String, dynamic> _$$BookModelImplToJson(_$BookModelImpl instance) =>
       'title': instance.title,
       'author': instance.author,
       'condition': instance.condition,
+      'average_rating': instance.averageRating,
       'image_path': instance.image?.toJson(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
@@ -43,6 +45,7 @@ _$BookLiteModelImpl _$$BookLiteModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : ImageObject.fromJson(json['image_path']),
       ownerId: ProfileId.fromJson(json['owner_id']),
+      averageRating: (json['average_rating'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$BookLiteModelImplToJson(_$BookLiteModelImpl instance) =>
@@ -52,6 +55,7 @@ Map<String, dynamic> _$$BookLiteModelImplToJson(_$BookLiteModelImpl instance) =>
       'author': instance.author,
       'image_path': instance.image?.toJson(),
       'owner_id': instance.ownerId.toJson(),
+      'average_rating': instance.averageRating,
     };
 
 _$BookDetailModelImpl _$$BookDetailModelImplFromJson(
@@ -62,6 +66,7 @@ _$BookDetailModelImpl _$$BookDetailModelImplFromJson(
       title: json['title'] as String,
       author: json['author'] as String,
       condition: (json['condition'] as num).toInt(),
+      averageRating: (json['average_rating'] as num?)?.toDouble(),
       image: json['image_path'] == null
           ? null
           : ImageObject.fromJson(json['image_path']),
@@ -81,6 +86,7 @@ Map<String, dynamic> _$$BookDetailModelImplToJson(
       'title': instance.title,
       'author': instance.author,
       'condition': instance.condition,
+      'average_rating': instance.averageRating,
       'image_path': instance.image?.toJson(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
@@ -148,6 +154,7 @@ const _tableBookModel = TableBuilder(
     ColumnBuilder('title'),
     ColumnBuilder('author'),
     ColumnBuilder('condition'),
+    ColumnBuilder('average_rating'),
     ColumnBuilder('image_path'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
@@ -162,6 +169,7 @@ const _tableBookLiteModel = TableBuilder(
     ColumnBuilder('author'),
     ColumnBuilder('image_path'),
     ColumnBuilder('owner_id'),
+    ColumnBuilder('average_rating'),
   ],
 );
 
@@ -173,6 +181,7 @@ const _tableBookDetailModel = TableBuilder(
     ColumnBuilder('title'),
     ColumnBuilder('author'),
     ColumnBuilder('condition'),
+    ColumnBuilder('average_rating'),
     ColumnBuilder('image_path'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),

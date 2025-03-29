@@ -32,6 +32,11 @@ class MessageTable {
   /// Key: `id`
   static const String id = "id";
 
+  /// Column: type
+  /// Data type: `MessageType`
+  /// Key: `type`
+  static const String type = "type";
+
   /// Column: sender_id
   /// Data type: `ProfileId`
   /// Key: `sender_id`
@@ -114,6 +119,7 @@ abstract class BaseMessageSchema {}
 /// Base model class for this schema, this includes all properties of the base model, and get inherited by all generated models in this schema where [inheritAllFromBase()] is called and without any excepted fields.
 abstract class IMessageModel {
   MessageId get id;
+  MessageType get type;
   ProfileId get senderId;
   ProfileId get recipientId;
   String get content;
@@ -139,6 +145,7 @@ sealed class MessageModel
   ///
   /// Fields:
   /// - MessageId id : JsonKey('id')
+  /// - MessageType type : JsonKey('type')
   /// - ProfileId senderId : JsonKey('sender_id')
   /// - ProfileId recipientId : JsonKey('recipient_id')
   /// - String content : JsonKey('content')
@@ -151,6 +158,7 @@ sealed class MessageModel
   @JsonSerializable(explicitToJson: true)
   const factory MessageModel({
     @JsonKey(name: MessageModel.idKey) required MessageId id,
+    @JsonKey(name: MessageModel.typeKey) required MessageType type,
     @JsonKey(name: MessageModel.senderIdKey) required ProfileId senderId,
     @JsonKey(name: MessageModel.recipientIdKey) required ProfileId recipientId,
     @JsonKey(name: MessageModel.contentKey) required String content,
@@ -177,6 +185,9 @@ sealed class MessageModel
 
   /// Field name for id field with JsonKey('id')
   static const String idKey = "id";
+
+  /// Field name for type field with JsonKey('type')
+  static const String typeKey = "type";
 
   /// Field name for senderId field with JsonKey('sender_id')
   static const String senderIdKey = "sender_id";
@@ -283,6 +294,7 @@ sealed class MessageDetailModel
   ///
   /// Fields:
   /// - MessageId id : JsonKey('id')
+  /// - MessageType type : JsonKey('type')
   /// - ProfileId senderId : JsonKey('sender_id')
   /// - ProfileId recipientId : JsonKey('recipient_id')
   /// - String content : JsonKey('content')
@@ -295,6 +307,7 @@ sealed class MessageDetailModel
   @JsonSerializable(explicitToJson: true)
   const factory MessageDetailModel({
     @JsonKey(name: MessageDetailModel.idKey) required MessageId id,
+    @JsonKey(name: MessageDetailModel.typeKey) required MessageType type,
     @JsonKey(name: MessageDetailModel.senderIdKey) required ProfileId senderId,
     @JsonKey(name: MessageDetailModel.recipientIdKey)
     required ProfileId recipientId,
@@ -323,6 +336,9 @@ sealed class MessageDetailModel
 
   /// Field name for id field with JsonKey('id')
   static const String idKey = "id";
+
+  /// Field name for type field with JsonKey('type')
+  static const String typeKey = "type";
 
   /// Field name for senderId field with JsonKey('sender_id')
   static const String senderIdKey = "sender_id";
@@ -354,6 +370,7 @@ sealed class MessageDetailModel
   MessageModel toMessageModel() {
     return MessageModel(
       id: id,
+      type: type,
       senderId: senderId,
       recipientId: recipientId,
       content: content,

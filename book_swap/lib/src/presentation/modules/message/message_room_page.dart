@@ -4,16 +4,25 @@ import 'package:book_swap/src/core/account/current_account_provider.dart';
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:book_swap/src/features/chat/providers/chat_clear_unread_count_provider.dart';
+import 'package:book_swap/src/features/chat/providers/chat_list_pagination_provider.dart';
 import 'package:book_swap/src/features/message/providers/message_list_pagination_provider.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/profile/providers/profile_detail_provider.dart';
+import 'package:book_swap/src/features/trade_request/providers/trade_request_confirm_offer_provider.dart';
+import 'package:book_swap/src/features/trade_request/providers/trade_request_update_offered_book_provider.dart';
+import 'package:book_swap/src/features/trade_request/providers/trade_request_update_status_provider.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:book_swap/src/presentation/modules/book/picker/book_list_picker_bottom_sheet.dart';
+import 'package:book_swap/src/presentation/modules/book/widget/book_cover.dart';
 import 'package:book_swap/src/presentation/modules/profile/widget/user_avatar_widget.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
+import 'package:book_swap/src/presentation/widgets/dialogs/app_dialog.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/async_value_widget.dart';
 import 'package:book_swap/src/presentation/widgets/layouts/app_card.dart';
 import 'package:dartx/dartx.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,10 +31,12 @@ import 'package:kimapp_supabase_helper/supabase_provider.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../features/message/message_schema.dart';
 import '../../../features/message/message_schema.schema.dart';
 import '../../../features/message/params/message_list_param.dart';
 import '../../../features/message/providers/message_send_text_provider.dart';
 import '../../app/app_style.dart';
+import '../../widgets/components/label_text.dart';
 
 @RoutePage()
 class MessageRoomPage extends ConsumerStatefulWidget {
@@ -57,6 +68,9 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
     _recipientName = widget.recipientName ?? 'Message';
     _recipientAvatar = widget.recipientAvatar;
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // To make sure mistake on the realtime, we need to refresh the message
+      ref.invalidate(messageListPaginationProvider);
+
       _clearUnreadCount();
       _loadUserInfo();
       _listenRealtimeMessages();
@@ -77,7 +91,11 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
   }
 
   void _sendMessage(MessageModel message) {
-    _channel?.sendBroadcastMessage(event: 'message', payload: message.toJson());
+    // create object_type to avoid issue of override type key from supabase
+    _channel?.sendBroadcastMessage(
+      event: 'message',
+      payload: message.toJson()..addAll({'object_type': message.type.name}),
+    );
   }
 
   void _listenRealtimeMessages() {
@@ -87,7 +105,9 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
         .onBroadcast(
           event: 'message',
           callback: (payload) {
-            final message = MessageModel.fromJson(payload);
+            final message = MessageModel.fromJson(
+              payload..update('type', (_) => payload['object_type']),
+            );
             MessagePaginationTracker.instance.addItem(ref, message);
           },
         )
@@ -112,27 +132,32 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(_recipientName),
-        actions: [
-          InkWell(
-            customBorder: const CircleBorder(),
-            onTap: () {},
-            child: UserAvatar(
-              size: 32,
-              imageObject: _recipientAvatar,
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        ref.invalidate(chatListPaginationProvider);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(_recipientName),
+          actions: [
+            InkWell(
+              customBorder: const CircleBorder(),
+              onTap: () {},
+              child: UserAvatar(
+                size: 32,
+                imageObject: _recipientAvatar,
+              ),
             ),
-          ),
-          AS.wGap12,
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(child: _MessageList()),
-          _MessageInput(recipientId: _recipientId, onSend: _sendMessage),
-        ],
+            AS.wGap12,
+          ],
+        ),
+        body: Column(
+          children: [
+            Expanded(child: _MessageList()),
+            _MessageInput(recipientId: _recipientId, onSend: _sendMessage),
+          ],
+        ),
       ),
     );
   }
@@ -250,6 +275,10 @@ class _MessageList extends HookConsumerWidget {
           ),
         ),
         itemBuilder: (index, data) {
+          if (data.type == MessageType.tradeConfirmed) {
+            return _ConfirmTradeItem(message: data);
+          }
+
           return _MessageItem(message: data);
         },
         externalItems: {
@@ -260,8 +289,8 @@ class _MessageList extends HookConsumerWidget {
   }
 }
 
-class _MessageItem extends ConsumerWidget {
-  const _MessageItem({
+class _ConfirmTradeItem extends ConsumerWidget {
+  const _ConfirmTradeItem({
     super.key,
     required this.message,
   });
@@ -270,15 +299,161 @@ class _MessageItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSender = message.senderId == ref.watch(currentProfileIdProvider)!;
+    final isRequester = message.tradeRequest?.requesterId == ref.watch(currentProfileIdProvider)!;
+
+    return AppCard(
+      padding: Pad(all: 16).copyWith(top: 12),
+      margin: Pad(all: 16).copyWith(bottom: 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Trade Confirmed',
+                  style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              if (message.tradeRequest?.status != TradeRequestStatus.completed)
+                DottedBorder(
+                  color: context.colors.primary,
+                  padding: Pad(horizontal: 4, vertical: 2),
+                  radius: Radius.circular(4),
+                  borderType: BorderType.RRect,
+                  child: Text(
+                    'In Progress',
+                    style: TextStyle(
+                      fontSize: 9,
+                    ),
+                  ),
+                )
+              else
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.green.withValues(alpha: 0.2),
+                    border: Border.all(color: Colors.green),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  padding: Pad(horizontal: 4, vertical: 2),
+                  child: Text(
+                    'Completed',
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          AS.hGap4,
+          Text(
+            'Great! Both parties have agreed to trade. Please arrange a meeting time and place to exchange the books. Once the swap is completed, you can mark this trade as "Completed".',
+          ),
+          AS.hGap16,
+          DottedLine(),
+          AS.hGap16,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                width: 100,
+                child: BookCover(cover: message.tradeRequest?.book.image),
+              ),
+              AS.wGap8,
+              Icon(Icons.swap_horiz),
+              AS.wGap8,
+              SizedBox(
+                width: 100,
+                child: BookCover(cover: message.tradeRequest?.offeredBook?.image),
+              ),
+            ],
+          ),
+          if (isRequester && message.tradeRequest?.status != TradeRequestStatus.completed) ...[
+            AS.hGap20,
+            Align(
+              alignment: Alignment.centerRight,
+              child: AppButton(
+                fullWidth: true,
+                borderRadius: AS.radiusS,
+                variant: AppButtonVariant.primary,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AppDialog(
+                      title: 'Confirm Trade',
+                      message: 'Are you sure you want to mark this trade as completed?',
+                      actions: [
+                        AppButton(
+                          label: 'Cancel',
+                          variant: AppButtonVariant.outline,
+                          onPressed: () => context.maybePop(),
+                        ),
+                        AppButton(
+                          label: 'Confirm',
+                          onPressed: () async {
+                            context.maybePop();
+                            await context.loadingWrapper(() async {
+                              final id = message.tradeRequest!.id;
+                              return await ref
+                                  .read(tradeRequestUpdateStatusProvider(id).notifier)
+                                  .call(status: TradeRequestStatus.completed);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                label: 'Mark as Completed',
+              ),
+            ),
+          ],
+          if (message.tradeRequest?.status == TradeRequestStatus.completed) ...[
+            AS.hGap20,
+            Align(
+              alignment: Alignment.center,
+              child: AppButton(
+                fullWidth: true,
+                onPressed: () {},
+                label: 'Leave Review',
+                variant: AppButtonVariant.outline,
+                borderRadius: AS.radiusS,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _MessageItem extends ConsumerStatefulWidget {
+  const _MessageItem({
+    super.key,
+    required this.message,
+  });
+
+  final MessageModel message;
+
+  @override
+  ConsumerState<_MessageItem> createState() => _MessageItemState();
+}
+
+class _MessageItemState extends ConsumerState<_MessageItem> {
+  @override
+  Widget build(BuildContext context) {
+    final isSender = widget.message.senderId == ref.watch(currentProfileIdProvider)!;
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         if (!isSender) ...[
           UserAvatar(
             size: 24,
-            imageObject: message.recipient.avatar,
+            imageObject: widget.message.recipient.avatar,
           ),
           AS.wGap8,
         ],
@@ -287,28 +462,94 @@ class _MessageItem extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 8),
+              constraints: BoxConstraints(maxWidth: context.screenWidth * 0.7),
+              margin: EdgeInsets.only(top: 16),
               decoration: BoxDecoration(
                 color: isSender ? context.primaryColor : Colors.grey[300],
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.all(12),
               child: Text(
-                message.content,
+                widget.message.content,
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: isSender ? Colors.white : Colors.black,
                 ),
               ),
             ),
-            if (message.tradeRequestId != null && isSender) ...[
+            if (widget.message.tradeRequestId != null &&
+                widget.message.type == MessageType.requestStarted) ...[
+              AS.hGap8,
+              _buildToTradeBookCard(),
+            ],
+            if (widget.message.tradeRequest != null &&
+                widget.message.type == MessageType.offeredBook &&
+                widget.message.tradeRequest?.offeredBookId != null) ...[
+              AS.hGap8,
+              _buildOffered(),
+              if (!isSender &&
+                  widget.message.tradeRequest?.status != TradeRequestStatus.confirmed) ...[
+                AppButton(
+                  label: 'Accept Offer',
+                  size: AppButtonSize.small,
+                  borderRadius: AS.radiusS,
+                  variant: AppButtonVariant.outline,
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AppDialog(
+                          title: 'Confirm Trade',
+                          message:
+                              'Are you sure you want to ${widget.message.tradeRequest?.status == TradeRequestStatus.confirmed ? 'decline' : 'accept'} this offer?',
+                          actions: [
+                            AppButton(
+                              label: 'Cancel',
+                              variant: AppButtonVariant.outline,
+                              onPressed: () => context.maybePop(),
+                            ),
+                            AppButton(
+                              label: 'Confirm',
+                              onPressed: () {
+                                context.loadingWrapper(() async {
+                                  final id = widget.message.tradeRequest!.id;
+                                  return await ref
+                                      .read(tradeRequestConfirmOfferProvider(id).notifier)
+                                      .call();
+                                });
+                                context.maybePop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+              if (isSender &&
+                  widget.message.tradeRequest?.status == TradeRequestStatus.accepted) ...[
+                AppButton(
+                  label: 'Change Offer',
+                  size: AppButtonSize.small,
+                  borderRadius: AS.radiusS,
+                  variant: AppButtonVariant.outline,
+                  onPressed: () {
+                    _pickerOfferBook(context);
+                  },
+                ),
+              ],
+            ],
+            if (widget.message.tradeRequestId != null &&
+                isSender &&
+                widget.message.tradeRequest?.offeredBookId == null &&
+                widget.message.type == MessageType.requestStarted) ...[
               AppButton(
                 size: AppButtonSize.small,
                 borderRadius: AS.radiusS,
                 variant: AppButtonVariant.outline,
                 foregroundColor: context.colors.error,
-                onPressed: () async {
-                  final result = await BookListPickerBottomSheet.show(context);
-                  if (result != null) {}
+                onPressed: () {
+                  _pickerOfferBook(context);
                 },
                 label: 'Click here to select your offer',
               ),
@@ -316,6 +557,117 @@ class _MessageItem extends ConsumerWidget {
           ],
         ),
       ],
+    );
+  }
+
+  Future<void> _pickerOfferBook(BuildContext context) async {
+    final result = await BookListPickerBottomSheet.show(
+      context,
+      selectedId: widget.message.tradeRequest?.offeredBookId,
+    );
+    if (result != null && context.mounted) {
+      context.loadingWrapper(() async {
+        return await ref
+            .read(
+              tradeRequestUpdateOfferedBookProvider(
+                widget.message.tradeRequest!.id,
+              ).notifier,
+            )
+            .call(offeredBookId: result.id);
+      });
+    }
+  }
+
+  AppCard _buildOffered() {
+    return AppCard(
+      child: Row(
+        children: [
+          SizedBox(
+            width: 80,
+            child: BookCover(
+              cover: widget.message.tradeRequest?.offeredBook?.image,
+              borderRadius: AS.radiusS,
+            ),
+          ),
+          AS.wGap12,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LabelText(
+                label: 'Title',
+                text: widget.message.tradeRequest?.offeredBook?.title ?? 'Unknown',
+              ),
+              AS.hGap4,
+              LabelText(
+                label: 'Author',
+                text: widget.message.tradeRequest?.offeredBook?.author ?? 'Unknown',
+              ),
+              AS.hGap4,
+              LabelText(
+                label: 'Rating',
+                text: widget.message.tradeRequest?.offeredBook?.averageRating == null
+                    ? 'No rating'
+                    : '${widget.message.tradeRequest?.offeredBook?.averageRating}/5',
+              ),
+              AS.hGap8,
+              Row(
+                children: [
+                  Icon(Icons.arrow_right_alt_outlined),
+                  AS.wGap12,
+                  SizedBox(
+                    width: 28,
+                    child: BookCover(
+                      cover: widget.message.tradeRequest?.book.image,
+                      borderRadius: 2,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  AppCard _buildToTradeBookCard() {
+    return AppCard(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 80,
+            child: BookCover(
+              cover: widget.message.tradeRequest?.book.image,
+              borderRadius: AS.radiusS,
+            ),
+          ),
+          AS.wGap12,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LabelText(
+                label: 'Title',
+                text: widget.message.tradeRequest?.book.title ?? 'Unknown',
+                textStyle: TextStyle(fontSize: 18),
+              ),
+              AS.hGap4,
+              LabelText(
+                label: 'Author',
+                text: widget.message.tradeRequest?.book.author ?? 'Unknown',
+              ),
+              AS.hGap8,
+              LabelText(
+                label: 'Rating',
+                text: widget.message.tradeRequest?.book.averageRating == null
+                    ? 'No rating'
+                    : '${widget.message.tradeRequest?.book.averageRating}/5',
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

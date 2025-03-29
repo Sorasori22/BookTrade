@@ -8,14 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class BookListPickerBottomSheet extends ConsumerWidget {
-  const BookListPickerBottomSheet({super.key});
+  const BookListPickerBottomSheet({super.key, this.selectedId});
 
-  static Future<BookModel?> show(BuildContext context) {
+  final BookId? selectedId;
+
+  static Future<BookModel?> show(BuildContext context, {BookId? selectedId}) {
     return showModalBottomSheet<BookModel>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => const BookListPickerBottomSheet(),
+      builder: (context) => BookListPickerBottomSheet(selectedId: selectedId),
     );
   }
 
@@ -30,6 +32,7 @@ class BookListPickerBottomSheet extends ConsumerWidget {
               onTap: (book) {
                 context.maybePop(book);
               },
+              selectedBookId: selectedId,
             ),
             param: BookListParam(
               ownerId: ref.watch(currentProfileIdProvider),

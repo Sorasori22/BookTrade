@@ -51,6 +51,7 @@ const _$TradeRequestStatusEnumMap = {
   TradeRequestStatus.pending: 'pending',
   TradeRequestStatus.accepted: 'accepted',
   TradeRequestStatus.rejected: 'rejected',
+  TradeRequestStatus.confirmed: 'confirmed',
   TradeRequestStatus.completed: 'completed',
 };
 
