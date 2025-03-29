@@ -129,10 +129,15 @@ class BookDetailRoute extends _i22.PageRouteInfo<BookDetailRouteArgs> {
   BookDetailRoute({
     _i24.Key? key,
     required String bookIdString,
+    bool hideSwapButton = false,
     List<_i22.PageRouteInfo>? children,
   }) : super(
          BookDetailRoute.name,
-         args: BookDetailRouteArgs(key: key, bookIdString: bookIdString),
+         args: BookDetailRouteArgs(
+           key: key,
+           bookIdString: bookIdString,
+           hideSwapButton: hideSwapButton,
+         ),
          rawPathParams: {'bookId': bookIdString},
          initialChildren: children,
        );
@@ -149,21 +154,31 @@ class BookDetailRoute extends _i22.PageRouteInfo<BookDetailRouteArgs> {
               bookIdString: pathParams.getString('bookId'),
             ),
       );
-      return _i4.BookDetailPage(key: args.key, bookIdString: args.bookIdString);
+      return _i4.BookDetailPage(
+        key: args.key,
+        bookIdString: args.bookIdString,
+        hideSwapButton: args.hideSwapButton,
+      );
     },
   );
 }
 
 class BookDetailRouteArgs {
-  const BookDetailRouteArgs({this.key, required this.bookIdString});
+  const BookDetailRouteArgs({
+    this.key,
+    required this.bookIdString,
+    this.hideSwapButton = false,
+  });
 
   final _i24.Key? key;
 
   final String bookIdString;
 
+  final bool hideSwapButton;
+
   @override
   String toString() {
-    return 'BookDetailRouteArgs{key: $key, bookIdString: $bookIdString}';
+    return 'BookDetailRouteArgs{key: $key, bookIdString: $bookIdString, hideSwapButton: $hideSwapButton}';
   }
 }
 

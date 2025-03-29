@@ -23,9 +23,14 @@ import '../../widgets/dialogs/app_dialog.dart';
 
 @RoutePage()
 class BookDetailPage extends ConsumerWidget {
-  const BookDetailPage({super.key, @PathParam('bookId') required this.bookIdString});
+  const BookDetailPage({
+    super.key,
+    @PathParam('bookId') required this.bookIdString,
+    this.hideSwapButton = false,
+  });
 
   final String bookIdString;
+  final bool hideSwapButton;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -140,7 +145,8 @@ class BookDetailPage extends ConsumerWidget {
                                 return '$rate/5';
                               }),
                             ),
-                            if (currentProfileId != ref.select((state) => state.ownerId)) ...[
+                            if (currentProfileId != ref.select((state) => state.ownerId) &&
+                                !hideSwapButton) ...[
                               AS.hGap12,
                               Consumer(
                                 builder: (context, ref, child) {

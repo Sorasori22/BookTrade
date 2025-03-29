@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/core/account/current_account_provider.dart';
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/chat/providers/chat_clear_unread_count_provider.dart';
 import 'package:book_swap/src/features/chat/providers/chat_list_pagination_provider.dart';
 import 'package:book_swap/src/features/message/providers/message_list_pagination_provider.dart';
@@ -15,6 +16,7 @@ import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:book_swap/src/presentation/modules/book/picker/book_list_picker_bottom_sheet.dart';
 import 'package:book_swap/src/presentation/modules/book/widget/book_cover.dart';
 import 'package:book_swap/src/presentation/modules/profile/widget/user_avatar_widget.dart';
+import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/dialogs/app_dialog.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
@@ -359,14 +361,20 @@ class _ConfirmTradeItem extends ConsumerWidget {
             children: [
               SizedBox(
                 width: 100,
-                child: BookCover(cover: message.tradeRequest?.book.image),
+                child: _BookCover(
+                  bookId: message.tradeRequest!.book.id,
+                  cover: message.tradeRequest?.book.image,
+                ),
               ),
               AS.wGap8,
               Icon(Icons.swap_horiz),
               AS.wGap8,
               SizedBox(
                 width: 100,
-                child: BookCover(cover: message.tradeRequest?.offeredBook?.image),
+                child: _BookCover(
+                  bookId: message.tradeRequest!.offeredBookId!,
+                  cover: message.tradeRequest?.offeredBook?.image,
+                ),
               ),
             ],
           ),
@@ -424,6 +432,41 @@ class _ConfirmTradeItem extends ConsumerWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+class _BookCover extends ConsumerWidget {
+  const _BookCover({
+    super.key,
+    required this.bookId,
+    required this.cover,
+    this.size = 80,
+    this.navigateToBookDetail = true,
+  });
+
+  final BookId bookId;
+  final ImageObject? cover;
+  final double size;
+  final bool navigateToBookDetail;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return GestureDetector(
+      onTap: navigateToBookDetail
+          ? () {
+              context.pushRoute(
+                BookDetailRoute(
+                  hideSwapButton: true,
+                  bookIdString: bookId.value.toString(),
+                ),
+              );
+            }
+          : null,
+      child: SizedBox(
+        width: size,
+        child: BookCover(cover: cover, borderRadius: AS.radiusS),
       ),
     );
   }
@@ -584,9 +627,9 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
         children: [
           SizedBox(
             width: 80,
-            child: BookCover(
+            child: _BookCover(
+              bookId: widget.message.tradeRequest!.offeredBookId!,
               cover: widget.message.tradeRequest?.offeredBook?.image,
-              borderRadius: AS.radiusS,
             ),
           ),
           AS.wGap12,
@@ -616,9 +659,10 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
                   AS.wGap12,
                   SizedBox(
                     width: 28,
-                    child: BookCover(
+                    child: _BookCover(
+                      bookId: widget.message.tradeRequest!.book.id,
                       cover: widget.message.tradeRequest?.book.image,
-                      borderRadius: 2,
+                      navigateToBookDetail: false,
                     ),
                   ),
                 ],
@@ -638,9 +682,10 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
         children: [
           SizedBox(
             width: 80,
-            child: BookCover(
+            child: _BookCover(
+              bookId: widget.message.tradeRequest!.book.id,
               cover: widget.message.tradeRequest?.book.image,
-              borderRadius: AS.radiusS,
+              navigateToBookDetail: false,
             ),
           ),
           AS.wGap12,
