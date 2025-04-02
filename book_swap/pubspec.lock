@@ -124,17 +124,19 @@ packages:
   autoverpod:
     dependency: "direct main"
     description:
-      path: "/Users/kim/Development/projects/kimapp/pubs/autoverpod"
-      relative: false
-    source: path
-    version: "0.0.4+1"
+      name: autoverpod
+      sha256: "1b9aa477e9869d7ff3e5fe2d6af0f0da4576b0285b4213be4db4b46eec0a1136"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   autoverpod_generator:
     dependency: "direct dev"
     description:
-      path: "/Users/kim/Development/projects/kimapp/pubs/autoverpod_generator"
-      relative: false
-    source: path
-    version: "0.0.4+1"
+      name: autoverpod_generator
+      sha256: f8be5158da728aaa6fd027a5e1762724ba479cd85bd2bfd82132ce0e5acbf81f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -998,30 +1000,38 @@ packages:
   kimapp:
     dependency: "direct main"
     description:
-      path: "/Users/kim/Development/projects/kimapp/packages/kimapp"
-      relative: false
-    source: path
+      path: "packages/kimapp"
+      ref: master
+      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      url: "https://github.com/pckimlong/kimapp.git"
+    source: git
     version: "0.0.3"
   kimapp_generator:
     dependency: "direct dev"
     description:
-      path: "/Users/kim/Development/projects/kimapp/packages/kimapp_generator"
-      relative: false
-    source: path
+      path: "packages/kimapp_generator"
+      ref: master
+      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      url: "https://github.com/pckimlong/kimapp.git"
+    source: git
     version: "0.0.2"
   kimapp_supabase_helper:
     dependency: "direct main"
     description:
-      path: "/Users/kim/Development/projects/kimapp/packages/kimapp_supabase_helper"
-      relative: false
-    source: path
+      path: "packages/kimapp_supabase_helper"
+      ref: master
+      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      url: "https://github.com/pckimlong/kimapp.git"
+    source: git
     version: "0.0.3"
   kimapp_utils:
     dependency: "direct main"
     description:
-      path: "/Users/kim/Development/projects/kimapp/packages/kimapp_utils"
-      relative: false
-    source: path
+      path: "packages/kimapp_utils"
+      ref: master
+      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      url: "https://github.com/pckimlong/kimapp.git"
+    source: git
     version: "0.0.3"
   leak_tracker:
     dependency: transitive
@@ -1974,4 +1984,4 @@ packages:
     version: "2.0.3"
 sdks:
   dart: ">=3.7.0 <4.0.0"
-  flutter: ">=3.27.0"
+  flutter: ">=3.27.1"
