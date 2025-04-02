@@ -31,7 +31,7 @@ class UserRatingUpdate extends _$UserRatingUpdateWidget {
 
   @override
   void onSuccess(UserRatingModel result) {
-    ref.read(userRatingListProvider.notifier).updateItem(result);
+    ref.invalidate(userRatingListProvider);
     ref.read(userRatingDetailProvider(userRatingId).notifier).updateState((_) => result);
 
     //! Use with caution

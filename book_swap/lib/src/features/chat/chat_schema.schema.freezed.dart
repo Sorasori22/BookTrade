@@ -36,6 +36,8 @@ mixin _$ChatModel {
   int get unreadCount => throw _privateConstructorUsedError;
   @JsonKey(name: ChatModel.isSenderKey)
   bool get isSender => throw _privateConstructorUsedError;
+  @JsonKey(name: ChatModel.messageTypeKey)
+  MessageType? get messageType => throw _privateConstructorUsedError;
 
   /// Serializes this ChatModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,7 +63,8 @@ abstract class $ChatModelCopyWith<$Res> {
       @JsonKey(name: ChatModel.lastMessageKey) String lastMessage,
       @JsonKey(name: ChatModel.lastMessageTimeKey) DateTime lastMessageTime,
       @JsonKey(name: ChatModel.unreadCountKey) int unreadCount,
-      @JsonKey(name: ChatModel.isSenderKey) bool isSender});
+      @JsonKey(name: ChatModel.isSenderKey) bool isSender,
+      @JsonKey(name: ChatModel.messageTypeKey) MessageType? messageType});
 }
 
 /// @nodoc
@@ -87,6 +90,7 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
     Object? lastMessageTime = null,
     Object? unreadCount = null,
     Object? isSender = null,
+    Object? messageType = freezed,
   }) {
     return _then(_value.copyWith(
       messageId: null == messageId
@@ -121,6 +125,10 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.isSender
           : isSender // ignore: cast_nullable_to_non_nullable
               as bool,
+      messageType: freezed == messageType
+          ? _value.messageType
+          : messageType // ignore: cast_nullable_to_non_nullable
+              as MessageType?,
     ) as $Val);
   }
 }
@@ -142,7 +150,8 @@ abstract class _$$ChatModelImplCopyWith<$Res>
       @JsonKey(name: ChatModel.lastMessageKey) String lastMessage,
       @JsonKey(name: ChatModel.lastMessageTimeKey) DateTime lastMessageTime,
       @JsonKey(name: ChatModel.unreadCountKey) int unreadCount,
-      @JsonKey(name: ChatModel.isSenderKey) bool isSender});
+      @JsonKey(name: ChatModel.isSenderKey) bool isSender,
+      @JsonKey(name: ChatModel.messageTypeKey) MessageType? messageType});
 }
 
 /// @nodoc
@@ -166,6 +175,7 @@ class __$$ChatModelImplCopyWithImpl<$Res>
     Object? lastMessageTime = null,
     Object? unreadCount = null,
     Object? isSender = null,
+    Object? messageType = freezed,
   }) {
     return _then(_$ChatModelImpl(
       messageId: null == messageId
@@ -200,6 +210,10 @@ class __$$ChatModelImplCopyWithImpl<$Res>
           ? _value.isSender
           : isSender // ignore: cast_nullable_to_non_nullable
               as bool,
+      messageType: freezed == messageType
+          ? _value.messageType
+          : messageType // ignore: cast_nullable_to_non_nullable
+              as MessageType?,
     ));
   }
 }
@@ -219,7 +233,8 @@ class _$ChatModelImpl extends _ChatModel {
       @JsonKey(name: ChatModel.lastMessageTimeKey)
       required this.lastMessageTime,
       @JsonKey(name: ChatModel.unreadCountKey) required this.unreadCount,
-      @JsonKey(name: ChatModel.isSenderKey) required this.isSender})
+      @JsonKey(name: ChatModel.isSenderKey) required this.isSender,
+      @JsonKey(name: ChatModel.messageTypeKey) required this.messageType})
       : super._();
 
   factory _$ChatModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -249,10 +264,13 @@ class _$ChatModelImpl extends _ChatModel {
   @override
   @JsonKey(name: ChatModel.isSenderKey)
   final bool isSender;
+  @override
+  @JsonKey(name: ChatModel.messageTypeKey)
+  final MessageType? messageType;
 
   @override
   String toString() {
-    return 'ChatModel(messageId: $messageId, recipientId: $recipientId, recipientName: $recipientName, recipientAvatarPath: $recipientAvatarPath, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, unreadCount: $unreadCount, isSender: $isSender)';
+    return 'ChatModel(messageId: $messageId, recipientId: $recipientId, recipientName: $recipientName, recipientAvatarPath: $recipientAvatarPath, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, unreadCount: $unreadCount, isSender: $isSender, messageType: $messageType)';
   }
 
   @override
@@ -275,7 +293,9 @@ class _$ChatModelImpl extends _ChatModel {
             (identical(other.unreadCount, unreadCount) ||
                 other.unreadCount == unreadCount) &&
             (identical(other.isSender, isSender) ||
-                other.isSender == isSender));
+                other.isSender == isSender) &&
+            (identical(other.messageType, messageType) ||
+                other.messageType == messageType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -289,7 +309,8 @@ class _$ChatModelImpl extends _ChatModel {
       lastMessage,
       lastMessageTime,
       unreadCount,
-      isSender);
+      isSender,
+      messageType);
 
   /// Create a copy of ChatModel
   /// with the given fields replaced by the non-null parameter values.
@@ -322,8 +343,9 @@ abstract class _ChatModel extends ChatModel {
       @JsonKey(name: ChatModel.lastMessageTimeKey)
       required final DateTime lastMessageTime,
       @JsonKey(name: ChatModel.unreadCountKey) required final int unreadCount,
-      @JsonKey(name: ChatModel.isSenderKey)
-      required final bool isSender}) = _$ChatModelImpl;
+      @JsonKey(name: ChatModel.isSenderKey) required final bool isSender,
+      @JsonKey(name: ChatModel.messageTypeKey)
+      required final MessageType? messageType}) = _$ChatModelImpl;
   const _ChatModel._() : super._();
 
   factory _ChatModel.fromJson(Map<String, dynamic> json) =
@@ -353,6 +375,9 @@ abstract class _ChatModel extends ChatModel {
   @override
   @JsonKey(name: ChatModel.isSenderKey)
   bool get isSender;
+  @override
+  @JsonKey(name: ChatModel.messageTypeKey)
+  MessageType? get messageType;
 
   /// Create a copy of ChatModel
   /// with the given fields replaced by the non-null parameter values.

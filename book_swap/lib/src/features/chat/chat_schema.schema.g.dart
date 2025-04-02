@@ -20,6 +20,8 @@ _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
       lastMessageTime: DateTime.parse(json['last_message_time'] as String),
       unreadCount: (json['unread_count'] as num).toInt(),
       isSender: json['is_sender'] as bool,
+      messageType:
+          $enumDecodeNullable(_$MessageTypeEnumMap, json['message_type']),
     );
 
 Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>
@@ -32,7 +34,15 @@ Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>
       'last_message_time': instance.lastMessageTime.toIso8601String(),
       'unread_count': instance.unreadCount,
       'is_sender': instance.isSender,
+      'message_type': _$MessageTypeEnumMap[instance.messageType],
     };
+
+const _$MessageTypeEnumMap = {
+  MessageType.text: 'text',
+  MessageType.requestStarted: 'requestStarted',
+  MessageType.offeredBook: 'offeredBook',
+  MessageType.tradeConfirmed: 'tradeConfirmed',
+};
 
 // **************************************************************************
 // TableModelGenerator
@@ -49,5 +59,6 @@ const _tableChatModel = TableBuilder(
     ColumnBuilder('last_message_time'),
     ColumnBuilder('unread_count'),
     ColumnBuilder('is_sender'),
+    ColumnBuilder('message_type'),
   ],
 );

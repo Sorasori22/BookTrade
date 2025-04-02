@@ -9,6 +9,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kimapp/kimapp.dart';
 
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'user_rating_schema.dart';
 
@@ -42,7 +43,7 @@ class UserRatingTable {
   static const String ratedUserId = "rated_user_id";
 
   /// Column: trade_request_id
-  /// Data type: `int?`
+  /// Data type: `TradeRequestId?`
   /// Key: `trade_request_id`
   static const String tradeRequestId = "trade_request_id";
 
@@ -115,7 +116,7 @@ abstract class IUserRatingModel {
   UserRatingId get id;
   ProfileId get raterId;
   ProfileId get ratedUserId;
-  int? get tradeRequestId;
+  TradeRequestId? get tradeRequestId;
   int get rating;
   String? get comment;
   DateTime get createdAt;
@@ -140,7 +141,7 @@ sealed class UserRatingModel
   /// - UserRatingId id : JsonKey('id')
   /// - ProfileId raterId : JsonKey('rater_id')
   /// - ProfileId ratedUserId : JsonKey('rated_user_id')
-  /// - int? tradeRequestId : JsonKey('trade_request_id')
+  /// - TradeRequestId? tradeRequestId : JsonKey('trade_request_id')
   /// - int rating : JsonKey('rating')
   /// - String? comment : JsonKey('comment')
   /// - DateTime createdAt : JsonKey('created_at')
@@ -154,14 +155,14 @@ sealed class UserRatingModel
     @JsonKey(name: UserRatingModel.ratedUserIdKey)
     required ProfileId ratedUserId,
     @JsonKey(name: UserRatingModel.tradeRequestIdKey)
-    required int? tradeRequestId,
+    required TradeRequestId? tradeRequestId,
     @JsonKey(name: UserRatingModel.ratingKey) required int rating,
     @JsonKey(name: UserRatingModel.commentKey) required String? comment,
     @JsonKey(name: UserRatingModel.createdAtKey) required DateTime createdAt,
-    @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
     @JsonKey(name: UserRatingModel.raterKey)
     required ProfileLiteModel rater,
-    @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
     @JsonKey(name: UserRatingModel.ratedUserKey)
     required ProfileLiteModel ratedUser,
   }) = _UserRatingModel;
@@ -198,11 +199,11 @@ sealed class UserRatingModel
   static const String createdAtKey = "created_at";
 
   /// Field name for rater field with JsonKey('rater')
-  /// This is json key for joined field. with foreign key: rater_id and candidate key: id
+  /// This is json key for joined field. with foreign key: rater_id and candidate key: null
   static const String raterKey = "rater";
 
   /// Field name for ratedUser field with JsonKey('ratedUser')
-  /// This is json key for joined field. with foreign key: rated_user_id and candidate key: id
+  /// This is json key for joined field. with foreign key: rated_user_id and candidate key: null
   static const String ratedUserKey = "ratedUser";
 }
 
@@ -282,7 +283,7 @@ sealed class UserRatingDetailModel
   /// - UserRatingId id : JsonKey('id')
   /// - ProfileId raterId : JsonKey('rater_id')
   /// - ProfileId ratedUserId : JsonKey('rated_user_id')
-  /// - int? tradeRequestId : JsonKey('trade_request_id')
+  /// - TradeRequestId? tradeRequestId : JsonKey('trade_request_id')
   /// - int rating : JsonKey('rating')
   /// - String? comment : JsonKey('comment')
   /// - DateTime createdAt : JsonKey('created_at')
@@ -296,15 +297,15 @@ sealed class UserRatingDetailModel
     @JsonKey(name: UserRatingDetailModel.ratedUserIdKey)
     required ProfileId ratedUserId,
     @JsonKey(name: UserRatingDetailModel.tradeRequestIdKey)
-    required int? tradeRequestId,
+    required TradeRequestId? tradeRequestId,
     @JsonKey(name: UserRatingDetailModel.ratingKey) required int rating,
     @JsonKey(name: UserRatingDetailModel.commentKey) required String? comment,
     @JsonKey(name: UserRatingDetailModel.createdAtKey)
     required DateTime createdAt,
-    @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
     @JsonKey(name: UserRatingDetailModel.raterKey)
     required ProfileLiteModel rater,
-    @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
     @JsonKey(name: UserRatingDetailModel.ratedUserKey)
     required ProfileLiteModel ratedUser,
   }) = _UserRatingDetailModel;
@@ -341,11 +342,11 @@ sealed class UserRatingDetailModel
   static const String createdAtKey = "created_at";
 
   /// Field name for rater field with JsonKey('rater')
-  /// This is json key for joined field. with foreign key: rater_id and candidate key: id
+  /// This is json key for joined field. with foreign key: rater_id and candidate key: null
   static const String raterKey = "rater";
 
   /// Field name for ratedUser field with JsonKey('ratedUser')
-  /// This is json key for joined field. with foreign key: rated_user_id and candidate key: id
+  /// This is json key for joined field. with foreign key: rated_user_id and candidate key: null
   static const String ratedUserKey = "ratedUser";
 
   /// Converts this model to a base model.
@@ -380,7 +381,7 @@ sealed class UserRatingCreateParam
   /// Fields:
   /// - ProfileId raterId : JsonKey('rater_id')
   /// - ProfileId ratedUserId : JsonKey('rated_user_id')
-  /// - int? tradeRequestId : JsonKey('trade_request_id')
+  /// - TradeRequestId? tradeRequestId : JsonKey('trade_request_id')
   /// - int rating : JsonKey('rating')
   /// - String? comment : JsonKey('comment')
   @JsonSerializable(explicitToJson: true)
@@ -389,7 +390,7 @@ sealed class UserRatingCreateParam
     @JsonKey(name: UserRatingCreateParam.ratedUserIdKey)
     required ProfileId ratedUserId,
     @JsonKey(name: UserRatingCreateParam.tradeRequestIdKey)
-    required int? tradeRequestId,
+    required TradeRequestId? tradeRequestId,
     @JsonKey(name: UserRatingCreateParam.ratingKey) required int rating,
     @JsonKey(name: UserRatingCreateParam.commentKey) required String? comment,
   }) = _UserRatingCreateParam;

@@ -10,6 +10,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kimapp/kimapp.dart';
 
 import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/message/message_schema.dart';
 import 'package:book_swap/src/features/message/message_schema.schema.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'chat_schema.dart';
@@ -66,6 +67,11 @@ class ChatTable {
   /// Data type: `bool`
   /// Key: `is_sender`
   static const String isSender = "is_sender";
+
+  /// Column: message_type
+  /// Data type: `MessageType?`
+  /// Key: `message_type`
+  static const String messageType = "message_type";
 }
 
 /// Base class of this schema, this is the parent of all generated models in this schema
@@ -81,6 +87,7 @@ abstract class IChatModel {
   DateTime get lastMessageTime;
   int get unreadCount;
   bool get isSender;
+  MessageType? get messageType;
 }
 
 /// Base model class for ChatModel.
@@ -103,6 +110,7 @@ sealed class ChatModel with _$ChatModel implements BaseChatSchema, IChatModel {
   /// - DateTime lastMessageTime : JsonKey('last_message_time')
   /// - int unreadCount : JsonKey('unread_count')
   /// - bool isSender : JsonKey('is_sender')
+  /// - MessageType? messageType : JsonKey('message_type')
   @TableModel(ChatModel.tableName)
   @JsonSerializable(explicitToJson: true)
   const factory ChatModel({
@@ -116,6 +124,7 @@ sealed class ChatModel with _$ChatModel implements BaseChatSchema, IChatModel {
     required DateTime lastMessageTime,
     @JsonKey(name: ChatModel.unreadCountKey) required int unreadCount,
     @JsonKey(name: ChatModel.isSenderKey) required bool isSender,
+    @JsonKey(name: ChatModel.messageTypeKey) required MessageType? messageType,
   }) = _ChatModel;
 
   /// Creates an instance of ChatModel from a JSON map.
@@ -151,4 +160,7 @@ sealed class ChatModel with _$ChatModel implements BaseChatSchema, IChatModel {
 
   /// Field name for isSender field with JsonKey('is_sender')
   static const String isSenderKey = "is_sender";
+
+  /// Field name for messageType field with JsonKey('message_type')
+  static const String messageTypeKey = "message_type";
 }

@@ -39,6 +39,7 @@ import '../../../features/message/params/message_list_param.dart';
 import '../../../features/message/providers/message_send_text_provider.dart';
 import '../../app/app_style.dart';
 import '../../widgets/components/label_text.dart';
+import '../user_rating/rating_create_dialog.dart';
 
 @RoutePage()
 class MessageRoomPage extends ConsumerStatefulWidget {
@@ -73,7 +74,6 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
       // To make sure mistake on the realtime, we need to refresh the message
       ref.invalidate(messageListPaginationProvider);
 
-      _clearUnreadCount();
       _loadUserInfo();
       _listenRealtimeMessages();
     });
@@ -136,6 +136,7 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
   Widget build(BuildContext context) {
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
+        _clearUnreadCount();
         ref.invalidate(chatListPaginationProvider);
       },
       child: Scaffold(
@@ -302,6 +303,7 @@ class _ConfirmTradeItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isRequester = message.tradeRequest?.requesterId == ref.watch(currentProfileIdProvider)!;
+    final tradeRequestId = message.tradeRequest!.id;
 
     return AppCard(
       padding: Pad(all: 16).copyWith(top: 12),
@@ -424,7 +426,17 @@ class _ConfirmTradeItem extends ConsumerWidget {
               alignment: Alignment.center,
               child: AppButton(
                 fullWidth: true,
-                onPressed: () {},
+                onPressed: () {
+                  final isRequester =
+                      message.tradeRequest?.requesterId == ref.watch(currentProfileIdProvider)!;
+                  RatingCreateDialog.show(
+                    context,
+                    ratedProfileId: isRequester
+                        ? message.tradeRequest!.book.ownerId
+                        : message.tradeRequest!.requesterId,
+                    tradeRequestId: message.tradeRequest!.id,
+                  );
+                },
                 label: 'Leave Review',
                 variant: AppButtonVariant.outline,
                 borderRadius: AS.radiusS,

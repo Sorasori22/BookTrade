@@ -13,7 +13,7 @@ part 'message_list_provider.g.dart';
 @riverpod
 class MessageList extends _$MessageList with IListAsyncNotifier<MessageModel> {
   @override
-  bool identity(MessageModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<MessageModel>> build() {

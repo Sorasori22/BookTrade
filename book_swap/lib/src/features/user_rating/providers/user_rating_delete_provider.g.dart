@@ -8,7 +8,7 @@ part of 'user_rating_delete_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userRatingDeleteHash() => r'c9a0736d7245c6af2e0c4c0bb5e04e31bded58b0';
+String _$userRatingDeleteHash() => r'e00c73f6f6e29d404d154d41fb395e61d38cd364';
 
 /// Copied from Dart SDK
 class _SystemHash {

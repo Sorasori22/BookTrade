@@ -13,7 +13,7 @@ part 'genre_list_provider.g.dart';
 @riverpod
 class GenreList extends _$GenreList with IListAsyncNotifier<GenreModel> {
   @override
-  bool identity(GenreModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<GenreModel>> build() {

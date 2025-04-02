@@ -13,7 +13,7 @@ part 'book_rating_list_provider.g.dart';
 @riverpod
 class BookRatingList extends _$BookRatingList with IListAsyncNotifier<BookRatingModel> {
   @override
-  bool identity(BookRatingModel item) => item.id == item.id;
+  bool comparer(BookRatingModel item1, BookRatingModel item2) => item1.id == item2.id;
 
   @override
   FutureOr<IList<BookRatingModel>> build() {

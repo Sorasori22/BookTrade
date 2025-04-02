@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserRatingListParam {
   ProfileId? get raterId => throw _privateConstructorUsedError;
   ProfileId? get ratedUserId => throw _privateConstructorUsedError;
-  int? get tradeRequestId => throw _privateConstructorUsedError;
+  TradeRequestId? get tradeRequestId => throw _privateConstructorUsedError;
   int? get minRating => throw _privateConstructorUsedError;
   int? get maxRating => throw _privateConstructorUsedError;
 
@@ -38,7 +38,7 @@ abstract class $UserRatingListParamCopyWith<$Res> {
   $Res call(
       {ProfileId? raterId,
       ProfileId? ratedUserId,
-      int? tradeRequestId,
+      TradeRequestId? tradeRequestId,
       int? minRating,
       int? maxRating});
 }
@@ -76,7 +76,7 @@ class _$UserRatingListParamCopyWithImpl<$Res, $Val extends UserRatingListParam>
       tradeRequestId: freezed == tradeRequestId
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as TradeRequestId?,
       minRating: freezed == minRating
           ? _value.minRating
           : minRating // ignore: cast_nullable_to_non_nullable
@@ -100,7 +100,7 @@ abstract class _$$UserRatingListParamImplCopyWith<$Res>
   $Res call(
       {ProfileId? raterId,
       ProfileId? ratedUserId,
-      int? tradeRequestId,
+      TradeRequestId? tradeRequestId,
       int? minRating,
       int? maxRating});
 }
@@ -136,7 +136,7 @@ class __$$UserRatingListParamImplCopyWithImpl<$Res>
       tradeRequestId: freezed == tradeRequestId
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as TradeRequestId?,
       minRating: freezed == minRating
           ? _value.minRating
           : minRating // ignore: cast_nullable_to_non_nullable
@@ -164,7 +164,7 @@ class _$UserRatingListParamImpl implements _UserRatingListParam {
   @override
   final ProfileId? ratedUserId;
   @override
-  final int? tradeRequestId;
+  final TradeRequestId? tradeRequestId;
   @override
   final int? minRating;
   @override
@@ -209,7 +209,7 @@ abstract class _UserRatingListParam implements UserRatingListParam {
   const factory _UserRatingListParam(
       {final ProfileId? raterId,
       final ProfileId? ratedUserId,
-      final int? tradeRequestId,
+      final TradeRequestId? tradeRequestId,
       final int? minRating,
       final int? maxRating}) = _$UserRatingListParamImpl;
 
@@ -218,7 +218,7 @@ abstract class _UserRatingListParam implements UserRatingListParam {
   @override
   ProfileId? get ratedUserId;
   @override
-  int? get tradeRequestId;
+  TradeRequestId? get tradeRequestId;
   @override
   int? get minRating;
   @override

@@ -14,7 +14,7 @@ part 'trade_request_list_provider.g.dart';
 @riverpod
 class TradeRequestList extends _$TradeRequestList with IListAsyncNotifier<TradeRequestModel> {
   @override
-  bool identity(TradeRequestModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<TradeRequestModel>> build(TradeRequestListParam param) {

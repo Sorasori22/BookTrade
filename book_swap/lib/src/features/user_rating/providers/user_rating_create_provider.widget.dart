@@ -15,7 +15,9 @@ import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/core/account/current_account_provider.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/user_rating/i_user_rating_repo.dart';
 import 'package:book_swap/src/features/user_rating/user_rating_schema.schema.dart';
@@ -35,7 +37,7 @@ extension UserRatingCreateFieldUpdater on UserRatingCreate {
       state = state.copyWith(ratedUserId: newValue);
 
   /// Update the tradeRequestId field of UserRatingCreateParam class.
-  void updateTradeRequestId(int? newValue) =>
+  void updateTradeRequestId(TradeRequestId? newValue) =>
       state = state.copyWith(tradeRequestId: newValue);
 
   /// Update the rating field of UserRatingCreateParam class.
@@ -51,10 +53,12 @@ extension UserRatingCreateFieldUpdater on UserRatingCreate {
 class _UserRatingCreateFormInheritedWidget extends InheritedWidget {
   const _UserRatingCreateFormInheritedWidget({
     required this.formKey,
+    required this.params,
     required super.child,
   });
 
   final GlobalKey<FormState> formKey;
+  final ({ProfileId ratedProfileId, TradeRequestId? tradeRequestId}) params;
 
   static _UserRatingCreateFormInheritedWidget of(BuildContext context) {
     return context
@@ -67,7 +71,7 @@ class _UserRatingCreateFormInheritedWidget extends InheritedWidget {
   bool updateShouldNotify(
     covariant _UserRatingCreateFormInheritedWidget oldWidget,
   ) {
-    return formKey != oldWidget.formKey;
+    return formKey != oldWidget.formKey && params != oldWidget.params;
   }
 }
 
@@ -76,13 +80,25 @@ class UserRatingCreateProxyWidgetRef extends WidgetRef {
 
   final WidgetRef _ref;
 
-  AsyncValue<UserRatingModel>? get status =>
-      _ref.watch(userRatingCreateCallStatusProvider);
+  ({ProfileId ratedProfileId, TradeRequestId? tradeRequestId}) get params =>
+      _UserRatingCreateFormInheritedWidget.of(context).params;
+
+  AsyncValue<UserRatingModel>? get status => _ref.watch(
+    userRatingCreateCallStatusProvider((
+      ratedProfileId: params.ratedProfileId,
+      tradeRequestId: params.tradeRequestId,
+    )),
+  );
 
   GlobalKey<FormState> get formKey =>
       _UserRatingCreateFormInheritedWidget.of(context).formKey;
 
-  UserRatingCreate get notifier => _ref.read(userRatingCreateProvider.notifier);
+  UserRatingCreate get notifier => _ref.read(
+    userRatingCreateProvider(
+      ratedProfileId: params.ratedProfileId,
+      tradeRequestId: params.tradeRequestId,
+    ).notifier,
+  );
 
   /// Submits the form. Internally this calls [notifier.submit] with the form key validated.
   Future<AsyncValue<UserRatingModel>> submit() async {
@@ -99,7 +115,12 @@ class UserRatingCreateProxyWidgetRef extends WidgetRef {
 
   Selected select<Selected>(
     Selected Function(UserRatingCreateParam) selector,
-  ) => _ref.watch(userRatingCreateProvider.select((value) => selector(value)));
+  ) => _ref.watch(
+    userRatingCreateProvider(
+      ratedProfileId: params.ratedProfileId,
+      tradeRequestId: params.tradeRequestId,
+    ).select((value) => selector(value)),
+  );
 
   @override
   BuildContext get context => _ref.context;
@@ -143,6 +164,8 @@ class UserRatingCreateProxyWidgetRef extends WidgetRef {
 class UserRatingCreateFormScope extends ConsumerStatefulWidget {
   const UserRatingCreateFormScope({
     super.key,
+    required this.ratedProfileId,
+    this.tradeRequestId,
     this.formKey,
     this.autovalidateMode,
     this.onPopInvokedWithResult,
@@ -153,7 +176,8 @@ class UserRatingCreateFormScope extends ConsumerStatefulWidget {
          child != null || builder != null,
          'Either child or builder must be provided',
        );
-
+  final ProfileId ratedProfileId;
+  final TradeRequestId? tradeRequestId;
   final Widget Function(
     BuildContext context,
     UserRatingCreateProxyWidgetRef ref,
@@ -189,14 +213,24 @@ class _UserRatingCreateFormScopeState
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(userRatingCreateCallStatusProvider, (previous, next) {
-      if (previous?.hasValue == false && next?.hasValue == true) {
-        widget.onSuccessed?.call(context, next!.requireValue);
-      }
-    });
+    ref.listen(
+      userRatingCreateCallStatusProvider((
+        ratedProfileId: widget.ratedProfileId,
+        tradeRequestId: widget.tradeRequestId,
+      )),
+      (previous, next) {
+        if (previous?.hasValue == false && next?.hasValue == true) {
+          widget.onSuccessed?.call(context, next!.requireValue);
+        }
+      },
+    );
 
     return _UserRatingCreateFormInheritedWidget(
       formKey: _cachedFormKey,
+      params: (
+        ratedProfileId: widget.ratedProfileId,
+        tradeRequestId: widget.tradeRequestId,
+      ),
       child: Form(
         key: _cachedFormKey,
         autovalidateMode: widget.autovalidateMode,
@@ -246,6 +280,25 @@ bool _debugCheckHasUserRatingCreateForm(BuildContext context) {
   return true;
 }
 
+class UserRatingCreateFormParams extends ConsumerWidget {
+  const UserRatingCreateFormParams({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    UserRatingCreateProxyWidgetRef ref,
+    ({ProfileId ratedProfileId, TradeRequestId? tradeRequestId}) params,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasUserRatingCreateForm(context);
+
+    final params = _UserRatingCreateFormInheritedWidget.of(context).params;
+    return builder(context, UserRatingCreateProxyWidgetRef(ref), params);
+  }
+}
+
 class UserRatingCreateFormSelect<Selected> extends ConsumerWidget {
   const UserRatingCreateFormSelect({
     super.key,
@@ -268,12 +321,16 @@ class UserRatingCreateFormSelect<Selected> extends ConsumerWidget {
     _debugCheckHasUserRatingCreateForm(context);
 
     if (onStateChanged != null) {
-      ref.listen(userRatingCreateProvider.select((value) => selector(value)), (
-        pre,
-        next,
-      ) {
-        if (pre != next) onStateChanged!(pre, next);
-      });
+      final params = _UserRatingCreateFormInheritedWidget.of(context).params;
+      ref.listen(
+        userRatingCreateProvider(
+          ratedProfileId: params.ratedProfileId,
+          tradeRequestId: params.tradeRequestId,
+        ).select((value) => selector(value)),
+        (pre, next) {
+          if (pre != next) onStateChanged!(pre, next);
+        },
+      );
     }
     final stateRef = UserRatingCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.select(selector));
@@ -289,7 +346,7 @@ class UserRatingCreateFormState extends ConsumerWidget {
   });
 
   /// The builder function that constructs the widget tree.
-  /// Access the state directly via ref.state, which is equivalent to ref.watch(userRatingCreateProvider)
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(userRatingCreateProvider(ratedProfileId : params.ratedProfileId, tradeRequestId : params.tradeRequestId))
   ///
   /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
   /// The ref parameter provides type-safe access to the provider state and notifier
@@ -311,11 +368,22 @@ class UserRatingCreateFormState extends ConsumerWidget {
     _debugCheckHasUserRatingCreateForm(context);
 
     if (onStateChanged != null) {
-      ref.listen(userRatingCreateProvider, (pre, next) {
-        if (pre != next) onStateChanged!(pre, next);
-      });
+      final params = _UserRatingCreateFormInheritedWidget.of(context).params;
+      ref.listen(
+        userRatingCreateProvider(
+          ratedProfileId: params.ratedProfileId,
+          tradeRequestId: params.tradeRequestId,
+        ),
+        (pre, next) {
+          if (pre != next) onStateChanged!(pre, next);
+        },
+      );
     }
-    return builder(context, UserRatingCreateProxyWidgetRef(ref), child);
+    return UserRatingCreateFormParams(
+      builder:
+          (context, ref, params) =>
+              builder(context, UserRatingCreateProxyWidgetRef(ref), child),
+    );
   }
 }
 
@@ -343,11 +411,18 @@ class UserRatingCreateFormStatus extends ConsumerWidget {
     _debugCheckHasUserRatingCreateForm(context);
 
     if (onChanged != null) {
-      ref.listen(userRatingCreateCallStatusProvider, (previous, next) {
-        if (previous != next) {
-          onChanged!(previous, next);
-        }
-      });
+      final params = _UserRatingCreateFormInheritedWidget.of(context).params;
+      ref.listen(
+        userRatingCreateCallStatusProvider((
+          ratedProfileId: params.ratedProfileId,
+          tradeRequestId: params.tradeRequestId,
+        )),
+        (previous, next) {
+          if (previous != next) {
+            onChanged!(previous, next);
+          }
+        },
+      );
     }
     final stateRef = UserRatingCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.status);
@@ -418,10 +493,10 @@ class UserRatingCreateTradeRequestIdProxyWidgetRef
   UserRatingCreateTradeRequestIdProxyWidgetRef(super._ref);
 
   /// Access the field value directly.
-  int? get tradeRequestId => select((state) => state.tradeRequestId);
+  TradeRequestId? get tradeRequestId => select((state) => state.tradeRequestId);
 
   /// Update the field value directly.
-  void updateTradeRequestId(int? newValue) =>
+  void updateTradeRequestId(TradeRequestId? newValue) =>
       notifier.updateTradeRequestId(newValue);
 }
 
@@ -515,22 +590,35 @@ class UserRatingCreateCommentField extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasUserRatingCreateForm(context);
 
+    final params = _UserRatingCreateFormInheritedWidget.of(context).params;
+
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(userRatingCreateProvider).comment;
+    final initialValue =
+        ref
+            .read(
+              userRatingCreateProvider(
+                ratedProfileId: params.ratedProfileId,
+                tradeRequestId: params.tradeRequestId,
+              ),
+            )
+            .comment;
 
     final controller =
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listen(userRatingCreateProvider.select((value) => value.comment), (
-      previous,
-      next,
-    ) {
-      if (previous != next && controller.text != next) {
-        controller.text = next ?? "";
-      }
-      onChanged?.call(previous, next);
-    });
+    ref.listen(
+      userRatingCreateProvider(
+        ratedProfileId: params.ratedProfileId,
+        tradeRequestId: params.tradeRequestId,
+      ).select((value) => value.comment),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
+    );
 
     // Initialize external controller if provided
     useEffect(() {
@@ -545,10 +633,23 @@ class UserRatingCreateCommentField extends HookConsumerWidget {
     // Setup text listener
     useEffect(() {
       void listener() {
-        final currentValue = ref.read(userRatingCreateProvider).comment;
+        final currentValue =
+            ref
+                .read(
+                  userRatingCreateProvider(
+                    ratedProfileId: params.ratedProfileId,
+                    tradeRequestId: params.tradeRequestId,
+                  ),
+                )
+                .comment;
         if (currentValue != controller.text) {
           ref
-              .read(userRatingCreateProvider.notifier)
+              .read(
+                userRatingCreateProvider(
+                  ratedProfileId: params.ratedProfileId,
+                  tradeRequestId: params.tradeRequestId,
+                ).notifier,
+              )
               .updateComment(controller.text);
         }
       }

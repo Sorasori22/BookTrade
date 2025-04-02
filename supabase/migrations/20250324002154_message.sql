@@ -14,7 +14,8 @@ returns table (
     last_message text,
     last_message_time timestamptz,
     unread_count bigint,
-    is_sender boolean
+    is_sender boolean,
+    message_type text
 ) as 
 $$
     begin
@@ -31,7 +32,8 @@ $$
                     m.recipient_id,
                     m.content as last_message,
                     m.created_at as last_message_time,
-                    m.sender_id = (select auth.uid()) as is_sender
+                    m.sender_id = (select auth.uid()) as is_sender,
+                    m.type as message_type
                 from public.messages m
                 where m.sender_id = (select auth.uid()) or m.recipient_id = (select auth.uid())
                 order by 
@@ -63,7 +65,8 @@ $$
                 m.last_message,
                 m.last_message_time,
                 coalesce(u.unread_count, 0) as unread_count,
-                m.is_sender
+                m.is_sender,
+                m.message_type
             from latest_messages m
             join public.profiles p on p.id = case 
                 when m.sender_id = (select auth.uid()) then m.recipient_id 

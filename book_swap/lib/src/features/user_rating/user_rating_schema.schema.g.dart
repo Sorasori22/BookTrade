@@ -14,7 +14,9 @@ _$UserRatingModelImpl _$$UserRatingModelImplFromJson(
       id: UserRatingId.fromJson(json['id']),
       raterId: ProfileId.fromJson(json['rater_id']),
       ratedUserId: ProfileId.fromJson(json['rated_user_id']),
-      tradeRequestId: (json['trade_request_id'] as num?)?.toInt(),
+      tradeRequestId: json['trade_request_id'] == null
+          ? null
+          : TradeRequestId.fromJson(json['trade_request_id']),
       rating: (json['rating'] as num).toInt(),
       comment: json['comment'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -29,7 +31,7 @@ Map<String, dynamic> _$$UserRatingModelImplToJson(
       'id': instance.id.toJson(),
       'rater_id': instance.raterId.toJson(),
       'rated_user_id': instance.ratedUserId.toJson(),
-      'trade_request_id': instance.tradeRequestId,
+      'trade_request_id': instance.tradeRequestId?.toJson(),
       'rating': instance.rating,
       'comment': instance.comment,
       'created_at': instance.createdAt.toIso8601String(),
@@ -63,7 +65,9 @@ _$UserRatingDetailModelImpl _$$UserRatingDetailModelImplFromJson(
       id: UserRatingId.fromJson(json['id']),
       raterId: ProfileId.fromJson(json['rater_id']),
       ratedUserId: ProfileId.fromJson(json['rated_user_id']),
-      tradeRequestId: (json['trade_request_id'] as num?)?.toInt(),
+      tradeRequestId: json['trade_request_id'] == null
+          ? null
+          : TradeRequestId.fromJson(json['trade_request_id']),
       rating: (json['rating'] as num).toInt(),
       comment: json['comment'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -78,7 +82,7 @@ Map<String, dynamic> _$$UserRatingDetailModelImplToJson(
       'id': instance.id.toJson(),
       'rater_id': instance.raterId.toJson(),
       'rated_user_id': instance.ratedUserId.toJson(),
-      'trade_request_id': instance.tradeRequestId,
+      'trade_request_id': instance.tradeRequestId?.toJson(),
       'rating': instance.rating,
       'comment': instance.comment,
       'created_at': instance.createdAt.toIso8601String(),
@@ -91,7 +95,9 @@ _$UserRatingCreateParamImpl _$$UserRatingCreateParamImplFromJson(
     _$UserRatingCreateParamImpl(
       raterId: ProfileId.fromJson(json['rater_id']),
       ratedUserId: ProfileId.fromJson(json['rated_user_id']),
-      tradeRequestId: (json['trade_request_id'] as num?)?.toInt(),
+      tradeRequestId: json['trade_request_id'] == null
+          ? null
+          : TradeRequestId.fromJson(json['trade_request_id']),
       rating: (json['rating'] as num).toInt(),
       comment: json['comment'] as String?,
     );
@@ -101,7 +107,7 @@ Map<String, dynamic> _$$UserRatingCreateParamImplToJson(
     <String, dynamic>{
       'rater_id': instance.raterId.toJson(),
       'rated_user_id': instance.ratedUserId.toJson(),
-      'trade_request_id': instance.tradeRequestId,
+      'trade_request_id': instance.tradeRequestId?.toJson(),
       'rating': instance.rating,
       'comment': instance.comment,
     };
@@ -135,9 +141,9 @@ const _tableUserRatingModel = TableBuilder(
     ColumnBuilder('comment'),
     ColumnBuilder('created_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "rater", candidateKey: 'id', foreignKey: 'rater_id'),
+        key: "rater", candidateKey: null, foreignKey: 'rater_id'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "ratedUser", candidateKey: 'id', foreignKey: 'rated_user_id'),
+        key: "ratedUser", candidateKey: null, foreignKey: 'rated_user_id'),
   ],
 );
 
@@ -163,8 +169,8 @@ const _tableUserRatingDetailModel = TableBuilder(
     ColumnBuilder('comment'),
     ColumnBuilder('created_at'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "rater", candidateKey: 'id', foreignKey: 'rater_id'),
+        key: "rater", candidateKey: null, foreignKey: 'rater_id'),
     ColumnBuilder.join(ProfileLiteModel.table,
-        key: "ratedUser", candidateKey: 'id', foreignKey: 'rated_user_id'),
+        key: "ratedUser", candidateKey: null, foreignKey: 'rated_user_id'),
   ],
 );

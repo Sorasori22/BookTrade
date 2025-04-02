@@ -13,7 +13,7 @@ part 'completed_swap_list_provider.g.dart';
 @riverpod
 class CompletedSwapList extends _$CompletedSwapList with IListAsyncNotifier<CompletedSwapModel> {
   @override
-  bool identity(CompletedSwapModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<CompletedSwapModel>> build() {

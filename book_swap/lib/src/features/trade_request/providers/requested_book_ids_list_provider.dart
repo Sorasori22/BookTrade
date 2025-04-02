@@ -15,7 +15,7 @@ part 'requested_book_ids_list_provider.g.dart';
 @riverpod
 class PrendingTradeRequestList extends _$PrendingTradeRequestList with IListAsyncNotifier {
   @override
-  bool identity(TradeRequestModel item) => item == item;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<TradeRequestModel>> build() async {

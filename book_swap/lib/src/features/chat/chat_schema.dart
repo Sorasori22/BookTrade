@@ -1,4 +1,5 @@
 import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/message/message_schema.dart';
 import 'package:book_swap/src/features/message/message_schema.schema.dart';
 import 'package:kimapp/kimapp.dart';
 
@@ -18,4 +19,5 @@ class ChatSchema extends KimappSchema {
   final lastMessageTime = Field<DateTime>('last_message_time');
   final unreadCount = Field<int>('unread_count');
   final isSender = Field<bool>('is_sender');
+  final messageType = Field<MessageType?>('message_type');
 }
