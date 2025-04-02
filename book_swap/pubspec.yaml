@@ -19,6 +19,7 @@ dependencies:
   cached_network_image: ^3.4.1
   connectivity_plus: ^6.1.1
   cupertino_icons: ^1.0.8
+  onesignal_flutter: ^5.1.2
   dartx: ^1.2.0
   desktop_drop: ^0.5.0
   device_info_plus: ^11.2.0

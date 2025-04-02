@@ -1,3 +1,4 @@
+import 'package:book_swap/src/presentation/startup/tasks/init_notification_task.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
@@ -46,6 +47,7 @@ class KimappRunner {
       InitSupabaseTask(),
       InitDeviceInfoTask(),
       InitAppSettingTask(),
+      InitNotificationTask(),
     ];
 
     await Future.wait(tasks.map((task) => task._initialize(context)));

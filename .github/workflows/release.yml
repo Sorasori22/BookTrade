@@ -30,6 +30,9 @@ jobs:
         - name: Push change to supabase
           run: supabase db push
 
+        - name: Deploy Supabase Functions
+          run: supabase functions deploy notify --project-ref $SUPABASE_PROJECT_ID --no-verify-jwt
+
   release_apk:
     needs: push_supabase
     runs-on: ubuntu-latest

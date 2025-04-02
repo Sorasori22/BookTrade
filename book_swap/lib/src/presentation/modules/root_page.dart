@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/core/account/current_account_provider.widget.dart';
+import 'package:book_swap/src/core/helpers/logger.dart';
 import 'package:book_swap/src/features/banner/providers/banner_provider.dart';
 import 'package:book_swap/src/features/trade_request/providers/trade_request_list_provider.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_supabase_helper/supabase_provider.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/account/account.dart';
@@ -16,6 +18,7 @@ import '../../features/message/providers/message_list_pagination_provider.dart';
 import '../../features/trade_request/providers/my_trade_request_list_provider.dart';
 import '../../features/trade_request/trade_request_schema.dart';
 import '../router/app_router.gr.dart';
+import '../startup/tasks/init_notification_task.dart';
 
 @RoutePage()
 class RootPage extends ConsumerStatefulWidget {
@@ -25,7 +28,7 @@ class RootPage extends ConsumerStatefulWidget {
   ConsumerState<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends ConsumerState<RootPage> {
+class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
   RealtimeChannel? _tradeRequestChannel;
   RealtimeChannel? _messageChannel;
   RealtimeChannel? _tradeMessageChannel;
@@ -38,6 +41,18 @@ class _RootPageState extends ConsumerState<RootPage> {
       _listenTradeRequestRealtime();
       _listenMessageRealtime();
       _listenTradeMessageEvent();
+    });
+
+    notificationClickEventHandler(ref, (OSNotificationClickEvent event) {
+      try {
+        final payload = event.notification.additionalData;
+        logInfo('Got notification payload: $payload');
+        if (payload == null) return;
+
+        throw UnimplementedError();
+      } catch (e) {
+        logError('Error handling notification click', e);
+      }
     });
   }
 
