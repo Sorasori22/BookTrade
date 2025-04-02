@@ -92,20 +92,20 @@ dev_dependencies:
   riverpod_generator: ^2.6.3
   riverpod_lint: ^2.6.3
 
-dependency_overrides:
+# dependency_overrides:
   # Remove to use pub.dev version
-  autoverpod:
-    path: /Users/kim/Development/projects/kimapp/pubs/autoverpod
-  autoverpod_generator:
-    path: /Users/kim/Development/projects/kimapp/pubs/autoverpod_generator
-  kimapp_generator:
-    path: /Users/kim/Development/projects/kimapp/packages/kimapp_generator
-  kimapp_utils:
-    path: /Users/kim/Development/projects/kimapp/packages/kimapp_utils
-  kimapp_supabase_helper:
-    path: /Users/kim/Development/projects/kimapp/packages/kimapp_supabase_helper
-  kimapp:
-    path: /Users/kim/Development/projects/kimapp/packages/kimapp
+  # autoverpod:
+  #   path: /Users/kim/Development/projects/kimapp/pubs/autoverpod
+  # autoverpod_generator:
+  #   path: /Users/kim/Development/projects/kimapp/pubs/autoverpod_generator
+  # kimapp_generator:
+  #   path: /Users/kim/Development/projects/kimapp/packages/kimapp_generator
+  # kimapp_utils:
+  #   path: /Users/kim/Development/projects/kimapp/packages/kimapp_utils
+  # kimapp_supabase_helper:
+  #   path: /Users/kim/Development/projects/kimapp/packages/kimapp_supabase_helper
+  # kimapp:
+  #   path: /Users/kim/Development/projects/kimapp/packages/kimapp
 
 flutter_launcher_icons:
   android: "launcher_icon"
