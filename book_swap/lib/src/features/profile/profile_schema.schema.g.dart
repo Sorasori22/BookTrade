@@ -52,6 +52,7 @@ _$ProfileLiteModelImpl _$$ProfileLiteModelImplFromJson(
       avatar: json['avatar_url'] == null
           ? null
           : ImageObject.fromJson(json['avatar_url']),
+      createdAt: DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$$ProfileLiteModelImplToJson(
@@ -62,6 +63,7 @@ Map<String, dynamic> _$$ProfileLiteModelImplToJson(
       'email': instance.email,
       'fullname': instance.fullname,
       'avatar_url': instance.avatar?.toJson(),
+      'created_at': instance.createdAt.toIso8601String(),
     };
 
 _$ProfileDetailModelImpl _$$ProfileDetailModelImplFromJson(
@@ -154,6 +156,7 @@ const _tableProfileLiteModel = TableBuilder(
     ColumnBuilder('email'),
     ColumnBuilder('fullname'),
     ColumnBuilder('avatar_url'),
+    ColumnBuilder('created_at'),
   ],
 );
 

@@ -1,6 +1,14 @@
 import 'package:kimapp/kimapp.dart';
 
 import '../profile/profile_schema.schema.dart';
+import '../trade_request/trade_request_schema.schema.dart';
+
+enum MessageType {
+  text,
+  requestStarted,
+  offeredBook,
+  tradeConfirmed,
+}
 
 @Schema(
   tableName: 'messages',
@@ -9,6 +17,7 @@ import '../profile/profile_schema.schema.dart';
 )
 class MessageSchema extends KimappSchema {
   final id = Field.id<int>('id').generateAs('MessageId');
+  final type = Field<MessageType>('type');
   final senderId = Field<ProfileId>('sender_id');
   final recipientId = Field<ProfileId>('recipient_id');
   final content = Field<String>('content');
@@ -16,10 +25,8 @@ class MessageSchema extends KimappSchema {
   final tradeRequestId = Field<int?>('trade_request_id');
   final createdAt = Field<DateTime>('created_at');
 
-  // Join fields
-  final sender = Field.join<ProfileLiteModel>().withForeignKey('sender_id').withCandidateKey('id');
-  final recipient =
-      Field.join<ProfileLiteModel>().withForeignKey('recipient_id').withCandidateKey('id');
+  final recipient = Field.join<ProfileLiteModel>().withForeignKey('recipient_id');
+  final tradeRequest = Field.join<TradeRequestLiteModel?>().withForeignKey('trade_request_id');
 
   @override
   List<Model> get models => [
@@ -37,7 +44,6 @@ class MessageSchema extends KimappSchema {
           ..table()
           ..inheritAllFromBase()
           ..addFields({
-            'sender': sender,
             'recipient': recipient,
           }),
         Model('MessageCreateParam')

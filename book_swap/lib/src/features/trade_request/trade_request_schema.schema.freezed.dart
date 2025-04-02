@@ -578,6 +578,12 @@ mixin _$TradeRequestLiteModel {
   TradeRequestStatus get status => throw _privateConstructorUsedError;
   @JsonKey(name: TradeRequestLiteModel.createdAtKey)
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
+  @JsonKey(name: TradeRequestLiteModel.bookKey)
+  BookLiteModel get book => throw _privateConstructorUsedError;
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
+  @JsonKey(name: TradeRequestLiteModel.offeredBookKey)
+  BookLiteModel? get offeredBook => throw _privateConstructorUsedError;
 
   /// Serializes this TradeRequestLiteModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -604,7 +610,16 @@ abstract class $TradeRequestLiteModelCopyWith<$Res> {
       @JsonKey(name: TradeRequestLiteModel.offeredBookIdKey)
       BookId? offeredBookId,
       @JsonKey(name: TradeRequestLiteModel.statusKey) TradeRequestStatus status,
-      @JsonKey(name: TradeRequestLiteModel.createdAtKey) DateTime createdAt});
+      @JsonKey(name: TradeRequestLiteModel.createdAtKey) DateTime createdAt,
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
+      @JsonKey(name: TradeRequestLiteModel.bookKey)
+      BookLiteModel book,
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
+      @JsonKey(name: TradeRequestLiteModel.offeredBookKey)
+      BookLiteModel? offeredBook});
+
+  $BookLiteModelCopyWith<$Res> get book;
+  $BookLiteModelCopyWith<$Res>? get offeredBook;
 }
 
 /// @nodoc
@@ -630,6 +645,8 @@ class _$TradeRequestLiteModelCopyWithImpl<$Res,
     Object? offeredBookId = freezed,
     Object? status = null,
     Object? createdAt = null,
+    Object? book = null,
+    Object? offeredBook = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -660,7 +677,39 @@ class _$TradeRequestLiteModelCopyWithImpl<$Res,
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      book: null == book
+          ? _value.book
+          : book // ignore: cast_nullable_to_non_nullable
+              as BookLiteModel,
+      offeredBook: freezed == offeredBook
+          ? _value.offeredBook
+          : offeredBook // ignore: cast_nullable_to_non_nullable
+              as BookLiteModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of TradeRequestLiteModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookLiteModelCopyWith<$Res> get book {
+    return $BookLiteModelCopyWith<$Res>(_value.book, (value) {
+      return _then(_value.copyWith(book: value) as $Val);
+    });
+  }
+
+  /// Create a copy of TradeRequestLiteModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookLiteModelCopyWith<$Res>? get offeredBook {
+    if (_value.offeredBook == null) {
+      return null;
+    }
+
+    return $BookLiteModelCopyWith<$Res>(_value.offeredBook!, (value) {
+      return _then(_value.copyWith(offeredBook: value) as $Val);
+    });
   }
 }
 
@@ -682,7 +731,18 @@ abstract class _$$TradeRequestLiteModelImplCopyWith<$Res>
       @JsonKey(name: TradeRequestLiteModel.offeredBookIdKey)
       BookId? offeredBookId,
       @JsonKey(name: TradeRequestLiteModel.statusKey) TradeRequestStatus status,
-      @JsonKey(name: TradeRequestLiteModel.createdAtKey) DateTime createdAt});
+      @JsonKey(name: TradeRequestLiteModel.createdAtKey) DateTime createdAt,
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
+      @JsonKey(name: TradeRequestLiteModel.bookKey)
+      BookLiteModel book,
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
+      @JsonKey(name: TradeRequestLiteModel.offeredBookKey)
+      BookLiteModel? offeredBook});
+
+  @override
+  $BookLiteModelCopyWith<$Res> get book;
+  @override
+  $BookLiteModelCopyWith<$Res>? get offeredBook;
 }
 
 /// @nodoc
@@ -706,6 +766,8 @@ class __$$TradeRequestLiteModelImplCopyWithImpl<$Res>
     Object? offeredBookId = freezed,
     Object? status = null,
     Object? createdAt = null,
+    Object? book = null,
+    Object? offeredBook = freezed,
   }) {
     return _then(_$TradeRequestLiteModelImpl(
       id: null == id
@@ -736,6 +798,14 @@ class __$$TradeRequestLiteModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      book: null == book
+          ? _value.book
+          : book // ignore: cast_nullable_to_non_nullable
+              as BookLiteModel,
+      offeredBook: freezed == offeredBook
+          ? _value.offeredBook
+          : offeredBook // ignore: cast_nullable_to_non_nullable
+              as BookLiteModel?,
     ));
   }
 }
@@ -755,7 +825,13 @@ class _$TradeRequestLiteModelImpl extends _TradeRequestLiteModel {
       required this.offeredBookId,
       @JsonKey(name: TradeRequestLiteModel.statusKey) required this.status,
       @JsonKey(name: TradeRequestLiteModel.createdAtKey)
-      required this.createdAt})
+      required this.createdAt,
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
+      @JsonKey(name: TradeRequestLiteModel.bookKey)
+      required this.book,
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
+      @JsonKey(name: TradeRequestLiteModel.offeredBookKey)
+      required this.offeredBook})
       : super._();
 
   factory _$TradeRequestLiteModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -782,10 +858,18 @@ class _$TradeRequestLiteModelImpl extends _TradeRequestLiteModel {
   @override
   @JsonKey(name: TradeRequestLiteModel.createdAtKey)
   final DateTime createdAt;
+  @override
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
+  @JsonKey(name: TradeRequestLiteModel.bookKey)
+  final BookLiteModel book;
+  @override
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
+  @JsonKey(name: TradeRequestLiteModel.offeredBookKey)
+  final BookLiteModel? offeredBook;
 
   @override
   String toString() {
-    return 'TradeRequestLiteModel(id: $id, requesterId: $requesterId, ownerId: $ownerId, bookId: $bookId, offeredBookId: $offeredBookId, status: $status, createdAt: $createdAt)';
+    return 'TradeRequestLiteModel(id: $id, requesterId: $requesterId, ownerId: $ownerId, bookId: $bookId, offeredBookId: $offeredBookId, status: $status, createdAt: $createdAt, book: $book, offeredBook: $offeredBook)';
   }
 
   @override
@@ -802,13 +886,16 @@ class _$TradeRequestLiteModelImpl extends _TradeRequestLiteModel {
                 other.offeredBookId == offeredBookId) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.book, book) || other.book == book) &&
+            (identical(other.offeredBook, offeredBook) ||
+                other.offeredBook == offeredBook));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, requesterId, ownerId, bookId,
-      offeredBookId, status, createdAt);
+      offeredBookId, status, createdAt, book, offeredBook);
 
   /// Create a copy of TradeRequestLiteModel
   /// with the given fields replaced by the non-null parameter values.
@@ -842,7 +929,13 @@ abstract class _TradeRequestLiteModel extends TradeRequestLiteModel {
       @JsonKey(name: TradeRequestLiteModel.statusKey)
       required final TradeRequestStatus status,
       @JsonKey(name: TradeRequestLiteModel.createdAtKey)
-      required final DateTime createdAt}) = _$TradeRequestLiteModelImpl;
+      required final DateTime createdAt,
+      @JoinedColumn(foreignKey: "book_id", candidateKey: null)
+      @JsonKey(name: TradeRequestLiteModel.bookKey)
+      required final BookLiteModel book,
+      @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
+      @JsonKey(name: TradeRequestLiteModel.offeredBookKey)
+      required final BookLiteModel? offeredBook}) = _$TradeRequestLiteModelImpl;
   const _TradeRequestLiteModel._() : super._();
 
   factory _TradeRequestLiteModel.fromJson(Map<String, dynamic> json) =
@@ -869,6 +962,14 @@ abstract class _TradeRequestLiteModel extends TradeRequestLiteModel {
   @override
   @JsonKey(name: TradeRequestLiteModel.createdAtKey)
   DateTime get createdAt;
+  @override
+  @JoinedColumn(foreignKey: "book_id", candidateKey: null)
+  @JsonKey(name: TradeRequestLiteModel.bookKey)
+  BookLiteModel get book;
+  @override
+  @JoinedColumn(foreignKey: "offered_book_id", candidateKey: null)
+  @JsonKey(name: TradeRequestLiteModel.offeredBookKey)
+  BookLiteModel? get offeredBook;
 
   /// Create a copy of TradeRequestLiteModel
   /// with the given fields replaced by the non-null parameter values.

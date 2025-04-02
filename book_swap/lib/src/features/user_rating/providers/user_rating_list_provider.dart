@@ -1,4 +1,5 @@
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/user_rating/params/user_rating_list_param.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
@@ -13,10 +14,10 @@ part 'user_rating_list_provider.g.dart';
 @riverpod
 class UserRatingList extends _$UserRatingList with IListAsyncNotifier<UserRatingModel> {
   @override
-  bool identity(UserRatingModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
-  FutureOr<IList<UserRatingModel>> build() {
-    return ref.watch(userRatingRepoProvider).findAll().getOrThrow();
+  FutureOr<IList<UserRatingModel>> build(UserRatingListParam param) {
+    return ref.watch(userRatingRepoProvider).findAll(param).getOrThrow();
   }
 }

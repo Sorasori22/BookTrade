@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -5,6 +7,7 @@ import '../../../config.dart';
 import '../../core/account/account.dart';
 import '../../core/helpers/logger.dart';
 import '../../features/auth/auth.dart';
+import '../../features/banner/providers/banner_provider.dart';
 import '../router/app_router.gr.dart';
 import '../router/app_router_provider.dart';
 
@@ -46,6 +49,8 @@ class AppState extends _$AppState with LoggerMixin {
     // Initialize auth state
     await ref.read(authStateProvider.notifier).initialize();
 
+    await _initializeBanner();
+
     // Handle auth-dependent initialization
     final authState = ref.read(authStateProvider);
     authState.when(
@@ -55,6 +60,20 @@ class AppState extends _$AppState with LoggerMixin {
 
     state = ApplicationState.initialized;
     logInfo('Application initialized');
+  }
+
+  Future<void> _initializeBanner() async {
+    final banner = await ref.read(bannerProvider.future);
+    if (banner != null) {
+      // Preload banner image
+      await precacheImage(
+        CachedNetworkImageProvider(banner.imagePath.getUrl()),
+        ref.read(appRouterProvider).navigatorKey.currentContext!,
+      ).onError((error, stackTrace) {
+        // Log error but don't fail initialization
+        logError('Failed to preload banner image', error, stackTrace);
+      });
+    }
   }
 
   /// Handle authenticated state initialization

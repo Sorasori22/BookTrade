@@ -16,7 +16,7 @@ part 'my_book_list_provider.g.dart';
 @riverpod
 class MyBookList extends _$MyBookList with IListAsyncNotifier {
   @override
-  bool identity(BookModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<BookModel>> build() {

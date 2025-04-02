@@ -27,17 +27,17 @@ mixin _$UserRatingModel {
   @JsonKey(name: UserRatingModel.ratedUserIdKey)
   ProfileId get ratedUserId => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingModel.tradeRequestIdKey)
-  int? get tradeRequestId => throw _privateConstructorUsedError;
+  TradeRequestId? get tradeRequestId => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingModel.ratingKey)
   int get rating => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingModel.commentKey)
   String? get comment => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingModel.createdAtKey)
   DateTime get createdAt => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
   @JsonKey(name: UserRatingModel.raterKey)
   ProfileLiteModel get rater => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
   @JsonKey(name: UserRatingModel.ratedUserKey)
   ProfileLiteModel get ratedUser => throw _privateConstructorUsedError;
 
@@ -61,14 +61,15 @@ abstract class $UserRatingModelCopyWith<$Res> {
       {@JsonKey(name: UserRatingModel.idKey) UserRatingId id,
       @JsonKey(name: UserRatingModel.raterIdKey) ProfileId raterId,
       @JsonKey(name: UserRatingModel.ratedUserIdKey) ProfileId ratedUserId,
-      @JsonKey(name: UserRatingModel.tradeRequestIdKey) int? tradeRequestId,
+      @JsonKey(name: UserRatingModel.tradeRequestIdKey)
+      TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingModel.ratingKey) int rating,
       @JsonKey(name: UserRatingModel.commentKey) String? comment,
       @JsonKey(name: UserRatingModel.createdAtKey) DateTime createdAt,
-      @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
       @JsonKey(name: UserRatingModel.raterKey)
       ProfileLiteModel rater,
-      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
       @JsonKey(name: UserRatingModel.ratedUserKey)
       ProfileLiteModel ratedUser});
 
@@ -117,7 +118,7 @@ class _$UserRatingModelCopyWithImpl<$Res, $Val extends UserRatingModel>
       tradeRequestId: freezed == tradeRequestId
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as TradeRequestId?,
       rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -174,14 +175,15 @@ abstract class _$$UserRatingModelImplCopyWith<$Res>
       {@JsonKey(name: UserRatingModel.idKey) UserRatingId id,
       @JsonKey(name: UserRatingModel.raterIdKey) ProfileId raterId,
       @JsonKey(name: UserRatingModel.ratedUserIdKey) ProfileId ratedUserId,
-      @JsonKey(name: UserRatingModel.tradeRequestIdKey) int? tradeRequestId,
+      @JsonKey(name: UserRatingModel.tradeRequestIdKey)
+      TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingModel.ratingKey) int rating,
       @JsonKey(name: UserRatingModel.commentKey) String? comment,
       @JsonKey(name: UserRatingModel.createdAtKey) DateTime createdAt,
-      @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
       @JsonKey(name: UserRatingModel.raterKey)
       ProfileLiteModel rater,
-      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
       @JsonKey(name: UserRatingModel.ratedUserKey)
       ProfileLiteModel ratedUser});
 
@@ -230,7 +232,7 @@ class __$$UserRatingModelImplCopyWithImpl<$Res>
       tradeRequestId: freezed == tradeRequestId
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as TradeRequestId?,
       rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -269,10 +271,10 @@ class _$UserRatingModelImpl extends _UserRatingModel {
       @JsonKey(name: UserRatingModel.ratingKey) required this.rating,
       @JsonKey(name: UserRatingModel.commentKey) required this.comment,
       @JsonKey(name: UserRatingModel.createdAtKey) required this.createdAt,
-      @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
       @JsonKey(name: UserRatingModel.raterKey)
       required this.rater,
-      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
       @JsonKey(name: UserRatingModel.ratedUserKey)
       required this.ratedUser})
       : super._();
@@ -291,7 +293,7 @@ class _$UserRatingModelImpl extends _UserRatingModel {
   final ProfileId ratedUserId;
   @override
   @JsonKey(name: UserRatingModel.tradeRequestIdKey)
-  final int? tradeRequestId;
+  final TradeRequestId? tradeRequestId;
   @override
   @JsonKey(name: UserRatingModel.ratingKey)
   final int rating;
@@ -302,11 +304,11 @@ class _$UserRatingModelImpl extends _UserRatingModel {
   @JsonKey(name: UserRatingModel.createdAtKey)
   final DateTime createdAt;
   @override
-  @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
   @JsonKey(name: UserRatingModel.raterKey)
   final ProfileLiteModel rater;
   @override
-  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
   @JsonKey(name: UserRatingModel.ratedUserKey)
   final ProfileLiteModel ratedUser;
 
@@ -365,15 +367,15 @@ abstract class _UserRatingModel extends UserRatingModel {
       @JsonKey(name: UserRatingModel.ratedUserIdKey)
       required final ProfileId ratedUserId,
       @JsonKey(name: UserRatingModel.tradeRequestIdKey)
-      required final int? tradeRequestId,
+      required final TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingModel.ratingKey) required final int rating,
       @JsonKey(name: UserRatingModel.commentKey) required final String? comment,
       @JsonKey(name: UserRatingModel.createdAtKey)
       required final DateTime createdAt,
-      @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
       @JsonKey(name: UserRatingModel.raterKey)
       required final ProfileLiteModel rater,
-      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
       @JsonKey(name: UserRatingModel.ratedUserKey)
       required final ProfileLiteModel ratedUser}) = _$UserRatingModelImpl;
   const _UserRatingModel._() : super._();
@@ -392,7 +394,7 @@ abstract class _UserRatingModel extends UserRatingModel {
   ProfileId get ratedUserId;
   @override
   @JsonKey(name: UserRatingModel.tradeRequestIdKey)
-  int? get tradeRequestId;
+  TradeRequestId? get tradeRequestId;
   @override
   @JsonKey(name: UserRatingModel.ratingKey)
   int get rating;
@@ -403,11 +405,11 @@ abstract class _UserRatingModel extends UserRatingModel {
   @JsonKey(name: UserRatingModel.createdAtKey)
   DateTime get createdAt;
   @override
-  @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
   @JsonKey(name: UserRatingModel.raterKey)
   ProfileLiteModel get rater;
   @override
-  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
   @JsonKey(name: UserRatingModel.ratedUserKey)
   ProfileLiteModel get ratedUser;
 
@@ -693,17 +695,17 @@ mixin _$UserRatingDetailModel {
   @JsonKey(name: UserRatingDetailModel.ratedUserIdKey)
   ProfileId get ratedUserId => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingDetailModel.tradeRequestIdKey)
-  int? get tradeRequestId => throw _privateConstructorUsedError;
+  TradeRequestId? get tradeRequestId => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingDetailModel.ratingKey)
   int get rating => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingDetailModel.commentKey)
   String? get comment => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingDetailModel.createdAtKey)
   DateTime get createdAt => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
   @JsonKey(name: UserRatingDetailModel.raterKey)
   ProfileLiteModel get rater => throw _privateConstructorUsedError;
-  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
   @JsonKey(name: UserRatingDetailModel.ratedUserKey)
   ProfileLiteModel get ratedUser => throw _privateConstructorUsedError;
 
@@ -729,14 +731,14 @@ abstract class $UserRatingDetailModelCopyWith<$Res> {
       @JsonKey(name: UserRatingDetailModel.ratedUserIdKey)
       ProfileId ratedUserId,
       @JsonKey(name: UserRatingDetailModel.tradeRequestIdKey)
-      int? tradeRequestId,
+      TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingDetailModel.ratingKey) int rating,
       @JsonKey(name: UserRatingDetailModel.commentKey) String? comment,
       @JsonKey(name: UserRatingDetailModel.createdAtKey) DateTime createdAt,
-      @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
       @JsonKey(name: UserRatingDetailModel.raterKey)
       ProfileLiteModel rater,
-      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
       @JsonKey(name: UserRatingDetailModel.ratedUserKey)
       ProfileLiteModel ratedUser});
 
@@ -786,7 +788,7 @@ class _$UserRatingDetailModelCopyWithImpl<$Res,
       tradeRequestId: freezed == tradeRequestId
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as TradeRequestId?,
       rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -846,14 +848,14 @@ abstract class _$$UserRatingDetailModelImplCopyWith<$Res>
       @JsonKey(name: UserRatingDetailModel.ratedUserIdKey)
       ProfileId ratedUserId,
       @JsonKey(name: UserRatingDetailModel.tradeRequestIdKey)
-      int? tradeRequestId,
+      TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingDetailModel.ratingKey) int rating,
       @JsonKey(name: UserRatingDetailModel.commentKey) String? comment,
       @JsonKey(name: UserRatingDetailModel.createdAtKey) DateTime createdAt,
-      @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
       @JsonKey(name: UserRatingDetailModel.raterKey)
       ProfileLiteModel rater,
-      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
       @JsonKey(name: UserRatingDetailModel.ratedUserKey)
       ProfileLiteModel ratedUser});
 
@@ -903,7 +905,7 @@ class __$$UserRatingDetailModelImplCopyWithImpl<$Res>
       tradeRequestId: freezed == tradeRequestId
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as TradeRequestId?,
       rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -944,10 +946,10 @@ class _$UserRatingDetailModelImpl extends _UserRatingDetailModel {
       @JsonKey(name: UserRatingDetailModel.commentKey) required this.comment,
       @JsonKey(name: UserRatingDetailModel.createdAtKey)
       required this.createdAt,
-      @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
       @JsonKey(name: UserRatingDetailModel.raterKey)
       required this.rater,
-      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
       @JsonKey(name: UserRatingDetailModel.ratedUserKey)
       required this.ratedUser})
       : super._();
@@ -966,7 +968,7 @@ class _$UserRatingDetailModelImpl extends _UserRatingDetailModel {
   final ProfileId ratedUserId;
   @override
   @JsonKey(name: UserRatingDetailModel.tradeRequestIdKey)
-  final int? tradeRequestId;
+  final TradeRequestId? tradeRequestId;
   @override
   @JsonKey(name: UserRatingDetailModel.ratingKey)
   final int rating;
@@ -977,11 +979,11 @@ class _$UserRatingDetailModelImpl extends _UserRatingDetailModel {
   @JsonKey(name: UserRatingDetailModel.createdAtKey)
   final DateTime createdAt;
   @override
-  @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
   @JsonKey(name: UserRatingDetailModel.raterKey)
   final ProfileLiteModel rater;
   @override
-  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
   @JsonKey(name: UserRatingDetailModel.ratedUserKey)
   final ProfileLiteModel ratedUser;
 
@@ -1041,16 +1043,16 @@ abstract class _UserRatingDetailModel extends UserRatingDetailModel {
       @JsonKey(name: UserRatingDetailModel.ratedUserIdKey)
       required final ProfileId ratedUserId,
       @JsonKey(name: UserRatingDetailModel.tradeRequestIdKey)
-      required final int? tradeRequestId,
+      required final TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingDetailModel.ratingKey) required final int rating,
       @JsonKey(name: UserRatingDetailModel.commentKey)
       required final String? comment,
       @JsonKey(name: UserRatingDetailModel.createdAtKey)
       required final DateTime createdAt,
-      @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
       @JsonKey(name: UserRatingDetailModel.raterKey)
       required final ProfileLiteModel rater,
-      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+      @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
       @JsonKey(name: UserRatingDetailModel.ratedUserKey)
       required final ProfileLiteModel ratedUser}) = _$UserRatingDetailModelImpl;
   const _UserRatingDetailModel._() : super._();
@@ -1069,7 +1071,7 @@ abstract class _UserRatingDetailModel extends UserRatingDetailModel {
   ProfileId get ratedUserId;
   @override
   @JsonKey(name: UserRatingDetailModel.tradeRequestIdKey)
-  int? get tradeRequestId;
+  TradeRequestId? get tradeRequestId;
   @override
   @JsonKey(name: UserRatingDetailModel.ratingKey)
   int get rating;
@@ -1080,11 +1082,11 @@ abstract class _UserRatingDetailModel extends UserRatingDetailModel {
   @JsonKey(name: UserRatingDetailModel.createdAtKey)
   DateTime get createdAt;
   @override
-  @JoinedColumn(foreignKey: "rater_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rater_id", candidateKey: null)
   @JsonKey(name: UserRatingDetailModel.raterKey)
   ProfileLiteModel get rater;
   @override
-  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: "id")
+  @JoinedColumn(foreignKey: "rated_user_id", candidateKey: null)
   @JsonKey(name: UserRatingDetailModel.ratedUserKey)
   ProfileLiteModel get ratedUser;
 
@@ -1108,7 +1110,7 @@ mixin _$UserRatingCreateParam {
   @JsonKey(name: UserRatingCreateParam.ratedUserIdKey)
   ProfileId get ratedUserId => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingCreateParam.tradeRequestIdKey)
-  int? get tradeRequestId => throw _privateConstructorUsedError;
+  TradeRequestId? get tradeRequestId => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingCreateParam.ratingKey)
   int get rating => throw _privateConstructorUsedError;
   @JsonKey(name: UserRatingCreateParam.commentKey)
@@ -1135,7 +1137,7 @@ abstract class $UserRatingCreateParamCopyWith<$Res> {
       @JsonKey(name: UserRatingCreateParam.ratedUserIdKey)
       ProfileId ratedUserId,
       @JsonKey(name: UserRatingCreateParam.tradeRequestIdKey)
-      int? tradeRequestId,
+      TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingCreateParam.ratingKey) int rating,
       @JsonKey(name: UserRatingCreateParam.commentKey) String? comment});
 }
@@ -1174,7 +1176,7 @@ class _$UserRatingCreateParamCopyWithImpl<$Res,
       tradeRequestId: freezed == tradeRequestId
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as TradeRequestId?,
       rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -1201,7 +1203,7 @@ abstract class _$$UserRatingCreateParamImplCopyWith<$Res>
       @JsonKey(name: UserRatingCreateParam.ratedUserIdKey)
       ProfileId ratedUserId,
       @JsonKey(name: UserRatingCreateParam.tradeRequestIdKey)
-      int? tradeRequestId,
+      TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingCreateParam.ratingKey) int rating,
       @JsonKey(name: UserRatingCreateParam.commentKey) String? comment});
 }
@@ -1238,7 +1240,7 @@ class __$$UserRatingCreateParamImplCopyWithImpl<$Res>
       tradeRequestId: freezed == tradeRequestId
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as TradeRequestId?,
       rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -1276,7 +1278,7 @@ class _$UserRatingCreateParamImpl extends _UserRatingCreateParam {
   final ProfileId ratedUserId;
   @override
   @JsonKey(name: UserRatingCreateParam.tradeRequestIdKey)
-  final int? tradeRequestId;
+  final TradeRequestId? tradeRequestId;
   @override
   @JsonKey(name: UserRatingCreateParam.ratingKey)
   final int rating;
@@ -1332,7 +1334,7 @@ abstract class _UserRatingCreateParam extends UserRatingCreateParam {
       @JsonKey(name: UserRatingCreateParam.ratedUserIdKey)
       required final ProfileId ratedUserId,
       @JsonKey(name: UserRatingCreateParam.tradeRequestIdKey)
-      required final int? tradeRequestId,
+      required final TradeRequestId? tradeRequestId,
       @JsonKey(name: UserRatingCreateParam.ratingKey) required final int rating,
       @JsonKey(name: UserRatingCreateParam.commentKey)
       required final String? comment}) = _$UserRatingCreateParamImpl;
@@ -1349,7 +1351,7 @@ abstract class _UserRatingCreateParam extends UserRatingCreateParam {
   ProfileId get ratedUserId;
   @override
   @JsonKey(name: UserRatingCreateParam.tradeRequestIdKey)
-  int? get tradeRequestId;
+  TradeRequestId? get tradeRequestId;
   @override
   @JsonKey(name: UserRatingCreateParam.ratingKey)
   int get rating;

@@ -16,10 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MessageListParam {
-  ProfileId? get senderId => throw _privateConstructorUsedError;
-  ProfileId? get recipientId => throw _privateConstructorUsedError;
-  int? get tradeRequestId => throw _privateConstructorUsedError;
-  bool? get read => throw _privateConstructorUsedError;
+  ProfileId get participantId => throw _privateConstructorUsedError;
 
   /// Create a copy of MessageListParam
   /// with the given fields replaced by the non-null parameter values.
@@ -34,11 +31,7 @@ abstract class $MessageListParamCopyWith<$Res> {
           MessageListParam value, $Res Function(MessageListParam) then) =
       _$MessageListParamCopyWithImpl<$Res, MessageListParam>;
   @useResult
-  $Res call(
-      {ProfileId? senderId,
-      ProfileId? recipientId,
-      int? tradeRequestId,
-      bool? read});
+  $Res call({ProfileId participantId});
 }
 
 /// @nodoc
@@ -56,28 +49,13 @@ class _$MessageListParamCopyWithImpl<$Res, $Val extends MessageListParam>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? senderId = freezed,
-    Object? recipientId = freezed,
-    Object? tradeRequestId = freezed,
-    Object? read = freezed,
+    Object? participantId = null,
   }) {
     return _then(_value.copyWith(
-      senderId: freezed == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
-      recipientId: freezed == recipientId
-          ? _value.recipientId
-          : recipientId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
-      tradeRequestId: freezed == tradeRequestId
-          ? _value.tradeRequestId
-          : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      read: freezed == read
-          ? _value.read
-          : read // ignore: cast_nullable_to_non_nullable
-              as bool?,
+      participantId: null == participantId
+          ? _value.participantId
+          : participantId // ignore: cast_nullable_to_non_nullable
+              as ProfileId,
     ) as $Val);
   }
 }
@@ -90,11 +68,7 @@ abstract class _$$MessageListParamImplCopyWith<$Res>
       __$$MessageListParamImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {ProfileId? senderId,
-      ProfileId? recipientId,
-      int? tradeRequestId,
-      bool? read});
+  $Res call({ProfileId participantId});
 }
 
 /// @nodoc
@@ -110,28 +84,13 @@ class __$$MessageListParamImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? senderId = freezed,
-    Object? recipientId = freezed,
-    Object? tradeRequestId = freezed,
-    Object? read = freezed,
+    Object? participantId = null,
   }) {
     return _then(_$MessageListParamImpl(
-      senderId: freezed == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
-      recipientId: freezed == recipientId
-          ? _value.recipientId
-          : recipientId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
-      tradeRequestId: freezed == tradeRequestId
-          ? _value.tradeRequestId
-          : tradeRequestId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      read: freezed == read
-          ? _value.read
-          : read // ignore: cast_nullable_to_non_nullable
-              as bool?,
+      participantId: null == participantId
+          ? _value.participantId
+          : participantId // ignore: cast_nullable_to_non_nullable
+              as ProfileId,
     ));
   }
 }
@@ -139,21 +98,14 @@ class __$$MessageListParamImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$MessageListParamImpl implements _MessageListParam {
-  const _$MessageListParamImpl(
-      {this.senderId, this.recipientId, this.tradeRequestId, this.read});
+  const _$MessageListParamImpl({required this.participantId});
 
   @override
-  final ProfileId? senderId;
-  @override
-  final ProfileId? recipientId;
-  @override
-  final int? tradeRequestId;
-  @override
-  final bool? read;
+  final ProfileId participantId;
 
   @override
   String toString() {
-    return 'MessageListParam(senderId: $senderId, recipientId: $recipientId, tradeRequestId: $tradeRequestId, read: $read)';
+    return 'MessageListParam(participantId: $participantId)';
   }
 
   @override
@@ -161,18 +113,12 @@ class _$MessageListParamImpl implements _MessageListParam {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MessageListParamImpl &&
-            (identical(other.senderId, senderId) ||
-                other.senderId == senderId) &&
-            (identical(other.recipientId, recipientId) ||
-                other.recipientId == recipientId) &&
-            (identical(other.tradeRequestId, tradeRequestId) ||
-                other.tradeRequestId == tradeRequestId) &&
-            (identical(other.read, read) || other.read == read));
+            (identical(other.participantId, participantId) ||
+                other.participantId == participantId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, senderId, recipientId, tradeRequestId, read);
+  int get hashCode => Object.hash(runtimeType, participantId);
 
   /// Create a copy of MessageListParam
   /// with the given fields replaced by the non-null parameter values.
@@ -185,20 +131,11 @@ class _$MessageListParamImpl implements _MessageListParam {
 }
 
 abstract class _MessageListParam implements MessageListParam {
-  const factory _MessageListParam(
-      {final ProfileId? senderId,
-      final ProfileId? recipientId,
-      final int? tradeRequestId,
-      final bool? read}) = _$MessageListParamImpl;
+  const factory _MessageListParam({required final ProfileId participantId}) =
+      _$MessageListParamImpl;
 
   @override
-  ProfileId? get senderId;
-  @override
-  ProfileId? get recipientId;
-  @override
-  int? get tradeRequestId;
-  @override
-  bool? get read;
+  ProfileId get participantId;
 
   /// Create a copy of MessageListParam
   /// with the given fields replaced by the non-null parameter values.

@@ -13,7 +13,7 @@ part 'notification_list_provider.g.dart';
 @riverpod
 class NotificationList extends _$NotificationList with IListAsyncNotifier<NotificationModel> {
   @override
-  bool identity(NotificationModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<NotificationModel>> build() {

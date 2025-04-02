@@ -1,11 +1,10 @@
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/core/account/account.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
-import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
 import 'package:book_swap/src/features/trade_request/params/trade_request_list_param.dart';
+import 'package:book_swap/src/features/trade_request/providers/trade_request_list_provider.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -18,13 +17,13 @@ part 'my_trade_request_list_provider.g.dart';
 @riverpod
 class MyTradeRequestList extends _$MyTradeRequestList with IListAsyncNotifier {
   @override
-  bool identity(TradeRequestModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<TradeRequestModel>> build({
     ProfileId? requesterId,
     TradeRequestStatus? status,
-  }) {
+  }) async {
     final myId = ref.watch(currentProfileIdProvider);
     if (myId == null) {
       return const IList.empty();
@@ -34,6 +33,6 @@ class MyTradeRequestList extends _$MyTradeRequestList with IListAsyncNotifier {
       requesterId: requesterId,
       status: status,
     );
-    return ref.watch(tradeRequestRepoProvider).findAll(param).getOrThrow();
+    return await ref.watch(tradeRequestListProvider(param).future);
   }
 }

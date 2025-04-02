@@ -13,7 +13,7 @@ part 'wishlist_item_list_provider.g.dart';
 @riverpod
 class WishlistItemList extends _$WishlistItemList with IListAsyncNotifier<WishlistItemModel> {
   @override
-  bool identity(WishlistItemModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<WishlistItemModel>> build() {

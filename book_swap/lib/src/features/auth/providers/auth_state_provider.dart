@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kimapp/extensions.dart';
 import 'package:kimapp_supabase_helper/kimapp_supabase_helper.dart';
+import 'package:kimapp_utils/startup.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../auth.dart';
@@ -38,6 +40,19 @@ class AuthState extends _$AuthState {
 
   @override
   AuthenticationState build() {
+    if (platformType.isAndroid) {
+      listenSelf((previous, next) {
+        if (previous != next) {
+          if (next.isAuthenticated) {
+            OneSignal.login(next is _Authenticated ? next.userId.value : '');
+          }
+          if (previous?.isAuthenticated == true && !next.isAuthenticated) {
+            OneSignal.logout();
+          }
+        }
+      });
+    }
+
     // Set up auth state change listener
     final supabaseAuth = ref.watch(supabaseProvider).client.auth;
 

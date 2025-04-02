@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:book_swap/src/features/trade_request/providers/trade_request_create_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'app_router.gr.dart';
@@ -72,6 +71,13 @@ class AppRouter extends RootStackRouter {
           ),
         ],
       ),
+      CustomRoute(
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        guards: [AuthGuard(_ref)],
+        page: BannerRoute.page,
+        path: '/banner',
+        fullscreenDialog: true,
+      ),
       AutoRoute(
         page: ProfileUpdateRoute.page,
         guards: [AuthGuard(_ref)],
@@ -111,6 +117,10 @@ class AppRouter extends RootStackRouter {
         page: TradeRequestCreateRoute.page,
         guards: [AuthGuard(_ref)],
         path: '/trade-request/:bookId/create',
+      ),
+      AutoRoute(
+        page: MessageRoomRoute.page,
+        path: '/messages/:recipientId',
       ),
     ];
   }

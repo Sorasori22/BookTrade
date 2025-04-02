@@ -10,6 +10,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kimapp/kimapp.dart';
 
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'message_schema.dart';
 
 part 'message_schema.schema.freezed.dart';
@@ -30,6 +31,11 @@ class MessageTable {
   /// Data type: `int`
   /// Key: `id`
   static const String id = "id";
+
+  /// Column: type
+  /// Data type: `MessageType`
+  /// Key: `type`
+  static const String type = "type";
 
   /// Column: sender_id
   /// Data type: `ProfileId`
@@ -61,17 +67,17 @@ class MessageTable {
   /// Key: `created_at`
   static const String createdAt = "created_at";
 
-  /// Column: sender_id
-  /// This is a join key for field sender.
-  /// Data type: `ProfileLiteModel`
-  /// Key: `sender`
-  static const String sender = "sender";
-
   /// Column: recipient_id
   /// This is a join key for field recipient.
   /// Data type: `ProfileLiteModel`
   /// Key: `recipient`
   static const String recipient = "recipient";
+
+  /// Column: trade_request_id
+  /// This is a join key for field tradeRequest.
+  /// Data type: `TradeRequestLiteModel?`
+  /// Key: `tradeRequest`
+  static const String tradeRequest = "tradeRequest";
 }
 
 /// Represents the unique identifier for a Message.
@@ -113,19 +119,20 @@ abstract class BaseMessageSchema {}
 /// Base model class for this schema, this includes all properties of the base model, and get inherited by all generated models in this schema where [inheritAllFromBase()] is called and without any excepted fields.
 abstract class IMessageModel {
   MessageId get id;
+  MessageType get type;
   ProfileId get senderId;
   ProfileId get recipientId;
   String get content;
   bool get read;
   int? get tradeRequestId;
   DateTime get createdAt;
-  ProfileLiteModel get sender;
   ProfileLiteModel get recipient;
+  TradeRequestLiteModel? get tradeRequest;
 }
 
 /// Base model class for MessageModel.
 @freezed
-class MessageModel
+sealed class MessageModel
     with _$MessageModel
     implements BaseMessageSchema, IMessageModel {
   const MessageModel._();
@@ -138,30 +145,32 @@ class MessageModel
   ///
   /// Fields:
   /// - MessageId id : JsonKey('id')
+  /// - MessageType type : JsonKey('type')
   /// - ProfileId senderId : JsonKey('sender_id')
   /// - ProfileId recipientId : JsonKey('recipient_id')
   /// - String content : JsonKey('content')
   /// - bool read : JsonKey('read')
   /// - int? tradeRequestId : JsonKey('trade_request_id')
   /// - DateTime createdAt : JsonKey('created_at')
-  /// - ProfileLiteModel sender : JsonKey('sender')
   /// - ProfileLiteModel recipient : JsonKey('recipient')
+  /// - TradeRequestLiteModel? tradeRequest : JsonKey('tradeRequest')
   @TableModel(MessageModel.tableName)
   @JsonSerializable(explicitToJson: true)
   const factory MessageModel({
     @JsonKey(name: MessageModel.idKey) required MessageId id,
+    @JsonKey(name: MessageModel.typeKey) required MessageType type,
     @JsonKey(name: MessageModel.senderIdKey) required ProfileId senderId,
     @JsonKey(name: MessageModel.recipientIdKey) required ProfileId recipientId,
     @JsonKey(name: MessageModel.contentKey) required String content,
     @JsonKey(name: MessageModel.readKey) required bool read,
     @JsonKey(name: MessageModel.tradeRequestIdKey) required int? tradeRequestId,
     @JsonKey(name: MessageModel.createdAtKey) required DateTime createdAt,
-    @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-    @JsonKey(name: MessageModel.senderKey)
-    required ProfileLiteModel sender,
-    @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
     @JsonKey(name: MessageModel.recipientKey)
     required ProfileLiteModel recipient,
+    @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+    @JsonKey(name: MessageModel.tradeRequestKey)
+    required TradeRequestLiteModel? tradeRequest,
   }) = _MessageModel;
 
   /// Creates an instance of MessageModel from a JSON map.
@@ -176,6 +185,9 @@ class MessageModel
 
   /// Field name for id field with JsonKey('id')
   static const String idKey = "id";
+
+  /// Field name for type field with JsonKey('type')
+  static const String typeKey = "type";
 
   /// Field name for senderId field with JsonKey('sender_id')
   static const String senderIdKey = "sender_id";
@@ -195,18 +207,20 @@ class MessageModel
   /// Field name for createdAt field with JsonKey('created_at')
   static const String createdAtKey = "created_at";
 
-  /// Field name for sender field with JsonKey('sender')
-  /// This is json key for joined field. with foreign key: sender_id and candidate key: id
-  static const String senderKey = "sender";
-
   /// Field name for recipient field with JsonKey('recipient')
-  /// This is json key for joined field. with foreign key: recipient_id and candidate key: id
+  /// This is json key for joined field. with foreign key: recipient_id and candidate key: null
   static const String recipientKey = "recipient";
+
+  /// Field name for tradeRequest field with JsonKey('tradeRequest')
+  /// This is json key for joined field. with foreign key: trade_request_id and candidate key: null
+  static const String tradeRequestKey = "tradeRequest";
 }
 
 /// Represents the MessageLiteModel model. generated by kimapp_generator
 @freezed
-class MessageLiteModel with _$MessageLiteModel implements BaseMessageSchema {
+sealed class MessageLiteModel
+    with _$MessageLiteModel
+    implements BaseMessageSchema {
   const MessageLiteModel._();
 
   /// Constructor for MessageLiteModel.
@@ -266,7 +280,7 @@ class MessageLiteModel with _$MessageLiteModel implements BaseMessageSchema {
 
 /// Represents the MessageDetailModel model. generated by kimapp_generator
 @freezed
-class MessageDetailModel
+sealed class MessageDetailModel
     with _$MessageDetailModel
     implements BaseMessageSchema, IMessageModel {
   const MessageDetailModel._();
@@ -280,18 +294,20 @@ class MessageDetailModel
   ///
   /// Fields:
   /// - MessageId id : JsonKey('id')
+  /// - MessageType type : JsonKey('type')
   /// - ProfileId senderId : JsonKey('sender_id')
   /// - ProfileId recipientId : JsonKey('recipient_id')
   /// - String content : JsonKey('content')
   /// - bool read : JsonKey('read')
   /// - int? tradeRequestId : JsonKey('trade_request_id')
   /// - DateTime createdAt : JsonKey('created_at')
-  /// - ProfileLiteModel sender : JsonKey('sender')
   /// - ProfileLiteModel recipient : JsonKey('recipient')
+  /// - TradeRequestLiteModel? tradeRequest : JsonKey('tradeRequest')
   @TableModel(MessageDetailModel.tableName)
   @JsonSerializable(explicitToJson: true)
   const factory MessageDetailModel({
     @JsonKey(name: MessageDetailModel.idKey) required MessageId id,
+    @JsonKey(name: MessageDetailModel.typeKey) required MessageType type,
     @JsonKey(name: MessageDetailModel.senderIdKey) required ProfileId senderId,
     @JsonKey(name: MessageDetailModel.recipientIdKey)
     required ProfileId recipientId,
@@ -300,12 +316,12 @@ class MessageDetailModel
     @JsonKey(name: MessageDetailModel.tradeRequestIdKey)
     required int? tradeRequestId,
     @JsonKey(name: MessageDetailModel.createdAtKey) required DateTime createdAt,
-    @JoinedColumn(foreignKey: "sender_id", candidateKey: "id")
-    @JsonKey(name: MessageDetailModel.senderKey)
-    required ProfileLiteModel sender,
-    @JoinedColumn(foreignKey: "recipient_id", candidateKey: "id")
+    @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
     @JsonKey(name: MessageDetailModel.recipientKey)
     required ProfileLiteModel recipient,
+    @JoinedColumn(foreignKey: "trade_request_id", candidateKey: null)
+    @JsonKey(name: MessageDetailModel.tradeRequestKey)
+    required TradeRequestLiteModel? tradeRequest,
   }) = _MessageDetailModel;
 
   /// Creates an instance of MessageDetailModel from a JSON map.
@@ -320,6 +336,9 @@ class MessageDetailModel
 
   /// Field name for id field with JsonKey('id')
   static const String idKey = "id";
+
+  /// Field name for type field with JsonKey('type')
+  static const String typeKey = "type";
 
   /// Field name for senderId field with JsonKey('sender_id')
   static const String senderIdKey = "sender_id";
@@ -339,33 +358,34 @@ class MessageDetailModel
   /// Field name for createdAt field with JsonKey('created_at')
   static const String createdAtKey = "created_at";
 
-  /// Field name for sender field with JsonKey('sender')
-  /// This is json key for joined field. with foreign key: sender_id and candidate key: id
-  static const String senderKey = "sender";
-
   /// Field name for recipient field with JsonKey('recipient')
-  /// This is json key for joined field. with foreign key: recipient_id and candidate key: id
+  /// This is json key for joined field. with foreign key: recipient_id and candidate key: null
   static const String recipientKey = "recipient";
+
+  /// Field name for tradeRequest field with JsonKey('tradeRequest')
+  /// This is json key for joined field. with foreign key: trade_request_id and candidate key: null
+  static const String tradeRequestKey = "tradeRequest";
 
   /// Converts this model to a base model.
   MessageModel toMessageModel() {
     return MessageModel(
       id: id,
+      type: type,
       senderId: senderId,
       recipientId: recipientId,
       content: content,
       read: read,
       tradeRequestId: tradeRequestId,
       createdAt: createdAt,
-      sender: sender,
       recipient: recipient,
+      tradeRequest: tradeRequest,
     );
   }
 }
 
 /// Represents the MessageCreateParam model. generated by kimapp_generator
 @freezed
-class MessageCreateParam
+sealed class MessageCreateParam
     with _$MessageCreateParam
     implements BaseMessageSchema {
   const MessageCreateParam._();
@@ -410,7 +430,7 @@ class MessageCreateParam
 
 /// Represents the MessageUpdateParam model. generated by kimapp_generator
 @freezed
-class MessageUpdateParam
+sealed class MessageUpdateParam
     with _$MessageUpdateParam
     implements BaseMessageSchema {
   const MessageUpdateParam._();

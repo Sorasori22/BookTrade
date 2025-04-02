@@ -453,6 +453,8 @@ mixin _$ProfileLiteModel {
   String? get fullname => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileLiteModel.avatarKey)
   ImageObject? get avatar => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileLiteModel.createdAtKey)
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileLiteModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -475,7 +477,8 @@ abstract class $ProfileLiteModelCopyWith<$Res> {
       @JsonKey(name: ProfileLiteModel.usernameKey) String username,
       @JsonKey(name: ProfileLiteModel.emailKey) String email,
       @JsonKey(name: ProfileLiteModel.fullnameKey) String? fullname,
-      @JsonKey(name: ProfileLiteModel.avatarKey) ImageObject? avatar});
+      @JsonKey(name: ProfileLiteModel.avatarKey) ImageObject? avatar,
+      @JsonKey(name: ProfileLiteModel.createdAtKey) DateTime createdAt});
 }
 
 /// @nodoc
@@ -498,6 +501,7 @@ class _$ProfileLiteModelCopyWithImpl<$Res, $Val extends ProfileLiteModel>
     Object? email = null,
     Object? fullname = freezed,
     Object? avatar = freezed,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -520,6 +524,10 @@ class _$ProfileLiteModelCopyWithImpl<$Res, $Val extends ProfileLiteModel>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as ImageObject?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -537,7 +545,8 @@ abstract class _$$ProfileLiteModelImplCopyWith<$Res>
       @JsonKey(name: ProfileLiteModel.usernameKey) String username,
       @JsonKey(name: ProfileLiteModel.emailKey) String email,
       @JsonKey(name: ProfileLiteModel.fullnameKey) String? fullname,
-      @JsonKey(name: ProfileLiteModel.avatarKey) ImageObject? avatar});
+      @JsonKey(name: ProfileLiteModel.avatarKey) ImageObject? avatar,
+      @JsonKey(name: ProfileLiteModel.createdAtKey) DateTime createdAt});
 }
 
 /// @nodoc
@@ -558,6 +567,7 @@ class __$$ProfileLiteModelImplCopyWithImpl<$Res>
     Object? email = null,
     Object? fullname = freezed,
     Object? avatar = freezed,
+    Object? createdAt = null,
   }) {
     return _then(_$ProfileLiteModelImpl(
       id: null == id
@@ -580,6 +590,10 @@ class __$$ProfileLiteModelImplCopyWithImpl<$Res>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as ImageObject?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -594,7 +608,8 @@ class _$ProfileLiteModelImpl extends _ProfileLiteModel {
       @JsonKey(name: ProfileLiteModel.usernameKey) required this.username,
       @JsonKey(name: ProfileLiteModel.emailKey) required this.email,
       @JsonKey(name: ProfileLiteModel.fullnameKey) required this.fullname,
-      @JsonKey(name: ProfileLiteModel.avatarKey) required this.avatar})
+      @JsonKey(name: ProfileLiteModel.avatarKey) required this.avatar,
+      @JsonKey(name: ProfileLiteModel.createdAtKey) required this.createdAt})
       : super._();
 
   factory _$ProfileLiteModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -615,10 +630,13 @@ class _$ProfileLiteModelImpl extends _ProfileLiteModel {
   @override
   @JsonKey(name: ProfileLiteModel.avatarKey)
   final ImageObject? avatar;
+  @override
+  @JsonKey(name: ProfileLiteModel.createdAtKey)
+  final DateTime createdAt;
 
   @override
   String toString() {
-    return 'ProfileLiteModel(id: $id, username: $username, email: $email, fullname: $fullname, avatar: $avatar)';
+    return 'ProfileLiteModel(id: $id, username: $username, email: $email, fullname: $fullname, avatar: $avatar, createdAt: $createdAt)';
   }
 
   @override
@@ -632,13 +650,15 @@ class _$ProfileLiteModelImpl extends _ProfileLiteModel {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.fullname, fullname) ||
                 other.fullname == fullname) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar));
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, username, email, fullname, avatar);
+  int get hashCode => Object.hash(
+      runtimeType, id, username, email, fullname, avatar, createdAt);
 
   /// Create a copy of ProfileLiteModel
   /// with the given fields replaced by the non-null parameter values.
@@ -666,7 +686,9 @@ abstract class _ProfileLiteModel extends ProfileLiteModel {
       @JsonKey(name: ProfileLiteModel.fullnameKey)
       required final String? fullname,
       @JsonKey(name: ProfileLiteModel.avatarKey)
-      required final ImageObject? avatar}) = _$ProfileLiteModelImpl;
+      required final ImageObject? avatar,
+      @JsonKey(name: ProfileLiteModel.createdAtKey)
+      required final DateTime createdAt}) = _$ProfileLiteModelImpl;
   const _ProfileLiteModel._() : super._();
 
   factory _ProfileLiteModel.fromJson(Map<String, dynamic> json) =
@@ -687,6 +709,9 @@ abstract class _ProfileLiteModel extends ProfileLiteModel {
   @override
   @JsonKey(name: ProfileLiteModel.avatarKey)
   ImageObject? get avatar;
+  @override
+  @JsonKey(name: ProfileLiteModel.createdAtKey)
+  DateTime get createdAt;
 
   /// Create a copy of ProfileLiteModel
   /// with the given fields replaced by the non-null parameter values.

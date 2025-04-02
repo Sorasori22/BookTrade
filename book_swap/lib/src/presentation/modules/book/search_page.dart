@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:book_swap/src/core/account/account.dart';
 import 'package:book_swap/src/features/book/params/book_list_param.dart';
 import 'package:book_swap/src/features/book/providers/book_list_pagination_provider.dart';
 import 'package:book_swap/src/presentation/widgets/forms/search_field.dart';
@@ -57,6 +58,7 @@ class SearchPage extends HookConsumerWidget {
                       padding: const EdgeInsets.all(AS.sidePadding),
                       sliver: BookSliverGrid(
                         param: BookListParam(
+                          toHideOwnerId: ref.watch(currentProfileIdProvider),
                           titleSearch: searchState.value,
                         ),
                       ),

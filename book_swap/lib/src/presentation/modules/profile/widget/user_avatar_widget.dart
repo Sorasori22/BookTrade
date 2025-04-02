@@ -30,7 +30,7 @@ class UserAvatar extends ConsumerWidget {
           shape: BoxShape.circle,
         ),
         child: fallback == null
-            ? Center(child: Icon(Icons.person, size: 24))
+            ? Center(child: Icon(Icons.person, size: (size ?? 50) * 0.5))
             : Center(child: Text(fallback!.toUpperCase())),
       ),
     );

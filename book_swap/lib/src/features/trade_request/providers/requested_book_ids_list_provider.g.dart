@@ -9,7 +9,7 @@ part of 'requested_book_ids_list_provider.dart';
 // **************************************************************************
 
 String _$prendingTradeRequestListHash() =>
-    r'1c2166b18fc35efc84949dfeb5bea53e3a73ccbb';
+    r'a58951314becea52eec1b017a937d1579a2ae5aa';
 
 /// See also [PrendingTradeRequestList].
 @ProviderFor(PrendingTradeRequestList)

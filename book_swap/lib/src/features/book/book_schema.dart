@@ -14,7 +14,8 @@ class BookSchema extends KimappSchema {
   final title = Field<String>('title');
   final author = Field<String>('author');
   final condition = Field<int>('condition');
-  final image = Field<ImageObject?>('image_url');
+  final averageRating = Field<double?>('average_rating');
+  final image = Field<ImageObject?>('image_path');
   final createdAt = Field<DateTime>('created_at');
   final updatedAt = Field<DateTime>('updated_at');
 
@@ -29,6 +30,7 @@ class BookSchema extends KimappSchema {
           'author': author,
           'image': image,
           'ownerId': ownerId,
+          'averageRating': averageRating,
         }),
       Model('BookDetailModel')
         ..table()

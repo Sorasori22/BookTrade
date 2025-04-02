@@ -13,7 +13,7 @@ part 'profile_list_provider.g.dart';
 @riverpod
 class ProfileList extends _$ProfileList with IListAsyncNotifier {
   @override
-  bool identity(ProfileModel item) => item.id == item.id;
+  bool comparer(a, b) => a.id == b.id;
 
   @override
   FutureOr<IList<ProfileModel>> build() {
