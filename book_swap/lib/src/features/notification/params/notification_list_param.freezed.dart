@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$NotificationListParam {
-  ProfileId? get userId => throw _privateConstructorUsedError;
+  ProfileId get userId => throw _privateConstructorUsedError;
   int? get relatedTradeId => throw _privateConstructorUsedError;
-  String? get notificationType => throw _privateConstructorUsedError;
+  NotificationType? get notificationType => throw _privateConstructorUsedError;
   bool? get read => throw _privateConstructorUsedError;
 
   /// Create a copy of NotificationListParam
@@ -35,9 +35,9 @@ abstract class $NotificationListParamCopyWith<$Res> {
       _$NotificationListParamCopyWithImpl<$Res, NotificationListParam>;
   @useResult
   $Res call(
-      {ProfileId? userId,
+      {ProfileId userId,
       int? relatedTradeId,
-      String? notificationType,
+      NotificationType? notificationType,
       bool? read});
 }
 
@@ -57,16 +57,16 @@ class _$NotificationListParamCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = freezed,
+    Object? userId = null,
     Object? relatedTradeId = freezed,
     Object? notificationType = freezed,
     Object? read = freezed,
   }) {
     return _then(_value.copyWith(
-      userId: freezed == userId
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
+              as ProfileId,
       relatedTradeId: freezed == relatedTradeId
           ? _value.relatedTradeId
           : relatedTradeId // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,7 @@ class _$NotificationListParamCopyWithImpl<$Res,
       notificationType: freezed == notificationType
           ? _value.notificationType
           : notificationType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as NotificationType?,
       read: freezed == read
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
@@ -93,9 +93,9 @@ abstract class _$$NotificationListParamImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ProfileId? userId,
+      {ProfileId userId,
       int? relatedTradeId,
-      String? notificationType,
+      NotificationType? notificationType,
       bool? read});
 }
 
@@ -113,16 +113,16 @@ class __$$NotificationListParamImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = freezed,
+    Object? userId = null,
     Object? relatedTradeId = freezed,
     Object? notificationType = freezed,
     Object? read = freezed,
   }) {
     return _then(_$NotificationListParamImpl(
-      userId: freezed == userId
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
+              as ProfileId,
       relatedTradeId: freezed == relatedTradeId
           ? _value.relatedTradeId
           : relatedTradeId // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ class __$$NotificationListParamImplCopyWithImpl<$Res>
       notificationType: freezed == notificationType
           ? _value.notificationType
           : notificationType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as NotificationType?,
       read: freezed == read
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
@@ -143,14 +143,17 @@ class __$$NotificationListParamImplCopyWithImpl<$Res>
 
 class _$NotificationListParamImpl implements _NotificationListParam {
   const _$NotificationListParamImpl(
-      {this.userId, this.relatedTradeId, this.notificationType, this.read});
+      {required this.userId,
+      this.relatedTradeId,
+      this.notificationType,
+      this.read});
 
   @override
-  final ProfileId? userId;
+  final ProfileId userId;
   @override
   final int? relatedTradeId;
   @override
-  final String? notificationType;
+  final NotificationType? notificationType;
   @override
   final bool? read;
 
@@ -188,17 +191,17 @@ class _$NotificationListParamImpl implements _NotificationListParam {
 
 abstract class _NotificationListParam implements NotificationListParam {
   const factory _NotificationListParam(
-      {final ProfileId? userId,
+      {required final ProfileId userId,
       final int? relatedTradeId,
-      final String? notificationType,
+      final NotificationType? notificationType,
       final bool? read}) = _$NotificationListParamImpl;
 
   @override
-  ProfileId? get userId;
+  ProfileId get userId;
   @override
   int? get relatedTradeId;
   @override
-  String? get notificationType;
+  NotificationType? get notificationType;
   @override
   bool? get read;
 

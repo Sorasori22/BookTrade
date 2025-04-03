@@ -1,4 +1,5 @@
 import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:kimapp/kimapp.dart';
 
 @Schema(
@@ -48,4 +49,8 @@ class ProfileSchema extends KimappSchema {
         }),
     ];
   }
+}
+
+extension ProfileModelX on ProfileLiteModel {
+  String get displayName => fullname ?? username;
 }

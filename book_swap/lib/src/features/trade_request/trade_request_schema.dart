@@ -25,6 +25,7 @@ class TradeRequestSchema extends KimappSchema {
   final status = Field<TradeRequestStatus>('status');
   final createdAt = Field<DateTime>('created_at');
   final updatedAt = Field<DateTime>('updated_at');
+  final rejectReason = Field<String?>('reject_reason');
 
   // Join fields
   final requester = Field.join<ProfileLiteModel>().withForeignKey('requester_id');
@@ -39,6 +40,7 @@ class TradeRequestSchema extends KimappSchema {
           ..addFields({
             'id': id,
             'requesterId': requesterId,
+            'requester': requester,
             'ownerId': ownerId,
             'bookId': bookId,
             'offeredBookId': offeredBookId,
@@ -46,6 +48,7 @@ class TradeRequestSchema extends KimappSchema {
             'createdAt': createdAt,
             'book': book,
             'offeredBook': offeredBook,
+            'rejectReason': rejectReason,
           }),
         Model('TradeRequestDetailModel')
           ..table()

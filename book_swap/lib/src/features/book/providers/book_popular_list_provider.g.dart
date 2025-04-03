@@ -2,27 +2,29 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'notification_list_provider.dart';
+part of 'book_popular_list_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$notificationListHash() => r'99fd43ee2fdab80c792256f835c7d4c118092706';
+String _$bookPopularListHash() => r'ce2e7c522e13bb10158d19060b7f927c01563938';
 
-/// See also [NotificationList].
-@ProviderFor(NotificationList)
-final notificationListProvider = AutoDisposeAsyncNotifierProvider<
-    NotificationList, IList<NotificationModel>>.internal(
-  NotificationList.new,
-  name: r'notificationListProvider',
+/// See also [bookPopularList].
+@ProviderFor(bookPopularList)
+final bookPopularListProvider =
+    AutoDisposeFutureProvider<IList<BookModel>>.internal(
+  bookPopularList,
+  name: r'bookPopularListProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$notificationListHash,
+      : _$bookPopularListHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$NotificationList = AutoDisposeAsyncNotifier<IList<NotificationModel>>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef BookPopularListRef = AutoDisposeFutureProviderRef<IList<BookModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

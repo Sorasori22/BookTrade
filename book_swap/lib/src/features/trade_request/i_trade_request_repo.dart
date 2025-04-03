@@ -1,3 +1,4 @@
+import 'package:book_swap/src/core/helpers/string_helpers.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
@@ -29,7 +30,11 @@ abstract class ITradeRequestRepo {
 
   Future<Either<Failure, Unit>> delete(TradeRequestId id);
 
-  AsyncFailureOr<Unit> updateStatus(TradeRequestId id, TradeRequestStatus status);
+  AsyncFailureOr<Unit> updateStatus(
+    TradeRequestId id,
+    TradeRequestStatus status, {
+    String? rejectReason,
+  });
 
   AsyncFailureOr<Unit> updateOfferedBook(TradeRequestId id, BookId offeredBookId);
 }
@@ -130,11 +135,16 @@ class _Impl implements ITradeRequestRepo {
   }
 
   @override
-  AsyncFailureOr<Unit> updateStatus(TradeRequestId id, TradeRequestStatus status) async {
+  AsyncFailureOr<Unit> updateStatus(
+    TradeRequestId id,
+    TradeRequestStatus status, {
+    String? rejectReason,
+  }) async {
     return await errorHandler(() async {
-      await _ref.supabaseClient
-          .from(TradeRequestModel.table.tableName)
-          .update({TradeRequestTable.status: status.name}).eq(TradeRequestTable.id, id.value);
+      await _ref.supabaseClient.from(TradeRequestModel.table.tableName).update({
+        TradeRequestTable.status: status.name,
+        'reject_reason': rejectReason.asNull(),
+      }).eq(TradeRequestTable.id, id.value);
       return right(unit);
     });
   }

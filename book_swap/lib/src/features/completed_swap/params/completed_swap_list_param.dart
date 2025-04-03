@@ -8,11 +8,7 @@ part 'completed_swap_list_param.freezed.dart';
 @freezed
 class CompletedSwapListParam with _$CompletedSwapListParam {
   const factory CompletedSwapListParam({
-    ProfileId? requesterId,
-    ProfileId? ownerId,
-    BookId? requesterBookId,
-    BookId? ownerBookId,
-    DateTime? completedAfter,
-    DateTime? completedBefore,
+    /// Find for both requester and owner
+    required ProfileId profileId,
   }) = _CompletedSwapListParam;
 }

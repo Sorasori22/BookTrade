@@ -8,7 +8,7 @@ part of 'genre_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$genreListHash() => r'bab80942d1d2a6e05a2ba03ddf1ec76f7da38679';
+String _$genreListHash() => r'3b0a0c4857e7943212964590ecd459f188b2aa74';
 
 /// See also [GenreList].
 @ProviderFor(GenreList)

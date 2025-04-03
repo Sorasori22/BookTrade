@@ -9,7 +9,7 @@ part of 'notification_delete_provider.dart';
 // **************************************************************************
 
 String _$notificationDeleteHash() =>
-    r'10a07512cb99dede6775f3abb1906775b4c14a46';
+    r'a15f0ca3e37bb51e9028b600fd026433d474b33d';
 
 /// Copied from Dart SDK
 class _SystemHash {

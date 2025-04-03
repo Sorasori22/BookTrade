@@ -15,13 +15,22 @@ class CurrentUserAvatar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: navigateToProfile ? () => context.navigateTo(ProfileRoute()) : null,
+      onTap: navigateToProfile
+          ? () {
+              context.navigateTo(
+                ProfileRootRoute(
+                  children: [
+                    ProfileRoute(),
+                  ],
+                ),
+              );
+            }
+          : null,
       child: CurrentAccountSelectWidget(
         selector: (state) => (state.account?.profile.avatar, state.account?.profile.fullname),
         builder: (context, ref, value) {
           return UserAvatar(
             imageObject: value.$1,
-            fallback: value.$2?.substring(0, 2),
             size: size,
           );
         },

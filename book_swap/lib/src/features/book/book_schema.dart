@@ -18,6 +18,7 @@ class BookSchema extends KimappSchema {
   final image = Field<ImageObject?>('image_path');
   final createdAt = Field<DateTime>('created_at');
   final updatedAt = Field<DateTime>('updated_at');
+  final description = Field<String?>('description');
 
   @override
   List<Model> get models {
@@ -38,7 +39,6 @@ class BookSchema extends KimappSchema {
         ..addFields({
           'owner':
               Field.join<ProfileLiteModel?>().withForeignKey('owner_id').withCandidateKey('id'),
-          'description': Field<String?>('description'),
         }),
 
       // Params

@@ -39,7 +39,7 @@ class AS {
 
   // Button styling
   static const double buttonRadius = 12.0;
-  static const double buttonElevation = 1.0;
+  static const double buttonElevation = 0.5;
   static const double buttonHeightS = 32.0;
   static const double buttonHeightM = 42.0;
   static const double buttonHeightL = 48.0;

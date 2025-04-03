@@ -10,6 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/account/account.dart';
 import '../../../app/app_style.dart';
 import '../../../router/app_router.gr.dart';
 
@@ -94,6 +95,7 @@ class BookItemCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final config = _BookItemConfigProvider.of(context).config;
     final isSelected = config.selectedBookId == book?.id;
+    final isOwner = book?.ownerId == ref.watch(currentProfileIdProvider);
 
     return Center(
       child: BouncingWidget(
@@ -111,7 +113,30 @@ class BookItemCard extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BookCover(cover: book?.image),
+                Stack(
+                  children: [
+                    BookCover(cover: book?.image),
+                    if (isOwner)
+                      Positioned(
+                        top: 6,
+                        right: 6,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: context.colors.error.withValues(alpha: 0.7),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            'Owned',
+                            style: context.textTheme.bodySmall?.copyWith(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
                 AS.hGap4,
                 Text.rich(
                   TextSpan(

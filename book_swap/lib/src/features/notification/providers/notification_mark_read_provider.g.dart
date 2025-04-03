@@ -2,14 +2,14 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'completed_swap_delete_provider.dart';
+part of 'notification_mark_read_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$completedSwapDeleteHash() =>
-    r'45d2e78081b328acc1cb5129e82fbf8c2a448773';
+String _$notificationMarkReadHash() =>
+    r'92088798ce01a31ab50af5dc918b2801e4e780dd';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -32,36 +32,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$CompletedSwapDelete
+abstract class _$NotificationMarkRead
     extends BuildlessAutoDisposeNotifier<ProviderStatus<Unit>> {
-  late final CompletedSwapId id;
+  late final NotificationId id;
 
   ProviderStatus<Unit> build(
-    CompletedSwapId id,
+    NotificationId id,
   );
 }
 
-/// See also [CompletedSwapDelete].
-@ProviderFor(CompletedSwapDelete)
-const completedSwapDeleteProvider = CompletedSwapDeleteFamily();
+/// See also [NotificationMarkRead].
+@ProviderFor(NotificationMarkRead)
+const notificationMarkReadProvider = NotificationMarkReadFamily();
 
-/// See also [CompletedSwapDelete].
-class CompletedSwapDeleteFamily extends Family<ProviderStatus<Unit>> {
-  /// See also [CompletedSwapDelete].
-  const CompletedSwapDeleteFamily();
+/// See also [NotificationMarkRead].
+class NotificationMarkReadFamily extends Family<ProviderStatus<Unit>> {
+  /// See also [NotificationMarkRead].
+  const NotificationMarkReadFamily();
 
-  /// See also [CompletedSwapDelete].
-  CompletedSwapDeleteProvider call(
-    CompletedSwapId id,
+  /// See also [NotificationMarkRead].
+  NotificationMarkReadProvider call(
+    NotificationId id,
   ) {
-    return CompletedSwapDeleteProvider(
+    return NotificationMarkReadProvider(
       id,
     );
   }
 
   @override
-  CompletedSwapDeleteProvider getProviderOverride(
-    covariant CompletedSwapDeleteProvider provider,
+  NotificationMarkReadProvider getProviderOverride(
+    covariant NotificationMarkReadProvider provider,
   ) {
     return call(
       provider.id,
@@ -80,30 +80,30 @@ class CompletedSwapDeleteFamily extends Family<ProviderStatus<Unit>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'completedSwapDeleteProvider';
+  String? get name => r'notificationMarkReadProvider';
 }
 
-/// See also [CompletedSwapDelete].
-class CompletedSwapDeleteProvider extends AutoDisposeNotifierProviderImpl<
-    CompletedSwapDelete, ProviderStatus<Unit>> {
-  /// See also [CompletedSwapDelete].
-  CompletedSwapDeleteProvider(
-    CompletedSwapId id,
+/// See also [NotificationMarkRead].
+class NotificationMarkReadProvider extends AutoDisposeNotifierProviderImpl<
+    NotificationMarkRead, ProviderStatus<Unit>> {
+  /// See also [NotificationMarkRead].
+  NotificationMarkReadProvider(
+    NotificationId id,
   ) : this._internal(
-          () => CompletedSwapDelete()..id = id,
-          from: completedSwapDeleteProvider,
-          name: r'completedSwapDeleteProvider',
+          () => NotificationMarkRead()..id = id,
+          from: notificationMarkReadProvider,
+          name: r'notificationMarkReadProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$completedSwapDeleteHash,
-          dependencies: CompletedSwapDeleteFamily._dependencies,
+                  : _$notificationMarkReadHash,
+          dependencies: NotificationMarkReadFamily._dependencies,
           allTransitiveDependencies:
-              CompletedSwapDeleteFamily._allTransitiveDependencies,
+              NotificationMarkReadFamily._allTransitiveDependencies,
           id: id,
         );
 
-  CompletedSwapDeleteProvider._internal(
+  NotificationMarkReadProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -113,11 +113,11 @@ class CompletedSwapDeleteProvider extends AutoDisposeNotifierProviderImpl<
     required this.id,
   }) : super.internal();
 
-  final CompletedSwapId id;
+  final NotificationId id;
 
   @override
   ProviderStatus<Unit> runNotifierBuild(
-    covariant CompletedSwapDelete notifier,
+    covariant NotificationMarkRead notifier,
   ) {
     return notifier.build(
       id,
@@ -125,10 +125,10 @@ class CompletedSwapDeleteProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(CompletedSwapDelete Function() create) {
+  Override overrideWith(NotificationMarkRead Function() create) {
     return ProviderOverride(
       origin: this,
-      override: CompletedSwapDeleteProvider._internal(
+      override: NotificationMarkReadProvider._internal(
         () => create()..id = id,
         from: from,
         name: null,
@@ -141,14 +141,14 @@ class CompletedSwapDeleteProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeNotifierProviderElement<CompletedSwapDelete, ProviderStatus<Unit>>
+  AutoDisposeNotifierProviderElement<NotificationMarkRead, ProviderStatus<Unit>>
       createElement() {
-    return _CompletedSwapDeleteProviderElement(this);
+    return _NotificationMarkReadProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is CompletedSwapDeleteProvider && other.id == id;
+    return other is NotificationMarkReadProvider && other.id == id;
   }
 
   @override
@@ -162,19 +162,19 @@ class CompletedSwapDeleteProvider extends AutoDisposeNotifierProviderImpl<
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin CompletedSwapDeleteRef
+mixin NotificationMarkReadRef
     on AutoDisposeNotifierProviderRef<ProviderStatus<Unit>> {
   /// The parameter `id` of this provider.
-  CompletedSwapId get id;
+  NotificationId get id;
 }
 
-class _CompletedSwapDeleteProviderElement
-    extends AutoDisposeNotifierProviderElement<CompletedSwapDelete,
-        ProviderStatus<Unit>> with CompletedSwapDeleteRef {
-  _CompletedSwapDeleteProviderElement(super.provider);
+class _NotificationMarkReadProviderElement
+    extends AutoDisposeNotifierProviderElement<NotificationMarkRead,
+        ProviderStatus<Unit>> with NotificationMarkReadRef {
+  _NotificationMarkReadProviderElement(super.provider);
 
   @override
-  CompletedSwapId get id => (origin as CompletedSwapDeleteProvider).id;
+  NotificationId get id => (origin as NotificationMarkReadProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

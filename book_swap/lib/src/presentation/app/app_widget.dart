@@ -12,7 +12,9 @@ import 'package:talker_flutter/talker_flutter.dart';
 import '../../../config.dart';
 import '../../core/helpers/build_context_helper.dart';
 import '../../core/helpers/flutter_talker.dart';
+import '../../features/ads/ads_list_provider.dart';
 import '../../features/auth/auth.dart';
+import '../../features/notification/providers/notification_unread_count_provider.dart';
 import '../router/app_router_provider.dart';
 import '../widgets/feedback/my_error_widget.dart';
 import './app_state_provider.dart';
@@ -32,6 +34,10 @@ class _EagerInitialization extends ConsumerWidget {
     ref.watch(prendingTradeRequestListProvider);
 
     ref.watch(bannerProvider);
+
+    ref.watch(notificationUnreadCountProvider);
+
+    ref.watch(adsListProvider);
 
     return child;
   }

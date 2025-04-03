@@ -1,0 +1,1 @@
+alter table public.trade_requests add column if not exists reject_reason text;

@@ -12,19 +12,21 @@ class BookCover extends ConsumerWidget {
     this.edgeShadow = false,
     this.borderRadius = AS.radiusM,
     this.cacheImage = true,
+    this.customBorderRadius,
   });
 
   final ImageObject? cover;
   final bool edgeShadow;
   final double borderRadius;
   final bool cacheImage;
+  final BorderRadiusGeometry? customBorderRadius;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: customBorderRadius ?? BorderRadius.circular(borderRadius),
       ),
       child: AspectRatio(
         aspectRatio: AS.bookCoverAspectRatio,

@@ -38,6 +38,8 @@ mixin _$BookModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: BookModel.updatedAtKey)
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: BookModel.descriptionKey)
+  String? get description => throw _privateConstructorUsedError;
 
   /// Serializes this BookModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -63,7 +65,8 @@ abstract class $BookModelCopyWith<$Res> {
       @JsonKey(name: BookModel.averageRatingKey) double? averageRating,
       @JsonKey(name: BookModel.imageKey) ImageObject? image,
       @JsonKey(name: BookModel.createdAtKey) DateTime createdAt,
-      @JsonKey(name: BookModel.updatedAtKey) DateTime updatedAt});
+      @JsonKey(name: BookModel.updatedAtKey) DateTime updatedAt,
+      @JsonKey(name: BookModel.descriptionKey) String? description});
 }
 
 /// @nodoc
@@ -90,6 +93,7 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
     Object? image = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? description = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -128,6 +132,10 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -149,7 +157,8 @@ abstract class _$$BookModelImplCopyWith<$Res>
       @JsonKey(name: BookModel.averageRatingKey) double? averageRating,
       @JsonKey(name: BookModel.imageKey) ImageObject? image,
       @JsonKey(name: BookModel.createdAtKey) DateTime createdAt,
-      @JsonKey(name: BookModel.updatedAtKey) DateTime updatedAt});
+      @JsonKey(name: BookModel.updatedAtKey) DateTime updatedAt,
+      @JsonKey(name: BookModel.descriptionKey) String? description});
 }
 
 /// @nodoc
@@ -174,6 +183,7 @@ class __$$BookModelImplCopyWithImpl<$Res>
     Object? image = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? description = freezed,
   }) {
     return _then(_$BookModelImpl(
       id: null == id
@@ -212,6 +222,10 @@ class __$$BookModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -230,7 +244,8 @@ class _$BookModelImpl extends _BookModel {
       @JsonKey(name: BookModel.averageRatingKey) required this.averageRating,
       @JsonKey(name: BookModel.imageKey) required this.image,
       @JsonKey(name: BookModel.createdAtKey) required this.createdAt,
-      @JsonKey(name: BookModel.updatedAtKey) required this.updatedAt})
+      @JsonKey(name: BookModel.updatedAtKey) required this.updatedAt,
+      @JsonKey(name: BookModel.descriptionKey) required this.description})
       : super._();
 
   factory _$BookModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -263,10 +278,13 @@ class _$BookModelImpl extends _BookModel {
   @override
   @JsonKey(name: BookModel.updatedAtKey)
   final DateTime updatedAt;
+  @override
+  @JsonKey(name: BookModel.descriptionKey)
+  final String? description;
 
   @override
   String toString() {
-    return 'BookModel(id: $id, ownerId: $ownerId, title: $title, author: $author, condition: $condition, averageRating: $averageRating, image: $image, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'BookModel(id: $id, ownerId: $ownerId, title: $title, author: $author, condition: $condition, averageRating: $averageRating, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, description: $description)';
   }
 
   @override
@@ -286,13 +304,15 @@ class _$BookModelImpl extends _BookModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, ownerId, title, author,
-      condition, averageRating, image, createdAt, updatedAt);
+      condition, averageRating, image, createdAt, updatedAt, description);
 
   /// Create a copy of BookModel
   /// with the given fields replaced by the non-null parameter values.
@@ -321,8 +341,9 @@ abstract class _BookModel extends BookModel {
       required final double? averageRating,
       @JsonKey(name: BookModel.imageKey) required final ImageObject? image,
       @JsonKey(name: BookModel.createdAtKey) required final DateTime createdAt,
-      @JsonKey(name: BookModel.updatedAtKey)
-      required final DateTime updatedAt}) = _$BookModelImpl;
+      @JsonKey(name: BookModel.updatedAtKey) required final DateTime updatedAt,
+      @JsonKey(name: BookModel.descriptionKey)
+      required final String? description}) = _$BookModelImpl;
   const _BookModel._() : super._();
 
   factory _BookModel.fromJson(Map<String, dynamic> json) =
@@ -355,6 +376,9 @@ abstract class _BookModel extends BookModel {
   @override
   @JsonKey(name: BookModel.updatedAtKey)
   DateTime get updatedAt;
+  @override
+  @JsonKey(name: BookModel.descriptionKey)
+  String? get description;
 
   /// Create a copy of BookModel
   /// with the given fields replaced by the non-null parameter values.
@@ -667,11 +691,11 @@ mixin _$BookDetailModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: BookDetailModel.updatedAtKey)
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: BookDetailModel.descriptionKey)
+  String? get description => throw _privateConstructorUsedError;
   @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
   @JsonKey(name: BookDetailModel.ownerKey)
   ProfileLiteModel? get owner => throw _privateConstructorUsedError;
-  @JsonKey(name: BookDetailModel.descriptionKey)
-  String? get description => throw _privateConstructorUsedError;
 
   /// Serializes this BookDetailModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -699,10 +723,10 @@ abstract class $BookDetailModelCopyWith<$Res> {
       @JsonKey(name: BookDetailModel.imageKey) ImageObject? image,
       @JsonKey(name: BookDetailModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: BookDetailModel.updatedAtKey) DateTime updatedAt,
+      @JsonKey(name: BookDetailModel.descriptionKey) String? description,
       @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
       @JsonKey(name: BookDetailModel.ownerKey)
-      ProfileLiteModel? owner,
-      @JsonKey(name: BookDetailModel.descriptionKey) String? description});
+      ProfileLiteModel? owner});
 
   $ProfileLiteModelCopyWith<$Res>? get owner;
 }
@@ -731,8 +755,8 @@ class _$BookDetailModelCopyWithImpl<$Res, $Val extends BookDetailModel>
     Object? image = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? owner = freezed,
     Object? description = freezed,
+    Object? owner = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -771,14 +795,14 @@ class _$BookDetailModelCopyWithImpl<$Res, $Val extends BookDetailModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      owner: freezed == owner
-          ? _value.owner
-          : owner // ignore: cast_nullable_to_non_nullable
-              as ProfileLiteModel?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      owner: freezed == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
+              as ProfileLiteModel?,
     ) as $Val);
   }
 
@@ -815,10 +839,10 @@ abstract class _$$BookDetailModelImplCopyWith<$Res>
       @JsonKey(name: BookDetailModel.imageKey) ImageObject? image,
       @JsonKey(name: BookDetailModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: BookDetailModel.updatedAtKey) DateTime updatedAt,
+      @JsonKey(name: BookDetailModel.descriptionKey) String? description,
       @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
       @JsonKey(name: BookDetailModel.ownerKey)
-      ProfileLiteModel? owner,
-      @JsonKey(name: BookDetailModel.descriptionKey) String? description});
+      ProfileLiteModel? owner});
 
   @override
   $ProfileLiteModelCopyWith<$Res>? get owner;
@@ -846,8 +870,8 @@ class __$$BookDetailModelImplCopyWithImpl<$Res>
     Object? image = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? owner = freezed,
     Object? description = freezed,
+    Object? owner = freezed,
   }) {
     return _then(_$BookDetailModelImpl(
       id: null == id
@@ -886,14 +910,14 @@ class __$$BookDetailModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      owner: freezed == owner
-          ? _value.owner
-          : owner // ignore: cast_nullable_to_non_nullable
-              as ProfileLiteModel?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      owner: freezed == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
+              as ProfileLiteModel?,
     ));
   }
 }
@@ -914,10 +938,10 @@ class _$BookDetailModelImpl extends _BookDetailModel {
       @JsonKey(name: BookDetailModel.imageKey) required this.image,
       @JsonKey(name: BookDetailModel.createdAtKey) required this.createdAt,
       @JsonKey(name: BookDetailModel.updatedAtKey) required this.updatedAt,
+      @JsonKey(name: BookDetailModel.descriptionKey) required this.description,
       @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
       @JsonKey(name: BookDetailModel.ownerKey)
-      required this.owner,
-      @JsonKey(name: BookDetailModel.descriptionKey) required this.description})
+      required this.owner})
       : super._();
 
   factory _$BookDetailModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -951,16 +975,16 @@ class _$BookDetailModelImpl extends _BookDetailModel {
   @JsonKey(name: BookDetailModel.updatedAtKey)
   final DateTime updatedAt;
   @override
+  @JsonKey(name: BookDetailModel.descriptionKey)
+  final String? description;
+  @override
   @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
   @JsonKey(name: BookDetailModel.ownerKey)
   final ProfileLiteModel? owner;
-  @override
-  @JsonKey(name: BookDetailModel.descriptionKey)
-  final String? description;
 
   @override
   String toString() {
-    return 'BookDetailModel(id: $id, ownerId: $ownerId, title: $title, author: $author, condition: $condition, averageRating: $averageRating, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, owner: $owner, description: $description)';
+    return 'BookDetailModel(id: $id, ownerId: $ownerId, title: $title, author: $author, condition: $condition, averageRating: $averageRating, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, description: $description, owner: $owner)';
   }
 
   @override
@@ -981,9 +1005,9 @@ class _$BookDetailModelImpl extends _BookDetailModel {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.owner, owner) || other.owner == owner) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.owner, owner) || other.owner == owner));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -999,8 +1023,8 @@ class _$BookDetailModelImpl extends _BookDetailModel {
       image,
       createdAt,
       updatedAt,
-      owner,
-      description);
+      description,
+      owner);
 
   /// Create a copy of BookDetailModel
   /// with the given fields replaced by the non-null parameter values.
@@ -1035,11 +1059,11 @@ abstract class _BookDetailModel extends BookDetailModel {
       required final DateTime createdAt,
       @JsonKey(name: BookDetailModel.updatedAtKey)
       required final DateTime updatedAt,
+      @JsonKey(name: BookDetailModel.descriptionKey)
+      required final String? description,
       @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
       @JsonKey(name: BookDetailModel.ownerKey)
-      required final ProfileLiteModel? owner,
-      @JsonKey(name: BookDetailModel.descriptionKey)
-      required final String? description}) = _$BookDetailModelImpl;
+      required final ProfileLiteModel? owner}) = _$BookDetailModelImpl;
   const _BookDetailModel._() : super._();
 
   factory _BookDetailModel.fromJson(Map<String, dynamic> json) =
@@ -1073,12 +1097,12 @@ abstract class _BookDetailModel extends BookDetailModel {
   @JsonKey(name: BookDetailModel.updatedAtKey)
   DateTime get updatedAt;
   @override
+  @JsonKey(name: BookDetailModel.descriptionKey)
+  String? get description;
+  @override
   @JoinedColumn(foreignKey: "owner_id", candidateKey: "id")
   @JsonKey(name: BookDetailModel.ownerKey)
   ProfileLiteModel? get owner;
-  @override
-  @JsonKey(name: BookDetailModel.descriptionKey)
-  String? get description;
 
   /// Create a copy of BookDetailModel
   /// with the given fields replaced by the non-null parameter values.

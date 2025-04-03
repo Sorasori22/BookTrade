@@ -48,13 +48,20 @@ serve(async (req) => {
         notification_type: notification_type,
         payload: payload,
       },
-      // ...(notification_type === 'chat_message' && {
-      //   android_group: `chat_${payload.chat_id}`,
-      //   android_group_message: {
-      //     en: `$[notif_count] new messages from ${title}`
-      //   },
-      //   thread_id: `chat_${payload.chat_id}`,
-      // }),
+      ...(notification_type !== 'message' && {
+        android_group: `non_message_notification`,
+        android_group_message: {
+          en: `New notification from ${title}`
+        },
+        thread_id: `non_message_notification`,
+      }),
+      ...(notification_type === 'message' && {
+        android_group: `chat_${payload.recipient_id}`,
+        android_group_message: {
+          en: `${payload.notif_count} new messages from ${title}`
+        },
+        thread_id: `chat_${payload.recipient_id}`,
+      }),
     }
 
     console.log('Notification Object:', notification);

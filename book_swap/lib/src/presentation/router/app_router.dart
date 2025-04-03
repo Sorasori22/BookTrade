@@ -120,7 +120,18 @@ class AppRouter extends RootStackRouter {
       ),
       AutoRoute(
         page: MessageRoomRoute.page,
+        guards: [AuthGuard(_ref)],
         path: '/messages/:recipientId',
+      ),
+      AutoRoute(
+        page: NotificationRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/notifications',
+      ),
+      AutoRoute(
+        page: TradeRequestRejectRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/trade-request/:tradeRequestId/reject',
       ),
     ];
   }

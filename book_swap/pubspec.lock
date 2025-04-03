@@ -566,6 +566,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
+  flutter_carousel_widget:
+    dependency: "direct main"
+    description:
+      name: flutter_carousel_widget
+      sha256: "6473e6df04bfafea70efd58251fe5945d5aa8d19461575c1b9d83643f08e0c77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   flutter_gen_core:
     dependency: transitive
     description:
@@ -1002,7 +1010,7 @@ packages:
     description:
       path: "packages/kimapp"
       ref: master
-      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      resolved-ref: "8e0a4eb266380a88327f9806133ed105b446b193"
       url: "https://github.com/pckimlong/kimapp.git"
     source: git
     version: "0.0.3"
@@ -1011,7 +1019,7 @@ packages:
     description:
       path: "packages/kimapp_generator"
       ref: master
-      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      resolved-ref: "8e0a4eb266380a88327f9806133ed105b446b193"
       url: "https://github.com/pckimlong/kimapp.git"
     source: git
     version: "0.0.2"
@@ -1020,7 +1028,7 @@ packages:
     description:
       path: "packages/kimapp_supabase_helper"
       ref: master
-      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      resolved-ref: "8e0a4eb266380a88327f9806133ed105b446b193"
       url: "https://github.com/pckimlong/kimapp.git"
     source: git
     version: "0.0.3"
@@ -1029,7 +1037,7 @@ packages:
     description:
       path: "packages/kimapp_utils"
       ref: master
-      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      resolved-ref: "8e0a4eb266380a88327f9806133ed105b446b193"
       url: "https://github.com/pckimlong/kimapp.git"
     source: git
     version: "0.0.3"
@@ -1791,7 +1799,7 @@ packages:
     source: hosted
     version: "1.4.0"
   url_launcher:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher
       sha256: "9d06212b1362abc2f0f0d78e6f09f726608c74e3b9462e8368bb03314aa8d603"

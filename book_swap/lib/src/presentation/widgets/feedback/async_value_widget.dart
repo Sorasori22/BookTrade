@@ -39,7 +39,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
         }
         return child;
       },
-      error: error ?? (e, _) => MyErrorWidget(error: e),
+      error: error ?? (e, _) => Center(child: MyErrorWidget(error: e)),
       loading: loading ?? () => const Center(child: CircularProgressIndicator()),
       skipLoadingOnRefresh: skipLoadingOnRefresh,
       skipLoadingOnReload: skipLoadingOnReload,

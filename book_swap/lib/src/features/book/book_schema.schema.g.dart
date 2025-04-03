@@ -21,6 +21,7 @@ _$BookModelImpl _$$BookModelImplFromJson(Map<String, dynamic> json) =>
           : ImageObject.fromJson(json['image_path']),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$$BookModelImplToJson(_$BookModelImpl instance) =>
@@ -34,6 +35,7 @@ Map<String, dynamic> _$$BookModelImplToJson(_$BookModelImpl instance) =>
       'image_path': instance.image?.toJson(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
+      'description': instance.description,
     };
 
 _$BookLiteModelImpl _$$BookLiteModelImplFromJson(Map<String, dynamic> json) =>
@@ -72,10 +74,10 @@ _$BookDetailModelImpl _$$BookDetailModelImplFromJson(
           : ImageObject.fromJson(json['image_path']),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
+      description: json['description'] as String?,
       owner: json['owner'] == null
           ? null
           : ProfileLiteModel.fromJson(json['owner'] as Map<String, dynamic>),
-      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$$BookDetailModelImplToJson(
@@ -90,8 +92,8 @@ Map<String, dynamic> _$$BookDetailModelImplToJson(
       'image_path': instance.image?.toJson(),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
-      'owner': instance.owner?.toJson(),
       'description': instance.description,
+      'owner': instance.owner?.toJson(),
     };
 
 _$BookCreateParamImpl _$$BookCreateParamImplFromJson(
@@ -158,6 +160,7 @@ const _tableBookModel = TableBuilder(
     ColumnBuilder('image_path'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
+    ColumnBuilder('description'),
   ],
 );
 
@@ -185,8 +188,8 @@ const _tableBookDetailModel = TableBuilder(
     ColumnBuilder('image_path'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
+    ColumnBuilder('description'),
     ColumnBuilder.join(ProfileLiteModel.table,
         key: "owner", candidateKey: 'id', foreignKey: 'owner_id'),
-    ColumnBuilder('description'),
   ],
 );

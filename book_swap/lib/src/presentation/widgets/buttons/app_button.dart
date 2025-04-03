@@ -243,6 +243,7 @@ class AppButton extends AppBaseWidget {
         width: iconSize,
         child: CircularProgressIndicator(
           strokeWidth: 2,
+          backgroundColor: Colors.grey.shade200,
           valueColor: AlwaysStoppedAnimation<Color>(textIconColor),
         ),
       );

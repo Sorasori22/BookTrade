@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/helpers/build_context_helper.dart';
+import '../../../features/notification/providers/notification_unread_count_provider.dart';
 import '../../app/app_style.dart';
 
 @RoutePage()
@@ -119,11 +120,17 @@ class MorePage extends ConsumerWidget {
           },
         ),
         AS.hGap4,
-        SettingsListTile(
-          icon: Icons.notifications_outlined,
-          title: 'Notifications',
-          onTap: () {
-            // Navigate to notifications page
+        Consumer(
+          builder: (context, ref, child) {
+            final unreadCount = ref.watch(notificationUnreadCountProvider).valueOrNull ?? 0;
+            return SettingsListTile(
+              icon: Icons.notifications_outlined,
+              title: 'Notifications',
+              unreadCount: unreadCount,
+              onTap: () {
+                context.pushRoute(const NotificationRoute());
+              },
+            );
           },
         ),
         AS.hGap4,

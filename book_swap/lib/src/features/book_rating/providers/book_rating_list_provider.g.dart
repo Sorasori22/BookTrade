@@ -8,7 +8,7 @@ part of 'book_rating_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookRatingListHash() => r'393eccbed9d013cc8b448da3d5e953c994dd843b';
+String _$bookRatingListHash() => r'08028053963a339ed8097771cfa9418b4170cc2b';
 
 /// See also [BookRatingList].
 @ProviderFor(BookRatingList)
