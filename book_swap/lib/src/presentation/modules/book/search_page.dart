@@ -38,7 +38,7 @@ class SearchPage extends HookConsumerWidget {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(AS.sidePadding).copyWith(top: 4),
+        padding: EdgeInsets.all(AS.sidePadding),
         child: Column(
           children: [
             SearchField(
@@ -46,6 +46,7 @@ class SearchPage extends HookConsumerWidget {
                 searchState.value = value;
               },
             ),
+            AS.hGap8,
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {

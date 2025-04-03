@@ -109,6 +109,9 @@ class HomePage extends ConsumerWidget {
             SliverToBoxAdapter(
               child: _RecentlyAddedList(),
             ),
+            SliverToBoxAdapter(
+              child: AS.hGap16,
+            ),
           ],
         ),
       ),
