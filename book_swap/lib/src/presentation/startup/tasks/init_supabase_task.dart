@@ -12,8 +12,10 @@ class InitSupabaseTask extends StartUpTask {
 
   @override
   Future<void> initialize(LaunchContext context) async {
-    final url = context.env.isDevelop ? _devUrl : const String.fromEnvironment('API_URL');
-    final key = context.env.isDevelop ? _devAnonKey : const String.fromEnvironment('API_ANON_KEY');
+    final url = context.env.isDevelop ? _devUrl : 'https://kcklnkxnhuyyfvytyhtt.supabase.co';
+    final key = context.env.isDevelop
+        ? _devAnonKey
+        : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtja2xua3huaHV5eWZ2eXR5aHR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwMDc1NzEsImV4cCI6MjA1NzU4MzU3MX0.mwyzB8P4ty7ot9yRoSVQ44M_m5XS7YeujS_a7wucZZ8';
 
     await initializeSupabase(
       url: url,
