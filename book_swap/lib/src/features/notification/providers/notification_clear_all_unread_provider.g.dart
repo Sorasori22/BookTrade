@@ -2,27 +2,29 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'notification_list_provider.dart';
+part of 'notification_clear_all_unread_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$notificationListHash() => r'99fd43ee2fdab80c792256f835c7d4c118092706';
+String _$notificationClearAllUnreadHash() =>
+    r'10ba88125c7a9bfabf38fb8fdfbf0d0c5466887c';
 
-/// See also [NotificationList].
-@ProviderFor(NotificationList)
-final notificationListProvider = AutoDisposeAsyncNotifierProvider<
-    NotificationList, IList<NotificationModel>>.internal(
-  NotificationList.new,
-  name: r'notificationListProvider',
+/// See also [NotificationClearAllUnread].
+@ProviderFor(NotificationClearAllUnread)
+final notificationClearAllUnreadProvider = AutoDisposeNotifierProvider<
+    NotificationClearAllUnread, ProviderStatus<Unit>>.internal(
+  NotificationClearAllUnread.new,
+  name: r'notificationClearAllUnreadProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$notificationListHash,
+      : _$notificationClearAllUnreadHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$NotificationList = AutoDisposeAsyncNotifier<IList<NotificationModel>>;
+typedef _$NotificationClearAllUnread
+    = AutoDisposeNotifier<ProviderStatus<Unit>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

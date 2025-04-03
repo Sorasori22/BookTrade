@@ -7,6 +7,7 @@ class SettingsListTile extends StatelessWidget {
   final String title;
   final String? subtitle;
   final VoidCallback onTap;
+  final int unreadCount;
 
   const SettingsListTile({
     super.key,
@@ -14,10 +15,17 @@ class SettingsListTile extends StatelessWidget {
     required this.title,
     this.subtitle,
     required this.onTap,
+    this.unreadCount = 0,
   });
 
   @override
   Widget build(BuildContext context) {
+    final icon2 = Icon(
+      icon,
+      color: context.colors.onSurface,
+      size: 24,
+    );
+
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -32,10 +40,10 @@ class SettingsListTile extends StatelessWidget {
               width: 34,
               height: 34,
               alignment: Alignment.center,
-              child: Icon(
-                icon,
-                color: context.colors.onSurface,
-                size: 24,
+              child: Badge.count(
+                isLabelVisible: unreadCount > 0,
+                count: unreadCount,
+                child: icon2,
               ),
             ),
             AS.wGap12,

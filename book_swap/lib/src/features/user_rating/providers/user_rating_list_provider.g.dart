@@ -8,7 +8,7 @@ part of 'user_rating_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userRatingListHash() => r'90d406122f762eabdef9885d47b5312fe2514981';
+String _$userRatingListHash() => r'3a892ba282e3089d7c367d91e685a29844817176';
 
 /// Copied from Dart SDK
 class _SystemHash {

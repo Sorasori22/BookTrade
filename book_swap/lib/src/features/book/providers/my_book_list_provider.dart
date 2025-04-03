@@ -21,7 +21,7 @@ class MyBookList extends _$MyBookList with IListAsyncNotifier {
   @override
   FutureOr<IList<BookModel>> build() {
     ref.cacheTime(10.minutes);
-    final myId = ref.watch(currentAccountProvider).valueOrNull?.profile?.id;
+    final myId = ref.watch(currentProfileIdProvider);
     if (myId == null) {
       return const IList.empty();
     }

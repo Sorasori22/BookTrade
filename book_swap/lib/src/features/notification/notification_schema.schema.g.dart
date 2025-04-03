@@ -16,9 +16,13 @@ _$NotificationModelImpl _$$NotificationModelImplFromJson(
       content: json['content'] as String,
       read: json['read'] as bool,
       relatedTradeId: (json['related_trade_id'] as num?)?.toInt(),
-      notificationType: json['notification_type'] as String,
+      rawType: json['notification_type'] as String,
+      payload: json['payload'] as Map<String, dynamic>,
       createdAt: DateTime.parse(json['created_at'] as String),
-      user: ProfileLiteModel.fromJson(json['user'] as Map<String, dynamic>),
+      tradeRequest: json['tradeRequest'] == null
+          ? null
+          : TradeRequestLiteModel.fromJson(
+              json['tradeRequest'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$NotificationModelImplToJson(
@@ -29,87 +33,10 @@ Map<String, dynamic> _$$NotificationModelImplToJson(
       'content': instance.content,
       'read': instance.read,
       'related_trade_id': instance.relatedTradeId,
-      'notification_type': instance.notificationType,
+      'notification_type': instance.rawType,
+      'payload': instance.payload,
       'created_at': instance.createdAt.toIso8601String(),
-      'user': instance.user.toJson(),
-    };
-
-_$NotificationLiteModelImpl _$$NotificationLiteModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NotificationLiteModelImpl(
-      id: NotificationId.fromJson(json['id']),
-      userId: ProfileId.fromJson(json['user_id']),
-      content: json['content'] as String,
-      read: json['read'] as bool,
-      notificationType: json['notification_type'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-    );
-
-Map<String, dynamic> _$$NotificationLiteModelImplToJson(
-        _$NotificationLiteModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id.toJson(),
-      'user_id': instance.userId.toJson(),
-      'content': instance.content,
-      'read': instance.read,
-      'notification_type': instance.notificationType,
-      'created_at': instance.createdAt.toIso8601String(),
-    };
-
-_$NotificationDetailModelImpl _$$NotificationDetailModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NotificationDetailModelImpl(
-      id: NotificationId.fromJson(json['id']),
-      userId: ProfileId.fromJson(json['user_id']),
-      content: json['content'] as String,
-      read: json['read'] as bool,
-      relatedTradeId: (json['related_trade_id'] as num?)?.toInt(),
-      notificationType: json['notification_type'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      user: ProfileLiteModel.fromJson(json['user'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$NotificationDetailModelImplToJson(
-        _$NotificationDetailModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id.toJson(),
-      'user_id': instance.userId.toJson(),
-      'content': instance.content,
-      'read': instance.read,
-      'related_trade_id': instance.relatedTradeId,
-      'notification_type': instance.notificationType,
-      'created_at': instance.createdAt.toIso8601String(),
-      'user': instance.user.toJson(),
-    };
-
-_$NotificationCreateParamImpl _$$NotificationCreateParamImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NotificationCreateParamImpl(
-      userId: ProfileId.fromJson(json['user_id']),
-      content: json['content'] as String,
-      relatedTradeId: (json['related_trade_id'] as num?)?.toInt(),
-      notificationType: json['notification_type'] as String,
-    );
-
-Map<String, dynamic> _$$NotificationCreateParamImplToJson(
-        _$NotificationCreateParamImpl instance) =>
-    <String, dynamic>{
-      'user_id': instance.userId.toJson(),
-      'content': instance.content,
-      'related_trade_id': instance.relatedTradeId,
-      'notification_type': instance.notificationType,
-    };
-
-_$NotificationUpdateParamImpl _$$NotificationUpdateParamImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NotificationUpdateParamImpl(
-      read: json['read'] as bool?,
-    );
-
-Map<String, dynamic> _$$NotificationUpdateParamImplToJson(
-        _$NotificationUpdateParamImpl instance) =>
-    <String, dynamic>{
-      'read': instance.read,
+      'tradeRequest': instance.tradeRequest?.toJson(),
     };
 
 // **************************************************************************
@@ -125,35 +52,11 @@ const _tableNotificationModel = TableBuilder(
     ColumnBuilder('read'),
     ColumnBuilder('related_trade_id'),
     ColumnBuilder('notification_type'),
+    ColumnBuilder('payload'),
     ColumnBuilder('created_at'),
-    ColumnBuilder.join(ProfileLiteModel.table,
-        key: "user", candidateKey: 'id', foreignKey: 'user_id'),
-  ],
-);
-
-const _tableNotificationLiteModel = TableBuilder(
-  tableName: "notifications",
-  columns: [
-    ColumnBuilder('id'),
-    ColumnBuilder('user_id'),
-    ColumnBuilder('content'),
-    ColumnBuilder('read'),
-    ColumnBuilder('notification_type'),
-    ColumnBuilder('created_at'),
-  ],
-);
-
-const _tableNotificationDetailModel = TableBuilder(
-  tableName: "notifications",
-  columns: [
-    ColumnBuilder('id'),
-    ColumnBuilder('user_id'),
-    ColumnBuilder('content'),
-    ColumnBuilder('read'),
-    ColumnBuilder('related_trade_id'),
-    ColumnBuilder('notification_type'),
-    ColumnBuilder('created_at'),
-    ColumnBuilder.join(ProfileLiteModel.table,
-        key: "user", candidateKey: 'id', foreignKey: 'user_id'),
+    ColumnBuilder.join(TradeRequestLiteModel.table,
+        key: "tradeRequest",
+        candidateKey: null,
+        foreignKey: 'related_trade_id'),
   ],
 );

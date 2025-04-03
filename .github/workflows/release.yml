@@ -56,7 +56,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --target=lib/main.dart --release
+        run: flutter build apk --target=lib/main.dart --release --target-platform android-arm64
 
       - name: Get version from pubspec.yaml
         id: version

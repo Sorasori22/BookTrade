@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, unnecessary_import, unused_import
+// ignore_for_file: type=lint, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/book/providers/book_update_provider.dart';
@@ -15,6 +15,7 @@ import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/features/book/providers/my_book_list_provider.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -519,10 +520,8 @@ class BookUpdateTitleField extends HookConsumerWidget {
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null &&
-          initialValue != null &&
-          textController!.text.isEmpty) {
-        textController!.text = initialValue;
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -615,10 +614,8 @@ class BookUpdateAuthorField extends HookConsumerWidget {
 
     // Initialize external controller if provided
     useEffect(() {
-      if (textController != null &&
-          initialValue != null &&
-          textController!.text.isEmpty) {
-        textController!.text = initialValue;
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);
@@ -718,7 +715,7 @@ class BookUpdateDescriptionField extends HookConsumerWidget {
       if (textController != null &&
           initialValue != null &&
           textController!.text.isEmpty) {
-        textController!.text = initialValue;
+        textController!.text = initialValue ?? "";
       }
       return null;
     }, []);

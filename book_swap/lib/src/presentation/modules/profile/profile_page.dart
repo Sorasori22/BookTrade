@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/core/account/current_account_provider.widget.dart';
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/features/book/providers/my_book_list_provider.widget.dart';
+import 'package:book_swap/src/features/notification/providers/notification_unread_count_provider.dart';
 import 'package:book_swap/src/presentation/modules/book/widget/book_cover.dart';
 import 'package:book_swap/src/presentation/modules/profile/widget/current_user_avatar.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
@@ -38,7 +39,16 @@ class ProfilePage extends ConsumerWidget {
             onPressed: () {
               context.router.push(const MoreRoute());
             },
-            icon: const Icon(Icons.more_vert),
+            icon: Consumer(
+              builder: (context, ref, child) {
+                final unreadCount = ref.watch(notificationUnreadCountProvider).valueOrNull ?? 0;
+                return Badge.count(
+                  count: unreadCount,
+                  isLabelVisible: unreadCount > 0,
+                  child: const Icon(Icons.more_vert),
+                );
+              },
+            ),
           ),
         ],
       ),

@@ -122,6 +122,10 @@ class AppRouter extends RootStackRouter {
         page: MessageRoomRoute.page,
         path: '/messages/:recipientId',
       ),
+      AutoRoute(
+        page: NotificationRoute.page,
+        path: '/notifications',
+      ),
     ];
   }
 }

@@ -21,6 +21,7 @@ _$TradeRequestModelImpl _$$TradeRequestModelImplFromJson(
       status: $enumDecode(_$TradeRequestStatusEnumMap, json['status']),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
+      rejectReason: json['reject_reason'] as String?,
       requester:
           ProfileLiteModel.fromJson(json['requester'] as Map<String, dynamic>),
       owner: ProfileLiteModel.fromJson(json['owner'] as Map<String, dynamic>),
@@ -41,6 +42,7 @@ Map<String, dynamic> _$$TradeRequestModelImplToJson(
       'status': _$TradeRequestStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
+      'reject_reason': instance.rejectReason,
       'requester': instance.requester.toJson(),
       'owner': instance.owner.toJson(),
       'book': instance.book.toJson(),
@@ -60,6 +62,8 @@ _$TradeRequestLiteModelImpl _$$TradeRequestLiteModelImplFromJson(
     _$TradeRequestLiteModelImpl(
       id: TradeRequestId.fromJson(json['id']),
       requesterId: ProfileId.fromJson(json['requester_id']),
+      requester:
+          ProfileLiteModel.fromJson(json['requester'] as Map<String, dynamic>),
       ownerId: ProfileId.fromJson(json['owner_id']),
       bookId: BookId.fromJson(json['book_id']),
       offeredBookId: json['offered_book_id'] == null
@@ -71,6 +75,7 @@ _$TradeRequestLiteModelImpl _$$TradeRequestLiteModelImplFromJson(
       offeredBook: json['offeredBook'] == null
           ? null
           : BookLiteModel.fromJson(json['offeredBook'] as Map<String, dynamic>),
+      rejectReason: json['reject_reason'] as String?,
     );
 
 Map<String, dynamic> _$$TradeRequestLiteModelImplToJson(
@@ -78,6 +83,7 @@ Map<String, dynamic> _$$TradeRequestLiteModelImplToJson(
     <String, dynamic>{
       'id': instance.id.toJson(),
       'requester_id': instance.requesterId.toJson(),
+      'requester': instance.requester.toJson(),
       'owner_id': instance.ownerId.toJson(),
       'book_id': instance.bookId.toJson(),
       'offered_book_id': instance.offeredBookId?.toJson(),
@@ -85,6 +91,7 @@ Map<String, dynamic> _$$TradeRequestLiteModelImplToJson(
       'created_at': instance.createdAt.toIso8601String(),
       'book': instance.book.toJson(),
       'offeredBook': instance.offeredBook?.toJson(),
+      'reject_reason': instance.rejectReason,
     };
 
 _$TradeRequestDetailModelImpl _$$TradeRequestDetailModelImplFromJson(
@@ -100,6 +107,7 @@ _$TradeRequestDetailModelImpl _$$TradeRequestDetailModelImplFromJson(
       status: $enumDecode(_$TradeRequestStatusEnumMap, json['status']),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
+      rejectReason: json['reject_reason'] as String?,
       requester:
           ProfileLiteModel.fromJson(json['requester'] as Map<String, dynamic>),
       owner: ProfileLiteModel.fromJson(json['owner'] as Map<String, dynamic>),
@@ -120,6 +128,7 @@ Map<String, dynamic> _$$TradeRequestDetailModelImplToJson(
       'status': _$TradeRequestStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
+      'reject_reason': instance.rejectReason,
       'requester': instance.requester.toJson(),
       'owner': instance.owner.toJson(),
       'book': instance.book.toJson(),
@@ -169,6 +178,7 @@ const _tableTradeRequestModel = TableBuilder(
     ColumnBuilder('status'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
+    ColumnBuilder('reject_reason'),
     ColumnBuilder.join(ProfileLiteModel.table,
         key: "requester", candidateKey: null, foreignKey: 'requester_id'),
     ColumnBuilder.join(ProfileLiteModel.table,
@@ -185,6 +195,8 @@ const _tableTradeRequestLiteModel = TableBuilder(
   columns: [
     ColumnBuilder('id'),
     ColumnBuilder('requester_id'),
+    ColumnBuilder.join(ProfileLiteModel.table,
+        key: "requester", candidateKey: null, foreignKey: 'requester_id'),
     ColumnBuilder('owner_id'),
     ColumnBuilder('book_id'),
     ColumnBuilder('offered_book_id'),
@@ -194,6 +206,7 @@ const _tableTradeRequestLiteModel = TableBuilder(
         key: "book", candidateKey: null, foreignKey: 'book_id'),
     ColumnBuilder.join(BookLiteModel.table,
         key: "offeredBook", candidateKey: null, foreignKey: 'offered_book_id'),
+    ColumnBuilder('reject_reason'),
   ],
 );
 
@@ -208,6 +221,7 @@ const _tableTradeRequestDetailModel = TableBuilder(
     ColumnBuilder('status'),
     ColumnBuilder('created_at'),
     ColumnBuilder('updated_at'),
+    ColumnBuilder('reject_reason'),
     ColumnBuilder.join(ProfileLiteModel.table,
         key: "requester", candidateKey: null, foreignKey: 'requester_id'),
     ColumnBuilder.join(ProfileLiteModel.table,

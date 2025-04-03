@@ -31,6 +31,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_supabase_helper/supabase_provider.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../features/message/message_schema.dart';
@@ -76,7 +77,12 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
 
       _loadUserInfo();
       _listenRealtimeMessages();
+      _clearOnesignalNotifications();
     });
+  }
+
+  void _clearOnesignalNotifications() {
+    OneSignal.Notifications.removeGroupedNotifications('chat_${_recipientId.value}');
   }
 
   @override

@@ -8,7 +8,7 @@ part of 'completed_swap_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$completedSwapListHash() => r'394fbbbe5ef2bc23478d22340e11b2832d6b45ca';
+String _$completedSwapListHash() => r'03b714cde21570614b0892e2e865293e4046e7bf';
 
 /// See also [CompletedSwapList].
 @ProviderFor(CompletedSwapList)

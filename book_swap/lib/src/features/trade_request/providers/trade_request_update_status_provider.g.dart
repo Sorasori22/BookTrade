@@ -9,7 +9,7 @@ part of 'trade_request_update_status_provider.dart';
 // **************************************************************************
 
 String _$tradeRequestUpdateStatusHash() =>
-    r'5d6d5815c417a2dfe570590c904c6d23160e7c4d';
+    r'df95d25a76ad74720fecb8116182786465fcd1a7';
 
 /// Copied from Dart SDK
 class _SystemHash {

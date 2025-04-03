@@ -2,14 +2,14 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'notification_detail_provider.dart';
+part of 'notification_mark_read_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$notificationDetailHash() =>
-    r'dd10f8b2f406b682f92e76caeab370aa40b3fcc6';
+String _$notificationMarkReadHash() =>
+    r'92088798ce01a31ab50af5dc918b2801e4e780dd';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -32,36 +32,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$NotificationDetail
-    extends BuildlessAutoDisposeAsyncNotifier<NotificationModel> {
+abstract class _$NotificationMarkRead
+    extends BuildlessAutoDisposeNotifier<ProviderStatus<Unit>> {
   late final NotificationId id;
 
-  FutureOr<NotificationModel> build(
+  ProviderStatus<Unit> build(
     NotificationId id,
   );
 }
 
-/// See also [NotificationDetail].
-@ProviderFor(NotificationDetail)
-const notificationDetailProvider = NotificationDetailFamily();
+/// See also [NotificationMarkRead].
+@ProviderFor(NotificationMarkRead)
+const notificationMarkReadProvider = NotificationMarkReadFamily();
 
-/// See also [NotificationDetail].
-class NotificationDetailFamily extends Family<AsyncValue<NotificationModel>> {
-  /// See also [NotificationDetail].
-  const NotificationDetailFamily();
+/// See also [NotificationMarkRead].
+class NotificationMarkReadFamily extends Family<ProviderStatus<Unit>> {
+  /// See also [NotificationMarkRead].
+  const NotificationMarkReadFamily();
 
-  /// See also [NotificationDetail].
-  NotificationDetailProvider call(
+  /// See also [NotificationMarkRead].
+  NotificationMarkReadProvider call(
     NotificationId id,
   ) {
-    return NotificationDetailProvider(
+    return NotificationMarkReadProvider(
       id,
     );
   }
 
   @override
-  NotificationDetailProvider getProviderOverride(
-    covariant NotificationDetailProvider provider,
+  NotificationMarkReadProvider getProviderOverride(
+    covariant NotificationMarkReadProvider provider,
   ) {
     return call(
       provider.id,
@@ -80,30 +80,30 @@ class NotificationDetailFamily extends Family<AsyncValue<NotificationModel>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'notificationDetailProvider';
+  String? get name => r'notificationMarkReadProvider';
 }
 
-/// See also [NotificationDetail].
-class NotificationDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    NotificationDetail, NotificationModel> {
-  /// See also [NotificationDetail].
-  NotificationDetailProvider(
+/// See also [NotificationMarkRead].
+class NotificationMarkReadProvider extends AutoDisposeNotifierProviderImpl<
+    NotificationMarkRead, ProviderStatus<Unit>> {
+  /// See also [NotificationMarkRead].
+  NotificationMarkReadProvider(
     NotificationId id,
   ) : this._internal(
-          () => NotificationDetail()..id = id,
-          from: notificationDetailProvider,
-          name: r'notificationDetailProvider',
+          () => NotificationMarkRead()..id = id,
+          from: notificationMarkReadProvider,
+          name: r'notificationMarkReadProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$notificationDetailHash,
-          dependencies: NotificationDetailFamily._dependencies,
+                  : _$notificationMarkReadHash,
+          dependencies: NotificationMarkReadFamily._dependencies,
           allTransitiveDependencies:
-              NotificationDetailFamily._allTransitiveDependencies,
+              NotificationMarkReadFamily._allTransitiveDependencies,
           id: id,
         );
 
-  NotificationDetailProvider._internal(
+  NotificationMarkReadProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -116,8 +116,8 @@ class NotificationDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final NotificationId id;
 
   @override
-  FutureOr<NotificationModel> runNotifierBuild(
-    covariant NotificationDetail notifier,
+  ProviderStatus<Unit> runNotifierBuild(
+    covariant NotificationMarkRead notifier,
   ) {
     return notifier.build(
       id,
@@ -125,10 +125,10 @@ class NotificationDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(NotificationDetail Function() create) {
+  Override overrideWith(NotificationMarkRead Function() create) {
     return ProviderOverride(
       origin: this,
-      override: NotificationDetailProvider._internal(
+      override: NotificationMarkReadProvider._internal(
         () => create()..id = id,
         from: from,
         name: null,
@@ -141,14 +141,14 @@ class NotificationDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<NotificationDetail, NotificationModel>
+  AutoDisposeNotifierProviderElement<NotificationMarkRead, ProviderStatus<Unit>>
       createElement() {
-    return _NotificationDetailProviderElement(this);
+    return _NotificationMarkReadProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is NotificationDetailProvider && other.id == id;
+    return other is NotificationMarkReadProvider && other.id == id;
   }
 
   @override
@@ -162,19 +162,19 @@ class NotificationDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin NotificationDetailRef
-    on AutoDisposeAsyncNotifierProviderRef<NotificationModel> {
+mixin NotificationMarkReadRef
+    on AutoDisposeNotifierProviderRef<ProviderStatus<Unit>> {
   /// The parameter `id` of this provider.
   NotificationId get id;
 }
 
-class _NotificationDetailProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<NotificationDetail,
-        NotificationModel> with NotificationDetailRef {
-  _NotificationDetailProviderElement(super.provider);
+class _NotificationMarkReadProviderElement
+    extends AutoDisposeNotifierProviderElement<NotificationMarkRead,
+        ProviderStatus<Unit>> with NotificationMarkReadRef {
+  _NotificationMarkReadProviderElement(super.provider);
 
   @override
-  NotificationId get id => (origin as NotificationDetailProvider).id;
+  NotificationId get id => (origin as NotificationMarkReadProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

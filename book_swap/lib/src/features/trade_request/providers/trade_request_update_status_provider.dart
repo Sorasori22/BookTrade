@@ -1,3 +1,4 @@
+import 'package:book_swap/src/features/notification/providers/notification_list_pagination_provider.dart';
 import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:kimapp/kimapp.dart';
@@ -17,14 +18,19 @@ class TradeRequestUpdateStatus extends _$TradeRequestUpdateStatus {
 
   Future<ProviderStatus<Unit>> call({
     required TradeRequestStatus status,
+    String? rejectReason,
   }) async {
     return await perform(
       (state) async {
-        return ref.read(tradeRequestRepoProvider).updateStatus(id, status).getOrThrow();
+        return ref
+            .read(tradeRequestRepoProvider)
+            .updateStatus(id, status, rejectReason: rejectReason)
+            .getOrThrow();
       },
       onSuccess: (success) {
         ref.invalidate(messageListPaginationProvider);
         ref.invalidate(chatListPaginationProvider);
+        ref.invalidate(notificationListPaginationProvider);
         ref.invalidateSelf();
       },
     );

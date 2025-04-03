@@ -1,7 +1,7 @@
 // **************************************************************************
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // **************************************************************************
-// ignore_for_file: type=lint, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, unnecessary_import, unused_import
+// ignore_for_file: type=lint, unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 // coverage:ignore-file
 
 import 'package:book_swap/src/features/trade_request/providers/trade_request_list_provider.dart';
@@ -14,12 +14,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/features/trade_request/params/trade_request_list_param.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
-import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'dart:core';
 
 class _TradeRequestListInheritedWidget extends InheritedWidget {

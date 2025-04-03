@@ -8,7 +8,7 @@ part of 'trade_request_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tradeRequestListHash() => r'618a543eb7febff2da967a3d3ebc976e9d22f1c1';
+String _$tradeRequestListHash() => r'159c5527b160ccae8b53e011c196a07c77fd2f97';
 
 /// Copied from Dart SDK
 class _SystemHash {

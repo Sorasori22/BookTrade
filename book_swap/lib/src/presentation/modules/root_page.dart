@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/core/account/current_account_provider.widget.dart';
 import 'package:book_swap/src/core/helpers/logger.dart';
 import 'package:book_swap/src/features/banner/providers/banner_provider.dart';
+import 'package:book_swap/src/features/notification/notification_schema.schema.dart';
+import 'package:book_swap/src/features/notification/providers/notification_list_pagination_provider.dart';
 import 'package:book_swap/src/features/trade_request/providers/trade_request_list_provider.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ import '../../features/chat/providers/chat_list_pagination_provider.dart';
 import '../../features/message/message_schema.dart';
 import '../../features/message/message_schema.schema.dart';
 import '../../features/message/providers/message_list_pagination_provider.dart';
+import '../../features/notification/providers/notification_unread_count_provider.dart';
 import '../../features/trade_request/providers/my_trade_request_list_provider.dart';
 import '../../features/trade_request/trade_request_schema.dart';
 import '../router/app_router.gr.dart';
@@ -32,6 +35,8 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
   RealtimeChannel? _tradeRequestChannel;
   RealtimeChannel? _messageChannel;
   RealtimeChannel? _tradeMessageChannel;
+  RealtimeChannel? _notificationChannel;
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +46,7 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
       _listenTradeRequestRealtime();
       _listenMessageRealtime();
       _listenTradeMessageEvent();
+      _listenNotificationRealtime();
     });
 
     notificationClickEventHandler(ref, (OSNotificationClickEvent event) {
@@ -54,6 +60,28 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
         logError('Error handling notification click', e);
       }
     });
+  }
+
+  void _listenNotificationRealtime() {
+    final sb = ref.read(supabaseProvider).client;
+    _notificationChannel = sb.channel('notifications');
+
+    _notificationChannel!
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: NotificationTable.table,
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: NotificationTable.userId,
+            value: ref.read(currentUserIdProvider),
+          ),
+          callback: (payload) {
+            ref.invalidate(notificationListPaginationProvider);
+            ref.invalidate(notificationUnreadCountProvider);
+          },
+        )
+        .subscribe();
   }
 
   void _listenTradeMessageEvent() {
