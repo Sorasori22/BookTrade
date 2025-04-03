@@ -198,6 +198,7 @@ class _BaseList extends ConsumerWidget {
         padding: EdgeInsets.symmetric(horizontal: AS.sidePadding),
         separatorBuilder: (context, index) => AS.wGap16,
         itemCount: listAsync.hasValue ? listAsync.requireValue.length : 10,
+        physics: !listAsync.hasValue ? NeverScrollableScrollPhysics() : null,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           if (!listAsync.hasValue) {
@@ -330,7 +331,82 @@ class _PopularBookList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listAsync = ref.watch(bookPopularListProvider);
-    return _BaseList(listAsync: listAsync);
+    const bgColors = Color(0xFF525252);
+
+    return _BaseList(
+      listAsync: listAsync,
+      itemBuilder: (context, value) {
+        return _BookTapHandler(
+          bookId: value.id,
+          child: Container(
+            decoration: BoxDecoration(
+              color: bgColors.withValues(alpha: 0.9),
+              borderRadius: BorderRadius.circular(AS.radiusM),
+            ),
+            width: 280,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.horizontal(
+                      left: Radius.circular(AS.radiusM),
+                      right: Radius.circular(4),
+                    ),
+                    child: BookCover(
+                      cover: value.image,
+                      edgeShadow: false,
+                      borderRadius: 0,
+                    ),
+                  ),
+                ),
+                AS.wGap12,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        value.title,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        value.description ?? value.author,
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                      AS.hGap12,
+                      Row(
+                        children: List.generate(
+                          5,
+                          (index) {
+                            final isFilled = index < (value.averageRating ?? 0);
+
+                            return Icon(
+                              Icons.star,
+                              size: 12,
+                              color: isFilled ? Colors.yellow : Colors.white,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                AS.wGap8,
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
