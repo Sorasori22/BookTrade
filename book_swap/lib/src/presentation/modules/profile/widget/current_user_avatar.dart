@@ -31,7 +31,6 @@ class CurrentUserAvatar extends ConsumerWidget {
         builder: (context, ref, value) {
           return UserAvatar(
             imageObject: value.$1,
-            fallback: value.$2?.substring(0, 2),
             size: size,
           );
         },

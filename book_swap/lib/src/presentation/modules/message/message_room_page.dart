@@ -512,9 +512,12 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
       mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         if (!isSender) ...[
-          UserAvatar(
-            size: 24,
-            imageObject: widget.message.recipient.avatar,
+          Container(
+            margin: EdgeInsets.only(top: 18),
+            child: UserAvatar(
+              size: 24,
+              imageObject: widget.message.recipient.avatar,
+            ),
           ),
           AS.wGap8,
         ],

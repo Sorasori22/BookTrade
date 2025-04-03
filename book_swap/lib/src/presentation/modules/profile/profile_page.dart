@@ -63,7 +63,10 @@ class ProfilePage extends ConsumerWidget {
                 [
                   Align(
                     alignment: Alignment.topCenter,
-                    child: CurrentUserAvatar(size: 72),
+                    child: CurrentUserAvatar(
+                      size: 72,
+                      navigateToProfile: false,
+                    ),
                   ),
                   AS.hGap12,
                   Align(
