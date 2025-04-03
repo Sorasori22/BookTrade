@@ -23,6 +23,7 @@ class LabelText extends StatelessWidget {
           TextSpan(
             text: text,
             style: TextStyle(
+              overflow: TextOverflow.ellipsis,
               fontWeight: FontWeight.bold,
             ).merge(textStyle),
           ),

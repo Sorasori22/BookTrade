@@ -25,11 +25,19 @@ abstract class IBookRepo {
 
   Future<Either<Failure, Unit>> delete(BookId id);
 
+  AsyncFailureOr<Unit> incrementViewCount(BookId id);
+
   Future<Either<Failure, IList<BookModel>>> findPagination({
     required int limit,
     required int offset,
     required BookListParam param,
   });
+
+  AsyncFailureOr<IList<BookModel>> getTrendingBooks();
+
+  AsyncFailureOr<IList<BookModel>> getPopularBooks();
+
+  AsyncFailureOr<IList<BookModel>> getSimilarBooks();
 }
 
 class _Impl implements IBookRepo {
@@ -152,6 +160,50 @@ class _Impl implements IBookRepo {
           .select(BookDetailModel.table.selectStatement)
           .single()
           .withConverter((data) => right(BookDetailModel.fromJson(data)));
+    });
+  }
+
+  @override
+  AsyncFailureOr<Unit> incrementViewCount(BookId id) async {
+    return await errorHandler(() async {
+      await _ref.supabaseClient.rpc('increment_book_view_count', params: {'p_book_id': id.value});
+      return right(unit);
+    });
+  }
+
+  @override
+  AsyncFailureOr<IList<BookModel>> getPopularBooks() async {
+    return await errorHandler(() async {
+      final result = await _ref.supabaseClient
+          .rpc('get_popular_books')
+          .select(BookModel.table.selectStatement);
+      return right(
+        IList.fromJson(result, (json) => BookModel.fromJson(json as Map<String, dynamic>)),
+      );
+    });
+  }
+
+  @override
+  AsyncFailureOr<IList<BookModel>> getTrendingBooks() async {
+    return await errorHandler(() async {
+      final result = await _ref.supabaseClient
+          .rpc('get_trending_books')
+          .select(BookModel.table.selectStatement);
+      return right(
+        IList.fromJson(result, (json) => BookModel.fromJson(json as Map<String, dynamic>)),
+      );
+    });
+  }
+
+  @override
+  AsyncFailureOr<IList<BookModel>> getSimilarBooks() async {
+    return await errorHandler(() async {
+      final result = await _ref.supabaseClient
+          .rpc('get_similar_books')
+          .select(BookModel.table.selectStatement);
+      return right(
+        IList.fromJson(result, (json) => BookModel.fromJson(json as Map<String, dynamic>)),
+      );
     });
   }
 }

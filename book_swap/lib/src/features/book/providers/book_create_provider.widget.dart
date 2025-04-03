@@ -12,8 +12,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
-import 'package:book_swap/src/features/book/book_schema.schema.dart';
-import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/core/account/account.dart';
@@ -21,6 +19,7 @@ import 'package:book_swap/src/features/book/providers/my_book_list_provider.dart
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_supabase_helper/kimapp_supabase_helper.dart';
+import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/book/i_book_repo.dart';
 import 'package:book_swap/src/features/book/providers/book_list_pagination_provider.dart';
 import 'dart:core';

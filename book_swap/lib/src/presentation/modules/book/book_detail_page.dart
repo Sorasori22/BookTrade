@@ -17,12 +17,13 @@ import 'package:kimapp/kimapp.dart';
 
 import '../../../core/account/account.dart' show currentProfileIdProvider;
 import '../../../features/book/book_schema.schema.dart';
+import '../../../features/book/providers/book_increment_view_provider.dart';
 import '../../../features/trade_request/trade_request_schema.dart' show TradeRequestStatus;
 import '../../app/app_style.dart';
 import '../../widgets/dialogs/app_dialog.dart';
 
 @RoutePage()
-class BookDetailPage extends ConsumerWidget {
+class BookDetailPage extends ConsumerStatefulWidget {
   const BookDetailPage({
     super.key,
     @PathParam('bookId') required this.bookIdString,
@@ -33,8 +34,23 @@ class BookDetailPage extends ConsumerWidget {
   final bool hideSwapButton;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final bookId = BookId.fromValue(bookIdString.toInt());
+  ConsumerState<BookDetailPage> createState() => _BookDetailPageState();
+}
+
+class _BookDetailPageState extends ConsumerState<BookDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref
+          .read(bookIncrementViewProvider(BookId.fromValue(widget.bookIdString.toInt())).notifier)
+          .call();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bookId = BookId.fromValue(widget.bookIdString.toInt());
     final currentProfileId = ref.watch(currentProfileIdProvider);
 
     return Scaffold(
@@ -48,7 +64,7 @@ class BookDetailPage extends ConsumerWidget {
             PopupMenuButton<String>(
               onSelected: (value) {
                 if (value == 'edit') {
-                  context.pushRoute(BookUpdateRoute(bookIdString: bookIdString));
+                  context.pushRoute(BookUpdateRoute(bookIdString: widget.bookIdString));
                 } else if (value == 'delete') {
                   AppDialog.showConfirmation(
                     context: context,
@@ -115,123 +131,127 @@ class BookDetailPage extends ConsumerWidget {
                           child: BookCover(cover: ref.select((state) => state.image)),
                         ),
                         AS.wGap16,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LabelText(
-                              label: 'Title',
-                              text: ref.select((state) => state.title),
-                              textStyle: TextStyle(fontSize: 18),
-                            ),
-                            AS.hGap4,
-                            LabelText(
-                              label: 'Author',
-                              text: ref.select((state) => state.author),
-                            ),
-                            AS.hGap20,
-                            LabelText(
-                              label: 'Conditional',
-                              text: ref.select((state) => state.condition.toString()),
-                            ),
-                            AS.hGap8,
-                            LabelText(
-                              label: 'Rating',
-                              text: ref.select((state) {
-                                final rate = state.averageRating;
-                                if (rate == null) {
-                                  return 'No rating';
-                                }
-
-                                return '$rate/5';
-                              }),
-                            ),
-                            if (currentProfileId != ref.select((state) => state.ownerId) &&
-                                !hideSwapButton) ...[
-                              AS.hGap12,
-                              Consumer(
-                                builder: (context, ref, child) {
-                                  final pendingRequest = ref.watch(
-                                    prendingTradeRequestListProvider.select(
-                                      (state) => state.valueOrNull
-                                          ?.where((e) => e.bookId == bookId)
-                                          .firstOrNull,
-                                    ),
-                                  );
-
-                                  final requested = pendingRequest != null;
-
-                                  return Row(
-                                    children: [
-                                      SizedBox(
-                                        width: requested ? 150 : 90,
-                                        child: AppButton(
-                                          onPressed: () {
-                                            if (requested) {
-                                              AppDialog.showConfirmation(
-                                                context: context,
-                                                title: 'Cancel Request',
-                                                message:
-                                                    'Are you sure you want to cancel this request?',
-                                                onConfirm: () {
-                                                  context.loadingWrapper(() async {
-                                                    final result = await ref
-                                                        .read(
-                                                          tradeRequestDeleteProvider(
-                                                            pendingRequest.id,
-                                                          ).notifier,
-                                                        )
-                                                        .call();
-
-                                                    if (result.isSuccess && context.mounted) {
-                                                      context
-                                                          .showSuccessSnackbar('Request cancelled');
-                                                    }
-
-                                                    if (result.isFailure && context.mounted) {
-                                                      context.showErrorSnackbar(
-                                                        result.failure!.message(),
-                                                      );
-                                                    }
-                                                  });
-                                                },
-                                              );
-                                            } else {
-                                              context.pushRoute(
-                                                TradeRequestCreateRoute(bookId: bookId.value),
-                                              );
-                                            }
-                                          },
-                                          label: requested ? 'Cancel Request' : 'Swap',
-                                          labelTextStyle: TextStyle(
-                                            color: requested ? Colors.red : null,
-                                          ),
-                                          borderRadius: AS.radiusS,
-                                          size: AppButtonSize.medium,
-                                          variant: requested
-                                              ? AppButtonVariant.neutral
-                                              : AppButtonVariant.primary,
-                                        ),
-                                      ),
-                                      if (requested &&
-                                          pendingRequest.status != TradeRequestStatus.pending) ...[
-                                        AS.wGap8,
-                                        IconButton(
-                                          onPressed: () {
-                                            context.pushRoute(
-                                              MessageRoomRoute(
-                                                recipientId: pendingRequest.ownerId.value,
-                                              ),
-                                            );
-                                          },
-                                          icon: Icon(Icons.message_outlined),
-                                        ),
-                                      ],
-                                    ],
-                                  );
-                                },
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              LabelText(
+                                label: 'Title',
+                                text: ref.select((state) => state.title),
+                                textStyle: TextStyle(fontSize: 18),
                               ),
+                              AS.hGap4,
+                              LabelText(
+                                label: 'Author',
+                                text: ref.select((state) => state.author),
+                              ),
+                              AS.hGap20,
+                              LabelText(
+                                label: 'Conditional',
+                                text: ref.select((state) => state.condition.toString()),
+                              ),
+                              AS.hGap8,
+                              LabelText(
+                                label: 'Rating',
+                                text: ref.select((state) {
+                                  final rate = state.averageRating;
+                                  if (rate == null) {
+                                    return 'No rating';
+                                  }
+
+                                  return '$rate/5';
+                                }),
+                              ),
+                              if (currentProfileId != ref.select((state) => state.ownerId) &&
+                                  !widget.hideSwapButton) ...[
+                                AS.hGap12,
+                                Consumer(
+                                  builder: (context, ref, child) {
+                                    final pendingRequest = ref.watch(
+                                      prendingTradeRequestListProvider.select(
+                                        (state) => state.valueOrNull
+                                            ?.where((e) => e.bookId == bookId)
+                                            .firstOrNull,
+                                      ),
+                                    );
+
+                                    final requested = pendingRequest != null;
+
+                                    return Row(
+                                      children: [
+                                        SizedBox(
+                                          width: requested ? 150 : 90,
+                                          child: AppButton(
+                                            onPressed: () {
+                                              if (requested) {
+                                                AppDialog.showConfirmation(
+                                                  context: context,
+                                                  title: 'Cancel Request',
+                                                  message:
+                                                      'Are you sure you want to cancel this request?',
+                                                  onConfirm: () {
+                                                    context.loadingWrapper(() async {
+                                                      final result = await ref
+                                                          .read(
+                                                            tradeRequestDeleteProvider(
+                                                              pendingRequest.id,
+                                                            ).notifier,
+                                                          )
+                                                          .call();
+
+                                                      if (result.isSuccess && context.mounted) {
+                                                        context.showSuccessSnackbar(
+                                                          'Request cancelled',
+                                                        );
+                                                      }
+
+                                                      if (result.isFailure && context.mounted) {
+                                                        context.showErrorSnackbar(
+                                                          result.failure!.message(),
+                                                        );
+                                                      }
+                                                    });
+                                                  },
+                                                );
+                                              } else {
+                                                context.pushRoute(
+                                                  TradeRequestCreateRoute(bookId: bookId.value),
+                                                );
+                                              }
+                                            },
+                                            label: requested ? 'Cancel Request' : 'Swap',
+                                            labelTextStyle: TextStyle(
+                                              color: requested ? Colors.red : null,
+                                            ),
+                                            borderRadius: AS.radiusS,
+                                            size: AppButtonSize.medium,
+                                            variant: requested
+                                                ? AppButtonVariant.neutral
+                                                : AppButtonVariant.primary,
+                                          ),
+                                        ),
+                                        if (requested &&
+                                            pendingRequest.status !=
+                                                TradeRequestStatus.pending) ...[
+                                          AS.wGap8,
+                                          IconButton(
+                                            onPressed: () {
+                                              context.pushRoute(
+                                                MessageRoomRoute(
+                                                  recipientId: pendingRequest.ownerId.value,
+                                                ),
+                                              );
+                                            },
+                                            icon: Icon(Icons.message_outlined),
+                                          ),
+                                        ],
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ],
                             ],
-                          ],
+                          ),
                         ),
                       ],
                     ),

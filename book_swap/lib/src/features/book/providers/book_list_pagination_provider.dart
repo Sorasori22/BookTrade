@@ -4,9 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/account/account.dart';
+import '../book_schema.schema.dart';
 import '../i_book_repo.dart';
 import '../params/book_list_param.dart';
-import '../book_schema.schema.dart';
 
 part 'book_list_pagination_provider.g.dart';
 
@@ -19,6 +20,7 @@ class BookListPagination extends _$BookListPagination with LoggerMixin {
     required int page,
     required BookListParam param,
   }) async {
+    ref.watch(currentUserIdProvider);
     _log('Building page $page with params: $param');
 
     ref.onDispose(() {
