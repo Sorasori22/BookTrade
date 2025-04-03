@@ -26,6 +26,10 @@ extension DateTimeX on DateTime {
   DateTime firstMinuteOfDay() => DateTime(year, month, day);
   DateTime lastMinuteOfDay() => DateTime(year, month, day, 23, 59, 59, 59);
 
+  String formatForSwapHistory() {
+    return DateFormat('MMM dd, yyyy').format(toLocal());
+  }
+
   String format([bool includeDay = true, bool useYtdTodayTmr = false]) {
     if (useYtdTodayTmr) {
       if (isToday) {

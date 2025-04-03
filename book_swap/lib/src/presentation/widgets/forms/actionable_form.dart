@@ -1,3 +1,4 @@
+import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:kimapp/object/failure.dart';
@@ -16,8 +17,10 @@ class ActionableForm extends StatefulWidget {
     required this.isProgressing,
     required this.child,
     this.saveButtonBuilder,
+    this.submitLabel = 'Save',
   });
 
+  final String submitLabel;
   final VoidCallback? onSubmit;
   final VoidCallback? onCancel;
   final bool flexibleChild;
@@ -46,31 +49,39 @@ class _ActionableFormState extends State<ActionableForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (widget.flexibleChild) Flexible(child: widget.child) else widget.child,
-        FailureWidget(failure: widget.failure),
-        AS.hGap24,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (widget.saveButtonBuilder != null)
-              widget.saveButtonBuilder!(widget.onSubmit, widget.isProgressing)
-            else
-              SizedBox(
-                width: widget.onCancel == null ? context.screenWidth * 0.8 : null,
-                child: FilledButton(onPressed: widget.onSubmit, child: const Text("Save")),
-              ),
-            if (widget.onCancel != null) ...[
-              AS.wGap12,
-              OutlinedButton(
-                onPressed: widget.onCancel,
-                child: const Text("Cancel"),
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          if (widget.flexibleChild) Flexible(child: widget.child) else widget.child,
+          FailureWidget(failure: widget.failure),
+          AS.hGap24,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (widget.saveButtonBuilder != null)
+                widget.saveButtonBuilder!(widget.onSubmit, widget.isProgressing)
+              else
+                SizedBox(
+                  width: widget.onCancel == null ? context.screenWidth * 0.8 : null,
+                  child: AppButton(
+                    onPressed: widget.onSubmit,
+                    busy: widget.isProgressing,
+                    label: widget.submitLabel,
+                  ),
+                ),
+              if (widget.onCancel != null) ...[
+                AS.wGap12,
+                AppButton(
+                  onPressed: widget.onCancel,
+                  label: 'Cancel',
+                  disabled: widget.isProgressing,
+                  variant: AppButtonVariant.neutral,
+                ),
+              ],
             ],
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -15,7 +15,6 @@ import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
-import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/features/book/providers/my_book_list_provider.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';

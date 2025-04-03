@@ -1002,7 +1002,7 @@ packages:
     description:
       path: "packages/kimapp"
       ref: master
-      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      resolved-ref: "8e0a4eb266380a88327f9806133ed105b446b193"
       url: "https://github.com/pckimlong/kimapp.git"
     source: git
     version: "0.0.3"
@@ -1011,7 +1011,7 @@ packages:
     description:
       path: "packages/kimapp_generator"
       ref: master
-      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      resolved-ref: "8e0a4eb266380a88327f9806133ed105b446b193"
       url: "https://github.com/pckimlong/kimapp.git"
     source: git
     version: "0.0.2"
@@ -1020,7 +1020,7 @@ packages:
     description:
       path: "packages/kimapp_supabase_helper"
       ref: master
-      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      resolved-ref: "8e0a4eb266380a88327f9806133ed105b446b193"
       url: "https://github.com/pckimlong/kimapp.git"
     source: git
     version: "0.0.3"
@@ -1029,7 +1029,7 @@ packages:
     description:
       path: "packages/kimapp_utils"
       ref: master
-      resolved-ref: f363c4b89c9e24bc7913223417ab9bff0f2dbb48
+      resolved-ref: "8e0a4eb266380a88327f9806133ed105b446b193"
       url: "https://github.com/pckimlong/kimapp.git"
     source: git
     version: "0.0.3"

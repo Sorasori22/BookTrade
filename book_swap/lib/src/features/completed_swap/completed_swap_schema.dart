@@ -18,46 +18,8 @@ class CompletedSwapSchema extends KimappSchema {
   final completedAt = Field<DateTime>('completed_at');
 
   // Join fields
-  final requester =
-      Field.join<ProfileLiteModel>().withForeignKey('requester_id').withCandidateKey('id');
-  final owner = Field.join<ProfileLiteModel>().withForeignKey('owner_id').withCandidateKey('id');
-  final requesterBook =
-      Field.join<BookLiteModel>().withForeignKey('requester_book_id').withCandidateKey('id');
-  final ownerBook =
-      Field.join<BookLiteModel>().withForeignKey('owner_book_id').withCandidateKey('id');
-
-  @override
-  List<Model> get models => [
-        Model('CompletedSwapLiteModel')
-          ..table()
-          ..addFields({
-            'id': id,
-            'requesterId': requesterId,
-            'ownerId': ownerId,
-            'requesterBookId': requesterBookId,
-            'ownerBookId': ownerBookId,
-            'completedAt': completedAt,
-          }),
-        Model('CompletedSwapDetailModel')
-          ..table()
-          ..inheritAllFromBase()
-          ..addFields({
-            'requester': requester,
-            'owner': owner,
-            'requesterBook': requesterBook,
-            'ownerBook': ownerBook,
-          }),
-        Model('CompletedSwapCreateParam')
-          ..addFields({
-            'requesterId': requesterId,
-            'ownerId': ownerId,
-            'requesterBookId': requesterBookId,
-            'ownerBookId': ownerBookId,
-            'tradeRequestId': tradeRequestId,
-          }),
-        Model('CompletedSwapUpdateParam')
-          ..addFields({
-            'completedAt': Field<DateTime?>('completed_at'),
-          }),
-      ];
+  final requester = Field.join<ProfileLiteModel>().withForeignKey('requester_id');
+  final owner = Field.join<ProfileLiteModel>().withForeignKey('owner_id');
+  final requesterBook = Field.join<BookLiteModel>().withForeignKey('requester_book_id');
+  final ownerBook = Field.join<BookLiteModel>().withForeignKey('owner_book_id');
 }

@@ -16,12 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CompletedSwapListParam {
-  ProfileId? get requesterId => throw _privateConstructorUsedError;
-  ProfileId? get ownerId => throw _privateConstructorUsedError;
-  BookId? get requesterBookId => throw _privateConstructorUsedError;
-  BookId? get ownerBookId => throw _privateConstructorUsedError;
-  DateTime? get completedAfter => throw _privateConstructorUsedError;
-  DateTime? get completedBefore => throw _privateConstructorUsedError;
+  /// Find for both requester and owner
+  ProfileId get profileId => throw _privateConstructorUsedError;
 
   /// Create a copy of CompletedSwapListParam
   /// with the given fields replaced by the non-null parameter values.
@@ -36,13 +32,7 @@ abstract class $CompletedSwapListParamCopyWith<$Res> {
           $Res Function(CompletedSwapListParam) then) =
       _$CompletedSwapListParamCopyWithImpl<$Res, CompletedSwapListParam>;
   @useResult
-  $Res call(
-      {ProfileId? requesterId,
-      ProfileId? ownerId,
-      BookId? requesterBookId,
-      BookId? ownerBookId,
-      DateTime? completedAfter,
-      DateTime? completedBefore});
+  $Res call({ProfileId profileId});
 }
 
 /// @nodoc
@@ -61,38 +51,13 @@ class _$CompletedSwapListParamCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? requesterId = freezed,
-    Object? ownerId = freezed,
-    Object? requesterBookId = freezed,
-    Object? ownerBookId = freezed,
-    Object? completedAfter = freezed,
-    Object? completedBefore = freezed,
+    Object? profileId = null,
   }) {
     return _then(_value.copyWith(
-      requesterId: freezed == requesterId
-          ? _value.requesterId
-          : requesterId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
-      ownerId: freezed == ownerId
-          ? _value.ownerId
-          : ownerId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
-      requesterBookId: freezed == requesterBookId
-          ? _value.requesterBookId
-          : requesterBookId // ignore: cast_nullable_to_non_nullable
-              as BookId?,
-      ownerBookId: freezed == ownerBookId
-          ? _value.ownerBookId
-          : ownerBookId // ignore: cast_nullable_to_non_nullable
-              as BookId?,
-      completedAfter: freezed == completedAfter
-          ? _value.completedAfter
-          : completedAfter // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      completedBefore: freezed == completedBefore
-          ? _value.completedBefore
-          : completedBefore // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      profileId: null == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as ProfileId,
     ) as $Val);
   }
 }
@@ -106,13 +71,7 @@ abstract class _$$CompletedSwapListParamImplCopyWith<$Res>
       __$$CompletedSwapListParamImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {ProfileId? requesterId,
-      ProfileId? ownerId,
-      BookId? requesterBookId,
-      BookId? ownerBookId,
-      DateTime? completedAfter,
-      DateTime? completedBefore});
+  $Res call({ProfileId profileId});
 }
 
 /// @nodoc
@@ -130,38 +89,13 @@ class __$$CompletedSwapListParamImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? requesterId = freezed,
-    Object? ownerId = freezed,
-    Object? requesterBookId = freezed,
-    Object? ownerBookId = freezed,
-    Object? completedAfter = freezed,
-    Object? completedBefore = freezed,
+    Object? profileId = null,
   }) {
     return _then(_$CompletedSwapListParamImpl(
-      requesterId: freezed == requesterId
-          ? _value.requesterId
-          : requesterId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
-      ownerId: freezed == ownerId
-          ? _value.ownerId
-          : ownerId // ignore: cast_nullable_to_non_nullable
-              as ProfileId?,
-      requesterBookId: freezed == requesterBookId
-          ? _value.requesterBookId
-          : requesterBookId // ignore: cast_nullable_to_non_nullable
-              as BookId?,
-      ownerBookId: freezed == ownerBookId
-          ? _value.ownerBookId
-          : ownerBookId // ignore: cast_nullable_to_non_nullable
-              as BookId?,
-      completedAfter: freezed == completedAfter
-          ? _value.completedAfter
-          : completedAfter // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      completedBefore: freezed == completedBefore
-          ? _value.completedBefore
-          : completedBefore // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      profileId: null == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as ProfileId,
     ));
   }
 }
@@ -169,30 +103,15 @@ class __$$CompletedSwapListParamImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CompletedSwapListParamImpl implements _CompletedSwapListParam {
-  const _$CompletedSwapListParamImpl(
-      {this.requesterId,
-      this.ownerId,
-      this.requesterBookId,
-      this.ownerBookId,
-      this.completedAfter,
-      this.completedBefore});
+  const _$CompletedSwapListParamImpl({required this.profileId});
 
+  /// Find for both requester and owner
   @override
-  final ProfileId? requesterId;
-  @override
-  final ProfileId? ownerId;
-  @override
-  final BookId? requesterBookId;
-  @override
-  final BookId? ownerBookId;
-  @override
-  final DateTime? completedAfter;
-  @override
-  final DateTime? completedBefore;
+  final ProfileId profileId;
 
   @override
   String toString() {
-    return 'CompletedSwapListParam(requesterId: $requesterId, ownerId: $ownerId, requesterBookId: $requesterBookId, ownerBookId: $ownerBookId, completedAfter: $completedAfter, completedBefore: $completedBefore)';
+    return 'CompletedSwapListParam(profileId: $profileId)';
   }
 
   @override
@@ -200,22 +119,12 @@ class _$CompletedSwapListParamImpl implements _CompletedSwapListParam {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CompletedSwapListParamImpl &&
-            (identical(other.requesterId, requesterId) ||
-                other.requesterId == requesterId) &&
-            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
-            (identical(other.requesterBookId, requesterBookId) ||
-                other.requesterBookId == requesterBookId) &&
-            (identical(other.ownerBookId, ownerBookId) ||
-                other.ownerBookId == ownerBookId) &&
-            (identical(other.completedAfter, completedAfter) ||
-                other.completedAfter == completedAfter) &&
-            (identical(other.completedBefore, completedBefore) ||
-                other.completedBefore == completedBefore));
+            (identical(other.profileId, profileId) ||
+                other.profileId == profileId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, requesterId, ownerId,
-      requesterBookId, ownerBookId, completedAfter, completedBefore);
+  int get hashCode => Object.hash(runtimeType, profileId);
 
   /// Create a copy of CompletedSwapListParam
   /// with the given fields replaced by the non-null parameter values.
@@ -228,26 +137,12 @@ class _$CompletedSwapListParamImpl implements _CompletedSwapListParam {
 }
 
 abstract class _CompletedSwapListParam implements CompletedSwapListParam {
-  const factory _CompletedSwapListParam(
-      {final ProfileId? requesterId,
-      final ProfileId? ownerId,
-      final BookId? requesterBookId,
-      final BookId? ownerBookId,
-      final DateTime? completedAfter,
-      final DateTime? completedBefore}) = _$CompletedSwapListParamImpl;
+  const factory _CompletedSwapListParam({required final ProfileId profileId}) =
+      _$CompletedSwapListParamImpl;
 
+  /// Find for both requester and owner
   @override
-  ProfileId? get requesterId;
-  @override
-  ProfileId? get ownerId;
-  @override
-  BookId? get requesterBookId;
-  @override
-  BookId? get ownerBookId;
-  @override
-  DateTime? get completedAfter;
-  @override
-  DateTime? get completedBefore;
+  ProfileId get profileId;
 
   /// Create a copy of CompletedSwapListParam
   /// with the given fields replaced by the non-null parameter values.

@@ -14,11 +14,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
-import 'package:book_swap/src/core/storage/image_object.dart';
-import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/trade_request/i_trade_request_repo.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'dart:core';
 
 class _TradeRequestDetailInheritedWidget extends InheritedWidget {

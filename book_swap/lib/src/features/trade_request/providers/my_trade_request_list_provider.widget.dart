@@ -14,12 +14,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
-import 'package:book_swap/src/core/storage/image_object.dart';
-import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/core/account/account.dart';
 import 'package:book_swap/src/features/trade_request/params/trade_request_list_param.dart';
 import 'package:book_swap/src/features/trade_request/providers/trade_request_list_provider.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'dart:core';
 

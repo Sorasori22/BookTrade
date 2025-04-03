@@ -205,6 +205,13 @@ class _Item extends ConsumerWidget {
                           color: context.colors.onSurface.withValues(alpha: 0.6),
                         ),
                       ),
+                      if (data.tradeRequest!.status == TradeRequestStatus.rejected) ...[
+                        AS.hGap8,
+                        Text(
+                          "You've declined the swap.\nReason: ${data.tradeRequest!.rejectReason}",
+                          style: context.textTheme.bodySmall?.copyWith(color: Colors.orange),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -224,7 +231,13 @@ class _Item extends ConsumerWidget {
                 ),
                 if (data.tradeRequest!.status == TradeRequestStatus.pending)
                   AppButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.navigateTo(
+                        TradeRequestRejectRoute(
+                          tradeRequestId: data.tradeRequest!.id.value.toString(),
+                        ),
+                      );
+                    },
                     label: 'Decline',
                     variant: AppButtonVariant.neutral,
                     backgroundColor: Colors.transparent,
