@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/presentation/app/app_theme_provider.dart';
 import 'package:book_swap/src/presentation/modules/profile/font/change_text_size_dialog.dart';
 import 'package:dartx/dartx.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,7 +17,7 @@ class AppearancePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Appearance'),
+        title: Text('appearance.title'.tr()),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -29,7 +30,7 @@ class AppearancePage extends ConsumerWidget {
                   final isDarkMode = ref.watch(appThemeModeProvider).requireValue == ThemeMode.dark;
                   return SettingsListTile(
                     icon: Icons.dark_mode_outlined,
-                    title: 'Dark Mode',
+                    title: 'appearance.menu.dark_mode'.tr(),
                     trailing: Switch(
                       value: isDarkMode,
                       onChanged: (value) {
@@ -47,7 +48,7 @@ class AppearancePage extends ConsumerWidget {
                   final textScale = ref.watch(textScaleProvider).requireValue;
                   return SettingsListTile(
                     icon: Icons.font_download_outlined,
-                    title: 'Font Size',
+                    title: 'appearance.menu.font_size.title'.tr(),
                     subtitle: textScale.name.capitalize(),
                     onTap: () {
                       ChangeTextSizeDialog.show(context);

@@ -10,6 +10,7 @@ import 'package:book_swap/src/presentation/modules/book/widget/book_cover.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/async_value_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
@@ -62,7 +63,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Notifications'),
+          title: Text('notification.title'.tr()),
         ),
         body: Padding(
           padding: EdgeInsets.all(AS.sidePadding).copyWith(top: 4),
@@ -70,7 +71,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
             if (count == 0) {
               return Center(
                 child: Text(
-                  'No notifications yet...',
+                  'notification.empty'.tr(),
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: context.colors.onSurfaceVariant,
                   ),
@@ -89,8 +90,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                 loadingItemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Loading more notifications...',
+                    child: Text(
+                      'notification.loading_more'.tr(),
                       textAlign: TextAlign.center,
                     ),
                   );
@@ -223,7 +224,8 @@ class _Item extends ConsumerWidget {
                         style: context.textTheme.bodyLarge,
                       ),
                       Text(
-                        "${data.tradeRequest!.requester.displayName} created a swap request for your book",
+                        'notification.trade_request.swap_request_message'
+                            .tr(args: [data.tradeRequest!.requester.displayName]),
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: context.colors.onSurface.withValues(alpha: 0.6),
                         ),
@@ -231,7 +233,8 @@ class _Item extends ConsumerWidget {
                       if (data.tradeRequest!.status == TradeRequestStatus.rejected) ...[
                         AS.hGap8,
                         Text(
-                          "You've declined the swap.\nReason: ${data.tradeRequest!.rejectReason}",
+                          'notification.trade_request.rejected_message'
+                              .tr(args: [data.tradeRequest!.rejectReason ?? 'No reason provided']),
                           style: context.textTheme.bodySmall?.copyWith(color: Colors.orange),
                         ),
                       ],
@@ -250,7 +253,7 @@ class _Item extends ConsumerWidget {
                   onPressed: () {
                     context.navigateTo(TradeRequestListRoute());
                   },
-                  label: 'View Swap',
+                  label: 'notification.trade_request.view_swap'.tr(),
                 ),
                 if (data.tradeRequest!.status == TradeRequestStatus.pending)
                   AppButton(
@@ -261,7 +264,7 @@ class _Item extends ConsumerWidget {
                         ),
                       );
                     },
-                    label: 'Decline',
+                    label: 'notification.trade_request.decline'.tr(),
                     variant: AppButtonVariant.neutral,
                     backgroundColor: Colors.transparent,
                   ),

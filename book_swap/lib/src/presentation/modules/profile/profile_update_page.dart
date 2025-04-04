@@ -9,6 +9,7 @@ import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:book_swap/src/presentation/widgets/forms/app_text_form_field.dart';
 import 'package:book_swap/src/presentation/widgets/typography/info_label_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,7 +30,7 @@ class ProfileUpdatePage extends ConsumerWidget {
       profileId: ref.watch(currentAccountProvider).requireValue.profile!.id,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Profile'),
+          title: Text('profile.update.title'.tr()),
         ),
         bottomNavigationBar: Padding(
           padding: EdgeInsets.all(24).copyWith(top: AS.sidePadding),
@@ -39,11 +40,11 @@ class ProfileUpdatePage extends ConsumerWidget {
                 onPressed: () async {
                   final result = await ref.submit();
                   if (result.isSuccess && context.mounted) {
-                    context.showSuccessSnackbar('Profile updated successfully');
+                    context.showSuccessSnackbar('profile.update.success'.tr());
                     context.maybePop();
                   }
                 },
-                label: 'SAVE',
+                label: 'profile.update.save'.tr(),
                 busy: status.isProcessing,
                 borderRadius: AS.radiusXL,
               );
@@ -68,7 +69,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                               children: [
                                 ListTile(
                                   leading: const Icon(Icons.photo_library),
-                                  title: const Text('Choose from Gallery'),
+                                  title: Text('profile.update.photo.gallery'.tr()),
                                   onTap: () async {
                                     final picker = ImagePicker();
                                     final image = await picker.pickImage(
@@ -93,7 +94,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                                 ),
                                 ListTile(
                                   leading: const Icon(Icons.camera_alt),
-                                  title: const Text('Take a Photo'),
+                                  title: Text('profile.update.photo.camera'.tr()),
                                   onTap: () async {
                                     final picker = ImagePicker();
                                     final image = await picker.pickImage(
@@ -119,7 +120,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                                 if (avatar != null) ...[
                                   ListTile(
                                     leading: const Icon(Icons.delete),
-                                    title: const Text('Remove Photo'),
+                                    title: Text('profile.update.photo.remove'.tr()),
                                     onTap: () async {
                                       final result = await context.loadingWrapper(() async {
                                         return await ref
@@ -144,7 +145,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                         },
                       );
                     },
-                    label: 'Edit Profile Photo',
+                    label: 'profile.update.photo.edit'.tr(),
                     variant: AppButtonVariant.neutral,
                     borderRadius: AS.radiusXL,
                   );
@@ -162,7 +163,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                         ProfileUpdateEmailField(
                           builder: (context, ref) {
                             return InfoLabel(
-                              label: 'Email',
+                              label: 'profile.update.fields.email'.tr(),
                               child: AppTextFormField(
                                 controller: ref.textController,
                                 readOnly: true,
@@ -174,12 +175,12 @@ class ProfileUpdatePage extends ConsumerWidget {
                         ProfileUpdateUsernameField(
                           builder: (context, ref) {
                             return InfoLabel(
-                              label: 'Username',
+                              label: 'profile.update.fields.username'.tr(),
                               child: AppTextFormField(
                                 controller: ref.textController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Username is required';
+                                    return 'profile.update.fields.username_required'.tr();
                                   }
                                   return null;
                                 },
@@ -191,7 +192,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                         ProfileUpdateFullnameField(
                           builder: (context, ref) {
                             return InfoLabel(
-                              label: 'Full Name',
+                              label: 'profile.update.fields.fullname'.tr(),
                               child: AppTextFormField(
                                 controller: ref.textController,
                               ),
@@ -202,7 +203,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                         ProfileUpdateBioField(
                           builder: (context, ref) {
                             return InfoLabel(
-                              label: 'Bio',
+                              label: 'profile.update.fields.bio'.tr(),
                               child: AppTextFormField(
                                 controller: ref.textController,
                                 maxLines: 3,
@@ -214,7 +215,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                         ProfileUpdateAgeField(
                           builder: (context, ref) {
                             return InfoLabel(
-                              label: 'Age',
+                              label: 'profile.update.fields.age'.tr(),
                               child: AppTextFormField(
                                 initialValue: ref.age?.toString(),
                                 keyboardType: TextInputType.number,
@@ -226,7 +227,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                         ProfileUpdateLocationField(
                           builder: (context, ref) {
                             return InfoLabel(
-                              label: 'Location',
+                              label: 'profile.update.fields.location'.tr(),
                               child: AppTextFormField(
                                 controller: ref.textController,
                               ),
@@ -237,7 +238,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                         ProfileUpdateAddressField(
                           builder: (context, ref) {
                             return InfoLabel(
-                              label: 'Address',
+                              label: 'profile.update.fields.address'.tr(),
                               child: AppTextFormField(
                                 controller: ref.textController,
                                 maxLines: 2,
@@ -249,7 +250,7 @@ class ProfileUpdatePage extends ConsumerWidget {
                         ProfileUpdatePhoneNumberField(
                           builder: (context, ref) {
                             return InfoLabel(
-                              label: 'Phone Number',
+                              label: 'profile.update.fields.phone'.tr(),
                               child: AppTextFormField(
                                 controller: ref.textController,
                                 keyboardType: TextInputType.phone,

@@ -7,6 +7,7 @@ import 'package:book_swap/src/features/notification/notification_schema.schema.d
 import 'package:book_swap/src/features/notification/providers/notification_list_pagination_provider.dart';
 import 'package:book_swap/src/features/trade_request/providers/trade_request_list_provider.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_supabase_helper/supabase_provider.dart';
@@ -211,12 +212,12 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home_outlined),
                     activeIcon: Icon(Icons.home),
-                    label: 'Home',
+                    label: 'navigation.home'.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.menu_book_outlined),
                     activeIcon: Icon(Icons.menu_book),
-                    label: 'Browse',
+                    label: 'navigation.browse'.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: Consumer(
@@ -235,12 +236,12 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
                       },
                     ),
                     activeIcon: Icon(Icons.messenger),
-                    label: 'Message',
+                    label: 'navigation.message'.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.person_2_outlined),
                     activeIcon: Icon(Icons.person),
-                    label: 'Profile',
+                    label: 'navigation.profile'.tr(),
                   ),
                 ],
               ),

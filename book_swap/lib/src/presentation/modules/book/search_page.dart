@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/features/book/params/book_list_param.dart';
 import 'package:book_swap/src/features/book/providers/book_list_pagination_provider.dart';
 import 'package:book_swap/src/presentation/widgets/forms/search_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,7 +23,7 @@ class SearchPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Happy Reading',
+          'search.title'.tr(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,
@@ -45,6 +46,8 @@ class SearchPage extends HookConsumerWidget {
               onChanged: (value) {
                 searchState.value = value;
               },
+              placeholder: 'search.placeholder'.tr(),
+              autofocus: autoFocus,
             ),
             AS.hGap8,
             Expanded(

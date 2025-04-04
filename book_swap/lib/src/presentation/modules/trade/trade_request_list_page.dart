@@ -10,6 +10,7 @@ import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/async_value_widget.dart';
 import 'package:book_swap/src/presentation/widgets/layouts/app_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -47,8 +48,8 @@ class TradeRequestListPage extends ConsumerWidget {
           Expanded(
             child: listAsync.onData((items) {
               if (items.isEmpty) {
-                return const Center(
-                  child: Text('No trade requests'),
+                return Center(
+                  child: Text('message.trade_request.list.empty'.tr()),
                 );
               }
 
@@ -111,7 +112,7 @@ class _Item extends ConsumerWidget {
 
                     if (result.isSuccess) {
                       if (context.mounted) {
-                        context.showSuccessSnackbar('Trade request accepted');
+                        context.showSuccessSnackbar('message.trade_request.status.accepted'.tr());
                         context.navigateTo(
                           MessageRoomRoute(
                             recipientId: item.requester.id.value,
@@ -129,7 +130,7 @@ class _Item extends ConsumerWidget {
                   fullWidth: true,
                   size: AppButtonSize.small,
                   borderRadius: AS.radiusS,
-                  label: 'Accept',
+                  label: 'message.trade_request.status.pending'.tr(),
                 ),
               ],
             ),

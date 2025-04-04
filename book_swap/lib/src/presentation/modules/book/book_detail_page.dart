@@ -11,6 +11,7 @@ import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/components/label_text.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:dartx/dartx_io.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -55,7 +56,7 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book Detail'),
+        title: Text('book_detail.title'.tr()),
         actions: [
           if (currentProfileId ==
               ref.watch(
@@ -68,13 +69,13 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
                 } else if (value == 'delete') {
                   AppDialog.showConfirmation(
                     context: context,
-                    title: 'Delete Book',
-                    message: 'Are you sure you want to delete this book?',
+                    title: 'book_detail.delete.title'.tr(),
+                    message: 'book_detail.delete.message'.tr(),
                     onConfirm: () async {
                       context.loadingWrapper(() async {
                         final result = await ref.read(bookDeleteProvider(bookId).notifier).call();
                         if (result.isSuccess && context.mounted) {
-                          context.showSuccessSnackbar('Book deleted successfully');
+                          context.showSuccessSnackbar('book_detail.delete.success'.tr());
                           context.maybePop();
                         }
 
@@ -87,23 +88,23 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
                 }
               },
               itemBuilder: (context) => [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'edit',
                   child: Row(
                     children: [
                       Icon(Icons.edit),
                       SizedBox(width: 8),
-                      Text('Edit'),
+                      Text('book_detail.menu.edit'.tr()),
                     ],
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'delete',
                   child: Row(
                     children: [
                       Icon(Icons.delete),
                       SizedBox(width: 8),
-                      Text('Delete'),
+                      Text('book_detail.menu.delete'.tr()),
                     ],
                   ),
                 ),
@@ -136,27 +137,27 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               LabelText(
-                                label: 'Title',
+                                label: 'book_detail.labels.title'.tr(),
                                 text: ref.select((state) => state.title),
                                 textStyle: TextStyle(fontSize: 18),
                               ),
                               AS.hGap4,
                               LabelText(
-                                label: 'Author',
+                                label: 'book_detail.labels.author'.tr(),
                                 text: ref.select((state) => state.author),
                               ),
                               AS.hGap20,
                               LabelText(
-                                label: 'Conditional',
+                                label: 'book_detail.labels.condition'.tr(),
                                 text: ref.select((state) => state.condition.toString()),
                               ),
                               AS.hGap8,
                               LabelText(
-                                label: 'Rating',
+                                label: 'book_detail.labels.rating'.tr(),
                                 text: ref.select((state) {
                                   final rate = state.averageRating;
                                   if (rate == null) {
-                                    return 'No rating';
+                                    return 'book_detail.labels.no_rating'.tr();
                                   }
 
                                   return '$rate/5';
@@ -186,9 +187,12 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
                                               if (requested) {
                                                 AppDialog.showConfirmation(
                                                   context: context,
-                                                  title: 'Cancel Request',
+                                                  title:
+                                                      'book_detail.trade.cancel_confirmation.title'
+                                                          .tr(),
                                                   message:
-                                                      'Are you sure you want to cancel this request?',
+                                                      'book_detail.trade.cancel_confirmation.message'
+                                                          .tr(),
                                                   onConfirm: () {
                                                     context.loadingWrapper(() async {
                                                       final result = await ref
@@ -201,7 +205,8 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
 
                                                       if (result.isSuccess && context.mounted) {
                                                         context.showSuccessSnackbar(
-                                                          'Request cancelled',
+                                                          'book_detail.trade.cancel_confirmation.success'
+                                                              .tr(),
                                                         );
                                                       }
 
@@ -219,7 +224,9 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
                                                 );
                                               }
                                             },
-                                            label: requested ? 'Cancel Request' : 'Swap',
+                                            label: requested
+                                                ? 'book_detail.trade.cancel_request'.tr()
+                                                : 'book_detail.trade.swap'.tr(),
                                             labelTextStyle: TextStyle(
                                               color: requested ? Colors.red : null,
                                             ),
@@ -256,9 +263,15 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
                       ],
                     ),
                     AS.hGap20,
-                    Text('Description:', style: Theme.of(context).textTheme.titleMedium),
+                    Text(
+                      'book_detail.labels.description'.tr(),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     AS.hGap8,
-                    Text(ref.select((state) => state.description) ?? 'No description'),
+                    Text(
+                      ref.select((state) => state.description) ??
+                          'book_detail.labels.no_description'.tr(),
+                    ),
                   ],
                 ),
               ),
