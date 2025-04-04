@@ -18,6 +18,7 @@ class ProfileUpdate extends _$ProfileUpdateWidget {
   Future<ProfileUpdateParam> build(ProfileId profileId) async {
     final result = await ref.read(profileRepoProvider).findOne(profileId).getOrThrow();
     return ProfileUpdateParam(
+      email: result.email,
       username: result.username,
       fullname: result.fullname,
       bio: result.bio,

@@ -7,5 +7,6 @@ class InitAppSettingTask extends StartUpTask {
   @override
   Future<void> initialize(LaunchContext context) async {
     await context.container.read(appThemeModeProvider.future);
+    await context.container.read(textScaleProvider.future);
   }
 }

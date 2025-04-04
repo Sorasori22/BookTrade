@@ -2,6 +2,7 @@ import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:book_swap/src/features/banner/providers/banner_provider.dart';
 import 'package:book_swap/src/features/trade_request/providers/requested_book_ids_list_provider.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -87,10 +88,14 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
         theme: ref.watch(lightThemeProvider),
         darkTheme: ref.watch(darkThemeProvider),
         themeMode: ref.watch(appThemeModeProvider).valueOrNull,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         builder: (context, child) {
           child = BotToastInit()(context, child);
           child = KeyboardDismiss(child: child);
           child = _LifecycleWatcher(child: child);
+          child = _TextScale(child: child);
           child = ResponsiveBreakpoints.builder(
             child: child,
             breakpoints: [
@@ -186,5 +191,24 @@ class __LifecycleWatcherState extends ConsumerState<_LifecycleWatcher> with Widg
   @override
   Widget build(BuildContext context) {
     return widget.child;
+  }
+}
+
+class _TextScale extends ConsumerWidget {
+  const _TextScale({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scale = ref.watch(textScaleProvider).valueOrNull ?? TextScaleValue.normal;
+    final mediaQuery = MediaQuery.of(context);
+
+    return MediaQuery(
+      data: mediaQuery.copyWith(
+        textScaler: TextScaler.linear(scale.scaleValue),
+      ),
+      child: child,
+    );
   }
 }

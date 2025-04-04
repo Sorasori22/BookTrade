@@ -9,6 +9,7 @@ import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/bouncing_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
@@ -42,7 +43,7 @@ class HomePage extends ConsumerWidget {
           slivers: [
             SliverAppBar(
               title: Text(
-                'Home',
+                'home.title'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 26,
@@ -79,7 +80,7 @@ class HomePage extends ConsumerWidget {
                           Icon(Icons.search),
                           AS.wGap12,
                           Text(
-                            'Search',
+                            'commons.search'.tr(),
                             style: context.textTheme.bodyMedium,
                           ),
                         ],
@@ -90,22 +91,22 @@ class HomePage extends ConsumerWidget {
               ),
             ),
             // Placeholder for trending books
-            _Header(title: 'Trending Books'),
+            _Header(title: 'home.trending_books'.tr()),
             SliverToBoxAdapter(
               child: _TrendingBookList(),
             ),
             SliverToBoxAdapter(
               child: _Ads(),
             ),
-            _Header(title: 'Popular Books'),
+            _Header(title: 'home.popular_books'.tr()),
             SliverToBoxAdapter(
               child: _PopularBookList(),
             ),
-            _Header(title: 'You Might Like'),
+            _Header(title: 'home.you_might_like'.tr()),
             SliverToBoxAdapter(
               child: _YouMightLikeList(),
             ),
-            _Header(title: 'Recently Added'),
+            _Header(title: 'home.recently_added'.tr()),
             SliverToBoxAdapter(
               child: _RecentlyAddedList(),
             ),
@@ -284,12 +285,15 @@ class _Ads extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(item.title),
+                        Text(
+                          item.title,
+                          style: TextStyle(color: Colors.black),
+                        ),
                         AS.hGap8,
                         Text(
                           item.description,
                           style: context.textTheme.bodySmall?.copyWith(
-                            color: context.colors.onSurface.withValues(alpha: 0.5),
+                            color: Colors.black.withValues(alpha: 0.5),
                             fontSize: 11,
                           ),
                           maxLines: 2,

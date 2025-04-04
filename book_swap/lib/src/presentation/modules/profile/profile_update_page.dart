@@ -159,6 +159,18 @@ class ProfileUpdatePage extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        ProfileUpdateEmailField(
+                          builder: (context, ref) {
+                            return InfoLabel(
+                              label: 'Email',
+                              child: AppTextFormField(
+                                controller: ref.textController,
+                                readOnly: true,
+                              ),
+                            );
+                          },
+                        ),
+                        AS.hGap16,
                         ProfileUpdateUsernameField(
                           builder: (context, ref) {
                             return InfoLabel(

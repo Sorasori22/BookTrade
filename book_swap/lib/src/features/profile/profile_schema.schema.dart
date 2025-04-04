@@ -416,6 +416,7 @@ sealed class ProfileUpdateParam
   /// Fields:
   /// - String? username : JsonKey('username')
   /// - String? fullname : JsonKey('fullname')
+  /// - String email : JsonKey('email')
   /// - String? bio : JsonKey('bio')
   /// - int? age : JsonKey('age')
   /// - String? location : JsonKey('location')
@@ -425,6 +426,7 @@ sealed class ProfileUpdateParam
   const factory ProfileUpdateParam({
     @JsonKey(name: ProfileUpdateParam.usernameKey) required String? username,
     @JsonKey(name: ProfileUpdateParam.fullnameKey) required String? fullname,
+    @JsonKey(name: ProfileUpdateParam.emailKey) required String email,
     @JsonKey(name: ProfileUpdateParam.bioKey) required String? bio,
     @JsonKey(name: ProfileUpdateParam.ageKey) required int? age,
     @JsonKey(name: ProfileUpdateParam.locationKey) required String? location,
@@ -442,6 +444,9 @@ sealed class ProfileUpdateParam
 
   /// Field name for fullname field with JsonKey('fullname')
   static const String fullnameKey = "fullname";
+
+  /// Field name for email field with JsonKey('email')
+  static const String emailKey = "email";
 
   /// Field name for bio field with JsonKey('bio')
   static const String bioKey = "bio";

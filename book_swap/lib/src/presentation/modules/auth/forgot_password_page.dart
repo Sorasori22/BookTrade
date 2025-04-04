@@ -4,6 +4,7 @@ import 'package:book_swap/src/features/auth/auth.dart';
 import 'package:book_swap/src/presentation/app/app_style.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -148,13 +149,13 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
   String _getStepTitle() {
     switch (_currentStep) {
       case 1:
-        return 'Forgot Password';
+        return 'Forgot Password'.tr();
       case 2:
-        return 'Verification Code';
+        return 'Verification Code'.tr();
       case 3:
-        return 'Reset Password';
+        return 'Reset Password'.tr();
       case 4:
-        return 'Success!';
+        return 'Success!'.tr();
       default:
         return '';
     }
@@ -163,13 +164,13 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
   String _getStepDescription() {
     switch (_currentStep) {
       case 1:
-        return 'Enter your email to receive a verification code';
+        return 'Enter your email to receive a verification code'.tr();
       case 2:
-        return 'Enter the verification code sent to your email';
+        return 'Enter the verification code sent to your email'.tr();
       case 3:
-        return 'Create a new password for your account';
+        return 'Create a new password for your account'.tr();
       case 4:
-        return 'Your password has been reset successfully';
+        return 'Your password has been reset successfully'.tr();
       default:
         return '';
     }
@@ -178,13 +179,13 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
   String _getButtonLabel() {
     switch (_currentStep) {
       case 1:
-        return 'Send Code';
+        return 'Send Code'.tr();
       case 2:
-        return 'Verify Code';
+        return 'Verify Code'.tr();
       case 3:
-        return 'Reset Password';
+        return 'Reset Password'.tr();
       case 4:
-        return 'Back to Login';
+        return 'Back to Login'.tr();
       default:
         return '';
     }
@@ -212,8 +213,8 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
         position: _slideAnimation,
         child: TextField(
           controller: _emailController,
-          decoration: const InputDecoration(
-            labelText: 'Email',
+          decoration: InputDecoration(
+            labelText: 'commons.email'.tr(),
             border: OutlineInputBorder(),
           ),
           keyboardType: TextInputType.emailAddress,
@@ -232,10 +233,10 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
           children: [
             TextField(
               controller: _codeController,
-              decoration: const InputDecoration(
-                labelText: 'Verification Code',
+              decoration: InputDecoration(
+                labelText: 'commons.verification_code'.tr(),
                 border: OutlineInputBorder(),
-                hintText: 'Enter the 4-digit code (1111)',
+                hintText: 'commons.enter_code_hint'.tr(),
               ),
               keyboardType: TextInputType.number,
               maxLength: 4,
@@ -243,7 +244,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
             const SizedBox(height: 16),
             TextButton(
               onPressed: _isLoading ? null : _resendCode,
-              child: const Text('Resend Code'),
+              child: Text('commons.resend_code'.tr()),
             ),
           ],
         ),
@@ -260,8 +261,8 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
           children: [
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'New Password',
+              decoration: InputDecoration(
+                labelText: 'commons.new_password'.tr(),
                 border: OutlineInputBorder(),
               ),
               obscureText: true,
@@ -269,8 +270,8 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
             const SizedBox(height: 16),
             TextField(
               controller: _confirmPasswordController,
-              decoration: const InputDecoration(
-                labelText: 'Confirm Password',
+              decoration: InputDecoration(
+                labelText: 'commons.confirm_password'.tr(),
                 border: OutlineInputBorder(),
               ),
               obscureText: true,
@@ -296,7 +297,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
               ),
               const SizedBox(height: 16),
               Text(
-                'Your password has been reset successfully.',
+                'auth.password_reset_success'.tr(),
                 textAlign: TextAlign.center,
                 style: context.theme.textTheme.bodyLarge,
               ),

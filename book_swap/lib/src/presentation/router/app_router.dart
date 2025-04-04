@@ -114,6 +114,21 @@ class AppRouter extends RootStackRouter {
         path: '/contact',
       ),
       AutoRoute(
+        page: AppearanceRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/appearance',
+      ),
+      AutoRoute(
+        page: LanguageRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/language',
+      ),
+      AutoRoute(
+        page: NotificationRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/notifications',
+      ),
+      AutoRoute(
         page: TradeRequestCreateRoute.page,
         guards: [AuthGuard(_ref)],
         path: '/trade-request/:bookId/create',

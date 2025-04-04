@@ -40,6 +40,21 @@ final darkThemeProvider = AutoDisposeProvider<ThemeData>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef DarkThemeRef = AutoDisposeProviderRef<ThemeData>;
+String _$textScaleHash() => r'de829619e7e27a3aafa2c02fda73fc3949433fbc';
+
+/// See also [TextScale].
+@ProviderFor(TextScale)
+final textScaleProvider =
+    AsyncNotifierProvider<TextScale, TextScaleValue>.internal(
+  TextScale.new,
+  name: r'textScaleProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$textScaleHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TextScale = AsyncNotifier<TextScaleValue>;
 String _$appThemeModeHash() => r'648b97b33d4411bec0a636fa8a9fe73c78a4c4d7';
 
 /// See also [AppThemeMode].
