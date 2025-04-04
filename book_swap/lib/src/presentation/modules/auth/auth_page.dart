@@ -4,6 +4,7 @@ import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/presentation/app/app_style.dart';
 import 'package:book_swap/src/presentation/modules/auth/sign_in_page.dart';
 import 'package:book_swap/src/presentation/modules/auth/sign_up_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -112,7 +113,7 @@ class _GetStarted extends StatelessWidget {
               );
             },
             child: Text(
-              'Welcome to Book Swap',
+              'auth.welcome_to_book_swap'.tr(),
               style: context.theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: context.theme.colorScheme.onSurface,

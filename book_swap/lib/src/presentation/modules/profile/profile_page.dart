@@ -10,6 +10,7 @@ import 'package:book_swap/src/presentation/modules/profile/widget/current_user_a
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
 import 'package:book_swap/src/presentation/widgets/layouts/app_card.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -36,7 +37,7 @@ class ProfilePage extends ConsumerWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            title: Text('Profile'),
+            title: Text('profile.title'.tr()),
             pinned: true,
             actions: [
               AS.wGap8,
@@ -86,7 +87,7 @@ class ProfilePage extends ConsumerWidget {
                   ),
                   AS.hGap12,
                   Text(
-                    'My Books',
+                    'profile.my_books'.tr(),
                     style: context.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -108,7 +109,7 @@ class ProfilePage extends ConsumerWidget {
                               color: context.colors.onSurface.withValues(alpha: 0.4),
                               child: Center(
                                 child: Text(
-                                  'No books yet, add one!',
+                                  'profile.no_books'.tr(),
                                   style: context.textTheme.bodyMedium?.copyWith(
                                     color: context.colors.onSurface.withValues(alpha: 0.6),
                                   ),
@@ -183,13 +184,13 @@ class ProfilePage extends ConsumerWidget {
                     onPressed: () {
                       context.pushRoute(BookCreateRoute());
                     },
-                    label: 'Add Book',
+                    label: 'profile.add_book'.tr(),
                     icon: Icons.add,
                     fullWidth: true,
                   ),
                   AS.hGap12,
                   Text(
-                    'Swap History',
+                    'profile.swap_history'.tr(),
                     style: context.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

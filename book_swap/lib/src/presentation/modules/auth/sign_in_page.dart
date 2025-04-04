@@ -4,6 +4,7 @@ import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/presentation/modules/auth/forgot_password_page.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -93,7 +94,7 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
                 child: SlideTransition(
                   position: _slideAnimation,
                   child: Text(
-                    'Welcome Back',
+                    'auth.welcome_back'.tr(),
                     style: context.theme.textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: context.theme.colorScheme.onSurface,
@@ -107,7 +108,7 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
                 child: SlideTransition(
                   position: _slideAnimation,
                   child: Text(
-                    'Sign in to continue',
+                    'auth.sign_in_continue'.tr(),
                     style: context.theme.textTheme.bodyLarge?.copyWith(
                       color: context.theme.colorScheme.onSurfaceVariant,
                     ),
@@ -121,8 +122,8 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
                   position: _slideAnimation,
                   child: TextField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
+                    decoration: InputDecoration(
+                      labelText: 'commons.email'.tr(),
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.emailAddress,
@@ -136,8 +137,8 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
                   position: _slideAnimation,
                   child: TextField(
                     controller: _passwordController,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
+                    decoration: InputDecoration(
+                      labelText: 'commons.password'.tr(),
                       border: OutlineInputBorder(),
                     ),
                     obscureText: true,
@@ -153,7 +154,6 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
-                        // Navigate to forgot password page
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ForgotPasswordPage(
@@ -162,7 +162,7 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
                           ),
                         );
                       },
-                      child: const Text('Forgot Password?'),
+                      child: Text('commons.forgot_password'.tr()),
                     ),
                   ),
                 ),
@@ -174,7 +174,7 @@ class _SignInPageState extends ConsumerState<SignInPage> with SingleTickerProvid
                   position: _slideAnimation,
                   child: AppButton(
                     onPressed: () => _signInPress(ref),
-                    label: 'Sign In',
+                    label: 'commons.sign_in'.tr(),
                     borderRadius: AS.radiusXL,
                     fullWidth: true,
                   ),

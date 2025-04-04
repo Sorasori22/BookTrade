@@ -14,7 +14,7 @@ class LanguagePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Language'),
+        title: Text('language.title'.tr()),
       ),
       body: Padding(
         padding: EdgeInsets.all(AS.sidePadding).copyWith(top: 4),
@@ -24,7 +24,7 @@ class LanguagePage extends ConsumerWidget {
             children: [
               _LanguageButton(
                 languageCode: 'en',
-                languageName: 'English',
+                languageName: 'language.english'.tr(),
                 onPressed: () {
                   context.setLocale(Locale('en'));
                 },
@@ -32,7 +32,7 @@ class LanguagePage extends ConsumerWidget {
               AS.hGap16,
               _LanguageButton(
                 languageCode: 'km',
-                languageName: 'ភាសាខ្មែរ',
+                languageName: 'language.khmer'.tr(),
                 onPressed: () {
                   context.setLocale(Locale('km'));
                 },

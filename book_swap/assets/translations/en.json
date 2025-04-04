@@ -2,7 +2,16 @@
     "commons": {
         "username": "Username",
         "password": "Password",
-        "search": "Search"
+        "search": "Search",
+        "email": "Email",
+        "back": "Back",
+        "forgot_password": "Forgot Password?",
+        "sign_in": "Sign In",
+        "resend_code": "Resend Code",
+        "new_password": "New Password",
+        "confirm_password": "Confirm Password",
+        "verification_code": "Verification Code",
+        "enter_code_hint": "Enter the 4-digit code (1111)"
     },
 
     "error" : {
@@ -16,5 +25,55 @@
         "popular_books": "Popular Books",
         "you_might_like": "You Might Like",
         "recently_added": "Recently Added"
+    },
+
+    "auth": {
+        "welcome_back": "Welcome Back",
+        "sign_in_continue": "Sign in to continue",
+        "welcome_to_book_swap": "Welcome to Book Swap",
+        "password_reset_success": "Your password has been reset successfully."
+    },
+
+    "splash": {
+        "app_name": "BOOK SWAP",
+        "tagline": "Swap Books, Share Stories"
+    },
+
+    "language": {
+        "title": "Language",
+        "english": "English",
+        "khmer": "ភាសាខ្មែរ"
+    },
+
+    "profile": {
+        "title": "Profile",
+        "my_books": "My Books",
+        "no_books": "No books yet, add one!",
+        "add_book": "Add Book",
+        "swap_history": "Swap History",
+        "view_profile": "View Profile"
+    },
+
+    "more": {
+        "title": "More",
+        "sections": {
+            "account": "Account",
+            "preferences": "Preferences",
+            "support": "Support"
+        },
+        "menu": {
+            "personal_info": "Personal Information",
+            "notifications": "Notifications",
+            "privacy_security": "Privacy & Security",
+            "appearance": "Appearance",
+            "language": "Language",
+            "help_center": "Help Center",
+            "contact_us": "Contact Us"
+        },
+        "logout": {
+            "button": "Log Out",
+            "title": "Log Out",
+            "message": "Are you sure you want to log out?"
+        }
     }
 }

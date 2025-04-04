@@ -2,7 +2,16 @@
     "commons": {
         "username": "ឈ្មោះគណនី",
         "password": "ពាក្យសម្ងាត់",
-        "search": "ស្វែងរក"
+        "search": "ស្វែងរក",
+        "email": "អ៊ីមែល",
+        "back": "ត្រឡប់ក្រោយ",
+        "forgot_password": "ភ្លេចពាក្យសម្ងាត់?",
+        "sign_in": "ចូល",
+        "resend_code": "ផ្ញើកូដម្តងទៀត",
+        "new_password": "ពាក្យសម្ងាត់ថ្មី",
+        "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
+        "verification_code": "កូដផ្ទៀងផ្ទាត់",
+        "enter_code_hint": "បញ្ចូលលេខកូដ ៤ ខ្ទង់ (1111)"
     },
 
     "error" : {
@@ -16,5 +25,55 @@
         "popular_books": "សៀវភៅល្បីៗ",
         "you_might_like": "អ្នកប្រហែលជាចូលចិត្ត",
         "recently_added": "បានបន្ថែមថ្មីៗ"
+    },
+
+    "auth": {
+        "welcome_back": "សូមស្វាគមន៍មកវិញ",
+        "sign_in_continue": "ចូលដើម្បីបន្ត",
+        "welcome_to_book_swap": "សូមស្វាគមន៍មកកាន់ Book Swap",
+        "password_reset_success": "ពាក្យសម្ងាត់របស់អ្នកត្រូវបានកំណត់ឡើងវិញដោយជោគជ័យ។"
+    },
+
+    "splash": {
+        "app_name": "BOOK SWAP",
+        "tagline": "ដូរសៀវភៅ ចែករំលែកអត្ថន័យ"
+    },
+
+    "language": {
+        "title": "ភាសា",
+        "english": "English",
+        "khmer": "ភាសាខ្មែរ"
+    },
+
+    "profile": {
+        "title": "ប្រវត្តិរូប",
+        "my_books": "សៀវភៅរបស់ខ្ញុំ",
+        "no_books": "មិនទាន់មានសៀវភៅទេ សូមបន្ថែម!",
+        "add_book": "បន្ថែមសៀវភៅ",
+        "swap_history": "ប្រវត្តិការដូរ",
+        "view_profile": "មើលប្រវត្តិរូប"
+    },
+
+    "more": {
+        "title": "ផ្សេងៗ",
+        "sections": {
+            "account": "គណនី",
+            "preferences": "ការកំណត់",
+            "support": "ជំនួយ"
+        },
+        "menu": {
+            "personal_info": "ព័ត៌មានផ្ទាល់ខ្លួន",
+            "notifications": "ការជូនដំណឹង",
+            "privacy_security": "ឯកជនភាព និងសុវត្ថិភាព",
+            "appearance": "រូបរាង",
+            "language": "ភាសា",
+            "help_center": "មជ្ឈមណ្ឌលជំនួយ",
+            "contact_us": "ទំនាក់ទំនងយើង"
+        },
+        "logout": {
+            "button": "ចាកចេញ",
+            "title": "ចាកចេញ",
+            "message": "តើអ្នកប្រាកដជាចង់ចាកចេញមែនទេ?"
+        }
     }
 }

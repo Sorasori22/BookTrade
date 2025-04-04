@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:book_swap/gen/assets.gen.dart';
 import 'package:book_swap/src/presentation/app/app_style.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -53,7 +54,7 @@ class SplashWidget extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'BOOK SWAP',
+                            'splash.app_name'.tr(),
                             style: GoogleFonts.montserrat(
                               fontSize: 38,
                               fontWeight: FontWeight.bold,
@@ -62,7 +63,7 @@ class SplashWidget extends StatelessWidget {
                           ),
                           AS.hGap8,
                           Text(
-                            'Swap Books, Share Stories',
+                            'splash.tagline'.tr(),
                             style: GoogleFonts.poppins(
                               fontSize: 16,
                               color: Colors.white,
