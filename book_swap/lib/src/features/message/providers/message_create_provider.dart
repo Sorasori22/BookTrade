@@ -8,7 +8,6 @@ import '../../profile/profile_schema.schema.dart' show ProfileId;
 import '../i_message_repo.dart';
 import '../message_schema.schema.dart';
 import 'message_list_pagination_provider.dart';
-import 'message_list_provider.dart';
 
 part 'message_create_provider.g.dart';
 
@@ -30,7 +29,6 @@ class MessageCreate extends _$MessageCreateWidget {
 
   @override
   void onSuccess(MessageModel result) {
-    ref.read(messageListProvider.notifier).insertItem(result);
     ref.invalidate(messageListPaginationProvider);
   }
 }

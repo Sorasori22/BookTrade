@@ -28,7 +28,7 @@ class AppThemeMode extends _$AppThemeMode {
       ThemeMode.values.byName,
     );
 
-    return themeMode ?? ThemeMode.system;
+    return themeMode ?? ThemeMode.light;
   }
 
   void change(ThemeMode themeMode) {
