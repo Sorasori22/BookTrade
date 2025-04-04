@@ -284,12 +284,15 @@ class _Ads extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(item.title),
+                        Text(
+                          item.title,
+                          style: TextStyle(color: Colors.black),
+                        ),
                         AS.hGap8,
                         Text(
                           item.description,
                           style: context.textTheme.bodySmall?.copyWith(
-                            color: context.colors.onSurface.withValues(alpha: 0.5),
+                            color: Colors.black.withValues(alpha: 0.5),
                             fontSize: 11,
                           ),
                           maxLines: 2,

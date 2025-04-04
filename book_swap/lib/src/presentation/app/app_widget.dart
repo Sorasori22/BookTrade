@@ -91,6 +91,7 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
           child = BotToastInit()(context, child);
           child = KeyboardDismiss(child: child);
           child = _LifecycleWatcher(child: child);
+          child = _TextScale(child: child);
           child = ResponsiveBreakpoints.builder(
             child: child,
             breakpoints: [
@@ -186,5 +187,24 @@ class __LifecycleWatcherState extends ConsumerState<_LifecycleWatcher> with Widg
   @override
   Widget build(BuildContext context) {
     return widget.child;
+  }
+}
+
+class _TextScale extends ConsumerWidget {
+  const _TextScale({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scale = ref.watch(textScaleProvider).valueOrNull ?? TextScaleValue.normal;
+    final mediaQuery = MediaQuery.of(context);
+
+    return MediaQuery(
+      data: mediaQuery.copyWith(
+        textScaler: TextScaler.linear(scale.scaleValue),
+      ),
+      child: child,
+    );
   }
 }

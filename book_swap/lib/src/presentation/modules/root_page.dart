@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/core/account/current_account_provider.widget.dart';
+import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/core/helpers/logger.dart';
 import 'package:book_swap/src/features/banner/providers/banner_provider.dart';
 import 'package:book_swap/src/features/notification/notification_schema.schema.dart';
@@ -201,6 +202,9 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
               BottomNavigationBar(
                 currentIndex: tabsRouter.activeIndex,
                 type: BottomNavigationBarType.fixed,
+                selectedIconTheme: context.theme.iconTheme.copyWith(
+                  color: context.colors.primary,
+                ),
                 selectedFontSize: 12,
                 onTap: tabsRouter.setActiveIndex,
                 items: [
