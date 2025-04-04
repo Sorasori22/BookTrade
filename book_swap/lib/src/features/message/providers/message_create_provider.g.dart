@@ -74,7 +74,7 @@ abstract class _$MessageCreateWidget extends _$MessageCreate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$messageCreateHash() => r'e0d5931c849e1b60c899806dcb9c8b52bd3accd5';
+String _$messageCreateHash() => r'b0be5cbb8c9bf289674346c583bf1994c462cb12';
 
 /// See also [MessageCreate].
 @ProviderFor(MessageCreate)

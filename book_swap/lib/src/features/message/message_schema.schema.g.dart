@@ -21,6 +21,9 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
       unsent: json['unsent'] as bool,
       hiddenFrom: IList<ProfileId>.fromJson(
           json['hidden_from'], (value) => ProfileId.fromJson(value)),
+      image: json['file_path'] == null
+          ? null
+          : ImageObject.fromJson(json['file_path']),
       recipient:
           ProfileLiteModel.fromJson(json['recipient'] as Map<String, dynamic>),
       tradeRequest: json['tradeRequest'] == null
@@ -43,6 +46,7 @@ Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
       'hidden_from': instance.hiddenFrom.toJson(
         (value) => value.toJson(),
       ),
+      'file_path': instance.image?.toJson(),
       'recipient': instance.recipient.toJson(),
       'tradeRequest': instance.tradeRequest?.toJson(),
     };
@@ -83,6 +87,9 @@ _$MessageCreateParamImpl _$$MessageCreateParamImplFromJson(
       recipientId: ProfileId.fromJson(json['recipient_id']),
       content: json['content'] as String,
       tradeRequestId: (json['trade_request_id'] as num?)?.toInt(),
+      image: json['file_path'] == null
+          ? null
+          : ImageObject.fromJson(json['file_path']),
     );
 
 Map<String, dynamic> _$$MessageCreateParamImplToJson(
@@ -92,6 +99,7 @@ Map<String, dynamic> _$$MessageCreateParamImplToJson(
       'recipient_id': instance.recipientId.toJson(),
       'content': instance.content,
       'trade_request_id': instance.tradeRequestId,
+      'file_path': instance.image?.toJson(),
     };
 
 _$MessageUpdateParamImpl _$$MessageUpdateParamImplFromJson(
@@ -123,6 +131,7 @@ const _tableMessageModel = TableBuilder(
     ColumnBuilder('created_at'),
     ColumnBuilder('unsent'),
     ColumnBuilder('hidden_from'),
+    ColumnBuilder('file_path'),
     ColumnBuilder.join(ProfileLiteModel.table,
         key: "recipient", candidateKey: null, foreignKey: 'recipient_id'),
     ColumnBuilder.join(TradeRequestLiteModel.table,

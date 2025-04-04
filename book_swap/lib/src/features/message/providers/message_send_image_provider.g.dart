@@ -2,13 +2,13 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'message_send_text_provider.dart';
+part of 'message_send_image_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$messageSendTextHash() => r'7483f52ebb55cf7a8dbdd6ee252187881361b959';
+String _$messageSendImageHash() => r'121fc20fbe84bafde24e0b53fcdb0eb1dd93cfaf';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,7 +31,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$MessageSendText
+abstract class _$MessageSendImage
     extends BuildlessAutoDisposeNotifier<ProviderStatus<MessageModel>> {
   late final ProfileId recipientId;
 
@@ -40,27 +40,27 @@ abstract class _$MessageSendText
   );
 }
 
-/// See also [MessageSendText].
-@ProviderFor(MessageSendText)
-const messageSendTextProvider = MessageSendTextFamily();
+/// See also [MessageSendImage].
+@ProviderFor(MessageSendImage)
+const messageSendImageProvider = MessageSendImageFamily();
 
-/// See also [MessageSendText].
-class MessageSendTextFamily extends Family<ProviderStatus<MessageModel>> {
-  /// See also [MessageSendText].
-  const MessageSendTextFamily();
+/// See also [MessageSendImage].
+class MessageSendImageFamily extends Family<ProviderStatus<MessageModel>> {
+  /// See also [MessageSendImage].
+  const MessageSendImageFamily();
 
-  /// See also [MessageSendText].
-  MessageSendTextProvider call(
+  /// See also [MessageSendImage].
+  MessageSendImageProvider call(
     ProfileId recipientId,
   ) {
-    return MessageSendTextProvider(
+    return MessageSendImageProvider(
       recipientId,
     );
   }
 
   @override
-  MessageSendTextProvider getProviderOverride(
-    covariant MessageSendTextProvider provider,
+  MessageSendImageProvider getProviderOverride(
+    covariant MessageSendImageProvider provider,
   ) {
     return call(
       provider.recipientId,
@@ -79,30 +79,30 @@ class MessageSendTextFamily extends Family<ProviderStatus<MessageModel>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'messageSendTextProvider';
+  String? get name => r'messageSendImageProvider';
 }
 
-/// See also [MessageSendText].
-class MessageSendTextProvider extends AutoDisposeNotifierProviderImpl<
-    MessageSendText, ProviderStatus<MessageModel>> {
-  /// See also [MessageSendText].
-  MessageSendTextProvider(
+/// See also [MessageSendImage].
+class MessageSendImageProvider extends AutoDisposeNotifierProviderImpl<
+    MessageSendImage, ProviderStatus<MessageModel>> {
+  /// See also [MessageSendImage].
+  MessageSendImageProvider(
     ProfileId recipientId,
   ) : this._internal(
-          () => MessageSendText()..recipientId = recipientId,
-          from: messageSendTextProvider,
-          name: r'messageSendTextProvider',
+          () => MessageSendImage()..recipientId = recipientId,
+          from: messageSendImageProvider,
+          name: r'messageSendImageProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$messageSendTextHash,
-          dependencies: MessageSendTextFamily._dependencies,
+                  : _$messageSendImageHash,
+          dependencies: MessageSendImageFamily._dependencies,
           allTransitiveDependencies:
-              MessageSendTextFamily._allTransitiveDependencies,
+              MessageSendImageFamily._allTransitiveDependencies,
           recipientId: recipientId,
         );
 
-  MessageSendTextProvider._internal(
+  MessageSendImageProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -116,7 +116,7 @@ class MessageSendTextProvider extends AutoDisposeNotifierProviderImpl<
 
   @override
   ProviderStatus<MessageModel> runNotifierBuild(
-    covariant MessageSendText notifier,
+    covariant MessageSendImage notifier,
   ) {
     return notifier.build(
       recipientId,
@@ -124,10 +124,10 @@ class MessageSendTextProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  Override overrideWith(MessageSendText Function() create) {
+  Override overrideWith(MessageSendImage Function() create) {
     return ProviderOverride(
       origin: this,
-      override: MessageSendTextProvider._internal(
+      override: MessageSendImageProvider._internal(
         () => create()..recipientId = recipientId,
         from: from,
         name: null,
@@ -140,14 +140,15 @@ class MessageSendTextProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeNotifierProviderElement<MessageSendText,
+  AutoDisposeNotifierProviderElement<MessageSendImage,
       ProviderStatus<MessageModel>> createElement() {
-    return _MessageSendTextProviderElement(this);
+    return _MessageSendImageProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is MessageSendTextProvider && other.recipientId == recipientId;
+    return other is MessageSendImageProvider &&
+        other.recipientId == recipientId;
   }
 
   @override
@@ -161,19 +162,19 @@ class MessageSendTextProvider extends AutoDisposeNotifierProviderImpl<
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin MessageSendTextRef
+mixin MessageSendImageRef
     on AutoDisposeNotifierProviderRef<ProviderStatus<MessageModel>> {
   /// The parameter `recipientId` of this provider.
   ProfileId get recipientId;
 }
 
-class _MessageSendTextProviderElement
-    extends AutoDisposeNotifierProviderElement<MessageSendText,
-        ProviderStatus<MessageModel>> with MessageSendTextRef {
-  _MessageSendTextProviderElement(super.provider);
+class _MessageSendImageProviderElement
+    extends AutoDisposeNotifierProviderElement<MessageSendImage,
+        ProviderStatus<MessageModel>> with MessageSendImageRef {
+  _MessageSendImageProviderElement(super.provider);
 
   @override
-  ProfileId get recipientId => (origin as MessageSendTextProvider).recipientId;
+  ProfileId get recipientId => (origin as MessageSendImageProvider).recipientId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

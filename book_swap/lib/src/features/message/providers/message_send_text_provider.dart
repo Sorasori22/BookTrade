@@ -26,6 +26,7 @@ class MessageSendText extends _$MessageSendText {
           recipientId: recipientId,
           senderId: ref.read(currentProfileIdProvider)!,
           tradeRequestId: null,
+          image: null,
         );
 
         return ref.read(messageRepoProvider).create(param).getOrThrow();

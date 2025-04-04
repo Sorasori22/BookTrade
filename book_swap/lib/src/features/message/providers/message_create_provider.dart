@@ -20,6 +20,7 @@ class MessageCreate extends _$MessageCreateWidget {
         recipientId: ProfileId.fromValue(''),
         content: '',
         tradeRequestId: null,
+        image: null,
       );
 
   @override

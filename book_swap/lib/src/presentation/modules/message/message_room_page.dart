@@ -7,6 +7,7 @@ import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/chat/providers/chat_clear_unread_count_provider.dart';
 import 'package:book_swap/src/features/chat/providers/chat_list_pagination_provider.dart';
 import 'package:book_swap/src/features/message/providers/message_list_pagination_provider.dart';
+import 'package:book_swap/src/features/message/providers/message_send_image_provider.dart';
 import 'package:book_swap/src/features/message/providers/message_unsent_provider.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/profile/providers/profile_detail_provider.dart';
@@ -19,10 +20,12 @@ import 'package:book_swap/src/presentation/modules/book/widget/book_cover.dart';
 import 'package:book_swap/src/presentation/modules/profile/widget/user_avatar_widget.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:book_swap/src/presentation/widgets/buttons/app_button.dart';
+import 'package:book_swap/src/presentation/widgets/components/effective_image.dart';
 import 'package:book_swap/src/presentation/widgets/dialogs/app_dialog.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/async_value_widget.dart';
 import 'package:book_swap/src/presentation/widgets/layouts/app_card.dart';
+import 'package:book_swap/src/presentation/widgets/tools/photo_view_page.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dartx/dartx.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -31,6 +34,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:kimapp_supabase_helper/supabase_provider.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
@@ -225,7 +229,85 @@ class _MessageInput extends HookConsumerWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      context.showAppModalBottomSheet(
+                        builder: (context) {
+                          return SafeArea(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  leading: const Icon(Icons.photo_library),
+                                  title: const Text('Choose from Gallery'),
+                                  onTap: () async {
+                                    final picker = ImagePicker();
+                                    final image = await picker.pickImage(
+                                      source: ImageSource.gallery,
+                                    );
+                                    if (image != null && context.mounted) {
+                                      final result = await context.loadingWrapper(() async {
+                                        return await ref
+                                            .read(messageSendImageProvider(recipientId).notifier)
+                                            .call(image: image);
+                                      });
+
+                                      if (result.isFailure && context.mounted) {
+                                        context.showSnackBar(
+                                          message: result.failure!.message(),
+                                          backgroundColor: context.colors.error,
+                                        );
+                                      }
+                                      if (result.isSuccess) {
+                                        onSend(result.successOrNull!);
+
+                                        MessagePaginationTracker.instance
+                                            .addItem(ref, result.successOrNull!);
+                                        // TODO: Temporary solution which is bad, but we have not choice due to deadline
+                                        ref.invalidate(messageListPaginationProvider);
+                                        context.maybePop();
+                                      }
+                                    }
+                                  },
+                                ),
+                                ListTile(
+                                  leading: const Icon(Icons.camera_alt),
+                                  title: const Text('Take a Photo'),
+                                  onTap: () async {
+                                    final picker = ImagePicker();
+                                    final image = await picker.pickImage(
+                                      source: ImageSource.camera,
+                                    );
+                                    if (image != null && context.mounted) {
+                                      final result = await context.loadingWrapper(() async {
+                                        return await ref
+                                            .read(messageSendImageProvider(recipientId).notifier)
+                                            .call(image: image);
+                                      });
+
+                                      if (result.isFailure && context.mounted) {
+                                        context.showSnackBar(
+                                          message: result.failure!.message(),
+                                          backgroundColor: context.colors.error,
+                                        );
+                                      }
+                                      if (result.isSuccess) {
+                                        onSend(result.successOrNull!);
+
+                                        MessagePaginationTracker.instance
+                                            .addItem(ref, result.successOrNull!);
+                                        // TODO: Temporary solution which is bad, but we have not choice due to deadline
+                                        ref.invalidate(messageListPaginationProvider);
+                                        context.maybePop();
+                                      }
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
                     icon: const Icon(Icons.image_outlined),
                     color: context.colors.onSurface.withValues(alpha: 0.38),
                   ),
@@ -641,13 +723,41 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
                           color: isSender ? context.primaryColor : Colors.grey[300],
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          widget.message.content,
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            color: isSender ? Colors.white : Colors.black,
-                          ),
-                        ),
+                        padding: EdgeInsets.all(widget.message.image != null ? 4 : 12),
+                        child: widget.message.image != null
+                            ? () {
+                                double? aspectRatio;
+                                if (widget.message.image!.dimensions?.width != null &&
+                                    widget.message.image!.dimensions?.height != null) {
+                                  aspectRatio = widget.message.image!.dimensions!.width! /
+                                      widget.message.image!.dimensions!.height!;
+                                }
+
+                                double? width;
+                                double? height;
+                                if (aspectRatio != null) {
+                                  final maxWidth = context.screenWidth * 0.5;
+                                  width = maxWidth;
+                                  height = maxWidth / aspectRatio;
+                                }
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    PhotoViewPage.show(context, widget.message.image!);
+                                  },
+                                  child: EffectiveImage(
+                                    width: width,
+                                    height: height,
+                                    imageObject: widget.message.image!,
+                                  ),
+                                );
+                              }()
+                            : Text(
+                                widget.message.content,
+                                style: context.textTheme.bodyMedium?.copyWith(
+                                  color: isSender ? Colors.white : Colors.black,
+                                ),
+                              ),
                       ),
                     ),
             ),
