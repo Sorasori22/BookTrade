@@ -74,6 +74,14 @@
             "button": "Log Out",
             "title": "Log Out",
             "message": "Are you sure you want to log out?"
-        }
+        },
+        "feature_name": {
+            "title": "English Title",
+            "section": {
+                "key": "English Value"
+            }
+        },
+        "terms_of_service": "Terms of Service",
+        "privacy_policy": "Privacy Policy"
     }
 }

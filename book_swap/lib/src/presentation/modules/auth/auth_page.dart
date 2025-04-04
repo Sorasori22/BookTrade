@@ -138,7 +138,7 @@ class _GetStarted extends StatelessWidget {
               onPressed: () {
                 authType.value = _AuthType.signUp;
               },
-              label: 'Sign Up',
+              label: 'Sign Up'.tr(),
               borderRadius: AS.radiusXL,
               fullWidth: true,
             ),
@@ -161,7 +161,7 @@ class _GetStarted extends StatelessWidget {
               onPressed: () {
                 authType.value = _AuthType.login;
               },
-              label: 'Login',
+              label: 'Login'.tr(),
               borderRadius: AS.radiusXL,
               fullWidth: true,
               variant: AppButtonVariant.neutral,
@@ -190,14 +190,14 @@ class _GetStarted extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: 'Terms of Service',
+                      text: 'more.terms_of_service'.tr(),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const TextSpan(text: ' and acknowledge you\'ve read our '),
                     TextSpan(
-                      text: 'Privacy Policy',
+                      text: 'more.privacy_policy'.tr(),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),

@@ -149,13 +149,13 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
   String _getStepTitle() {
     switch (_currentStep) {
       case 1:
-        return 'Forgot Password';
+        return 'Forgot Password'.tr();
       case 2:
-        return 'Verification Code';
+        return 'Verification Code'.tr();
       case 3:
-        return 'Reset Password';
+        return 'Reset Password'.tr();
       case 4:
-        return 'Success!';
+        return 'Success!'.tr();
       default:
         return '';
     }
@@ -164,13 +164,13 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
   String _getStepDescription() {
     switch (_currentStep) {
       case 1:
-        return 'Enter your email to receive a verification code';
+        return 'Enter your email to receive a verification code'.tr();
       case 2:
-        return 'Enter the verification code sent to your email';
+        return 'Enter the verification code sent to your email'.tr();
       case 3:
-        return 'Create a new password for your account';
+        return 'Create a new password for your account'.tr();
       case 4:
-        return 'Your password has been reset successfully';
+        return 'Your password has been reset successfully'.tr();
       default:
         return '';
     }
@@ -179,13 +179,13 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage>
   String _getButtonLabel() {
     switch (_currentStep) {
       case 1:
-        return 'Send Code';
+        return 'Send Code'.tr();
       case 2:
-        return 'Verify Code';
+        return 'Verify Code'.tr();
       case 3:
-        return 'Reset Password';
+        return 'Reset Password'.tr();
       case 4:
-        return 'Back to Login';
+        return 'Back to Login'.tr();
       default:
         return '';
     }
