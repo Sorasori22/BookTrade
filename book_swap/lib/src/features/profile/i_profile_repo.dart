@@ -33,6 +33,8 @@ abstract class IProfileRepo {
     required int offset,
     required ProfileListParam param,
   });
+
+  AsyncFailureOr<Unit> updateEmail(ProfileId profileId, {required String email});
 }
 
 class _Impl implements IProfileRepo {
@@ -129,6 +131,17 @@ class _Impl implements IProfileRepo {
       await _ref.supabaseClient
           .from(ProfileDetailModel.table.tableName)
           .update({'avatar_url': image?.toJson()}).eq(ProfileTable.id, profileId.value);
+
+      return right(unit);
+    });
+  }
+
+  @override
+  AsyncFailureOr<Unit> updateEmail(ProfileId profileId, {required String email}) async {
+    return await errorHandler(() async {
+      await _ref.supabaseClient
+          .from(ProfileDetailModel.table.tableName)
+          .update({'email': email}).eq(ProfileTable.id, profileId.value);
 
       return right(unit);
     });

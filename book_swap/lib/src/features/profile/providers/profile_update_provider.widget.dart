@@ -13,9 +13,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
-import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:book_swap/src/core/storage/image_object.dart';
-import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/profile/i_profile_repo.dart';
@@ -42,6 +41,10 @@ extension ProfileUpdateFieldUpdater on ProfileUpdate {
           fullname: newValue == null || newValue.isEmpty ? null : newValue,
         ),
       );
+
+  /// Update the email field of ProfileUpdateParam class.
+  void updateEmail(String newValue) =>
+      state = state.whenData((state) => state.copyWith(email: newValue));
 
   /// Update the bio field of ProfileUpdateParam class.
   void updateBio(String? newValue) =>
@@ -658,6 +661,103 @@ class ProfileUpdateFullnameField extends HookConsumerWidget {
     }, [controller]);
 
     final proxy = ProfileUpdateFullnameProxyWidgetRef(
+      ref,
+      textController: controller,
+    );
+
+    return builder(context, proxy);
+  }
+}
+
+class ProfileUpdateEmailProxyWidgetRef extends ProfileUpdateProxyWidgetRef {
+  ProfileUpdateEmailProxyWidgetRef(super._ref, {required this.textController});
+
+  /// Text controller for the field. This is automatically created by the form widget and handles cleanup automatically.
+  final TextEditingController textController;
+
+  /// Access the field value directly.
+  String get email => select((state) => state.email);
+
+  /// Update the field value directly.
+  void updateEmail(String newValue) => notifier.updateEmail(newValue);
+}
+
+class ProfileUpdateEmailField extends HookConsumerWidget {
+  const ProfileUpdateEmailField({
+    super.key,
+    this.textController,
+    this.onChanged,
+    required this.builder,
+  });
+
+  /// Text controller for the field. If not provided, one will be created automatically.
+  final TextEditingController? textController;
+
+  /// Builder function that will be called with the context and ref.
+  /// Field utilities are accessible via [ref]
+  final Widget Function(
+    BuildContext context,
+    ProfileUpdateEmailProxyWidgetRef ref,
+  )
+  builder;
+
+  /// Optional callback that will be called when the field value changes
+  final void Function(String? previous, String next)? onChanged;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasProfileUpdateForm(context);
+
+    final params = _ProfileUpdateFormInheritedWidget.of(context).params;
+
+    // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
+    final initialValue =
+        ref.read(profileUpdateProvider(params.profileId)).valueOrNull?.email;
+
+    final controller =
+        textController ?? useTextEditingController(text: initialValue);
+
+    // Listen for provider changes
+    ref.listen(
+      profileUpdateProvider(
+        params.profileId,
+      ).select((value) => value.valueOrNull?.email),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next ?? "");
+      },
+    );
+
+    // Initialize external controller if provided
+    useEffect(() {
+      if (textController != null && textController!.text.isEmpty) {
+        textController!.text = initialValue ?? "";
+      }
+      return null;
+    }, []);
+
+    // Setup text listener
+    useEffect(() {
+      void listener() {
+        final currentValue =
+            ref
+                .read(profileUpdateProvider(params.profileId))
+                .valueOrNull
+                ?.email;
+        if (currentValue != controller.text) {
+          ref
+              .read(profileUpdateProvider(params.profileId).notifier)
+              .updateEmail(controller.text);
+        }
+      }
+
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
+
+    final proxy = ProfileUpdateEmailProxyWidgetRef(
       ref,
       textController: controller,
     );

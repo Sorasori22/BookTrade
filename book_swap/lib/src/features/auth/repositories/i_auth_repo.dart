@@ -21,6 +21,17 @@ abstract class IAuthRepo {
   Future<Either<Failure, Unit>> forgotPassword(ForgotPasswordParam param);
   Future<Either<Failure, Unit>> verifyResetCode(VerifyResetCodeParam param);
   Future<Either<Failure, Unit>> resetPassword(ResetPasswordParam param);
+
+  Future<Either<Failure, bool>> checkPassword(String password);
+
+  Future<Either<Failure, Unit>> updateEmail({
+    required UserId userId,
+    required String email,
+  });
+  Future<Either<Failure, Unit>> updatePassword({
+    required UserId userId,
+    required String password,
+  });
 }
 
 class _Impl implements IAuthRepo {
@@ -30,7 +41,8 @@ class _Impl implements IAuthRepo {
         _ref.supabaseClient.rest.url.split('/rest')[0],
         integrationMode.isDevelop
             ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU'
-            : throw UnimplementedError(),
+            // TODO: Bad practice, we can't use like this in production
+            : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtja2xua3huaHV5eWZ2eXR5aHR0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MjAwNzU3MSwiZXhwIjoyMDU3NTgzNTcxfQ.EFBttsG6ixvGYXVimM__sKKEdsPENu3wUf_dVIwyNhk',
       );
 
   final Ref _ref;
@@ -168,6 +180,57 @@ class _Impl implements IAuthRepo {
 
       _verifiedResetUsers.remove(param.email);
       return right(unit);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updateEmail({
+    required UserId userId,
+    required String email,
+  }) async {
+    return await errorHandler(() async {
+      await _adminClient.auth.admin.updateUserById(
+        userId.value,
+        attributes: AdminUserAttributes(
+          email: email,
+          emailConfirm: true,
+        ),
+      );
+
+      // Reflect to email change
+      await _ref.read(supabaseProvider).client.auth.refreshSession();
+      return right(unit);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updatePassword({
+    required UserId userId,
+    required String password,
+  }) async {
+    return await errorHandler(() async {
+      await _adminClient.auth.admin.updateUserById(
+        userId.value,
+        attributes: AdminUserAttributes(
+          password: password,
+        ),
+      );
+
+      // Reflect to email change
+      await _ref.read(supabaseProvider).client.auth.refreshSession();
+      return right(unit);
+    });
+  }
+
+  @override
+  Future<Either<Failure, bool>> checkPassword(String password) async {
+    return await errorHandler(() async {
+      final result = await _ref
+          .read(supabaseProvider)
+          .client
+          .rpc('check_current_password', params: {'password': password.trim()});
+
+      return right(result == true);
     });
   }
 }

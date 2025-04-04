@@ -41,6 +41,7 @@ class ProfileSchema extends KimappSchema {
         ..addFields({
           'username': Field<String?>('username'),
           'fullname': Field<String?>('fullname'),
+          'email': email,
           'bio': bio,
           'age': age,
           'location': location,

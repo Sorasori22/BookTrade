@@ -1161,6 +1161,8 @@ mixin _$ProfileUpdateParam {
   String? get username => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileUpdateParam.fullnameKey)
   String? get fullname => throw _privateConstructorUsedError;
+  @JsonKey(name: ProfileUpdateParam.emailKey)
+  String get email => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileUpdateParam.bioKey)
   String? get bio => throw _privateConstructorUsedError;
   @JsonKey(name: ProfileUpdateParam.ageKey)
@@ -1191,6 +1193,7 @@ abstract class $ProfileUpdateParamCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: ProfileUpdateParam.usernameKey) String? username,
       @JsonKey(name: ProfileUpdateParam.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileUpdateParam.emailKey) String email,
       @JsonKey(name: ProfileUpdateParam.bioKey) String? bio,
       @JsonKey(name: ProfileUpdateParam.ageKey) int? age,
       @JsonKey(name: ProfileUpdateParam.locationKey) String? location,
@@ -1215,6 +1218,7 @@ class _$ProfileUpdateParamCopyWithImpl<$Res, $Val extends ProfileUpdateParam>
   $Res call({
     Object? username = freezed,
     Object? fullname = freezed,
+    Object? email = null,
     Object? bio = freezed,
     Object? age = freezed,
     Object? location = freezed,
@@ -1230,6 +1234,10 @@ class _$ProfileUpdateParamCopyWithImpl<$Res, $Val extends ProfileUpdateParam>
           ? _value.fullname
           : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
@@ -1265,6 +1273,7 @@ abstract class _$$ProfileUpdateParamImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: ProfileUpdateParam.usernameKey) String? username,
       @JsonKey(name: ProfileUpdateParam.fullnameKey) String? fullname,
+      @JsonKey(name: ProfileUpdateParam.emailKey) String email,
       @JsonKey(name: ProfileUpdateParam.bioKey) String? bio,
       @JsonKey(name: ProfileUpdateParam.ageKey) int? age,
       @JsonKey(name: ProfileUpdateParam.locationKey) String? location,
@@ -1287,6 +1296,7 @@ class __$$ProfileUpdateParamImplCopyWithImpl<$Res>
   $Res call({
     Object? username = freezed,
     Object? fullname = freezed,
+    Object? email = null,
     Object? bio = freezed,
     Object? age = freezed,
     Object? location = freezed,
@@ -1302,6 +1312,10 @@ class __$$ProfileUpdateParamImplCopyWithImpl<$Res>
           ? _value.fullname
           : fullname // ignore: cast_nullable_to_non_nullable
               as String?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
@@ -1333,6 +1347,7 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
   const _$ProfileUpdateParamImpl(
       {@JsonKey(name: ProfileUpdateParam.usernameKey) required this.username,
       @JsonKey(name: ProfileUpdateParam.fullnameKey) required this.fullname,
+      @JsonKey(name: ProfileUpdateParam.emailKey) required this.email,
       @JsonKey(name: ProfileUpdateParam.bioKey) required this.bio,
       @JsonKey(name: ProfileUpdateParam.ageKey) required this.age,
       @JsonKey(name: ProfileUpdateParam.locationKey) required this.location,
@@ -1351,6 +1366,9 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
   @JsonKey(name: ProfileUpdateParam.fullnameKey)
   final String? fullname;
   @override
+  @JsonKey(name: ProfileUpdateParam.emailKey)
+  final String email;
+  @override
   @JsonKey(name: ProfileUpdateParam.bioKey)
   final String? bio;
   @override
@@ -1368,7 +1386,7 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
 
   @override
   String toString() {
-    return 'ProfileUpdateParam(username: $username, fullname: $fullname, bio: $bio, age: $age, location: $location, address: $address, phoneNumber: $phoneNumber)';
+    return 'ProfileUpdateParam(username: $username, fullname: $fullname, email: $email, bio: $bio, age: $age, location: $location, address: $address, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -1380,6 +1398,7 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
                 other.username == username) &&
             (identical(other.fullname, fullname) ||
                 other.fullname == fullname) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.bio, bio) || other.bio == bio) &&
             (identical(other.age, age) || other.age == age) &&
             (identical(other.location, location) ||
@@ -1391,8 +1410,8 @@ class _$ProfileUpdateParamImpl extends _ProfileUpdateParam {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, username, fullname, bio, age,
-      location, address, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, username, fullname, email, bio,
+      age, location, address, phoneNumber);
 
   /// Create a copy of ProfileUpdateParam
   /// with the given fields replaced by the non-null parameter values.
@@ -1417,6 +1436,7 @@ abstract class _ProfileUpdateParam extends ProfileUpdateParam {
       required final String? username,
       @JsonKey(name: ProfileUpdateParam.fullnameKey)
       required final String? fullname,
+      @JsonKey(name: ProfileUpdateParam.emailKey) required final String email,
       @JsonKey(name: ProfileUpdateParam.bioKey) required final String? bio,
       @JsonKey(name: ProfileUpdateParam.ageKey) required final int? age,
       @JsonKey(name: ProfileUpdateParam.locationKey)
@@ -1436,6 +1456,9 @@ abstract class _ProfileUpdateParam extends ProfileUpdateParam {
   @override
   @JsonKey(name: ProfileUpdateParam.fullnameKey)
   String? get fullname;
+  @override
+  @JsonKey(name: ProfileUpdateParam.emailKey)
+  String get email;
   @override
   @JsonKey(name: ProfileUpdateParam.bioKey)
   String? get bio;
