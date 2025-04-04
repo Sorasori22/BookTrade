@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 
 import '../profile/profile_schema.schema.dart';
@@ -24,6 +25,8 @@ class MessageSchema extends KimappSchema {
   final read = Field<bool>('read');
   final tradeRequestId = Field<int?>('trade_request_id');
   final createdAt = Field<DateTime>('created_at');
+  final unsent = Field<bool>('unsent');
+  final hiddenFrom = Field<IList<ProfileId>>('hidden_from');
 
   final recipient = Field.join<ProfileLiteModel>().withForeignKey('recipient_id');
   final tradeRequest = Field.join<TradeRequestLiteModel?>().withForeignKey('trade_request_id');
@@ -39,12 +42,6 @@ class MessageSchema extends KimappSchema {
             'content': content,
             'read': read,
             'createdAt': createdAt,
-          }),
-        Model('MessageDetailModel')
-          ..table()
-          ..inheritAllFromBase()
-          ..addFields({
-            'recipient': recipient,
           }),
         Model('MessageCreateParam')
           ..addFields({

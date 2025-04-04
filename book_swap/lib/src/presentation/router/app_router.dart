@@ -124,6 +124,11 @@ class AppRouter extends RootStackRouter {
         path: '/messages/:recipientId',
       ),
       AutoRoute(
+        page: MessageRecipientDetailRoute.page,
+        guards: [AuthGuard(_ref)],
+        path: '/messages/:recipientId/detail',
+      ),
+      AutoRoute(
         page: NotificationRoute.page,
         guards: [AuthGuard(_ref)],
         path: '/notifications',

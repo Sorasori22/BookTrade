@@ -1,3 +1,4 @@
+import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,8 +15,6 @@ part 'i_message_repo.g.dart';
 IMessageRepo messageRepo(Ref ref) => _Impl(ref);
 
 abstract class IMessageRepo {
-  Future<Either<Failure, IList<MessageModel>>> findAll();
-
   Future<Either<Failure, MessageModel>> findOne(MessageId id);
 
   Future<Either<Failure, MessageModel>> create(MessageCreateParam data);
@@ -25,13 +24,15 @@ abstract class IMessageRepo {
     required MessageUpdateParam data,
   });
 
-  Future<Either<Failure, Unit>> delete(MessageId id);
-
   Future<Either<Failure, IList<MessageModel>>> findPagination({
     required int limit,
     required int offset,
     required MessageListParam param,
   });
+
+  AsyncFailureOr<Unit> unsent(MessageId id);
+
+  AsyncFailureOr<Unit> hideAll(ProfileId profileId);
 }
 
 class _Impl implements IMessageRepo {
@@ -48,34 +49,6 @@ class _Impl implements IMessageRepo {
           .select(MessageModel.table.selectStatement)
           .single()
           .withConverter((data) => right(MessageModel.fromJson(data)));
-    });
-  }
-
-  @override
-  Future<Either<Failure, Unit>> delete(MessageId id) async {
-    return await errorHandler(() async {
-      await _ref.supabaseClient.from(MessageTable.table).delete().eq(MessageTable.id, id.value);
-
-      return right(unit);
-    });
-  }
-
-  @override
-  Future<Either<Failure, IList<MessageModel>>> findAll() async {
-    return await errorHandler(() async {
-      final query = _ref.supabaseClient
-          .from(MessageModel.table.tableName)
-          .select(MessageModel.table.selectStatement);
-
-      if (true) {}
-
-      return await query.withConverter((data) {
-        final items = IList.fromJson(
-          data,
-          (json) => MessageModel.fromJson(json as Map<String, dynamic>),
-        );
-        return right(items);
-      });
     });
   }
 
@@ -102,6 +75,7 @@ class _Impl implements IMessageRepo {
       final query = _ref.supabaseClient
           .from(MessageModel.table.tableName)
           .select(MessageModel.table.selectStatement)
+          // my own id filter and hide from filter was done in rls
           .or('sender_id.eq.${param.participantId.value},recipient_id.eq.${param.participantId.value}');
 
       return await query
@@ -131,6 +105,25 @@ class _Impl implements IMessageRepo {
           .select(MessageModel.table.selectStatement)
           .single()
           .withConverter((data) => right(MessageModel.fromJson(data)));
+    });
+  }
+
+  @override
+  AsyncFailureOr<Unit> unsent(MessageId id) async {
+    return await errorHandler(() async {
+      await _ref.supabaseClient
+          .from(MessageModel.table.tableName)
+          .update({'unsent': true}).eq(MessageTable.id, id.value);
+      return right(unit);
+    });
+  }
+
+  @override
+  AsyncFailureOr<Unit> hideAll(ProfileId recipientId) async {
+    return await errorHandler(() async {
+      await _ref.supabaseClient
+          .rpc('hide_all_my_messages', params: {'p_recipient_id': recipientId.value});
+      return right(unit);
     });
   }
 }

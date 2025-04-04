@@ -3,6 +3,7 @@ import 'package:book_swap/src/core/account/current_account_provider.widget.dart'
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/features/book/providers/my_book_list_provider.widget.dart';
 import 'package:book_swap/src/features/notification/providers/notification_unread_count_provider.dart';
+import 'package:book_swap/src/features/profile/profile_schema.dart';
 import 'package:book_swap/src/presentation/modules/book/widget/book_cover.dart';
 import 'package:book_swap/src/presentation/modules/profile/swap_history/swap_history_sliver_list_widget.dart';
 import 'package:book_swap/src/presentation/modules/profile/widget/current_user_avatar.dart';
@@ -72,7 +73,7 @@ class ProfilePage extends ConsumerWidget {
                   Align(
                     alignment: Alignment.topCenter,
                     child: CurrentAccountSelectWidget(
-                      selector: (state) => state.profile?.fullname ?? "...",
+                      selector: (state) => state.profile?.displayName ?? "...",
                       builder: (context, ref, value) {
                         return Text(
                           value,

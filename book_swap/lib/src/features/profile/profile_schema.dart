@@ -51,6 +51,14 @@ class ProfileSchema extends KimappSchema {
   }
 }
 
-extension ProfileModelX on ProfileLiteModel {
+extension ProfileLiteModelX on ProfileLiteModel {
+  String get displayName => fullname ?? username;
+}
+
+extension ProfileModelX on ProfileModel {
+  String get displayName => fullname ?? username;
+}
+
+extension ProfileDetailModelX on ProfileDetailModel {
   String get displayName => fullname ?? username;
 }

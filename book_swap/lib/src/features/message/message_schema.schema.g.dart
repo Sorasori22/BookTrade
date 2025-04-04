@@ -18,6 +18,9 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
       read: json['read'] as bool,
       tradeRequestId: (json['trade_request_id'] as num?)?.toInt(),
       createdAt: DateTime.parse(json['created_at'] as String),
+      unsent: json['unsent'] as bool,
+      hiddenFrom: IList<ProfileId>.fromJson(
+          json['hidden_from'], (value) => ProfileId.fromJson(value)),
       recipient:
           ProfileLiteModel.fromJson(json['recipient'] as Map<String, dynamic>),
       tradeRequest: json['tradeRequest'] == null
@@ -36,6 +39,10 @@ Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
       'read': instance.read,
       'trade_request_id': instance.tradeRequestId,
       'created_at': instance.createdAt.toIso8601String(),
+      'unsent': instance.unsent,
+      'hidden_from': instance.hiddenFrom.toJson(
+        (value) => value.toJson(),
+      ),
       'recipient': instance.recipient.toJson(),
       'tradeRequest': instance.tradeRequest?.toJson(),
     };
@@ -67,40 +74,6 @@ Map<String, dynamic> _$$MessageLiteModelImplToJson(
       'content': instance.content,
       'read': instance.read,
       'created_at': instance.createdAt.toIso8601String(),
-    };
-
-_$MessageDetailModelImpl _$$MessageDetailModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$MessageDetailModelImpl(
-      id: MessageId.fromJson(json['id']),
-      type: $enumDecode(_$MessageTypeEnumMap, json['type']),
-      senderId: ProfileId.fromJson(json['sender_id']),
-      recipientId: ProfileId.fromJson(json['recipient_id']),
-      content: json['content'] as String,
-      read: json['read'] as bool,
-      tradeRequestId: (json['trade_request_id'] as num?)?.toInt(),
-      createdAt: DateTime.parse(json['created_at'] as String),
-      recipient:
-          ProfileLiteModel.fromJson(json['recipient'] as Map<String, dynamic>),
-      tradeRequest: json['tradeRequest'] == null
-          ? null
-          : TradeRequestLiteModel.fromJson(
-              json['tradeRequest'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$MessageDetailModelImplToJson(
-        _$MessageDetailModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id.toJson(),
-      'type': _$MessageTypeEnumMap[instance.type]!,
-      'sender_id': instance.senderId.toJson(),
-      'recipient_id': instance.recipientId.toJson(),
-      'content': instance.content,
-      'read': instance.read,
-      'trade_request_id': instance.tradeRequestId,
-      'created_at': instance.createdAt.toIso8601String(),
-      'recipient': instance.recipient.toJson(),
-      'tradeRequest': instance.tradeRequest?.toJson(),
     };
 
 _$MessageCreateParamImpl _$$MessageCreateParamImplFromJson(
@@ -148,6 +121,8 @@ const _tableMessageModel = TableBuilder(
     ColumnBuilder('read'),
     ColumnBuilder('trade_request_id'),
     ColumnBuilder('created_at'),
+    ColumnBuilder('unsent'),
+    ColumnBuilder('hidden_from'),
     ColumnBuilder.join(ProfileLiteModel.table,
         key: "recipient", candidateKey: null, foreignKey: 'recipient_id'),
     ColumnBuilder.join(TradeRequestLiteModel.table,
@@ -166,25 +141,5 @@ const _tableMessageLiteModel = TableBuilder(
     ColumnBuilder('content'),
     ColumnBuilder('read'),
     ColumnBuilder('created_at'),
-  ],
-);
-
-const _tableMessageDetailModel = TableBuilder(
-  tableName: "messages",
-  columns: [
-    ColumnBuilder('id'),
-    ColumnBuilder('type'),
-    ColumnBuilder('sender_id'),
-    ColumnBuilder('recipient_id'),
-    ColumnBuilder('content'),
-    ColumnBuilder('read'),
-    ColumnBuilder('trade_request_id'),
-    ColumnBuilder('created_at'),
-    ColumnBuilder.join(ProfileLiteModel.table,
-        key: "recipient", candidateKey: null, foreignKey: 'recipient_id'),
-    ColumnBuilder.join(TradeRequestLiteModel.table,
-        key: "tradeRequest",
-        candidateKey: null,
-        foreignKey: 'trade_request_id'),
   ],
 );

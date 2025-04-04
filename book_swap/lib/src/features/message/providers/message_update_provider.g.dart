@@ -82,7 +82,7 @@ abstract class _$MessageUpdateWidget extends _$MessageUpdate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$messageUpdateHash() => r'49a6a60aa4849dddc3026a82b85298acdae85eeb';
+String _$messageUpdateHash() => r'18878045522b8fb491fdec35803e4c9f0e966479';
 
 /// Copied from Dart SDK
 class _SystemHash {

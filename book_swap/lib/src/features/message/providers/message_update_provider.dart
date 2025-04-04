@@ -8,7 +8,6 @@ import '../i_message_repo.dart';
 import '../message_schema.schema.dart';
 import 'message_detail_provider.dart';
 import 'message_list_pagination_provider.dart';
-import 'message_list_provider.dart';
 
 part 'message_update_provider.g.dart';
 
@@ -30,7 +29,6 @@ class MessageUpdate extends _$MessageUpdateWidget {
 
   @override
   void onSuccess(MessageModel result) {
-    ref.read(messageListProvider.notifier).updateItem(result);
     ref.read(messageDetailProvider(messageId).notifier).updateState((_) => result);
 
     //! Use with caution

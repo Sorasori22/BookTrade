@@ -7,6 +7,7 @@ import 'package:book_swap/src/features/book/book_schema.schema.dart';
 import 'package:book_swap/src/features/chat/providers/chat_clear_unread_count_provider.dart';
 import 'package:book_swap/src/features/chat/providers/chat_list_pagination_provider.dart';
 import 'package:book_swap/src/features/message/providers/message_list_pagination_provider.dart';
+import 'package:book_swap/src/features/message/providers/message_unsent_provider.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/profile/providers/profile_detail_provider.dart';
 import 'package:book_swap/src/features/trade_request/providers/trade_request_confirm_offer_provider.dart';
@@ -22,10 +23,12 @@ import 'package:book_swap/src/presentation/widgets/dialogs/app_dialog.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/app_snackbar.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/async_value_widget.dart';
 import 'package:book_swap/src/presentation/widgets/layouts/app_card.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dartx/dartx.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -33,6 +36,7 @@ import 'package:kimapp_supabase_helper/supabase_provider.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:super_context_menu/super_context_menu.dart';
 
 import '../../../features/message/message_schema.dart';
 import '../../../features/message/message_schema.schema.dart';
@@ -152,7 +156,13 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
           actions: [
             InkWell(
               customBorder: const CircleBorder(),
-              onTap: () {},
+              onTap: () {
+                context.navigateTo(
+                  MessageRecipientDetailRoute(
+                    recipientId: _recipientId.value,
+                  ),
+                );
+              },
               child: UserAvatar(
                 size: 32,
                 imageObject: _recipientAvatar,
@@ -512,11 +522,20 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
       mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         if (!isSender) ...[
-          Container(
-            margin: EdgeInsets.only(top: 18),
-            child: UserAvatar(
-              size: 24,
-              imageObject: widget.message.recipient.avatar,
+          GestureDetector(
+            onTap: () {
+              context.navigateTo(
+                MessageRecipientDetailRoute(
+                  recipientId: widget.message.senderId.value,
+                ),
+              );
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 18),
+              child: UserAvatar(
+                size: 24,
+                imageObject: widget.message.recipient.avatar,
+              ),
             ),
           ),
           AS.wGap8,
@@ -526,19 +545,100 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              constraints: BoxConstraints(maxWidth: context.screenWidth * 0.7),
               margin: EdgeInsets.only(top: 16),
-              decoration: BoxDecoration(
-                color: isSender ? context.primaryColor : Colors.grey[300],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                widget.message.content,
-                style: context.textTheme.bodyMedium?.copyWith(
-                  color: isSender ? Colors.white : Colors.black,
-                ),
-              ),
+              child: widget.message.unsent
+                  ? Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: context.colors.onSurface.withValues(alpha: 0.3)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      child: Text(
+                        'Message was deleted',
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: context.colors.onSurface.withValues(alpha: 0.4),
+                        ),
+                      ),
+                    )
+                  : ContextMenuWidget(
+                      menuProvider: (request) {
+                        return Menu(
+                          children: [
+                            MenuAction(
+                              callback: () {
+                                Clipboard.setData(ClipboardData(text: widget.message.content));
+                                BotToast.showText(text: 'Copied to clipboard');
+                              },
+                              title: 'Copy',
+                            ),
+                            if (isSender) ...[
+                              MenuAction(
+                                callback: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('Delete'),
+                                      content:
+                                          Text('Are you sure you want to delete this message?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            context.maybePop();
+                                          },
+                                          child: Text('Cancel'),
+                                        ),
+                                        FilledButton(
+                                          onPressed: () async {
+                                            final closeLoading = BotToast.showLoading();
+                                            final result = await ref
+                                                .read(
+                                                  messageUnsentProvider(widget.message.id).notifier,
+                                                )
+                                                .call();
+                                            closeLoading();
+
+                                            if (result.isSuccess) {
+                                              if (context.mounted) {
+                                                context.maybePop();
+                                              }
+                                              BotToast.showText(text: 'Message deleted');
+                                            }
+
+                                            if (result.isFailure) {
+                                              BotToast.showText(text: result.failure!.message());
+                                            }
+                                          },
+                                          style: FilledButton.styleFrom(
+                                            backgroundColor: context.colors.error,
+                                          ),
+                                          child: Text('Delete'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                attributes: const MenuActionAttributes(destructive: true),
+                                title: 'Delete',
+                              ),
+                            ],
+                          ],
+                        );
+                      },
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: context.screenWidth * 0.7),
+                        decoration: BoxDecoration(
+                          color: isSender ? context.primaryColor : Colors.grey[300],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          widget.message.content,
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            color: isSender ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
             ),
             if (widget.message.tradeRequestId != null &&
                 widget.message.type == MessageType.requestStarted) ...[

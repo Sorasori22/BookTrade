@@ -2,13 +2,13 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'message_delete_provider.dart';
+part of 'message_delete_chat_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$messageDeleteHash() => r'9f9fdbf1eea59d19cdbeed77b6f527b0070d44ac';
+String _$messageDeleteChatHash() => r'8be8cb1c08c33d7a4c2552a966adcd5ed329b7c3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,39 +31,39 @@ class _SystemHash {
   }
 }
 
-abstract class _$MessageDelete
+abstract class _$MessageDeleteChat
     extends BuildlessAutoDisposeNotifier<ProviderStatus<Unit>> {
-  late final MessageId id;
+  late final ProfileId recipientId;
 
   ProviderStatus<Unit> build(
-    MessageId id,
+    ProfileId recipientId,
   );
 }
 
-/// See also [MessageDelete].
-@ProviderFor(MessageDelete)
-const messageDeleteProvider = MessageDeleteFamily();
+/// See also [MessageDeleteChat].
+@ProviderFor(MessageDeleteChat)
+const messageDeleteChatProvider = MessageDeleteChatFamily();
 
-/// See also [MessageDelete].
-class MessageDeleteFamily extends Family<ProviderStatus<Unit>> {
-  /// See also [MessageDelete].
-  const MessageDeleteFamily();
+/// See also [MessageDeleteChat].
+class MessageDeleteChatFamily extends Family<ProviderStatus<Unit>> {
+  /// See also [MessageDeleteChat].
+  const MessageDeleteChatFamily();
 
-  /// See also [MessageDelete].
-  MessageDeleteProvider call(
-    MessageId id,
+  /// See also [MessageDeleteChat].
+  MessageDeleteChatProvider call(
+    ProfileId recipientId,
   ) {
-    return MessageDeleteProvider(
-      id,
+    return MessageDeleteChatProvider(
+      recipientId,
     );
   }
 
   @override
-  MessageDeleteProvider getProviderOverride(
-    covariant MessageDeleteProvider provider,
+  MessageDeleteChatProvider getProviderOverride(
+    covariant MessageDeleteChatProvider provider,
   ) {
     return call(
-      provider.id,
+      provider.recipientId,
     );
   }
 
@@ -79,81 +79,82 @@ class MessageDeleteFamily extends Family<ProviderStatus<Unit>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'messageDeleteProvider';
+  String? get name => r'messageDeleteChatProvider';
 }
 
-/// See also [MessageDelete].
-class MessageDeleteProvider extends AutoDisposeNotifierProviderImpl<
-    MessageDelete, ProviderStatus<Unit>> {
-  /// See also [MessageDelete].
-  MessageDeleteProvider(
-    MessageId id,
+/// See also [MessageDeleteChat].
+class MessageDeleteChatProvider extends AutoDisposeNotifierProviderImpl<
+    MessageDeleteChat, ProviderStatus<Unit>> {
+  /// See also [MessageDeleteChat].
+  MessageDeleteChatProvider(
+    ProfileId recipientId,
   ) : this._internal(
-          () => MessageDelete()..id = id,
-          from: messageDeleteProvider,
-          name: r'messageDeleteProvider',
+          () => MessageDeleteChat()..recipientId = recipientId,
+          from: messageDeleteChatProvider,
+          name: r'messageDeleteChatProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$messageDeleteHash,
-          dependencies: MessageDeleteFamily._dependencies,
+                  : _$messageDeleteChatHash,
+          dependencies: MessageDeleteChatFamily._dependencies,
           allTransitiveDependencies:
-              MessageDeleteFamily._allTransitiveDependencies,
-          id: id,
+              MessageDeleteChatFamily._allTransitiveDependencies,
+          recipientId: recipientId,
         );
 
-  MessageDeleteProvider._internal(
+  MessageDeleteChatProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.id,
+    required this.recipientId,
   }) : super.internal();
 
-  final MessageId id;
+  final ProfileId recipientId;
 
   @override
   ProviderStatus<Unit> runNotifierBuild(
-    covariant MessageDelete notifier,
+    covariant MessageDeleteChat notifier,
   ) {
     return notifier.build(
-      id,
+      recipientId,
     );
   }
 
   @override
-  Override overrideWith(MessageDelete Function() create) {
+  Override overrideWith(MessageDeleteChat Function() create) {
     return ProviderOverride(
       origin: this,
-      override: MessageDeleteProvider._internal(
-        () => create()..id = id,
+      override: MessageDeleteChatProvider._internal(
+        () => create()..recipientId = recipientId,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        id: id,
+        recipientId: recipientId,
       ),
     );
   }
 
   @override
-  AutoDisposeNotifierProviderElement<MessageDelete, ProviderStatus<Unit>>
+  AutoDisposeNotifierProviderElement<MessageDeleteChat, ProviderStatus<Unit>>
       createElement() {
-    return _MessageDeleteProviderElement(this);
+    return _MessageDeleteChatProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is MessageDeleteProvider && other.id == id;
+    return other is MessageDeleteChatProvider &&
+        other.recipientId == recipientId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, recipientId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -161,17 +162,20 @@ class MessageDeleteProvider extends AutoDisposeNotifierProviderImpl<
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin MessageDeleteRef on AutoDisposeNotifierProviderRef<ProviderStatus<Unit>> {
-  /// The parameter `id` of this provider.
-  MessageId get id;
+mixin MessageDeleteChatRef
+    on AutoDisposeNotifierProviderRef<ProviderStatus<Unit>> {
+  /// The parameter `recipientId` of this provider.
+  ProfileId get recipientId;
 }
 
-class _MessageDeleteProviderElement extends AutoDisposeNotifierProviderElement<
-    MessageDelete, ProviderStatus<Unit>> with MessageDeleteRef {
-  _MessageDeleteProviderElement(super.provider);
+class _MessageDeleteChatProviderElement
+    extends AutoDisposeNotifierProviderElement<MessageDeleteChat,
+        ProviderStatus<Unit>> with MessageDeleteChatRef {
+  _MessageDeleteChatProviderElement(super.provider);
 
   @override
-  MessageId get id => (origin as MessageDeleteProvider).id;
+  ProfileId get recipientId =>
+      (origin as MessageDeleteChatProvider).recipientId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
