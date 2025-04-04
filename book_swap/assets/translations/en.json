@@ -1,11 +1,20 @@
 {
     "commons": {
         "username": "Username",
-        "password": "Password"
+        "password": "Password",
+        "search": "Search"
     },
 
     "error" : {
         "required_input": "Please input",
         "required_input_with_param" : "@:error.required_input{}"
+    },
+
+    "home": {
+        "title": "Home",
+        "trending_books": "Trending Books",
+        "popular_books": "Popular Books",
+        "you_might_like": "You Might Like",
+        "recently_added": "Recently Added"
     }
 }

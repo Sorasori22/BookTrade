@@ -62,6 +62,8 @@ class KimappRunner {
           path: 'assets/translations',
           supportedLocales: const [Locale("en"), Locale("km")],
           fallbackLocale: const Locale('km'),
+          useOnlyLangCode: true,
+          assetLoader: const RootBundleAssetLoader(),
           child: app,
         ),
       ),
