@@ -41,6 +41,10 @@ extension MessageCreateFieldUpdater on MessageCreate {
   /// Update the tradeRequestId field of MessageCreateParam class.
   void updateTradeRequestId(int? newValue) =>
       state = state.copyWith(tradeRequestId: newValue);
+
+  /// Update the image field of MessageCreateParam class.
+  void updateImage(ImageObject? newValue) =>
+      state = state.copyWith(image: newValue);
 }
 
 class _MessageCreateFormInheritedWidget extends InheritedWidget {
@@ -520,6 +524,34 @@ class MessageCreateTradeRequestIdField extends ConsumerWidget {
     _debugCheckHasMessageCreateForm(context);
 
     final proxy = MessageCreateTradeRequestIdProxyWidgetRef(ref);
+    return builder(context, proxy);
+  }
+}
+
+class MessageCreateImageProxyWidgetRef extends MessageCreateProxyWidgetRef {
+  MessageCreateImageProxyWidgetRef(super._ref);
+
+  /// Access the field value directly.
+  ImageObject? get image => select((state) => state.image);
+
+  /// Update the field value directly.
+  void updateImage(ImageObject? newValue) => notifier.updateImage(newValue);
+}
+
+class MessageCreateImageField extends ConsumerWidget {
+  const MessageCreateImageField({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    MessageCreateImageProxyWidgetRef ref,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasMessageCreateForm(context);
+
+    final proxy = MessageCreateImageProxyWidgetRef(ref);
     return builder(context, proxy);
   }
 }

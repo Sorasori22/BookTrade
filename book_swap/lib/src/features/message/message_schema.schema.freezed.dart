@@ -40,6 +40,8 @@ mixin _$MessageModel {
   bool get unsent => throw _privateConstructorUsedError;
   @JsonKey(name: MessageModel.hiddenFromKey)
   IList<ProfileId> get hiddenFrom => throw _privateConstructorUsedError;
+  @JsonKey(name: MessageModel.imageKey)
+  ImageObject? get image => throw _privateConstructorUsedError;
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
   ProfileLiteModel get recipient => throw _privateConstructorUsedError;
@@ -74,6 +76,7 @@ abstract class $MessageModelCopyWith<$Res> {
       @JsonKey(name: MessageModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: MessageModel.unsentKey) bool unsent,
       @JsonKey(name: MessageModel.hiddenFromKey) IList<ProfileId> hiddenFrom,
+      @JsonKey(name: MessageModel.imageKey) ImageObject? image,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
       ProfileLiteModel recipient,
@@ -110,6 +113,7 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
     Object? createdAt = null,
     Object? unsent = null,
     Object? hiddenFrom = null,
+    Object? image = freezed,
     Object? recipient = null,
     Object? tradeRequest = freezed,
   }) {
@@ -154,6 +158,10 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.hiddenFrom
           : hiddenFrom // ignore: cast_nullable_to_non_nullable
               as IList<ProfileId>,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
@@ -209,6 +217,7 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       @JsonKey(name: MessageModel.createdAtKey) DateTime createdAt,
       @JsonKey(name: MessageModel.unsentKey) bool unsent,
       @JsonKey(name: MessageModel.hiddenFromKey) IList<ProfileId> hiddenFrom,
+      @JsonKey(name: MessageModel.imageKey) ImageObject? image,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
       ProfileLiteModel recipient,
@@ -245,6 +254,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? unsent = null,
     Object? hiddenFrom = null,
+    Object? image = freezed,
     Object? recipient = null,
     Object? tradeRequest = freezed,
   }) {
@@ -289,6 +299,10 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value.hiddenFrom
           : hiddenFrom // ignore: cast_nullable_to_non_nullable
               as IList<ProfileId>,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
@@ -318,6 +332,7 @@ class _$MessageModelImpl extends _MessageModel {
       @JsonKey(name: MessageModel.createdAtKey) required this.createdAt,
       @JsonKey(name: MessageModel.unsentKey) required this.unsent,
       @JsonKey(name: MessageModel.hiddenFromKey) required this.hiddenFrom,
+      @JsonKey(name: MessageModel.imageKey) required this.image,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
       required this.recipient,
@@ -360,6 +375,9 @@ class _$MessageModelImpl extends _MessageModel {
   @JsonKey(name: MessageModel.hiddenFromKey)
   final IList<ProfileId> hiddenFrom;
   @override
+  @JsonKey(name: MessageModel.imageKey)
+  final ImageObject? image;
+  @override
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
   final ProfileLiteModel recipient;
@@ -370,7 +388,7 @@ class _$MessageModelImpl extends _MessageModel {
 
   @override
   String toString() {
-    return 'MessageModel(id: $id, type: $type, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, unsent: $unsent, hiddenFrom: $hiddenFrom, recipient: $recipient, tradeRequest: $tradeRequest)';
+    return 'MessageModel(id: $id, type: $type, senderId: $senderId, recipientId: $recipientId, content: $content, read: $read, tradeRequestId: $tradeRequestId, createdAt: $createdAt, unsent: $unsent, hiddenFrom: $hiddenFrom, image: $image, recipient: $recipient, tradeRequest: $tradeRequest)';
   }
 
   @override
@@ -393,6 +411,7 @@ class _$MessageModelImpl extends _MessageModel {
             (identical(other.unsent, unsent) || other.unsent == unsent) &&
             const DeepCollectionEquality()
                 .equals(other.hiddenFrom, hiddenFrom) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient) &&
             (identical(other.tradeRequest, tradeRequest) ||
@@ -413,6 +432,7 @@ class _$MessageModelImpl extends _MessageModel {
       createdAt,
       unsent,
       const DeepCollectionEquality().hash(hiddenFrom),
+      image,
       recipient,
       tradeRequest);
 
@@ -449,6 +469,7 @@ abstract class _MessageModel extends MessageModel {
       @JsonKey(name: MessageModel.unsentKey) required final bool unsent,
       @JsonKey(name: MessageModel.hiddenFromKey)
       required final IList<ProfileId> hiddenFrom,
+      @JsonKey(name: MessageModel.imageKey) required final ImageObject? image,
       @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
       @JsonKey(name: MessageModel.recipientKey)
       required final ProfileLiteModel recipient,
@@ -490,6 +511,9 @@ abstract class _MessageModel extends MessageModel {
   @override
   @JsonKey(name: MessageModel.hiddenFromKey)
   IList<ProfileId> get hiddenFrom;
+  @override
+  @JsonKey(name: MessageModel.imageKey)
+  ImageObject? get image;
   @override
   @JoinedColumn(foreignKey: "recipient_id", candidateKey: null)
   @JsonKey(name: MessageModel.recipientKey)
@@ -804,6 +828,8 @@ mixin _$MessageCreateParam {
   String get content => throw _privateConstructorUsedError;
   @JsonKey(name: MessageCreateParam.tradeRequestIdKey)
   int? get tradeRequestId => throw _privateConstructorUsedError;
+  @JsonKey(name: MessageCreateParam.imageKey)
+  ImageObject? get image => throw _privateConstructorUsedError;
 
   /// Serializes this MessageCreateParam to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -825,8 +851,8 @@ abstract class $MessageCreateParamCopyWith<$Res> {
       {@JsonKey(name: MessageCreateParam.senderIdKey) ProfileId senderId,
       @JsonKey(name: MessageCreateParam.recipientIdKey) ProfileId recipientId,
       @JsonKey(name: MessageCreateParam.contentKey) String content,
-      @JsonKey(name: MessageCreateParam.tradeRequestIdKey)
-      int? tradeRequestId});
+      @JsonKey(name: MessageCreateParam.tradeRequestIdKey) int? tradeRequestId,
+      @JsonKey(name: MessageCreateParam.imageKey) ImageObject? image});
 }
 
 /// @nodoc
@@ -848,6 +874,7 @@ class _$MessageCreateParamCopyWithImpl<$Res, $Val extends MessageCreateParam>
     Object? recipientId = null,
     Object? content = null,
     Object? tradeRequestId = freezed,
+    Object? image = freezed,
   }) {
     return _then(_value.copyWith(
       senderId: null == senderId
@@ -866,6 +893,10 @@ class _$MessageCreateParamCopyWithImpl<$Res, $Val extends MessageCreateParam>
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
               as int?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
     ) as $Val);
   }
 }
@@ -882,8 +913,8 @@ abstract class _$$MessageCreateParamImplCopyWith<$Res>
       {@JsonKey(name: MessageCreateParam.senderIdKey) ProfileId senderId,
       @JsonKey(name: MessageCreateParam.recipientIdKey) ProfileId recipientId,
       @JsonKey(name: MessageCreateParam.contentKey) String content,
-      @JsonKey(name: MessageCreateParam.tradeRequestIdKey)
-      int? tradeRequestId});
+      @JsonKey(name: MessageCreateParam.tradeRequestIdKey) int? tradeRequestId,
+      @JsonKey(name: MessageCreateParam.imageKey) ImageObject? image});
 }
 
 /// @nodoc
@@ -903,6 +934,7 @@ class __$$MessageCreateParamImplCopyWithImpl<$Res>
     Object? recipientId = null,
     Object? content = null,
     Object? tradeRequestId = freezed,
+    Object? image = freezed,
   }) {
     return _then(_$MessageCreateParamImpl(
       senderId: null == senderId
@@ -921,6 +953,10 @@ class __$$MessageCreateParamImplCopyWithImpl<$Res>
           ? _value.tradeRequestId
           : tradeRequestId // ignore: cast_nullable_to_non_nullable
               as int?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as ImageObject?,
     ));
   }
 }
@@ -935,7 +971,8 @@ class _$MessageCreateParamImpl extends _MessageCreateParam {
       required this.recipientId,
       @JsonKey(name: MessageCreateParam.contentKey) required this.content,
       @JsonKey(name: MessageCreateParam.tradeRequestIdKey)
-      required this.tradeRequestId})
+      required this.tradeRequestId,
+      @JsonKey(name: MessageCreateParam.imageKey) required this.image})
       : super._();
 
   factory _$MessageCreateParamImpl.fromJson(Map<String, dynamic> json) =>
@@ -953,10 +990,13 @@ class _$MessageCreateParamImpl extends _MessageCreateParam {
   @override
   @JsonKey(name: MessageCreateParam.tradeRequestIdKey)
   final int? tradeRequestId;
+  @override
+  @JsonKey(name: MessageCreateParam.imageKey)
+  final ImageObject? image;
 
   @override
   String toString() {
-    return 'MessageCreateParam(senderId: $senderId, recipientId: $recipientId, content: $content, tradeRequestId: $tradeRequestId)';
+    return 'MessageCreateParam(senderId: $senderId, recipientId: $recipientId, content: $content, tradeRequestId: $tradeRequestId, image: $image)';
   }
 
   @override
@@ -970,13 +1010,14 @@ class _$MessageCreateParamImpl extends _MessageCreateParam {
                 other.recipientId == recipientId) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.tradeRequestId, tradeRequestId) ||
-                other.tradeRequestId == tradeRequestId));
+                other.tradeRequestId == tradeRequestId) &&
+            (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, senderId, recipientId, content, tradeRequestId);
+  int get hashCode => Object.hash(
+      runtimeType, senderId, recipientId, content, tradeRequestId, image);
 
   /// Create a copy of MessageCreateParam
   /// with the given fields replaced by the non-null parameter values.
@@ -1004,7 +1045,9 @@ abstract class _MessageCreateParam extends MessageCreateParam {
       @JsonKey(name: MessageCreateParam.contentKey)
       required final String content,
       @JsonKey(name: MessageCreateParam.tradeRequestIdKey)
-      required final int? tradeRequestId}) = _$MessageCreateParamImpl;
+      required final int? tradeRequestId,
+      @JsonKey(name: MessageCreateParam.imageKey)
+      required final ImageObject? image}) = _$MessageCreateParamImpl;
   const _MessageCreateParam._() : super._();
 
   factory _MessageCreateParam.fromJson(Map<String, dynamic> json) =
@@ -1022,6 +1065,9 @@ abstract class _MessageCreateParam extends MessageCreateParam {
   @override
   @JsonKey(name: MessageCreateParam.tradeRequestIdKey)
   int? get tradeRequestId;
+  @override
+  @JsonKey(name: MessageCreateParam.imageKey)
+  ImageObject? get image;
 
   /// Create a copy of MessageCreateParam
   /// with the given fields replaced by the non-null parameter values.

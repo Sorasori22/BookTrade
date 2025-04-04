@@ -1,3 +1,4 @@
+import 'package:book_swap/src/core/storage/image_object.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:kimapp/kimapp.dart';
 
@@ -27,6 +28,7 @@ class MessageSchema extends KimappSchema {
   final createdAt = Field<DateTime>('created_at');
   final unsent = Field<bool>('unsent');
   final hiddenFrom = Field<IList<ProfileId>>('hidden_from');
+  final image = Field<ImageObject?>('file_path');
 
   final recipient = Field.join<ProfileLiteModel>().withForeignKey('recipient_id');
   final tradeRequest = Field.join<TradeRequestLiteModel?>().withForeignKey('trade_request_id');
@@ -49,6 +51,7 @@ class MessageSchema extends KimappSchema {
             'recipientId': recipientId,
             'content': content,
             'tradeRequestId': tradeRequestId,
+            'image': image,
           }),
         Model('MessageUpdateParam')
           ..addFields({
