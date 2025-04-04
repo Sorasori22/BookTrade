@@ -1,0 +1,11 @@
+{
+    "commons": {
+        "username": "Username",
+        "password": "Password"
+    },
+
+    "error" : {
+        "required_input": "Please input",
+        "required_input_with_param" : "@:error.required_input{}"
+    }
+}

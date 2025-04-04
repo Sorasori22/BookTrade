@@ -1,4 +1,6 @@
+import 'package:book_swap/src/presentation/startup/tasks/init_localization_task.dart';
 import 'package:book_swap/src/presentation/startup/tasks/init_notification_task.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
@@ -48,6 +50,7 @@ class KimappRunner {
       InitDeviceInfoTask(),
       InitAppSettingTask(),
       InitNotificationTask(),
+      InitLocalizationTask(),
     ];
 
     await Future.wait(tasks.map((task) => task._initialize(context)));
@@ -55,7 +58,12 @@ class KimappRunner {
     runApp(
       UncontrolledProviderScope(
         container: container,
-        child: app,
+        child: EasyLocalization(
+          path: 'assets/translations',
+          supportedLocales: const [Locale("en"), Locale("km")],
+          fallbackLocale: const Locale('km'),
+          child: app,
+        ),
       ),
     );
   }
