@@ -202,38 +202,49 @@ class _MessageInput extends HookConsumerWidget {
       children: [
         AppCard(
           margin: Pad(horizontal: 12),
-          padding: Pad(horizontal: 12, bottom: 4),
+          padding: Pad(bottom: 4, left: 4, right: 12),
           child: Column(
             children: [
-              TextField(
-                controller: textController,
-                onChanged: (value) {
-                  hasText.value = value.isNotBlank;
-                },
-                decoration: InputDecoration(
-                  hintText: 'Type your message here...',
-                  border: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.zero,
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: TextField(
+                  controller: textController,
+                  onChanged: (value) {
+                    hasText.value = value.isNotBlank;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Type your message here...',
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.zero,
+                  ),
                 ),
               ),
               Row(
                 children: [
+                  IconButton(
+                    onPressed: () async {},
+                    icon: const Icon(Icons.image_outlined),
+                    color: context.colors.onSurface.withValues(alpha: 0.38),
+                  ),
                   Spacer(),
                   AppButton(
                     size: AppButtonSize.small,
                     borderRadius: AS.radiusS,
-                    disabled: sendTextState.isInProgress,
+                    disabled: sendTextState.isInProgress || hasText.value == false,
                     onPressed: () async {
                       ref
                           .read(messageSendTextProvider(recipientId).notifier)
                           .call(content: textController.text)
-                          .then((result) {
+                          .then((result) async {
                         if (result.isSuccess) {
                           onSend(result.successOrNull!);
+
                           MessagePaginationTracker.instance.addItem(ref, result.successOrNull!);
+                          // TODO: Temporary solution which is bad, but we have not choice due to deadline
+                          ref.invalidate(messageListPaginationProvider);
                         }
                       });
                       textController.clear();
