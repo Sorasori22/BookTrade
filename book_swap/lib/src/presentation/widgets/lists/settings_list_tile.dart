@@ -8,6 +8,7 @@ class SettingsListTile extends StatelessWidget {
   final String? subtitle;
   final VoidCallback onTap;
   final int unreadCount;
+  final Widget? trailing;
 
   const SettingsListTile({
     super.key,
@@ -16,6 +17,7 @@ class SettingsListTile extends StatelessWidget {
     this.subtitle,
     required this.onTap,
     this.unreadCount = 0,
+    this.trailing,
   });
 
   @override
@@ -59,11 +61,14 @@ class SettingsListTile extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: context.colors.onSurfaceVariant,
-              size: 24,
-            ),
+            if (trailing != null)
+              trailing!
+            else
+              Icon(
+                Icons.chevron_right,
+                color: context.colors.onSurfaceVariant,
+                size: 24,
+              ),
           ],
         ),
       ),

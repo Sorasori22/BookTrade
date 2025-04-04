@@ -152,7 +152,7 @@ class MorePage extends ConsumerWidget {
           icon: Icons.palette_outlined,
           title: 'Appearance',
           onTap: () {
-            // Navigate to appearance page
+            context.pushRoute(const AppearanceRoute());
           },
         ),
         AS.hGap4,
@@ -160,7 +160,7 @@ class MorePage extends ConsumerWidget {
           icon: Icons.language_outlined,
           title: 'Language',
           onTap: () {
-            // Navigate to language page
+            context.pushRoute(const LanguageRoute());
           },
         ),
       ],

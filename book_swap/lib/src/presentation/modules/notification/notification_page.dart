@@ -120,7 +120,30 @@ class _Item extends ConsumerWidget {
       children: [
         if (index > 0) Divider(),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            final userId = ref.read(currentProfileIdProvider);
+            if (data.type != NotificationType.tradeRequest &&
+                data.type != NotificationType.tradeRequestCompleted) {
+              final pId = data.tradeRequest?.requesterId == userId
+                  ? data.tradeRequest?.ownerId
+                  : data.tradeRequest?.requesterId;
+              context.navigateTo(
+                MessageRoomRoute(
+                  recipientId: pId!.value.toString(),
+                ),
+              );
+            }
+
+            if (data.type == NotificationType.tradeRequestCompleted) {
+              final requestId = data.payload['requester_id'];
+              final ownerId = data.payload['owner_id'];
+              context.navigateTo(
+                MessageRoomRoute(
+                  recipientId: userId!.value == ownerId ? requestId.toString() : ownerId.toString(),
+                ),
+              );
+            }
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Row(
