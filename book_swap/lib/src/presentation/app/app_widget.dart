@@ -6,6 +6,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -144,8 +145,7 @@ class _ThemeOverrider extends ConsumerWidget {
             ),
           ),
         ],
-
-        // Other theme settings here ...
+        textTheme: GoogleFonts.poppinsTextTheme(context.textTheme),
       ),
       child: child,
     );

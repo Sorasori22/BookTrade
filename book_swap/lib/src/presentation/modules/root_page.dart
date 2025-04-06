@@ -217,8 +217,8 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
                     label: 'navigation.home'.tr(),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(FluentIcons.search_24_regular),
-                    activeIcon: Icon(FluentIcons.search_24_filled),
+                    icon: Icon(FluentIcons.book_open_24_regular),
+                    activeIcon: Icon(FluentIcons.book_open_24_filled),
                     label: 'navigation.browse'.tr(),
                   ),
                   BottomNavigationBarItem(
@@ -229,9 +229,8 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
                               .select((state) => state.valueOrNull?.length ?? 0),
                         );
 
-                        if (tradeRequestCount == 0) return Icon(Icons.messenger_outline);
-
                         return Badge.count(
+                          isLabelVisible: tradeRequestCount > 0,
                           count: tradeRequestCount,
                           child: Icon(FluentIcons.chat_24_regular),
                         );
