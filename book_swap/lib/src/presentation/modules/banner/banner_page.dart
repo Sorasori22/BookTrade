@@ -52,11 +52,28 @@ class _BannerPageState extends ConsumerState<BannerPage> {
       body: Stack(
         fit: StackFit.expand,
         children: [
+          //TODO: Just the workaround to fill the color without need to implement much
+          Column(
+            children: [
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  color: Color(0xFF585C86),
+                ),
+              ),
+            ],
+          ),
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: CachedNetworkImageProvider(banner.imagePath.getUrl()),
-                fit: BoxFit.cover,
+                fit: BoxFit.fitWidth,
               ),
             ),
           ),

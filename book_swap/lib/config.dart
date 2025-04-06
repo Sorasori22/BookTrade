@@ -14,5 +14,5 @@ class Config {
     printProviderUpdated: true,
   );
 
-  static const int minSplashDurationInMs = 1200;
+  static const int minSplashDurationInMs = 2400;
 }

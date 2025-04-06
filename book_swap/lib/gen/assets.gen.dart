@@ -27,10 +27,38 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [background, logo, logoNoBackground];
 }
 
+class $AssetsLottiesGen {
+  const $AssetsLottiesGen();
+
+  /// File path: assets/lotties/small-light.json
+  String get smallLight => 'assets/lotties/small-light.json';
+
+  /// File path: assets/lotties/splash.json
+  String get splash => 'assets/lotties/splash.json';
+
+  /// List of all assets
+  List<String> get values => [smallLight, splash];
+}
+
+class $AssetsTranslationsGen {
+  const $AssetsTranslationsGen();
+
+  /// File path: assets/translations/en.json
+  String get en => 'assets/translations/en.json';
+
+  /// File path: assets/translations/km.json
+  String get km => 'assets/translations/km.json';
+
+  /// List of all assets
+  List<String> get values => [en, km];
+}
+
 class Assets {
   const Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
+  static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
 }
 
 class AssetGenImage {
