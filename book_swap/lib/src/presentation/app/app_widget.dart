@@ -1,4 +1,5 @@
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
+import 'package:book_swap/src/core/account/account.dart';
 import 'package:book_swap/src/features/banner/providers/banner_provider.dart';
 import 'package:book_swap/src/features/trade_request/providers/requested_book_ids_list_provider.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -31,6 +32,7 @@ class _EagerInitialization extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Initialize app state
     ref.watch(appStateProvider);
+    ref.watch(currentAccountProvider);
 
     ref.watch(prendingTradeRequestListProvider);
 

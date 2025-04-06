@@ -57,7 +57,8 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
         logInfo('Got notification payload: $payload');
         if (payload == null) return;
 
-        throw UnimplementedError();
+        final participentId = payload['recipient_id'];
+        context.pushRoute(MessageRoomRoute(recipientId: participentId));
       } catch (e) {
         logError('Error handling notification click', e);
       }

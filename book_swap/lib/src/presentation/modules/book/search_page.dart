@@ -38,40 +38,40 @@ class SearchPage extends HookConsumerWidget {
           AS.wGap16,
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(AS.sidePadding),
-        child: Column(
-          children: [
-            SearchField(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AS.sidePadding).copyWith(bottom: 0),
+            child: SearchField(
               onChanged: (value) {
                 searchState.value = value;
               },
               placeholder: 'search.placeholder'.tr(),
               autofocus: autoFocus,
             ),
-            AS.hGap8,
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  ref.invalidate(bookListPaginationProvider);
-                },
-                child: CustomScrollView(
-                  slivers: [
-                    SliverPadding(
-                      padding: const EdgeInsets.all(AS.sidePadding),
-                      sliver: BookSliverGrid(
-                        param: BookListParam(
-                          // toHideOwnerId: ref.watch(currentProfileIdProvider),
-                          titleSearch: searchState.value,
-                        ),
+          ),
+          AS.hGap8,
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                ref.invalidate(bookListPaginationProvider);
+              },
+              child: CustomScrollView(
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.all(AS.sidePadding),
+                    sliver: BookSliverGrid(
+                      param: BookListParam(
+                        // toHideOwnerId: ref.watch(currentProfileIdProvider),
+                        titleSearch: searchState.value,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
