@@ -175,7 +175,7 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
                                       }
                                       return Row(
                                         children: [
-                                          RatingStars(rating: rate),
+                                          RatingStars(rating: rate, size: 16),
                                           SizedBox(width: 8),
                                           Text(
                                             '($rate)',
