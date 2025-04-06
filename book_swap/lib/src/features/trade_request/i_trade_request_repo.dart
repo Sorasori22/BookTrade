@@ -161,30 +161,4 @@ class _Impl implements ITradeRequestRepo {
       return right(unit);
     });
   }
-
-  @override
-  AsyncFailureOr<Unit> acceptOffer(TradeRequestId id) async {
-    return await errorHandler(() async {
-      await _ref.supabaseClient
-          .from(TradeRequestModel.table.tableName)
-          .update({TradeRequestTable.status: TradeRequestStatus.confirmed.name}).eq(
-        TradeRequestTable.id,
-        id.value,
-      );
-      return right(unit);
-    });
-  }
-
-  @override
-  AsyncFailureOr<Unit> rejectOffer(TradeRequestId id) async {
-    return await errorHandler(() async {
-      await _ref.supabaseClient
-          .from(TradeRequestModel.table.tableName)
-          .update({TradeRequestTable.status: TradeRequestStatus.accepted.name}).eq(
-        TradeRequestTable.id,
-        id.value,
-      );
-      return right(unit);
-    });
-  }
 }

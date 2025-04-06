@@ -51,7 +51,19 @@ class ContactUsPage extends StatelessWidget {
           context,
           Icons.email_outlined,
           'Email',
-          'support@bookswap.com',
+          'limsonata11@gmail.com',
+        ),
+        _buildContactMethod(
+          context,
+          Icons.email_outlined,
+          'Telephone',
+          'limsonata11@gmail.com',
+        ),
+        _buildContactMethod(
+          context,
+          Icons.phone,
+          'Phone',
+          '017638734',
         ),
         _buildContactMethod(
           context,
@@ -63,7 +75,7 @@ class ContactUsPage extends StatelessWidget {
           context,
           Icons.location_on_outlined,
           'Location',
-          'San Francisco, CA',
+          'Phnom Penh, Cambodia',
         ),
       ],
     );

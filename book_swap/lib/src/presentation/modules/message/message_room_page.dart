@@ -30,6 +30,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:dartx/dartx.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -217,7 +218,7 @@ class _MessageInput extends HookConsumerWidget {
                     hasText.value = value.isNotBlank;
                   },
                   decoration: InputDecoration(
-                    hintText: 'Type your message here...',
+                    hintText: 'message.room.type_message'.tr(),
                     border: InputBorder.none,
                     errorBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -238,7 +239,7 @@ class _MessageInput extends HookConsumerWidget {
                               children: [
                                 ListTile(
                                   leading: const Icon(Icons.photo_library),
-                                  title: const Text('Choose from Gallery'),
+                                  title: Text('message.room.image.gallery'.tr()),
                                   onTap: () async {
                                     final picker = ImagePicker();
                                     final image = await picker.pickImage(
@@ -271,7 +272,7 @@ class _MessageInput extends HookConsumerWidget {
                                 ),
                                 ListTile(
                                   leading: const Icon(Icons.camera_alt),
-                                  title: const Text('Take a Photo'),
+                                  title: Text('message.room.image.camera'.tr()),
                                   onTap: () async {
                                     final picker = ImagePicker();
                                     final image = await picker.pickImage(
@@ -332,7 +333,7 @@ class _MessageInput extends HookConsumerWidget {
                       textController.clear();
                       hasText.value = false;
                     },
-                    label: 'Send Now',
+                    label: 'message.room.send'.tr(),
                   ),
                 ],
               ),
@@ -424,7 +425,7 @@ class _ConfirmTradeItem extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Trade Confirmed',
+                  'message.room.trade.title'.tr(),
                   style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -435,7 +436,7 @@ class _ConfirmTradeItem extends ConsumerWidget {
                   radius: Radius.circular(4),
                   borderType: BorderType.RRect,
                   child: Text(
-                    'In Progress',
+                    'message.room.trade.in_progress'.tr(),
                     style: TextStyle(
                       fontSize: 9,
                     ),
@@ -450,7 +451,7 @@ class _ConfirmTradeItem extends ConsumerWidget {
                   ),
                   padding: Pad(horizontal: 4, vertical: 2),
                   child: Text(
-                    'Completed',
+                    'message.room.trade.completed'.tr(),
                     style: TextStyle(
                       fontSize: 9,
                       color: Colors.green,
@@ -461,9 +462,7 @@ class _ConfirmTradeItem extends ConsumerWidget {
             ],
           ),
           AS.hGap4,
-          Text(
-            'Great! Both parties have agreed to trade. Please arrange a meeting time and place to exchange the books. Once the swap is completed, you can mark this trade as "Completed".',
-          ),
+          Text('message.room.trade.description'.tr()),
           AS.hGap16,
           DottedLine(),
           AS.hGap16,
@@ -501,8 +500,8 @@ class _ConfirmTradeItem extends ConsumerWidget {
                   showDialog(
                     context: context,
                     builder: (context) => AppDialog(
-                      title: 'Confirm Trade',
-                      message: 'Are you sure you want to mark this trade as completed?',
+                      title: 'message.room.trade.confirm.title'.tr(),
+                      message: 'message.room.trade.confirm.message'.tr(),
                       actions: [
                         AppButton(
                           label: 'Cancel',
@@ -525,7 +524,7 @@ class _ConfirmTradeItem extends ConsumerWidget {
                     ),
                   );
                 },
-                label: 'Mark as Completed',
+                label: 'message.room.trade.mark_completed'.tr(),
               ),
             ),
           ],
@@ -546,7 +545,7 @@ class _ConfirmTradeItem extends ConsumerWidget {
                     tradeRequestId: message.tradeRequest!.id,
                   );
                 },
-                label: 'Leave Review',
+                label: 'message.room.trade.leave_review'.tr(),
                 variant: AppButtonVariant.outline,
                 borderRadius: AS.radiusS,
               ),
@@ -647,7 +646,7 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                       child: Text(
-                        'Message was deleted',
+                        'message.room.message.deleted'.tr(),
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: context.colors.onSurface.withValues(alpha: 0.4),
                         ),
@@ -670,9 +669,8 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
                                   showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
-                                      title: Text('Delete'),
-                                      content:
-                                          Text('Are you sure you want to delete this message?'),
+                                      title: Text('message.room.message.delete.title'.tr()),
+                                      content: Text('message.room.message.delete.message'.tr()),
                                       actions: [
                                         TextButton(
                                           onPressed: () {

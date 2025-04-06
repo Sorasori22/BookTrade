@@ -1,9 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:book_swap/gen/assets.gen.dart';
 import 'package:book_swap/src/presentation/app/app_style.dart';
+import 'package:dartx/dartx.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashWidget extends StatelessWidget {
   const SplashWidget({
@@ -70,6 +72,15 @@ class SplashWidget extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: FadeIn(
+                      delay: 200.milliseconds,
+                      child: Lottie.asset(
+                        Assets.lotties.smallLight,
+                        frameRate: const FrameRate(60),
                       ),
                     ),
                   ),

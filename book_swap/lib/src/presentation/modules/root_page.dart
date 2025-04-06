@@ -7,6 +7,8 @@ import 'package:book_swap/src/features/notification/notification_schema.schema.d
 import 'package:book_swap/src/features/notification/providers/notification_list_pagination_provider.dart';
 import 'package:book_swap/src/features/trade_request/providers/trade_request_list_provider.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_supabase_helper/supabase_provider.dart';
@@ -56,7 +58,8 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
         logInfo('Got notification payload: $payload');
         if (payload == null) return;
 
-        throw UnimplementedError();
+        final participentId = payload['recipient_id'];
+        context.pushRoute(MessageRoomRoute(recipientId: participentId));
       } catch (e) {
         logError('Error handling notification click', e);
       }
@@ -209,14 +212,14 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
                 onTap: tabsRouter.setActiveIndex,
                 items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home_outlined),
-                    activeIcon: Icon(Icons.home),
-                    label: 'Home',
+                    icon: Icon(FluentIcons.home_20_regular),
+                    activeIcon: Icon(FluentIcons.home_24_filled),
+                    label: 'navigation.home'.tr(),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.menu_book_outlined),
-                    activeIcon: Icon(Icons.menu_book),
-                    label: 'Browse',
+                    icon: Icon(FluentIcons.book_open_24_regular),
+                    activeIcon: Icon(FluentIcons.book_open_24_filled),
+                    label: 'navigation.browse'.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: Consumer(
@@ -226,21 +229,20 @@ class _RootPageState extends ConsumerState<RootPage> with LoggerMixin {
                               .select((state) => state.valueOrNull?.length ?? 0),
                         );
 
-                        if (tradeRequestCount == 0) return Icon(Icons.messenger_outline);
-
                         return Badge.count(
+                          isLabelVisible: tradeRequestCount > 0,
                           count: tradeRequestCount,
-                          child: Icon(Icons.messenger_outline),
+                          child: Icon(FluentIcons.chat_24_regular),
                         );
                       },
                     ),
-                    activeIcon: Icon(Icons.messenger),
-                    label: 'Message',
+                    activeIcon: Icon(FluentIcons.chat_24_filled),
+                    label: 'navigation.message'.tr(),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.person_2_outlined),
-                    activeIcon: Icon(Icons.person),
-                    label: 'Profile',
+                    icon: Icon(FluentIcons.person_24_regular),
+                    activeIcon: Icon(FluentIcons.person_24_filled),
+                    label: 'navigation.profile'.tr(),
                   ),
                 ],
               ),

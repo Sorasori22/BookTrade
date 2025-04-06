@@ -10,7 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i27;
-import 'package:book_swap/src/core/storage/image_object.dart' as _i30;
+import 'package:book_swap/src/core/storage/image_object.dart' as _i29;
 import 'package:book_swap/src/presentation/modules/auth/auth_page.dart' as _i2;
 import 'package:book_swap/src/presentation/modules/banner/banner_page.dart'
     as _i3;
@@ -59,8 +59,7 @@ import 'package:book_swap/src/presentation/modules/trade/request/trade_request_c
     as _i24;
 import 'package:book_swap/src/presentation/modules/trade/trade_request_list_page.dart'
     as _i25;
-import 'package:flutter/material.dart' as _i29;
-import 'package:flutter/widgets.dart' as _i28;
+import 'package:flutter/material.dart' as _i28;
 
 /// generated route for
 /// [_i1.AppearancePage]
@@ -153,7 +152,7 @@ class BookCreateRoute extends _i27.PageRouteInfo<void> {
 /// [_i5.BookDetailPage]
 class BookDetailRoute extends _i27.PageRouteInfo<BookDetailRouteArgs> {
   BookDetailRoute({
-    _i29.Key? key,
+    _i28.Key? key,
     required String bookIdString,
     bool hideSwapButton = false,
     List<_i27.PageRouteInfo>? children,
@@ -196,7 +195,7 @@ class BookDetailRouteArgs {
     this.hideSwapButton = false,
   });
 
-  final _i29.Key? key;
+  final _i28.Key? key;
 
   final String bookIdString;
 
@@ -228,7 +227,7 @@ class BookRoute extends _i27.PageRouteInfo<void> {
 /// [_i7.BookUpdatePage]
 class BookUpdateRoute extends _i27.PageRouteInfo<BookUpdateRouteArgs> {
   BookUpdateRoute({
-    _i29.Key? key,
+    _i28.Key? key,
     required String bookIdString,
     List<_i27.PageRouteInfo>? children,
   }) : super(
@@ -258,7 +257,7 @@ class BookUpdateRoute extends _i27.PageRouteInfo<BookUpdateRouteArgs> {
 class BookUpdateRouteArgs {
   const BookUpdateRouteArgs({this.key, required this.bookIdString});
 
-  final _i29.Key? key;
+  final _i28.Key? key;
 
   final String bookIdString;
 
@@ -369,7 +368,7 @@ class MessageRoute extends _i27.PageRouteInfo<void> {
 class MessageRecipientDetailRoute
     extends _i27.PageRouteInfo<MessageRecipientDetailRouteArgs> {
   MessageRecipientDetailRoute({
-    _i29.Key? key,
+    _i28.Key? key,
     required String recipientId,
     List<_i27.PageRouteInfo>? children,
   }) : super(
@@ -405,7 +404,7 @@ class MessageRecipientDetailRoute
 class MessageRecipientDetailRouteArgs {
   const MessageRecipientDetailRouteArgs({this.key, required this.recipientId});
 
-  final _i29.Key? key;
+  final _i28.Key? key;
 
   final String recipientId;
 
@@ -419,10 +418,10 @@ class MessageRecipientDetailRouteArgs {
 /// [_i15.MessageRoomPage]
 class MessageRoomRoute extends _i27.PageRouteInfo<MessageRoomRouteArgs> {
   MessageRoomRoute({
-    _i29.Key? key,
+    _i28.Key? key,
     required String recipientId,
     String? recipientName,
-    _i30.ImageObject? recipientAvatar,
+    _i29.ImageObject? recipientAvatar,
     List<_i27.PageRouteInfo>? children,
   }) : super(
          MessageRoomRoute.name,
@@ -459,13 +458,13 @@ class MessageRoomRouteArgs {
     this.recipientAvatar,
   });
 
-  final _i29.Key? key;
+  final _i28.Key? key;
 
   final String recipientId;
 
   final String? recipientName;
 
-  final _i30.ImageObject? recipientAvatar;
+  final _i29.ImageObject? recipientAvatar;
 
   @override
   String toString() {
@@ -589,7 +588,7 @@ class RootRoute extends _i27.PageRouteInfo<void> {
 /// [_i22.SearchPage]
 class SearchRoute extends _i27.PageRouteInfo<SearchRouteArgs> {
   SearchRoute({
-    _i29.Key? key,
+    _i28.Key? key,
     bool autoFocus = false,
     List<_i27.PageRouteInfo>? children,
   }) : super(
@@ -614,7 +613,7 @@ class SearchRoute extends _i27.PageRouteInfo<SearchRouteArgs> {
 class SearchRouteArgs {
   const SearchRouteArgs({this.key, this.autoFocus = false});
 
-  final _i29.Key? key;
+  final _i28.Key? key;
 
   final bool autoFocus;
 
@@ -628,8 +627,8 @@ class SearchRouteArgs {
 /// [_i23.SplashPage]
 class SplashRoute extends _i27.PageRouteInfo<SplashRouteArgs> {
   SplashRoute({
-    _i29.Key? key,
-    _i29.VoidCallback? onInitialized,
+    _i28.Key? key,
+    _i28.VoidCallback? onInitialized,
     List<_i27.PageRouteInfo>? children,
   }) : super(
          SplashRoute.name,
@@ -653,9 +652,9 @@ class SplashRoute extends _i27.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key, this.onInitialized});
 
-  final _i29.Key? key;
+  final _i28.Key? key;
 
-  final _i29.VoidCallback? onInitialized;
+  final _i28.VoidCallback? onInitialized;
 
   @override
   String toString() {
@@ -668,7 +667,7 @@ class SplashRouteArgs {
 class TradeRequestCreateRoute
     extends _i27.PageRouteInfo<TradeRequestCreateRouteArgs> {
   TradeRequestCreateRoute({
-    _i29.Key? key,
+    _i28.Key? key,
     required int bookId,
     List<_i27.PageRouteInfo>? children,
   }) : super(
@@ -698,7 +697,7 @@ class TradeRequestCreateRoute
 class TradeRequestCreateRouteArgs {
   const TradeRequestCreateRouteArgs({this.key, required this.bookId});
 
-  final _i29.Key? key;
+  final _i28.Key? key;
 
   final int bookId;
 
@@ -729,7 +728,7 @@ class TradeRequestListRoute extends _i27.PageRouteInfo<void> {
 class TradeRequestRejectRoute
     extends _i27.PageRouteInfo<TradeRequestRejectRouteArgs> {
   TradeRequestRejectRoute({
-    _i29.Key? key,
+    _i28.Key? key,
     required String tradeRequestId,
     List<_i27.PageRouteInfo>? children,
   }) : super(
@@ -765,7 +764,7 @@ class TradeRequestRejectRoute
 class TradeRequestRejectRouteArgs {
   const TradeRequestRejectRouteArgs({this.key, required this.tradeRequestId});
 
-  final _i29.Key? key;
+  final _i28.Key? key;
 
   final String tradeRequestId;
 

@@ -13,7 +13,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:book_swap/src/features/profile/profile_schema.schema.dart';
 import 'package:book_swap/src/features/book/book_schema.schema.dart';
+import 'package:book_swap/src/core/storage/image_object.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
+import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/core/account/current_account_provider.dart';
+import 'package:book_swap/src/features/book/providers/book_detail_provider.dart';
+import 'package:book_swap/src/features/book/providers/book_popular_list_provider.dart';
+import 'package:book_swap/src/features/book_rating/providers/book_rating_overall_provider.dart';
 import 'package:kimapp/kimapp.dart';
 import 'package:book_swap/src/features/book_rating/book_rating_schema.schema.dart';
 import 'package:book_swap/src/features/book_rating/i_book_rating_repo.dart';
@@ -45,10 +52,12 @@ extension BookRatingCreateFieldUpdater on BookRatingCreate {
 class _BookRatingCreateFormInheritedWidget extends InheritedWidget {
   const _BookRatingCreateFormInheritedWidget({
     required this.formKey,
+    required this.params,
     required super.child,
   });
 
   final GlobalKey<FormState> formKey;
+  final ({BookId bookId}) params;
 
   static _BookRatingCreateFormInheritedWidget of(BuildContext context) {
     return context
@@ -61,7 +70,7 @@ class _BookRatingCreateFormInheritedWidget extends InheritedWidget {
   bool updateShouldNotify(
     covariant _BookRatingCreateFormInheritedWidget oldWidget,
   ) {
-    return formKey != oldWidget.formKey;
+    return formKey != oldWidget.formKey && params != oldWidget.params;
   }
 }
 
@@ -70,13 +79,17 @@ class BookRatingCreateProxyWidgetRef extends WidgetRef {
 
   final WidgetRef _ref;
 
+  ({BookId bookId}) get params =>
+      _BookRatingCreateFormInheritedWidget.of(context).params;
+
   AsyncValue<BookRatingModel>? get status =>
-      _ref.watch(bookRatingCreateCallStatusProvider);
+      _ref.watch(bookRatingCreateCallStatusProvider((bookId: params.bookId)));
 
   GlobalKey<FormState> get formKey =>
       _BookRatingCreateFormInheritedWidget.of(context).formKey;
 
-  BookRatingCreate get notifier => _ref.read(bookRatingCreateProvider.notifier);
+  BookRatingCreate get notifier =>
+      _ref.read(bookRatingCreateProvider(params.bookId).notifier);
 
   /// Submits the form. Internally this calls [notifier.submit] with the form key validated.
   Future<AsyncValue<BookRatingModel>> submit() async {
@@ -93,7 +106,9 @@ class BookRatingCreateProxyWidgetRef extends WidgetRef {
 
   Selected select<Selected>(
     Selected Function(BookRatingCreateParam) selector,
-  ) => _ref.watch(bookRatingCreateProvider.select((value) => selector(value)));
+  ) => _ref.watch(
+    bookRatingCreateProvider(params.bookId).select((value) => selector(value)),
+  );
 
   @override
   BuildContext get context => _ref.context;
@@ -137,6 +152,7 @@ class BookRatingCreateProxyWidgetRef extends WidgetRef {
 class BookRatingCreateFormScope extends ConsumerStatefulWidget {
   const BookRatingCreateFormScope({
     super.key,
+    required this.bookId,
     this.formKey,
     this.autovalidateMode,
     this.onPopInvokedWithResult,
@@ -147,7 +163,7 @@ class BookRatingCreateFormScope extends ConsumerStatefulWidget {
          child != null || builder != null,
          'Either child or builder must be provided',
        );
-
+  final BookId bookId;
   final Widget Function(
     BuildContext context,
     BookRatingCreateProxyWidgetRef ref,
@@ -183,7 +199,10 @@ class _BookRatingCreateFormScopeState
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(bookRatingCreateCallStatusProvider, (previous, next) {
+    ref.listen(bookRatingCreateCallStatusProvider((bookId: widget.bookId)), (
+      previous,
+      next,
+    ) {
       if (previous?.hasValue == false && next?.hasValue == true) {
         widget.onSuccessed?.call(context, next!.requireValue);
       }
@@ -191,6 +210,7 @@ class _BookRatingCreateFormScopeState
 
     return _BookRatingCreateFormInheritedWidget(
       formKey: _cachedFormKey,
+      params: (bookId: widget.bookId),
       child: Form(
         key: _cachedFormKey,
         autovalidateMode: widget.autovalidateMode,
@@ -240,6 +260,25 @@ bool _debugCheckHasBookRatingCreateForm(BuildContext context) {
   return true;
 }
 
+class BookRatingCreateFormParams extends ConsumerWidget {
+  const BookRatingCreateFormParams({super.key, required this.builder});
+
+  final Widget Function(
+    BuildContext context,
+    BookRatingCreateProxyWidgetRef ref,
+    ({BookId bookId}) params,
+  )
+  builder;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    _debugCheckHasBookRatingCreateForm(context);
+
+    final params = _BookRatingCreateFormInheritedWidget.of(context).params;
+    return builder(context, BookRatingCreateProxyWidgetRef(ref), params);
+  }
+}
+
 class BookRatingCreateFormSelect<Selected> extends ConsumerWidget {
   const BookRatingCreateFormSelect({
     super.key,
@@ -262,12 +301,15 @@ class BookRatingCreateFormSelect<Selected> extends ConsumerWidget {
     _debugCheckHasBookRatingCreateForm(context);
 
     if (onStateChanged != null) {
-      ref.listen(bookRatingCreateProvider.select((value) => selector(value)), (
-        pre,
-        next,
-      ) {
-        if (pre != next) onStateChanged!(pre, next);
-      });
+      final params = _BookRatingCreateFormInheritedWidget.of(context).params;
+      ref.listen(
+        bookRatingCreateProvider(
+          params.bookId,
+        ).select((value) => selector(value)),
+        (pre, next) {
+          if (pre != next) onStateChanged!(pre, next);
+        },
+      );
     }
     final stateRef = BookRatingCreateProxyWidgetRef(ref);
     return builder(context, stateRef, stateRef.select(selector));
@@ -283,7 +325,7 @@ class BookRatingCreateFormState extends ConsumerWidget {
   });
 
   /// The builder function that constructs the widget tree.
-  /// Access the state directly via ref.state, which is equivalent to ref.watch(bookRatingCreateProvider)
+  /// Access the state directly via ref.state, which is equivalent to ref.watch(bookRatingCreateProvider(params.bookId))
   ///
   /// For selecting specific fields, use ref.select() - e.g. ref.select((value) => value.someField)
   /// The ref parameter provides type-safe access to the provider state and notifier
@@ -305,11 +347,16 @@ class BookRatingCreateFormState extends ConsumerWidget {
     _debugCheckHasBookRatingCreateForm(context);
 
     if (onStateChanged != null) {
-      ref.listen(bookRatingCreateProvider, (pre, next) {
+      final params = _BookRatingCreateFormInheritedWidget.of(context).params;
+      ref.listen(bookRatingCreateProvider(params.bookId), (pre, next) {
         if (pre != next) onStateChanged!(pre, next);
       });
     }
-    return builder(context, BookRatingCreateProxyWidgetRef(ref), child);
+    return BookRatingCreateFormParams(
+      builder:
+          (context, ref, params) =>
+              builder(context, BookRatingCreateProxyWidgetRef(ref), child),
+    );
   }
 }
 
@@ -337,7 +384,11 @@ class BookRatingCreateFormStatus extends ConsumerWidget {
     _debugCheckHasBookRatingCreateForm(context);
 
     if (onChanged != null) {
-      ref.listen(bookRatingCreateCallStatusProvider, (previous, next) {
+      final params = _BookRatingCreateFormInheritedWidget.of(context).params;
+      ref.listen(bookRatingCreateCallStatusProvider((bookId: params.bookId)), (
+        previous,
+        next,
+      ) {
         if (previous != next) {
           onChanged!(previous, next);
         }
@@ -478,22 +529,25 @@ class BookRatingCreateCommentField extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     _debugCheckHasBookRatingCreateForm(context);
 
+    final params = _BookRatingCreateFormInheritedWidget.of(context).params;
+
     // Using ref.read to get the initial value to avoid rebuilding the widget when the provider value changes
-    final initialValue = ref.read(bookRatingCreateProvider).comment;
+    final initialValue =
+        ref.read(bookRatingCreateProvider(params.bookId)).comment;
 
     final controller =
         textController ?? useTextEditingController(text: initialValue);
 
     // Listen for provider changes
-    ref.listen(bookRatingCreateProvider.select((value) => value.comment), (
-      previous,
-      next,
-    ) {
-      if (previous != next && controller.text != next) {
-        controller.text = next ?? "";
-      }
-      onChanged?.call(previous, next);
-    });
+    ref.listen(
+      bookRatingCreateProvider(params.bookId).select((value) => value.comment),
+      (previous, next) {
+        if (previous != next && controller.text != next) {
+          controller.text = next ?? "";
+        }
+        onChanged?.call(previous, next);
+      },
+    );
 
     // Initialize external controller if provided
     useEffect(() {
@@ -508,10 +562,11 @@ class BookRatingCreateCommentField extends HookConsumerWidget {
     // Setup text listener
     useEffect(() {
       void listener() {
-        final currentValue = ref.read(bookRatingCreateProvider).comment;
+        final currentValue =
+            ref.read(bookRatingCreateProvider(params.bookId)).comment;
         if (currentValue != controller.text) {
           ref
-              .read(bookRatingCreateProvider.notifier)
+              .read(bookRatingCreateProvider(params.bookId).notifier)
               .updateComment(controller.text);
         }
       }

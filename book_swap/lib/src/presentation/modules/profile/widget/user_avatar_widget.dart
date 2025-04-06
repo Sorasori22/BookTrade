@@ -1,5 +1,6 @@
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/presentation/widgets/components/effective_image.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -23,6 +24,7 @@ class UserAvatar extends ConsumerWidget {
       width: size,
       height: size,
       imageObject: imageObject,
+      border: false,
       shape: ImageShape.circle,
       fallbackWidget: (context) => DecoratedBox(
         decoration: BoxDecoration(
@@ -30,7 +32,13 @@ class UserAvatar extends ConsumerWidget {
           shape: BoxShape.circle,
         ),
         child: fallback == null
-            ? Center(child: Icon(Icons.person, size: (size ?? 50) * 0.5))
+            ? Center(
+                child: Icon(
+                  FluentIcons.person_24_filled,
+                  size: (size ?? 50) * 0.5,
+                  color: Colors.black,
+                ),
+              )
             : Center(child: Text(fallback!.toUpperCase())),
       ),
     );

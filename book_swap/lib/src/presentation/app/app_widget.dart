@@ -1,10 +1,12 @@
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
+import 'package:book_swap/src/core/account/account.dart';
 import 'package:book_swap/src/features/banner/providers/banner_provider.dart';
 import 'package:book_swap/src/features/trade_request/providers/requested_book_ids_list_provider.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -31,6 +33,7 @@ class _EagerInitialization extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Initialize app state
     ref.watch(appStateProvider);
+    ref.watch(currentAccountProvider);
 
     ref.watch(prendingTradeRequestListProvider);
 
@@ -142,8 +145,7 @@ class _ThemeOverrider extends ConsumerWidget {
             ),
           ),
         ],
-
-        // Other theme settings here ...
+        textTheme: GoogleFonts.poppinsTextTheme(context.textTheme),
       ),
       child: child,
     );

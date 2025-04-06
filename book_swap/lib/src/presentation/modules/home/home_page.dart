@@ -13,6 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -287,15 +288,19 @@ class _Ads extends ConsumerWidget {
                       children: [
                         Text(
                           item.title,
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.battambang(
+                            color: Colors.black,
+                          ),
                         ),
                         AS.hGap8,
                         Text(
                           item.description,
-                          style: context.textTheme.bodySmall?.copyWith(
-                            color: Colors.black.withValues(alpha: 0.5),
-                            fontSize: 11,
-                          ),
+                          style: context.textTheme.bodySmall
+                              ?.copyWith(
+                                color: Colors.black.withValues(alpha: 0.5),
+                                fontSize: 11,
+                              )
+                              .merge(GoogleFonts.battambang()),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),

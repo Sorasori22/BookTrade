@@ -7,6 +7,7 @@ import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:book_swap/src/presentation/widgets/components/effective_image.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/async_value_widget.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -87,7 +88,7 @@ class MessageRecipientDetailPage extends ConsumerWidget {
                               icon: Icon(Icons.more_vert, color: iconColor),
                               itemBuilder: (context) => [
                                 PopupMenuItem(
-                                  child: const Text('Delete chat'),
+                                  child: Text('message.recipient.delete_chat.title'.tr()),
                                   onTap: () => _showDeleteChatDialog(context, ref, id),
                                 ),
                               ],
@@ -160,8 +161,8 @@ class MessageRecipientDetailPage extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (data.bio != null && data.bio!.isNotEmpty) ...[
-                          const Text(
-                            'About',
+                          Text(
+                            'message.recipient.about'.tr(),
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -174,8 +175,8 @@ class MessageRecipientDetailPage extends ConsumerWidget {
                           ),
                           const SizedBox(height: 24),
                         ],
-                        const Text(
-                          'Contact Information',
+                        Text(
+                          'message.recipient.contact_info'.tr(),
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -185,7 +186,7 @@ class MessageRecipientDetailPage extends ConsumerWidget {
                         _buildInfoTile(
                           context,
                           icon: Icons.email_outlined,
-                          title: 'Email',
+                          title: 'commons.email'.tr(),
                           value: data.email,
                         ),
                         if (data.phoneNumber != null)
@@ -210,8 +211,8 @@ class MessageRecipientDetailPage extends ConsumerWidget {
                             value: data.address!,
                           ),
                         const SizedBox(height: 24),
-                        const Text(
-                          'Additional Information',
+                        Text(
+                          'message.recipient.additional_info'.tr(),
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -223,18 +224,18 @@ class MessageRecipientDetailPage extends ConsumerWidget {
                             context,
                             icon: Icons.cake_outlined,
                             title: 'Age',
-                            value: '${data.age} years old',
+                            value: 'message.recipient.age'.tr(args: [data.age.toString()]),
                           ),
                         _buildInfoTile(
                           context,
                           icon: Icons.person_outline,
-                          title: 'Username',
+                          title: 'commons.username'.tr(),
                           value: '@${data.username}',
                         ),
                         _buildInfoTile(
                           context,
                           icon: Icons.calendar_today_outlined,
-                          title: 'Member Since',
+                          title: 'message.recipient.member_since'.tr(),
                           value: _formatDate(data.createdAt),
                         ),
                       ],
@@ -304,21 +305,21 @@ class MessageRecipientDetailPage extends ConsumerWidget {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete chat'),
-        content: const Text('Are you sure you want to delete this chat?'),
+        title: Text('message.recipient.delete_chat.title'.tr()),
+        content: Text('message.recipient.delete_chat.message'.tr()),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text('Cancel'),
           ),
           FilledButton(
-            child: const Text('Delete'),
+            child: Text('Delete'),
             onPressed: () async {
               final closeLoading = BotToast.showLoading();
               final result = await ref.read(messageDeleteChatProvider(id).notifier).call();
               closeLoading();
               if (result.isSuccess) {
-                BotToast.showText(text: 'Chat deleted');
+                BotToast.showText(text: 'message.recipient.delete_chat.success'.tr());
                 if (context.mounted) {
                   context.navigateTo(MessageRoomRoute(recipientId: recipientId));
                 }

@@ -1,3 +1,4 @@
+import 'package:book_swap/src/presentation/startup/tasks/init_local_db_task.dart';
 import 'package:book_swap/src/presentation/startup/tasks/init_localization_task.dart';
 import 'package:book_swap/src/presentation/startup/tasks/init_notification_task.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -51,6 +52,7 @@ class KimappRunner {
       InitAppSettingTask(),
       InitNotificationTask(),
       InitLocalizationTask(),
+      InitLocalDbTask(),
     ];
 
     await Future.wait(tasks.map((task) => task._initialize(context)));

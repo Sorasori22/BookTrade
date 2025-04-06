@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -29,7 +30,7 @@ class MessagePage extends ConsumerWidget {
                   dividerColor: context.bookTheme.dividerColor,
                   controller: tabController,
                   tabs: [
-                    Tab(text: 'Messages'),
+                    Tab(text: 'message.tabs.messages'.tr()),
                     Tab(
                       child: Consumer(
                         builder: (context, ref, child) {
@@ -40,7 +41,7 @@ class MessagePage extends ConsumerWidget {
 
                           return Text.rich(
                             TextSpan(
-                              text: 'Trade Requests',
+                              text: 'message.tabs.trade_requests'.tr(),
                               children: [
                                 if (tradeRequestCount > 0)
                                   WidgetSpan(

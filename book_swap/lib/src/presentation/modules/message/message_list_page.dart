@@ -4,6 +4,7 @@ import 'package:book_swap/src/features/chat/providers/chat_list_pagination_provi
 import 'package:book_swap/src/presentation/modules/profile/widget/user_avatar_widget.dart';
 import 'package:book_swap/src/presentation/router/app_router.gr.dart';
 import 'package:book_swap/src/presentation/widgets/feedback/my_error_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp_utils/riverpod_pagination_widgets.dart';
@@ -31,7 +32,7 @@ class MessageListPage extends ConsumerWidget {
           );
 
           if (firstPageCountAsync.hasValue && firstPageCountAsync.requireValue == 0) {
-            return const Center(child: Text('No messages'));
+            return Center(child: Text('message.list.empty'.tr()));
           }
 
           if (firstPageCountAsync.hasError) {
