@@ -58,7 +58,7 @@ class _BannerPageState extends ConsumerState<BannerPage> {
               Expanded(
                 child: Container(
                   width: double.infinity,
-                  color: Colors.white,
+                  color: Color(0xFFFDF9F1),
                 ),
               ),
               Expanded(

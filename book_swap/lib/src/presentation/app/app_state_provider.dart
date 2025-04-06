@@ -1,3 +1,4 @@
+import 'package:book_swap/src/features/ads/ads_list_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kimapp/kimapp.dart';
@@ -81,6 +82,7 @@ class AppState extends _$AppState with LoggerMixin {
     logInfo('Authenticated, initializing user data');
     await Future.wait([
       ref.refresh(currentAccountProvider.future),
+      ref.refresh(adsListProvider.future),
     ]);
   }
 
