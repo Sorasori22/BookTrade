@@ -13,6 +13,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../app/app_style.dart';
 import '../../router/app_router.gr.dart';
@@ -96,6 +97,52 @@ class ProfilePage extends ConsumerWidget {
                   SizedBox(
                     height: 220,
                     child: MyBookListProviderScope(
+                      loading: () {
+                        return Skeletonizer(
+                          child: ListView.separated(
+                            padding: EdgeInsets.symmetric(vertical: 2),
+                            itemCount: 10,
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            separatorBuilder: (context, index) => AS.wGap16,
+                            itemBuilder: (context, index) {
+                              return SizedBox(
+                                width: 170,
+                                child: AppCard(
+                                  borderRadius: AS.radiusS,
+                                  padding: EdgeInsets.all(AS.paddingS),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 150,
+                                        child: Center(child: BookCover(cover: null)),
+                                      ),
+                                      AS.hGap8,
+                                      Text(
+                                        "Loading Title",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: context.textTheme.bodyMedium
+                                            ?.copyWith(fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "Author",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: context.textTheme.bodySmall?.copyWith(
+                                          color: context.colors.onSurface.withValues(alpha: 0.6),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
                       child: MyBookListStateWidget(
                         builder: (context, ref, child) {
                           final length = ref.select((e) => e.length);

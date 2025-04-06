@@ -34,6 +34,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kimapp/kimapp.dart';
@@ -42,6 +43,7 @@ import 'package:kimapp_utils/kimapp_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:super_context_menu/super_context_menu.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../features/message/message_schema.dart';
 import '../../../features/message/message_schema.schema.dart';
@@ -178,7 +180,12 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
         ),
         body: Column(
           children: [
-            Expanded(child: _MessageList()),
+            Expanded(
+              child: GestureDetector(
+                onTap: () => context.dismissKeyboard(),
+                child: _MessageList(),
+              ),
+            ),
             _MessageInput(recipientId: _recipientId, onSend: _sendMessage),
           ],
         ),
@@ -214,6 +221,7 @@ class _MessageInput extends HookConsumerWidget {
                 padding: const EdgeInsets.only(left: 8),
                 child: TextField(
                   controller: textController,
+                  maxLines: null,
                   onChanged: (value) {
                     hasText.value = value.isNotBlank;
                   },
@@ -340,6 +348,7 @@ class _MessageInput extends HookConsumerWidget {
             ],
           ),
         ),
+        AS.hGap8,
         SizedBox(
           height: MediaQuery.paddingOf(context).bottom,
         ),
@@ -750,8 +759,17 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
                                   ),
                                 );
                               }()
-                            : Text(
-                                widget.message.content,
+                            : Linkify(
+                                onOpen: (link) {
+                                  launchUrl(Uri.parse(link.url));
+                                },
+                                text: widget.message.content,
+                                linkStyle: isSender
+                                    ? TextStyle(
+                                        color: Colors.white,
+                                        decorationColor: Colors.white,
+                                      )
+                                    : null,
                                 style: context.textTheme.bodyMedium?.copyWith(
                                   color: isSender ? Colors.white : Colors.black,
                                 ),
@@ -916,6 +934,7 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
 
   AppCard _buildToTradeBookCard() {
     return AppCard(
+      width: context.screenWidth * 0.8,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -929,27 +948,29 @@ class _MessageItemState extends ConsumerState<_MessageItem> {
             ),
           ),
           AS.wGap12,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              LabelText(
-                label: 'Title',
-                text: widget.message.tradeRequest?.book.title ?? 'Unknown',
-                textStyle: TextStyle(fontSize: 18),
-              ),
-              AS.hGap4,
-              LabelText(
-                label: 'Author',
-                text: widget.message.tradeRequest?.book.author ?? 'Unknown',
-              ),
-              AS.hGap8,
-              LabelText(
-                label: 'Rating',
-                text: widget.message.tradeRequest?.book.averageRating == null
-                    ? 'No rating'
-                    : '${widget.message.tradeRequest?.book.averageRating}/5',
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LabelText(
+                  label: 'Title',
+                  text: widget.message.tradeRequest?.book.title ?? 'Unknown',
+                  textStyle: TextStyle(fontSize: 16),
+                ),
+                AS.hGap4,
+                LabelText(
+                  label: 'Author',
+                  text: widget.message.tradeRequest?.book.author ?? 'Unknown',
+                ),
+                AS.hGap8,
+                LabelText(
+                  label: 'Rating',
+                  text: widget.message.tradeRequest?.book.averageRating == null
+                      ? 'No rating'
+                      : '${widget.message.tradeRequest?.book.averageRating}/5',
+                ),
+              ],
+            ),
           ),
         ],
       ),

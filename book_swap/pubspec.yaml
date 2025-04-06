@@ -3,7 +3,7 @@ description: A book swap app
 
 publish_to: "none"
 
-version: 0.0.1+1
+version: 1.0.0+1
 
 environment:
   sdk: ">=3.5.0 <4.0.0"
@@ -15,6 +15,7 @@ dependencies:
   assorted_layout_widgets: ^10.0.4
   auto_route: ^9.2.2
   dotted_line: ^3.2.3
+  flutter_linkify: ^6.0.0
   sliver_tools: ^0.2.12
   sembast: ^3.8.4+1
   autoverpod: ^0.0.3

@@ -68,8 +68,8 @@ class AppButton extends AppBaseWidget {
 
     if (isDisabled) {
       baseStyle = baseStyle.copyWith(
-        backgroundColor: WidgetStateProperty.all(theme.disabledColor),
-        foregroundColor: WidgetStateProperty.all(colors.surface.withValues(alpha: 0.38)),
+        backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
+        foregroundColor: WidgetStateProperty.all(colors.onSurface.withValues(alpha: 0.38)),
       );
     }
 

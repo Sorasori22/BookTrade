@@ -59,6 +59,13 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
     return Scaffold(
       backgroundColor: context.theme.colorScheme.surface,
       body: BookDetailProviderScope(
+        loading: () => Scaffold(
+          appBar: AppBar(),
+          backgroundColor: context.theme.colorScheme.surface,
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
         id: bookId,
         child: BookDetailStateWidget(
           builder: (context, ref, child) {
@@ -165,25 +172,27 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
                                             color: Theme.of(context).colorScheme.outline,
                                           ),
                                     ),
-                                    ref.select((state) {
-                                      final rate = state.averageRating;
-                                      if (rate == null) {
-                                        return Text(
-                                          'book_detail.labels.no_rating'.tr(),
-                                          style: Theme.of(context).textTheme.bodyMedium,
-                                        );
-                                      }
-                                      return Row(
-                                        children: [
-                                          RatingStars(rating: rate),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            '($rate)',
+                                    Expanded(
+                                      child: ref.select((state) {
+                                        final rate = state.averageRating;
+                                        if (rate == null) {
+                                          return Text(
+                                            'book_detail.labels.no_rating'.tr(),
                                             style: Theme.of(context).textTheme.bodyMedium,
-                                          ),
-                                        ],
-                                      );
-                                    }),
+                                          );
+                                        }
+                                        return Row(
+                                          children: [
+                                            RatingStars(rating: rate, size: 16, spacing: 0),
+                                            SizedBox(width: 8),
+                                            Text(
+                                              '($rate)',
+                                              style: Theme.of(context).textTheme.bodySmall,
+                                            ),
+                                          ],
+                                        );
+                                      }),
+                                    ),
                                   ],
                                 ),
                                 if (currentProfileId != ref.select((state) => state.ownerId) &&
