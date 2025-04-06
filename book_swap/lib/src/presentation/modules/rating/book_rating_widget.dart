@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:book_swap/src/core/account/current_account_provider.dart';
 import 'package:book_swap/src/core/helpers/build_context_helper.dart';
 import 'package:book_swap/src/core/helpers/date_time_helper.dart';
@@ -268,10 +269,7 @@ class _RatingList extends ConsumerWidget {
       );
     }
 
-    final loading = firstPageCountAsync.isLoading && !firstPageCountAsync.isRefreshing;
-
     return RiverpodPaginationSliverList(
-      loading: loading,
       getData: (ref, index) => ref.watch(bookRatingPaginatedAtIndexProvider(index, param: param)),
       loadingItemBuilder: (index, isFirstItem) {
         return Skeletonizer(
@@ -283,51 +281,53 @@ class _RatingList extends ConsumerWidget {
         );
       },
       itemBuilder: (index, data) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  UserAvatar(
-                    size: 38,
-                    imageObject: data.user.avatar,
-                    fallback: (data.user.displayName[0] + data.user.displayName[1]).toUpperCase(),
-                  ),
-                  AS.wGap12,
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data.user.displayName,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                        Row(
-                          children: [
-                            RatingStars(rating: data.rating.toDouble(), size: 16),
-                            AS.wGap8,
+        return FadeIn(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    UserAvatar(
+                      size: 38,
+                      imageObject: data.user.avatar,
+                      fallback: (data.user.displayName[0] + data.user.displayName[1]).toUpperCase(),
+                    ),
+                    AS.wGap12,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data.user.displayName,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          Row(
+                            children: [
+                              RatingStars(rating: data.rating.toDouble(), size: 16),
+                              AS.wGap8,
+                              Text(
+                                data.createdAt.toTimeAgo(),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                          if (data.comment.isNotNullOrBlank) ...[
+                            AS.hGap8,
                             Text(
-                              data.createdAt.toTimeAgo(),
-                              style: Theme.of(context).textTheme.bodySmall,
+                              data.comment!,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ],
-                        ),
-                        if (data.comment.isNotNullOrBlank) ...[
-                          AS.hGap8,
-                          Text(
-                            data.comment!,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
                         ],
-                      ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              if (index < 2) AS.hGap16,
-            ],
+                  ],
+                ),
+                if (index < 2) AS.hGap16,
+              ],
+            ),
           ),
         );
       },
