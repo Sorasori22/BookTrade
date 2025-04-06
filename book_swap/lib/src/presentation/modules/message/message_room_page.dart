@@ -180,9 +180,11 @@ class _MessageRoomPageState extends ConsumerState<MessageRoomPage> {
         ),
         body: Column(
           children: [
-            GestureDetector(
-              onTap: () => context.dismissKeyboard(),
-              child: Expanded(child: _MessageList()),
+            Expanded(
+              child: GestureDetector(
+                onTap: () => context.dismissKeyboard(),
+                child: _MessageList(),
+              ),
             ),
             _MessageInput(recipientId: _recipientId, onSend: _sendMessage),
           ],
