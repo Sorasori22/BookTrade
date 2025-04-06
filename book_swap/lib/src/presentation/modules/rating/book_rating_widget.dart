@@ -88,14 +88,16 @@ class BookRatingWidget extends HookConsumerWidget {
                             Skeletonizer(
                               enabled: data == null,
                               child: Text(
-                                data?.average.toString() ?? 'Loading',
+                                data?.average.toString() ?? '12',
                                 style: Theme.of(context).textTheme.headlineLarge,
                               ),
                             ),
                             AS.hGap4,
                             Skeletonizer(
                               enabled: data == null,
-                              child: RatingStars(rating: data?.average ?? 0),
+                              child: RatingStars(
+                                rating: data?.average ?? (dataAsync.isLoading ? 5 : 0),
+                              ),
                             ),
                             AS.hGap8,
                             Skeletonizer(
