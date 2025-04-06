@@ -1,5 +1,6 @@
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/core/account/current_account_provider.dart';
+import 'package:book_swap/src/features/book/providers/book_popular_list_provider.dart';
 import 'package:book_swap/src/features/book_rating/providers/book_rating_overall_provider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -35,5 +36,6 @@ class BookRatingCreate extends _$BookRatingCreateWidget {
     ref.read(bookRatingListProvider.notifier).insertItem(result);
     ref.invalidate(bookRatingListPaginationProvider);
     ref.invalidate(bookRatingOverallProvider);
+    ref.invalidate(bookPopularListProvider);
   }
 }
