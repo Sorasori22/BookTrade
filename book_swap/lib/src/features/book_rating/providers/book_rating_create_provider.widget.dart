@@ -18,6 +18,7 @@ import 'package:book_swap/src/features/trade_request/trade_request_schema.dart';
 import 'package:book_swap/src/features/trade_request/trade_request_schema.schema.dart';
 import 'package:autoverpod/autoverpod.dart';
 import 'package:book_swap/src/core/account/current_account_provider.dart';
+import 'package:book_swap/src/features/book/providers/book_detail_provider.dart';
 import 'package:book_swap/src/features/book/providers/book_popular_list_provider.dart';
 import 'package:book_swap/src/features/book_rating/providers/book_rating_overall_provider.dart';
 import 'package:kimapp/kimapp.dart';
