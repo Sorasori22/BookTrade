@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.sonata.book_swap"
     compileSdk = 35
-    ndkVersion = "27.0.12077973"
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
