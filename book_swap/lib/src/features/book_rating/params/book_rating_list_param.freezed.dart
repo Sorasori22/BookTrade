@@ -16,8 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BookRatingListParam {
+  BookId get bookId => throw _privateConstructorUsedError;
+  ProfileId get myId => throw _privateConstructorUsedError;
   ProfileId? get userId => throw _privateConstructorUsedError;
-  BookId? get bookId => throw _privateConstructorUsedError;
   int? get minRating => throw _privateConstructorUsedError;
   int? get maxRating => throw _privateConstructorUsedError;
 
@@ -35,7 +36,11 @@ abstract class $BookRatingListParamCopyWith<$Res> {
       _$BookRatingListParamCopyWithImpl<$Res, BookRatingListParam>;
   @useResult
   $Res call(
-      {ProfileId? userId, BookId? bookId, int? minRating, int? maxRating});
+      {BookId bookId,
+      ProfileId myId,
+      ProfileId? userId,
+      int? minRating,
+      int? maxRating});
 }
 
 /// @nodoc
@@ -53,20 +58,25 @@ class _$BookRatingListParamCopyWithImpl<$Res, $Val extends BookRatingListParam>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? bookId = null,
+    Object? myId = null,
     Object? userId = freezed,
-    Object? bookId = freezed,
     Object? minRating = freezed,
     Object? maxRating = freezed,
   }) {
     return _then(_value.copyWith(
+      bookId: null == bookId
+          ? _value.bookId
+          : bookId // ignore: cast_nullable_to_non_nullable
+              as BookId,
+      myId: null == myId
+          ? _value.myId
+          : myId // ignore: cast_nullable_to_non_nullable
+              as ProfileId,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as ProfileId?,
-      bookId: freezed == bookId
-          ? _value.bookId
-          : bookId // ignore: cast_nullable_to_non_nullable
-              as BookId?,
       minRating: freezed == minRating
           ? _value.minRating
           : minRating // ignore: cast_nullable_to_non_nullable
@@ -88,7 +98,11 @@ abstract class _$$BookRatingListParamImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ProfileId? userId, BookId? bookId, int? minRating, int? maxRating});
+      {BookId bookId,
+      ProfileId myId,
+      ProfileId? userId,
+      int? minRating,
+      int? maxRating});
 }
 
 /// @nodoc
@@ -104,20 +118,25 @@ class __$$BookRatingListParamImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? bookId = null,
+    Object? myId = null,
     Object? userId = freezed,
-    Object? bookId = freezed,
     Object? minRating = freezed,
     Object? maxRating = freezed,
   }) {
     return _then(_$BookRatingListParamImpl(
+      bookId: null == bookId
+          ? _value.bookId
+          : bookId // ignore: cast_nullable_to_non_nullable
+              as BookId,
+      myId: null == myId
+          ? _value.myId
+          : myId // ignore: cast_nullable_to_non_nullable
+              as ProfileId,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as ProfileId?,
-      bookId: freezed == bookId
-          ? _value.bookId
-          : bookId // ignore: cast_nullable_to_non_nullable
-              as BookId?,
       minRating: freezed == minRating
           ? _value.minRating
           : minRating // ignore: cast_nullable_to_non_nullable
@@ -134,12 +153,18 @@ class __$$BookRatingListParamImplCopyWithImpl<$Res>
 
 class _$BookRatingListParamImpl implements _BookRatingListParam {
   const _$BookRatingListParamImpl(
-      {this.userId, this.bookId, this.minRating, this.maxRating});
+      {required this.bookId,
+      required this.myId,
+      this.userId,
+      this.minRating,
+      this.maxRating});
 
   @override
-  final ProfileId? userId;
+  final BookId bookId;
   @override
-  final BookId? bookId;
+  final ProfileId myId;
+  @override
+  final ProfileId? userId;
   @override
   final int? minRating;
   @override
@@ -147,7 +172,7 @@ class _$BookRatingListParamImpl implements _BookRatingListParam {
 
   @override
   String toString() {
-    return 'BookRatingListParam(userId: $userId, bookId: $bookId, minRating: $minRating, maxRating: $maxRating)';
+    return 'BookRatingListParam(bookId: $bookId, myId: $myId, userId: $userId, minRating: $minRating, maxRating: $maxRating)';
   }
 
   @override
@@ -155,8 +180,9 @@ class _$BookRatingListParamImpl implements _BookRatingListParam {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BookRatingListParamImpl &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.bookId, bookId) || other.bookId == bookId) &&
+            (identical(other.myId, myId) || other.myId == myId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.minRating, minRating) ||
                 other.minRating == minRating) &&
             (identical(other.maxRating, maxRating) ||
@@ -165,7 +191,7 @@ class _$BookRatingListParamImpl implements _BookRatingListParam {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, userId, bookId, minRating, maxRating);
+      Object.hash(runtimeType, bookId, myId, userId, minRating, maxRating);
 
   /// Create a copy of BookRatingListParam
   /// with the given fields replaced by the non-null parameter values.
@@ -179,15 +205,18 @@ class _$BookRatingListParamImpl implements _BookRatingListParam {
 
 abstract class _BookRatingListParam implements BookRatingListParam {
   const factory _BookRatingListParam(
-      {final ProfileId? userId,
-      final BookId? bookId,
+      {required final BookId bookId,
+      required final ProfileId myId,
+      final ProfileId? userId,
       final int? minRating,
       final int? maxRating}) = _$BookRatingListParamImpl;
 
   @override
-  ProfileId? get userId;
+  BookId get bookId;
   @override
-  BookId? get bookId;
+  ProfileId get myId;
+  @override
+  ProfileId? get userId;
   @override
   int? get minRating;
   @override

@@ -137,7 +137,12 @@
             "rating": "ការវាយតម្លៃ",
             "description": "ការពិពណ៌នា",
             "no_rating": "មិនទាន់មានការវាយតម្លៃ",
-            "no_description": "គ្មានការពិពណ៌នា"
+            "no_description": "គ្មានការពិពណ៌នា",
+            "ratings_and_reviews": "ការវាយតម្លៃ និងមតិ",
+            "total_reviews": "មតិចំនួន {}",
+            "write_review": "សរសេរមតិ",
+            "days_ago": "{} ថ្ងៃមុន",
+            "your_review" : "មតិរបស់អ្នក"
         },
         "trade": {
             "swap": "ដូរ",

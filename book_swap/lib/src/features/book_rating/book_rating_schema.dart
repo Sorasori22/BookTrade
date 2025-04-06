@@ -22,22 +22,6 @@ class BookRatingSchema extends KimappSchema {
 
   @override
   List<Model> get models => [
-        Model('BookRatingLiteModel')
-          ..table()
-          ..addFields({
-            'id': id,
-            'userId': userId,
-            'bookId': bookId,
-            'rating': rating,
-            'createdAt': createdAt,
-          }),
-        Model('BookRatingDetailModel')
-          ..table()
-          ..inheritAllFromBase()
-          ..addFields({
-            'user': user,
-            'book': book,
-          }),
         Model('BookRatingCreateParam')
           ..addFields({
             'userId': userId,

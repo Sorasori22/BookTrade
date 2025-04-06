@@ -8,8 +8,9 @@ part 'book_rating_list_param.freezed.dart';
 @freezed
 class BookRatingListParam with _$BookRatingListParam {
   const factory BookRatingListParam({
+    required BookId bookId,
+    required ProfileId myId,
     ProfileId? userId,
-    BookId? bookId,
     int? minRating,
     int? maxRating,
   }) = _BookRatingListParam;

@@ -1,4 +1,4 @@
-import 'package:book_swap/src/core/sembast/sembast_db.dart';
+import 'package:book_swap/src/core/sembast/sembast_db_provider.dart';
 
 import '../startup.dart';
 

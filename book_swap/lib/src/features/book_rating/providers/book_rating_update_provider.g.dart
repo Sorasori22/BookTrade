@@ -83,7 +83,7 @@ abstract class _$BookRatingUpdateWidget extends _$BookRatingUpdate {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$bookRatingUpdateHash() => r'469566f7c3332a1ad75d33e4b3fbd83ba4de7ede';
+String _$bookRatingUpdateHash() => r'3d476e653ddc7b1d2afcc03e61e35825a85f80f5';
 
 /// Copied from Dart SDK
 class _SystemHash {

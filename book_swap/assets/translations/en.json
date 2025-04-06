@@ -137,7 +137,12 @@
             "rating": "Rating",
             "description": "Description",
             "no_rating": "No rating",
-            "no_description": "No description"
+            "no_description": "No description",
+            "ratings_and_reviews": "Ratings & Reviews",
+            "total_reviews": "{} reviews",
+            "write_review": "Write a Review",
+            "days_ago": "{} days ago",
+            "your_review" : "Your Review"
         },
         "trade": {
             "swap": "Swap",

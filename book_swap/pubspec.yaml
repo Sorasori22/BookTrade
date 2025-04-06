@@ -15,6 +15,7 @@ dependencies:
   assorted_layout_widgets: ^10.0.4
   auto_route: ^9.2.2
   dotted_line: ^3.2.3
+  sliver_tools: ^0.2.12
   sembast: ^3.8.4+1
   autoverpod: ^0.0.3
   bot_toast: ^4.1.3

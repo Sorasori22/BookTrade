@@ -2,13 +2,13 @@
 
 // ignore_for_file: non_constant_identifier_names, require_trailing_commas, type=lint
 
-part of 'sembast_db.dart';
+part of 'sembast_db_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sembastDbHash() => r'f398ff2b558e3e938cf0921b9397781ee823166d';
+String _$sembastDbHash() => r'9eeb8369d0d1c15f8b03c50806b1f3016111dc6c';
 
 /// See also [sembastDb].
 @ProviderFor(sembastDb)

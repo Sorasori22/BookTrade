@@ -1,4 +1,5 @@
 import 'package:autoverpod/autoverpod.dart';
+import 'package:book_swap/src/features/book_rating/providers/book_rating_overall_provider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kimapp/kimapp.dart';
@@ -33,6 +34,7 @@ class BookRatingUpdate extends _$BookRatingUpdateWidget {
   void onSuccess(BookRatingModel result) {
     ref.read(bookRatingListProvider.notifier).updateItem(result);
     ref.read(bookRatingDetailProvider(bookRatingId).notifier).updateState((_) => result);
+    ref.invalidate(bookRatingOverallProvider);
 
     //! Use with caution
     /// this update might lead to data inconsistency, for example, if we have update the item to not meet the param filter
